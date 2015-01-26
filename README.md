@@ -1,5 +1,5 @@
-# cmput410-project
-Welcome to the cmput410-project wiki!
+# CMPUT410-project
+Welcome to the CMPUT410-project!
 
 Team Members / Contact Info
 ------------
