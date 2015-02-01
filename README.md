@@ -19,6 +19,6 @@ Brian Trinh
 btrinh@ualberta.ca  
 780-995-5086
 
-John (Chun-Han) Lee
-chunhan@ualberta.ca
+John (Chun-Han) Lee <br>
+chunhan@ualberta.ca <br>
 780-884-0628
