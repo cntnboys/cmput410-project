@@ -1,12 +1,49 @@
 {% extends "layout.html" %}
 {% block body %}
 
+<!-- {% if session.logged_in %} -->
+<form action ="{{url_for('tasks')}}" method = post>
+    <dl>
+    <p>Category <input type=text name = category></p>
+    <p>Priority <input type=text name = priority></p>
+    <p>Description <input type=text name = description></p>
+    <p><input type = submit value = Add></p>
+    </dl>
+</form>
+<!-- {% endif %} -->
+
+<table>
+    <colgroup>
+    <col style="col_category">
+    <col stype="col_priority">
+    <col stype="col_desc">
+    <col stype="col_op">
+    </colgroup>
+    <tbody>
+        <tr>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Description</th>
+            <th>Operation</th>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.category }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.description }}</td>
+                <td>
+                    <!-- {% if session.logged_in %}
+                        <form class = "operation-form" action="{{url_for('delete') }}" method=post>
+                        <input type="hidden" name="category" value = "{{task.category}}">
+                        <input type="hidden" name="priority" value = "{{task.priority}}">
+                        <input type="hidden" name="description" value = "{{task.description}}">
+                        <input type=submit value=Delete>
+                        </form>
+                    {% endif %}
+                    -->
+                </td>
+            {% endfor %}
+        </tbdoy>
+    </table>
 
 
-
-
-
-</body>
-</html>
-
-{% endblock %}            
+{% endblock %}
