@@ -6,3 +6,11 @@ from django.http import HttpResponse
 # Create your views here.
 def index(request):
 	return HttpResponse ("Hey, you're in polls.")
+
+def mainpage(request):
+	greeting = Greeting()
+    greeting.save()
+
+    greetings = Greeting.objects.all()
+
+    return render(request, './templates/mainpage.html', {'greetings': greetings})
