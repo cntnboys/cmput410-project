@@ -40,9 +40,16 @@
 
 <!-- BODY -->
 <body>
+<<<<<<< HEAD
 <body background="../Static/Images/images.jpg"
+=======
+>>>>>>> pro/master
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
 
+<<<<<<< HEAD
+=======
+</html>
+>>>>>>> pro/master
