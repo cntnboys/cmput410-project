@@ -8,4 +8,4 @@ def index(request):
     return HttpResponse ("Hey, you're in polls.")
 
 def mainpage(request):
-    return render(request, './templates/mainpage.html')
+    return render(request, '/templates/mainpage.html')
