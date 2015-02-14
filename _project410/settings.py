@@ -10,11 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-<<<<<<< HEAD
-=======
 import dj_database_url
-
->>>>>>> pro/master
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -28,12 +24,7 @@ SECRET_KEY = '+ei^7v4d_$7vf+$&cdsrr4zl0$$+c7hxn*ay02vnx+#^snfrp6'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
-<<<<<<< HEAD
-ALLOWED_HOSTS = []
-=======
 ALLOWED_HOSTS = [".herokuapp.com"]
->>>>>>> pro/master
 
 
 # Application definition
@@ -46,10 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-<<<<<<< HEAD
-=======
     'hello',
->>>>>>> pro/master
 )
 
 MIDDLEWARE_CLASSES = (
@@ -95,8 +83,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-<<<<<<< HEAD
-=======
 
 
 # Parse database configuration from $DATABASE_URL
