@@ -4,6 +4,10 @@ import datetime
 
 from django.utils import timezone
 
+# Create your models here.
+class Greeting(models.Model):
+    when = models.DateTimeField('date created', auto_now_add=True)
+
 class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
     name = models.CharField(max_length=200, null=False)
