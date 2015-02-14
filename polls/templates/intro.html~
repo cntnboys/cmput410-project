@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+        
+        
+
+<h2> Welcome to our Project Website </h2>
+
+
+<div>
+
+<img src="Static/images.jpeg" alt="earth">
+
+
+
+</div>
+
+
+</body>
+
+{% endblock %}    

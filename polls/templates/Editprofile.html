@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+      <div class="row">
+      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+           <A href="edit.html" >Edit Profile</A>
+       <br>
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+   
+   
+         <form>
+              <h3 class="panel-title">Cameron Alexander</h3>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="Static/cat.jpg" class="img-circle"> </div>
+
+
+		<html lang="en"><head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+
+    <title>HTML5 photo upload</title>
+
+</head>
+<body style="zoom: 1;">
+
+<div class="container">
+    <section id="global">
+        <div class="page-header">
+            <h1>HTML5 photo upload</h1>
+        </div>
+        <div class="row">
+            <div class="span12">
+
+                <p class="lead">
+                    Drag 'n drop your photo
+                </p>
+
+                <p>
+                    HTML5 photo upload is a jQuery plugin to crop, scale and upload an image. It croppes the dropped or selected image at the predefined
+                    resolution and scales it down to fit automatically. For efficiency, cropping and scaling is performed on the browser side. The
+                    resulting image is uploaded to the server through an asynchronous call. This plugin exploits all of HTML5's
+                    possibilities, available in every modern browser.
+
+
+		<!-- http://sandbox.juurlink.org/html5imageuploader/ -->
+                </p>
+
+               
+
+                
+
+                <p>Files are automatically uploaded as soon as they are added, no files are stored on the server.</p>
+
+                <form>
+                    <fieldset>
+                        <label>Target image size in pixels</label>
+                        <label class="radio">
+                            <input type="radio" name="targetsize" value="800,600" checked="checked"> 800 x 600
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="targetsize" value="800,800"> 800 x 800
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="targetsize" value="600,800"> 600 x 800
+                        </label>
+                    </fieldset>
+                </form>
+
+                <!-- Drop media element. -->
+                <div class="media-drop">
+
+                    <!-- Image placeholder. -->
+                    <div id="droppedimage"></div>
+
+                    <div id="dropbox" class="media-drop-placeholder" style="width: 640px; height: 480px">
+                        <span class="media-drop-placeholder-title">Drop image here</span>
+                        <span class="media-drop-placeholder-or">or</span>
+
+                        <div class="media-drop-placeholder-uploadbutton">
+                                                        <input id="realUploadBtn" name="media-drop-placeholder-file" type="file" accept="image/*" tabindex="-1">
+                            <button id="uploadBtn" type="button" class="btn" tabindex="-1">Browse file…</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Error message placeholder. -->
+                <p class="help-block error errormessages"></p>
+
+                <button id="resetupload" type="button" class="btn" style="display: none;">Upload new image</button>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>Built with all the love in the world.</p>
+    </div>
+</footer>
+
+<script src="js/jquery-1.9.0.min.js"></script>
+<script src="js/jquery.html5uploader-1.1.js"></script>
+<script src="js/exif.js"></script>
+<script src="js/main.js"></script>
+
+
+
+                
+                <div class=" col-md-9 col-lg-9 "> 
+          
+                        <td>Department:</td> </br>
+                        <input type="text" name="department"> </br>
+                      </tr>
+                      <tr>
+                        <td>Join Date:</td> </br>
+                        <td>06/23/2013</td> </br>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td> </br>
+                         <input type="text" name="Birth"> </br>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Gender</td> </br>
+                        <input type="text" name="gender"> </br>
+                      </tr>
+                        <tr>
+                        <td>Home Address</td> </br>
+                        <input type="text" name="address"> </br>
+                      </tr>
+                      <tr>
+                        <td>Email</td> </br>
+                        <input type="text" name="email"> </br>
+                      </tr>
+                        <td>Phone Number</td> </br>
+                        <input type="text" name="firstname"> </br>
+                        </td>
+                           
+                      </tr>
+                    
+		    <dl> <input type=submit value="Save Changes">  </br>     
+		</form>
+                 
+                </div>
+              </div>
+            </div>
+
+
+	<script src="js/jquery-1.9.0.min.js"></script>
+	<script src="js/jquery.html5uploader-1.1.js"></script>
+	<script src="js/exif.js"></script>
+	<script src="js/main.js"></script>
+
+
+
+
+
+</body>
+</html>
+
+{% endblock %}     

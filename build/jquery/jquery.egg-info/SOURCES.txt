@@ -1,0 +1,17 @@
+README.txt
+ez_setup.py
+setup.py
+jquery/__init__.py
+jquery/ajax.py
+jquery/release.py
+jquery/widgets.py
+jquery.egg-info/PKG-INFO
+jquery.egg-info/SOURCES.txt
+jquery.egg-info/dependency_links.txt
+jquery.egg-info/entry_points.txt
+jquery.egg-info/not-zip-safe
+jquery.egg-info/paster_plugins.txt
+jquery.egg-info/requires.txt
+jquery.egg-info/sqlobject.txt
+jquery.egg-info/top_level.txt
+jquery/static/jquery-1.2.3.pack.js
