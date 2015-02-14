@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-        
-       
-        <h2> Login </h2>
+
+  <h2> Register </h2>
         
       
         
@@ -13,11 +12,25 @@
         <dl> <input type=text name=username>
         <dl>Password:
         <dl> <input type=text name=password>
+
+	<dl>Confirm Password:
+        <dl> <input type=text name=passwordconfirm>
+
+
+
+	<dl>Email:
+        <dl> <input type=text name=password>
+
         <dl> <input type=submit value="Login">       
         
         </dl>        
         </form>
-        
-        
-        
- {% endblock %}    
+
+
+
+
+
+
+
+
+{% endblock %}            

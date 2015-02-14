@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+      <div class="row">
+      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+           <A href="edit.html" >Edit Profile</A>
+       <br>
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+   
+   
+         
+              <h3 class="panel-title">Cameron Alexander</h3>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="Static/cat.jpg" class="img-circle"> </div>
+                
+                <div class=" col-md-9 col-lg-9 "> 
+          
+                        <td>Department:</td> </br>
+                        <input type="text" name="department"> </br>
+                      </tr>
+                      <tr>
+                        <td>Join Date:</td> </br>
+                        <td>06/23/2013</td> </br>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td> </br>
+                         <input type="text" name="Birth"> </br>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Gender</td> </br>
+                        <input type="text" name="gender"> </br>
+                      </tr>
+                        <tr>
+                        <td>Home Address</td> </br>
+                        <input type="text" name="address"> </br>
+                      </tr>
+                      <tr>
+                        <td>Email</td> </br>
+                        <input type="text" name="email"> </br>
+                      </tr>
+                        <td>Phone Number</td> </br>
+                        <input type="text" name="firstname"> </br>
+                        </td>
+                           
+                      </tr>
+                    
+		    <dl> <input type=submit value="Save Changes">  </br>     
+		</form>
+                 
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}     
