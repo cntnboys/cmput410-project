@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from polls.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 
-<<<<<<< HEAD
 
 # Create your views here.
 #@app.route('/mainpage', methods = ['GET', 'POST'])
@@ -20,7 +19,6 @@ from polls.models import Authors, Friends, Posts, Comments, GithubStreams, Twitt
 #def add_post(postid, authorid, ,content, image, privacy):
 #    query_db("insert into posts(post_id, author_id, ,content, image, privacy) values(?,?,?,?,?)", (postid, authorid, ,content, image, privacy))
 #    get_conn().commit();
-=======
 from django.http import HttpResponse
 # Create your views here.
 def index(request):
@@ -28,4 +26,3 @@ def index(request):
 
 def mainpage(request):
     return render(request, 'login.html')
->>>>>>> pro/master
