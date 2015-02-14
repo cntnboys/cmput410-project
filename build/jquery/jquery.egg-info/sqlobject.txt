@@ -1,0 +1,2 @@
+db_module=jquery.model
+history_dir=$base/jquery/sqlobject-history
