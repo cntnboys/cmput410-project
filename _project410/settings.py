@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -72,13 +71,18 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/Edmonton'
 
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
+
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/polls/templates'), )
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
+STATIC_URL = os.path.join(PROJECT_PATH,'/polls/static/')
 
-STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media') # Absolute path to the media directory
