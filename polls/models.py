@@ -13,7 +13,6 @@ class Authors(models.Model):
     twitter = models.CharField(max_length=200)
     facebook = models.CharField(max_length=200)
 
-
     class Meta:
         db_table = "authors"
         verbose_name = "Author"
@@ -71,7 +70,6 @@ class GithubStreams(models.Model):
         db_table = "githubstreams"
         verbose_name = "GithubStream"
 
-
     def __str__(self):
         return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
 
@@ -83,8 +81,7 @@ class TwitterStreams(models.Model):
     class Meta:
         db_table = "twitterstreams"
         verbose_name = "TwitterStream"
-    
-    
+       
     def __str__(self):
         return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
 
@@ -96,7 +93,6 @@ class FacebookStreams(models.Model):
     class Meta:
         db_table = "facebookstreams"
         verbose_name = "FacebookStream"
-    
     
     def __str__(self):
         return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
