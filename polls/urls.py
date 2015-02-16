@@ -7,7 +7,8 @@ from polls import views
 urlpatterns = patterns('',
     url(r'^$', views.mainPage, name='MainPage'),
     url(r'^login/$', views.loginPage, name='LoginPage'),
-
+    url(r'^profile/$', views.editProfileMain, name='EditProfileMain'),
+    url(r'^register/$', views.registerPage, name='RegisterPage'),
 )
 
 if settings.DEBUG:

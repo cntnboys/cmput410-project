@@ -15,7 +15,13 @@ def redirectMain(request):
 	return redirect(mainPage)
 
 def loginPage(request):
-	return render(request, '../../polls/templates/login.html')
+	return render(request, 'login.html')
+
+def editProfileMain(request):
+	return render(request, 'profile.html')
+
+def registerPage(request):
+	return render(request, 'Register.html')
 
 # Create your views here.
 #@app.route('/mainpage', methods = ['GET', 'POST'])
