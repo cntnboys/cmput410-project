@@ -32,7 +32,7 @@ class Friends(models.Model):
         unique_together = (("inviter_id", "invitee_id"),)
 
     def __str__(self):
-            return "inviter_id: " + str(self.inviter_id) + " invitee_id: " + str(self.invitee_id) + " status: " + str(self.status)
+        return "inviter_id: " + str(self.inviter_id.author_id) + " invitee_id: " + str(self.invitee_id.author_id) + " status: " + str(self.status)
 
 
 class Posts(models.Model):
@@ -47,19 +47,21 @@ class Posts(models.Model):
         verbose_name = "Post"
 
     def __str__(self):
-        return "post_id: " + str(self.post_id) + " author_id: " + str(self.author_id) + " content: " + str(self.content) + " image: " + str(self.image) + " privacy: " + str(self.privacy)
+        return "post_id: " + str(self.post_id) + " author_id: " + str(self.author_id.author_id) + " content: " + str(self.content) + " image: " + str(self.image) + " privacy: " + str(self.privacy)
+
 
 class Comments(models.Model):
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     content = models.CharField(max_length=2000)
 
+
     class Meta:
         db_table = "comments"
         verbose_name = "Comment"
 
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " post_id: " + str(self.post_id) + " content: " + str(self.content)
+        return "author_id: " + str(self.author_id.author_id) + " post_id: " + str(self.post_id.post_id) + " content: " + str(self.content)
 
 
 class GithubStreams(models.Model):
@@ -73,7 +75,8 @@ class GithubStreams(models.Model):
 
 
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+            return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+
 
 class TwitterStreams(models.Model):
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
@@ -86,7 +89,8 @@ class TwitterStreams(models.Model):
     
     
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+        return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+
 
 class FacebookStreams(models.Model):
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
@@ -99,4 +103,5 @@ class FacebookStreams(models.Model):
     
     
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+        return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
+
