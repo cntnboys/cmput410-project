@@ -71,16 +71,12 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/Edmonton'
 
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
-
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/polls/templates'), )
 
 
