@@ -17,8 +17,11 @@ def redirectMain(request):
 def loginPage(request):
 	return render(request, 'login.html')
 
-def editProfileMain(request):
+def profileMain(request):
 	return render(request, 'profile.html')
+
+def editProfile(request):
+	return render(request, 'Editprofile.html')
 
 def registerPage(request):
 	return render(request, 'Register.html')
