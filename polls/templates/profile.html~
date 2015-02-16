@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
-
 <h1> 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 </h1>
 
 <div>
@@ -35,6 +35,8 @@
 
 
 <!-- BODY -->
+</br></br></br></br>
+
 <body>
 <body background="../Static/Images/images.jpg"
 <!-- Latest compiled and minified JavaScript -->
@@ -45,10 +47,10 @@
 <div class="container">
       <div class="row">
    
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+        <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
    
    
-          <div class="panel panel-info">
+          <div class="panel panel-info" >
             <div class="panel-heading">
               <h3 class="panel-title">Cameron Alexander</h3>
             </div>
