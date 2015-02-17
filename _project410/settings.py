@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -24,6 +25,7 @@ SECRET_KEY = '+ei^7v4d_$7vf+$&cdsrr4zl0$$+c7hxn*ay02vnx+#^snfrp6'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
 ALLOWED_HOSTS = [".herokuapp.com"]
 
 
@@ -36,8 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
-    'hello',
+    'author',
+    'friends',
+    'friendrequest',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,8 +94,10 @@ DATABASES['default'] =  dj_database_url.config()
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+"""
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
 
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -107,4 +112,22 @@ TEMPATE_DIRS = (
     '/polls/templates'
     '/hello/templates'
 )
->>>>>>> pro/master
+"""
+
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
+STATIC_ROOT = "/static/images"
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/author/static/images',
+)
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
+STATIC_URL = os.path.join(PROJECT_PATH,'/static/')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media') # Absolute path to the media directory
+
