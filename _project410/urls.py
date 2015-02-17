@@ -5,7 +5,6 @@ import friends.views
 import author.views
 import friendrequest.views
 from django.conf.urls.static import static
->>>>>>> brian
 
 urlpatterns = patterns('',
     # Examples:
