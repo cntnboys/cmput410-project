@@ -1,0 +1,13 @@
+#wrapper {
+    width: 800px;
+    border: 1px solid black;
+}
+#git{
+    width: 200px;
+    border: 1px solid red;
+    float:left;
+}
+#twitter {
+    border: 1px solid green;
+    overflow:hidden;
+}
