@@ -2,12 +2,12 @@
 
 {% block body %}
 
+</br></br></br></br></br>
+<h2> Login </h2>
 
-</br></br></br></br>
-
-        <h2> Login </h2>
-                
-        <form action="" method=post>
+        
+        <form action="/author/userlogin/" method=POST>
+        {% csrf_token %}
         
         <dl>
         <dl> Username:
@@ -16,11 +16,9 @@
         <dl> <input type=text name=password>
         <dl> <input type=submit value="Login">       
         
+        
         </dl>        
         </form>
-
-        </body>
-</html>
          
 {% endblock %}
 

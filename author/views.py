@@ -4,8 +4,15 @@ from datetime import timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.forms import EmailField
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
+
 
 # TODO: Fix the template pathing using settings.py
 def mainPage(request):
@@ -25,22 +32,27 @@ def editProfile(request):
 
 def registerPage(request):
 	return render(request, 'Register.html')
+
+def homePage(request):
+	return render(request, 'homepage.html')
+
 def index(request):
 	return render(request, 'index.html')
 
-# Create your views here.
-#@app.route('/mainpage', methods = ['GET', 'POST'])
-#def post():
-#    if request.method == 'POST' :
-#        if not session.get('logged_in'):
-#            abort(401)
-#        post = request.form['post']
-#        add_post(postid, authorid, ,content, image, privacy)
-#        flash('New post was successfully added.')
-#        return redirect(url_for('mainpage'))
-#    posts = query_db('SELECT * FROM posts')
-#    return render_template('mainpage.html', posts=posts)
-
-#def add_post(postid, authorid, ,content, image, privacy):
-#    query_db("insert into posts(post_id, author_id, ,content, image, privacy) values(?,?,?,?,?)", (postid, authorid, ,content, image, privacy))
-#    get_conn().commit();
+def userlogin(request):
+	context = RequestContext(request)
+	
+	error = None
+	
+	if request.method == 'POST':
+		username = request.POST.get("username","").strip()
+		print(username)
+		password = request.POST.get("password","").strip()
+		print(password)
+		if username != "admin" or password != "admin":
+			error = "Invalid username or password"
+			return HttpResponseRedirect('../login')
+		else:
+			return HttpResponseRedirect('../homepage')
+	else:
+		return render(request, 'login.html')        
