@@ -6,8 +6,10 @@ from django.utils import timezone
 
 class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
-    name = models.CharField(max_length=200, null=False)
+    name = models.CharField(max_length=200, null=False, unique=True)
+    username = models.CharField(max_length=30, null=False)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
+    email = models.EmailField(max_length=80, null=False, unique=True)
     location = models.CharField(max_length=200, null=False)
     github = models.CharField(max_length=200)
     twitter = models.CharField(max_length=200)
@@ -18,7 +20,7 @@ class Authors(models.Model):
         verbose_name = "Author"
 
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " name: " + str(self.name) + " image: " + str(self.image) + " location: " + str(self.location) + " github: " + str(self.github) + " twitter: " + str(self.twitter) + " facebook: " + str(self.facebook)
+        return "author_id: " + str(self.author_id) + " name: " + str(self.name) + " username: " + str(self.username) + " image: " + str(self.image) + " email: " + str(self.email) + " location: " + str(self.location) + " github: " + str(self.github) + " twitter: " + str(self.twitter) + " facebook: " + str(self.facebook)
 
 class Friends(models.Model):
     inviter_id = models.ForeignKey(Authors, related_name='inviter_id', null=False)

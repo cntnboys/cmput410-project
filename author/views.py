@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+from forms import NewForm
 
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 
@@ -31,7 +32,38 @@ def editProfile(request):
 	return render(request, 'Editprofile.html')
 
 def registerPage(request):
-	return render(request, 'Register.html')
+    if request.method== 'POST':
+        
+        print request
+        
+        #name = request.POST["name"]
+        #location = "location"
+        #new_author = Authors(name=name, location=location)
+        
+        #new_author.save()
+
+        form = NewForm(request.POST or None)
+        if form.is_valid():
+           new_author = form.save(commit=False)
+           name = form.cleaned_data["name"]
+           username = form.cleaned_data["username"]
+           email = form.cleaned_data["email"]
+           image = form.cleaned_data["image"]
+           facebook = form.cleaned_data["facebook"]
+           github = form.cleaned_data["github"]
+           twitter = form.cleaned_data["twitter"]
+           location = "local"
+           
+           new_author, created = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
+
+#new_author.save()
+
+#Authors.objects.create(name="name")
+        context = {"form": form}
+        template = "Register.html"
+
+        return render(request, template, context)
+    return render(request, 'Register.html')
 
 def homePage(request):
 	return render(request, 'homepage.html')

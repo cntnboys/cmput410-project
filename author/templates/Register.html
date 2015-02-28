@@ -21,9 +21,11 @@
         
       
         
-        <form action="" method=post>
+        <form action="" method=post >  {% csrf_token %}
 
         <dl>
+        <dl> Name:
+        <dl> <input type=text name=name>
         <dl> Username:
         <dl> <input type=text name=username>
         <dl>Password:
@@ -33,11 +35,12 @@
         <dl> <input type=text name=passwordconfirm>
 
 	<dl>Email:
-        <dl> <input type=text name=password>
-
+        <dl> <input type=text name=email>
+        
         <dl> <input type=submit value="Login">       
         
-        </dl>        
+        </dl>
+        {{ form.as_p }}
         </form>
 
 

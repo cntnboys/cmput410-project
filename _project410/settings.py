@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import dj_database_url
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+#PROJECT_ROOT = os.path.normpath(os.path.join(BASE_DIR, '..'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -64,6 +67,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+        
     }
 }
 
@@ -80,9 +85,38 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#if ON_HEROKU:
+#   DATABASE_URL = 'postgresql:///postgresql'
+#else:
+#   DATABASE_URL = 'sqlite://' + os.path.join(BASE_DIR, 'db.sqlite3')
+#DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
+#ADDEDEDD THE FOLLLOWWINGGG TO DEAAALLLL WITHTHTHT DB ERRORS WHEN LOCAL
+ON_HEROKU = os.environ.get('ON_HEROKU')
+HEROKU_SERVER = os.environ.get('HEROKU_SERVER')
+
+if ON_HEROKU:
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgresql',
+    }
+}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '',
+    }
+}
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+#COMMMENTEED OUT THIIIISSS LINNENENENENE
+#DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
