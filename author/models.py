@@ -6,8 +6,8 @@ from django.utils import timezone
 
 class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
-    name = models.CharField(max_length=200, null=False, unique=True)
-    username = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=200, null=False)
+    username = models.CharField(max_length=30, null=False, unique=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
     email = models.EmailField(max_length=80, null=False, unique=True)
     location = models.CharField(max_length=200, null=False)
