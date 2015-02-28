@@ -1,4 +1,0 @@
-
-    [turbogears.widgets]
-    jquery = jquery.widgets
-    
