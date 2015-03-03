@@ -4,7 +4,7 @@
 <head>
 
     <title>Thought-Bubble Login</title>
-    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
+    <!-- Bootstrap example from http://bootsnipp.com/snippets/featured/login-screen-with-background-->
     <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../../static/css/small-business.css" rel="stylesheet">
@@ -50,12 +50,14 @@
 <div id="fullscreen_bg" class="fullscreen_bg"/>
 
 <div class="container">
-
+        <!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
+	<img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
 	<form  class="form-signin" action="/author/userlogin/" method=POST>
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Sign In</h1>
 		<input type="text" class="form-control" placeholder="Username" required="" autofocus="" name=username>
 		<input type="password" class="form-control" placeholder="Password" required="" name=password>
+		</br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Sign In
 		</button>

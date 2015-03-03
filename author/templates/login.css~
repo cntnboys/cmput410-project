@@ -12,6 +12,7 @@
    border-bottom:none;
    border-left:none;
    border-right:none;
+   color:black;
    box-shadow:inset 2px -3px rgba(0,0,0,0.15);
     
   }
@@ -58,22 +59,29 @@
     margin-bottom: -1px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     border-top-style: solid;
     border-right-style: solid;
-    border-bottom-style: none;
+    border-bottom-style: solid;
     border-left-style: solid;
     border-color: black;
+    border-top:1px solid rgba(0,0,0,0.08);
+    border-bottom:px solid rgba(0,0,0,0.08);
   }
   .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top-style: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-style: solid;
     border-right-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
     border-color: rgb(0,0,0);
     border-top:1px solid rgba(0,0,0,0.08);
+    border-bottom:px solid rgba(0,0,0,0.08);
   }
   .form-signin-heading {
     color: #fff;
