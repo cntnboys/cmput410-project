@@ -1,25 +1,67 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
+<head>
 
-</br></br></br></br></br>
-<h2> Login </h2>
+    <title>Thought-Bubble Login</title>
+    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../static/css/small-business.css" rel="stylesheet">
 
+    <link href="../../static/css/login.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="../../static/images/bubbles.png" alt="" height = "50" width = "50">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+                    <li>
+                        <a href="#">Register</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+      
         
-        <form action="/author/userlogin/" method=POST>
-        {% csrf_token %}
-        
-        <dl>
-        <dl> Username:
-        <dl> <input type=text name=username>
-        <dl>Password:
-        <dl> <input type=text name=password>
-        <dl> <input type=submit value="Login">       
-        
-        
-        </dl>        
-        </form>
-         
-{% endblock %}
+<div id="fullscreen_bg" class="fullscreen_bg"/>
+
+<div class="container">
+
+	<form  class="form-signin" action="/author/userlogin/" method=POST>
+		{% csrf_token %}
+		<h1 class="form-signin-heading">Sign In</h1>
+		<input type="text" class="form-control" placeholder="Username" required="" autofocus="" name=username>
+		<input type="password" class="form-control" placeholder="Password" required="" name=password>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">
+			Sign In
+		</button>
+	</form>
+
+</div>
+
 
 
