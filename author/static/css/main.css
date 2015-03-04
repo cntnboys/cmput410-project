@@ -1,0 +1,188 @@
+* {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #3f3e3d;
+}
+.navbar-fixed-top .nav {
+    padding: 15px 0;
+}
+
+.navbar-fixed-top .navbar-brand {
+    padding: 0 15px;
+}
+body {
+  background: white;
+  margin: 0;
+  padding: 0;
+}
+input {
+  width: 236px;
+  height: 38px;
+  border: 1px solid #d2d2d2;
+  padding: 0 10px;
+  outline: none;
+  font-size: 17px;
+}
+input:focus {
+  background: #FFFDF2;
+}
+input[type="submit"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #7BC574;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #8cd585;
+  background: -moz-linear-gradient(top, ##5bd0bb 0%, #7ac7cd 23%, #4c97ad 86%, #4597a9 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #85d5cb), color-stop(23%, #7acdc3), color-stop(86%, #4c97ad), color-stop(100%, #4597a9));
+  background: -webkit-linear-gradient(top, ##5bd0bb 0%, #7ac7cd 23%, #4c97ad 86%, #4597a9 100%);
+  background: -o-linear-gradient(top, ##5bd0bb 0%, #7ac7cd 23%, #4c97ad 86%, #4597a9 100%);
+  background: -ms-linear-gradient(top, ##5bd0bb 0%, #7ac7cd 23%, #4c97ad 86%, #4597a9 100%);
+  background: linear-gradient(to bottom, ##5bd0bb 0%, #7ac7cd 23%, #4c97ad 86%, #4597a9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@c1', endColorstr='@c4', GradientType=0);
+}
+a.postlink {
+  text-decoration: none;
+  color: #53bfab;
+  text-shadow: #53bfab 0 0 1px;
+}
+a.postlink:visited
+a.postlink:hover {
+  text-decoration: underline;
+  color: #5bd0bb;
+}
+a.user:hover {
+  text-decoration: underline;
+}
+
+.wrapper {
+  width: 860px;
+  margin: auto;
+}
+header {
+  /*background: url(../images/bg-header.png);*/
+  background: #cdf1ff;
+  height: 90px;
+  width: 100%;
+}
+header div.wrapper {
+  padding: 11px 0;
+}
+header div.wrapper img {
+  position: relative;
+  top: 10px;
+  margin: 0 15px 0 0;
+}
+header div.wrapper span {
+  font-size: 18px;
+  margin: 0 42px 0 0;
+}
+header div.wrapper form {
+  display: inline;
+}
+header div.wrapper form input {
+  margin: 0 0 0 14px;
+}
+header div.wrapper #btnLogOut {
+  float: right;
+  margin: 14px 0 0 0;
+}
+#content {
+  margin-bottom: 15px;
+  min-height: 560px;
+}
+#content div.wrapper {
+  margin: 38px auto;
+}
+#content div.wrapper img {
+  border-radius: 6px;
+  float: left;
+}
+#content div.wrapper div.panel {
+  border: 1px solid #d2d2d2;
+  background: white;
+  margin: 0;
+  margin-bottom: 29px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+#content div.wrapper div.panel.right {
+  width: 303px;
+  height: 313px;
+  float: right;
+}
+#content div.wrapper div.panel.right textarea.bubbleText {
+  width: 249px;
+  height: 160px;
+  border: 1px solid #d2d2d2;
+}
+#content div.wrapper div.panel.left {
+  width: 533px;
+  float: left;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper {
+  padding: 15px 0;
+  border-bottom: 1px solid #d2d2d2;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper:last-child {
+  border: none;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper span.name {
+  font-size: 18px;
+  color: #4e9bb8;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper span.time {
+  font-size: 12px;
+  color: #CCC;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper img.avatar {
+  margin: 0 19px 0 20px;
+  float: left;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper p {
+  margin: 5px 50px 0 90px;
+  padding: 0;
+  text-align: justify;
+  line-height: 1.5;
+  color: #3f3e3d;
+  text-shadow: #3f3e3d 0 0 1px;
+}
+#content div.wrapper div.panel.left div.bubbleWrapper p span.spacing {
+  padding-left: 9px;
+  margin-left: 9px;
+  height: 10px;
+  border-left: 1px solid #d2d2d2;
+}
+#content div.wrapper div.panel * {
+  margin: 6px 0;
+}
+#content div.wrapper div.panel form {
+  padding: 0 23px;
+}
+#content div.wrapper div.panel h1 {
+  border-bottom: 1px solid #d2d2d2;
+  margin: 5px 0;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 13px 23px;
+  height: 23px;
+}
+#content div.wrapper div.panel p {
+  padding: 0 24px;
+  margin: 18px 0;
+}
+footer {
+  background: #cdf1ff;
+  height: 220px;
+  font-size: 14px;
+  clear: both;
+}
+footer div.wrapper {
+  padding: 15px;
+}
+footer div.wrapper img {
+  float: right;
+}

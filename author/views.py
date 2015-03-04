@@ -25,6 +25,9 @@ def redirectMain(request):
 def loginPage(request):
 	return render(request, 'login.html')
 
+def home(request):
+	return render(request, 'main.html')
+
 def profileMain(request):
 	return render(request, 'profile.html')
 

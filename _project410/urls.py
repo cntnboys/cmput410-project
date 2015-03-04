@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^friends/', friends.views.index, name='index'),
     url(r'^author/', include('author.urls')),
     url(r'^friendrequest/', friendrequest.views.index, name='index'),
+    url(r'^main/', author.views.home, name='homePage'),
     
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
