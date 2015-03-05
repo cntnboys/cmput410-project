@@ -39,7 +39,14 @@ def registerPage(request):
         
         print request
         
-        
+        name=request.POST["name"]
+        username=request.POST["username"]
+        email=request.POST["email"]
+        github=request.POST["github"]
+        facebook=request.POST["facebook"]
+        twitter=request.POST["twitter"]
+        image=request.POST["image"]
+        location="local"
       
       
         new_author, created = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
