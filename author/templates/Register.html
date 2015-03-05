@@ -9,7 +9,7 @@
     <!-- Custom CSS -->
     <link href="../../static/css/small-business.css" rel="stylesheet">
 
-    <link href="../../static/css/login.css" rel="stylesheet">
+    <link href="../../static/css/register.css" rel="stylesheet">
     <br>
 </head>
 
@@ -50,22 +50,21 @@
 <div id="fullscreen_bg" class="fullscreen_bg"/>
 
 <div class="container">
-	<!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
-	<img class="profile-img2" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
+	
 	<form  class="form-signin" action="/author/userlogin/" method=POST enctype="multipart/form-data"> 
+		<!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
+	<img class="profile-img2" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Register</h1>
-        <input type="text" class="form-control" placeholder="Name" required=true autofocus="" name=name>
+        	<input type="text" class="form-control" placeholder="Name" required=true autofocus="" name=name>
 		<input type="text" class="form-control" placeholder="Username" required=true autofocus="" name=username>
-		<input type="password" class="form-control" placeholder="Password" required=true autofocus="" name=password>
-        <input type="password" class="form-control" placeholder="ConfirmPassword" required=true name=confpassword>
-        <input type="email" class="form-control" placeholder="Email" required=true name=email>
-        
-        <input type="text" class="form-control" placeholder="MyGithub" required="" name=github>
-        <input type="text" class="form-control" placeholder="MyFacebook" required="" name=facebook>
-        <input type="text" class="form-control" placeholder="MyTwitter" required="" name=twitter>
-        <input type="file" class="form-control" placeholder="" required=false name=image>
-		
+		<input type="password" class="form-control" placeholder="Password" required=true autofocus=""name=password>
+        	<input type="password" class="form-control" placeholder="ConfirmPassword" required=true name=confpassword>
+        	<input type="email" class="form-control" placeholder="Email" name=email>
+        	<input type="text" class="form-control" placeholder="MyGithub"  name=github>
+        	<input type="text" class="form-control" placeholder="MyFacebook"  name=facebook>
+        	<input type="text" class="form-control" placeholder="MyTwitter"  name=twitter>
+        	<input type="file" class="form-control" placeholder=""  name=image>
 		</br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Register
