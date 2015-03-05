@@ -52,7 +52,7 @@
 <div class="container">
 	<!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
 	<img class="profile-img2" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
-	<form  class="form-signin" action="/author/userlogin/" method=POST> 
+	<form  class="form-signin" action="/author/userlogin/" method=POST enctype="multipart/form-data"> 
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Register</h1>
         <input type="text" class="form-control" placeholder="Name" required=true autofocus="" name=name>
