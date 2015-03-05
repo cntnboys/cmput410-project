@@ -36,9 +36,10 @@ def editProfile(request):
 
 def registerPage(request):
     if request.method== 'POST':
-        
+
         print request
-        
+        error = None
+
         name=request.POST["name"]
         username=request.POST["username"]
         email=request.POST["email"]
@@ -47,9 +48,16 @@ def registerPage(request):
         twitter=request.POST["twitter"]
         image=request.POST["image"]
         location="local"
-      
-      
-        new_author, created = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
+
+        if (name and username and email):
+
+            if Authors.objects.filter(username=username):
+                error="Username already exists"
+                return HttpResponseRedirect('../register/')
+
+            new_author = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
+
+
 
 
     return render(request, 'Register.html')
