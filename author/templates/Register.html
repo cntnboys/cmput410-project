@@ -55,6 +55,7 @@
 	<form  class="form-signin" action="/author/userlogin/" method=POST>
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Register</h1>
+        <input type="text" class="form-control" placeholder="Name" required="" autofocus="" name=name>
 		<input type="text" class="form-control" placeholder="Username" required="" autofocus="" name=username>
 		<input type="password" class="form-control" placeholder="Password" required="" autofocus="" name=password>
         <input type="password" class="form-control" placeholder="ConfirmPassword" required="" name=confpassword>

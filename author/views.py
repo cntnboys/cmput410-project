@@ -39,33 +39,12 @@ def registerPage(request):
         
         print request
         
-        #name = request.POST["name"]
-        #location = "location"
-        #new_author = Authors(name=name, location=location)
         
-        #new_author.save()
+      
+      
+        new_author, created = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
 
-        form = NewForm(request.POST or None)
-        if form.is_valid():
-           new_author = form.save(commit=False)
-           name = form.cleaned_data["name"]
-           username = form.cleaned_data["username"]
-           email = form.cleaned_data["email"]
-           image = form.cleaned_data["image"]
-           facebook = form.cleaned_data["facebook"]
-           github = form.cleaned_data["github"]
-           twitter = form.cleaned_data["twitter"]
-           location = "local"
-           
-           new_author, created = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
 
-#new_author.save()
-
-#Authors.objects.create(name="name")
-        context = {"form": form}
-        template = "Register.html"
-
-        return render(request, template, context)
     return render(request, 'Register.html')
 
 def homePage(request):
