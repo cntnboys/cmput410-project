@@ -1,12 +1,55 @@
-{% extends "layout.html" %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <title>Thought-Bubble Login</title>
+    <!-- Bootstrap example from http://bootsnipp.com/snippets/featured/login-screen-with-background-->
+   <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../static/css/small-business.css" rel="stylesheet">
+
+    <link href="../../static/css/login.css" rel="stylesheet">
+    <br>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="../../static/images/bubbles.png" alt="" height = "50" width = "50">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+                    <li>
+                        <a href="#">Register</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
 <!-- BODY -->
 </br></br></br></br>
 
 <body>
-<body background="../Static/Images/images.jpg"
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -24,7 +67,7 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="../Static/Images/cat.jpg" class="img-circle"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/cat.jpg" class="img-circle"> </div>
                 
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
@@ -66,12 +109,13 @@
                 </div>
               </div>
             </div>
+
                  <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="Editprofile" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        </span>
+                       <button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Follow
+</button>
+                       
+                       
                     </div>
             
           </div>
@@ -82,6 +126,3 @@
 </body>
 </html>
 
-
-
-{% endblock %}
