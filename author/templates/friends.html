@@ -63,11 +63,11 @@
 					<img class="avatar" src="{% static 'images/user2.png' %}">
 					<span class="name">Kermit</span> <a href="http://thought-bubble.herokuapp.com/author/Kermit">@Kermit</a> <span class="time">15m</span>
 				</div>
-                {% for link in q %}
+                {% for link in items %}
                     <div class="bubbleWrapper">
                         <img class="avatar" src={{link.images}}>
-                        <span class="name">{{ link.name.0 }}</span>
-                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.username.0}}</a>
+                        <span class="name">{{ link.0.name }}</span>
+                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}
 			</div>
