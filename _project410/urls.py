@@ -11,12 +11,11 @@ urlpatterns = patterns('',
     # url(r'^$', '_project410.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', author.views.mainPage, name='mainPage'),
+    url(r'^$', author.views.redirectIndex, name='IndexPage'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^friends/', friends.views.index, name='index'),
     url(r'^author/', include('author.urls')),
     url(r'^friendrequest/', friendrequest.views.index, name='index'),
-    url(r'^main/', author.views.home, name='homePage'),
     
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
