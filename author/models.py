@@ -39,7 +39,7 @@ class Friends(models.Model):
 
 
 class Posts(models.Model):
-    post_id = models.AutoField(primary_key = True)
+    post_id = UUIDField(primary_key=True, auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     content = models.CharField(max_length=10000)
     image = models.ImageField(upload_to="PostImages", max_length=250)
@@ -54,6 +54,7 @@ class Posts(models.Model):
 
 
 class Comments(models.Model):
+    comment_id = UUIDField(primary_key=True, auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     content = models.CharField(max_length=2000, null=True)
