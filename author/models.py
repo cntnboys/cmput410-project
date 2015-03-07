@@ -14,9 +14,9 @@ class Authors(models.Model):
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
     email = models.EmailField(max_length=80, null=False, unique=True)
     location = models.CharField(max_length=200, null=False)
-    github = models.CharField(max_length=200)
-    twitter = models.CharField(max_length=200)
-    facebook = models.CharField(max_length=200)
+    github = models.CharField(max_length=200, null=True)
+    twitter = models.CharField(max_length=200, null=True)
+    facebook = models.CharField(max_length=200, null=True)
 
     class Meta:
         db_table = "authors"
@@ -57,8 +57,8 @@ class Posts(models.Model):
 class Comments(models.Model):
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
-    content = models.CharField(max_length=2000)
-
+    content = models.CharField(max_length=2000, null=True)
+    image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
 
     class Meta:
         db_table = "comments"
