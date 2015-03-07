@@ -56,10 +56,14 @@
 		<div class="wrapper">
 			<div id="createBubble" class="panel right">
 				<h1>Create a Post</h1>
+				</br>
 				<p>
-					<form>
-						<textarea name="text" class="bubbleText"></textarea>
+					<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
+						{% csrf_token %}
+						<input type="text" class="bubbleText" name="posttext">
+						<input type="file" class="form-control" placeholder=""  name="image">
 						<input type="submit" value="Post">
+						
 					</form>
 				</p>
 			</div>

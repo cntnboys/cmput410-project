@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^profile/Editprofile', views.editProfile, name='EditProfile'),
     url(r'^Editprofile/$', views.editProfile, name='EditProfile'),
     url(r'^registerPage/$', views.editProfile, name='registerPage'),
+    url(r'^makePost/$', views.makePost, name='makePost')
+    
 )
 
 if settings.DEBUG:

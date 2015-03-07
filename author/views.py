@@ -112,6 +112,21 @@ def profileMain(request):
 def editProfile(request):
     return render(request, 'Editprofile.html')
 
+
+
+def makePost(request):
+    if request.method == "POST":
+
+        
+        content = request.POST["posttext"]
+        image   = request.FILES["image"]
+        privacy = "public"
+        author_id = "heyimcameron"
+
+        new_post = Posts.objects.get_or_create(author_id = author_id,content = content, image=image, privacy = privacy )
+
+        return redirect(mainPage)
+
 def registerPage(request):
     if request.method== 'POST':
 
