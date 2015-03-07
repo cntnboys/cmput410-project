@@ -58,6 +58,7 @@ target/
 *.py~
 *.pyc~
 *.html~
+*.css~
 
 # Mac
 *.DS_Store
