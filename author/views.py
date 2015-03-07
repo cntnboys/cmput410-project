@@ -8,11 +8,11 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
-from forms import NewForm
 import uuid
 
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 from django.db.models import Count
 
@@ -29,7 +29,6 @@ def mainPage(request):
     return render(request, 'main.html')
 
 def loginPage(request):
-    # TODO: Fix this Login Request
     context = RequestContext(request)
 
     # Handle if signin not clicked
@@ -43,22 +42,24 @@ def loginPage(request):
     # Check if fields are filled.
     if username and password:
 
+        user = authenticate(username=username, password=password)
+
         # Determine if user exists.
-        try:
-            user = Authors.objects.get(username=username)
-        except ObjectDoesNotExist:
-            error_msg = "User %s does not exist" % username
-            return render (request, 'login/login.html', {'error_msg':error_msg})
+        if user is not None:
+            if user.is_active:
+                login(request, user);
 
-        if user.password == password:
-            response = render_to_response('index/intro.html',
-                        {'password': password, 'username': username }, 
-                        RequestContext(request))
+            else:
+                error_msg = """Account is deactivated. Please contact 
+                            website hosts for further assistance."""
 
-            return response
+                return render (request, 'login/login.html', {'error_msg':error_msg })
 
         else:
-            error = "Password Incorrect. Please Try Again."
+            error_msg = "Username or password is not valid. Please try again." 
+            return render (request, 'login/login.html', {'error_msg':error_msg })
+
+
     else:
         error = "Missing either a username or password. Please supply one "
 
@@ -128,10 +129,10 @@ def makePost(request):
         return redirect(mainPage)
 
 def registerPage(request):
-    if request.method== 'POST':
+    if request.method == 'POST':
 
-        print request
-        error = None
+        #print request
+        error_msg = None
 
         name=request.POST["name"]
         username=request.POST["username"]
@@ -155,15 +156,19 @@ def registerPage(request):
             error_msg = "Email already exists"
             return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
            
+        new_user = User.objects.create(username=username, password=password)
+        new_author = Authors.objects.get_or_create(name=name, username=username, 
+            image=image, location=location, email=email, github=github, 
+            facebook=facebook, twitter=twitter)
 
+        # Successful. Redirect to Login
+        return redirect(loginPage)
 
+    else:
+        
+        # Render Register Page
+        return render(request, 'Register.html')
 
-        new_author = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
-
-
-
-
-    return render(request, 'Register.html')
 
 
       

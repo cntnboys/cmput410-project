@@ -22,3 +22,21 @@ btrinh@ualberta.ca
 John (Chun-Han) Lee <br>
 chunhan@ualberta.ca <br>
 780-884-0628
+
+
+Resources and References
+====
+
+#### Basic HTTP Authentication
+
+* Can I use Basic HTTP Authentication on Django? - Stack Overflow - (http://stackoverflow.com/questions/152248/can-i-use-http-basic-authentication-with-django)
+* Django Doc - Authentication using Remote User (https://docs.djangoproject.com/en/dev/howto/auth-remote-user/)
+* Django Snippet - Basic HTTP Auth - https://djangosnippets.org/snippets/243/
+
+
+Licensing
+===
+1.
+2.
+3.
+4. Django Snippets used under the TOS (https://djangosnippets.org/about/tos/) are free to use by everyone royalty free.

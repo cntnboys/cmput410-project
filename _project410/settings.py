@@ -45,15 +45,23 @@ INSTALLED_APPS = (
     'friendrequest',
 )
 
+# Remote Authentication Modifications for Basic HTTP Auth
+# https://docs.djangoproject.com/en/dev/howto/auth-remote-user/
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+#AUTHENTICATION_BACKENDS = [
+#    'django.contrib.auth.backends.RemoteUserBackend',
+#]
+
 
 ROOT_URLCONF = '_project410.urls'
 
@@ -67,8 +75,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
-        
+         #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),        
     }
 }
 
@@ -120,7 +127,6 @@ else:
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
