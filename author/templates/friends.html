@@ -6,6 +6,9 @@
 	<script src="{% static 'js/less.js' %}"></script>
     <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'js/jquery.js' %}"></script>
+    <script type ="text/javascript">
+        $("avatar").val(items[0][0].name)
+    </script>
 	    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -67,7 +70,7 @@
                     <div class="bubbleWrapper">
                         <img class="avatar" src={{link.images}}>
                         <span class="name">{{ link.0.name }}</span>
-                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
+                        <a href="http://thought-bubble.herokuapp.com/author/"+{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}
 			</div>
