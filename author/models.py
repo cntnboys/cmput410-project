@@ -69,6 +69,7 @@ class Comments(models.Model):
 
 
 class GithubStreams(models.Model):
+    gh_id = UUIDField(primary_key=True, auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
@@ -82,6 +83,7 @@ class GithubStreams(models.Model):
 
 
 class TwitterStreams(models.Model):
+    tweet_id = UUIDField(primary_key=True, auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
@@ -95,6 +97,7 @@ class TwitterStreams(models.Model):
 
 
 class FacebookStreams(models.Model):
+    fbstream_id = UUIDField(primary_key=True, auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
