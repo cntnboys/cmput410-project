@@ -42,10 +42,12 @@ class Friends(models.Model):
 class Posts(models.Model):
     post_id = models.AutoField(primary_key = True)
     post_uuid = UUIDField(auto=True, unique=True)
-    author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
+    #author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
+    author_id = models.CharField(max_length=20, null=False)
     content = models.CharField(max_length=10000)
     image = models.ImageField(upload_to="PostImages", max_length=250)
     privacy = models.CharField(max_length=20, null=False)
+    date = models.DateTimeField(auto_now_add=True, null=False)
 
     class Meta:
         db_table = "posts"
