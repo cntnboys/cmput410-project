@@ -1,7 +1,9 @@
   body {
     padding-top: 120px;
     padding-bottom: 40px;
-    background-color: #eee;
+    background-attachment: fixed;
+    background-size:cover;
+    background-image: url(../images/back.jpg);
   
   }
   .btn 
@@ -22,22 +24,12 @@
    -webkit-outline:0;
    -moz-outline:0;
   }
-  .fullscreen_bg {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-size: cover;
-    background-position: 50% 50%;
-    background-image: url(../images/back.jpg);
-    background-repeat:repeat;
-  }
+
   .form-signin {
     max-width: 280px;
     padding: 15px;
     margin: 0 auto;
-    margin-top:10px;
+    margin-top:0px;
   }
   .form-signin .form-signin-heading, .form-signin {
     color: black;
@@ -68,7 +60,7 @@
 .profile-img2
 {
     position: relative ;
-    margin-top:30%;
+    margin-top:0%;
     padding-left: 70px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

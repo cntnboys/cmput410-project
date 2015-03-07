@@ -28,7 +28,6 @@
 {% endblock %}
 
 {% block body %}  
-<div id="fullscreen_bg" class="fullscreen_bg"/>
 
 <div class="container">
         <!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
@@ -45,12 +44,13 @@
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Sign In
 		</button>
-
+        <br/>
+        {% if error_msg %}
+        <h3 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
+        {% endif %}
 	</form>
 
-    {% if error_msg %}
-    <h3 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
-    {% endif %}
+
 
 </div>
 </body>

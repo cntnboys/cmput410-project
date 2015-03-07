@@ -1,17 +1,16 @@
   h3#center {
     margin-left: auto;
     margin-right: auto;
-    width: 12em
+    padding
+    width: 280px;
   } 
 
   body {
     padding-top: 120px;
     padding-bottom: 40px;
-    body { background: url(../images/back.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; margin:5%; text-align:justify }
+    background-attachment: fixed;
+    background-size:cover;
+    background-image: url(../images/back.jpg);
   
   }
   .btn 
@@ -32,17 +31,7 @@
    -webkit-outline:0;
    -moz-outline:0;
   }
-  .fullscreen_bg {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-size: cover;
-    background-position: 50% 50%;
-    background-image: url(../images/back.jpg);
-    background-repeat:repeat;
-  }
+
   .form-signin {
     max-width: 280px;
     padding: 15px;
