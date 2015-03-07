@@ -8,7 +8,7 @@ from django.db import connection
 
 class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
-    author_uuid = UUIDField(auto=True, unique=True)
+    #author_uuid = UUIDField(auto=True, unique=True)
     name = models.CharField(max_length=200, null=False)
     username = models.CharField(max_length=30, null=False, unique=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)

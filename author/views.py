@@ -14,12 +14,19 @@ import uuid
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
 
+from django.db.models import Count
+
+import json
+
 # TODO: Fix the template pathing using settings.py
 def indexPage(request):
     return render(request, 'index/intro.html')
 
 def redirectIndex(request):
     return redirect(indexPage)
+    
+def mainPage(request):
+    return render(request, 'main.html')
 
 def loginPage(request):
     # TODO: Fix this Login Request
@@ -64,7 +71,50 @@ def friendRequest(request):
     return render(request, 'friendrequest.html')
 
 def friends(request):
-    return render(request, 'friends.html')
+    # links = Authors.objects.all()
+    # context = RequestContext(request)
+    # return render_to_response('friends.html',{'links': links}, context)
+    #json.loads(request.POST.get('JSONreponseobj', '{}'))
+    names = []
+    users = []
+    images = []
+    JSONobj = {}
+    if request.method == 'GET':
+        #context = RequestContext(request)
+        #links = Friends.objects.all()
+        #for x in q.count():
+            #print Friends.objects.filter(invitee_id_id)
+        #count = 0
+        for e in Friends.objects.filter(inviter_id_id=1):
+            #print(e.invitee_id_id)
+            q = Authors.objects.filter(author_id=e.invitee_id_id)
+            #links = q
+            print q.values('name')
+            print q.values('username')
+            print q.values('image')
+
+            #JSONobj['qname'] = q.values('name')
+            #JSONobj['quser'] = q.values('username')
+            #JSONobj['qimage'] = q.values('image')
+            #print JSONobj.qname
+            #names.append(q[0].name)
+            #users.append(q[0].username)
+            #images.append(q[0].image)
+
+            #print names, users, images
+            #count = count + 1
+
+            #JSONreponseobj.push(name,user,image)
+            #return render_to_response('friends.html',{'name':qname, 'username':quser, 'image':qimage}, context)
+        #allList = [names, users, images]
+        #Friends.objects.filter(inviter_id_id=)
+    #return render(request, 'friends.html')
+    #print JSONreponseobj
+    #my_list = list(self.get_queryset().values_list('code', flat=True))
+
+    #json_data = json.dumps(JSONobj)
+    #return render(request, 'friends.html',{'names':names, 'users':users, 'images':images})
+    return render(request, 'friends.html',{'q':q})
 
 
 def profileMain(request):
