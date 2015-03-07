@@ -57,6 +57,36 @@ def loginPage(request):
     error_msg = error_msg if error else "Unknown Error."
     return render(request, 'login/login.html', {'error_msg': error_msg})
   
+
+def friendRequest(request):
+    # User is logged in
+    # http://code.tutsplus.com/tutorials/building-ribbit-in-django--net-29957
+    # if request.user.is_authenticated():
+    #     ribbit_form = RibbitForm()
+    #     user = request.user
+    #     ribbits_self = Ribbit.objects.filter(user=user.id)
+    #     ribbits_buddies = Ribbit.objects.filter(user__userprofile__in=user.profile.follows.all)
+    #     ribbits = ribbits_self | ribbits_buddies
+ 
+    #     return render(request,
+    #                   'buddies.html',
+    #                   {'ribbit_form': ribbit_form, 'user': user,
+    #                    'ribbits': ribbits,
+    #                    'next_url': '/', })
+    # else:
+    #     # User is not logged in
+    #     auth_form = auth_form or AuthenticateForm()
+    #     user_form = user_form or UserCreateForm()
+ 
+    #     return render(request,
+    #                   'home.html',
+    #                   {'auth_form': auth_form, 'user_form': user_form, })
+    return render(request, 'friendrequest.html')
+
+def friends(request):
+    return render(request, 'friends.html')
+
+
 def profileMain(request):
     return render(request, 'profile.html')
 
