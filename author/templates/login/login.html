@@ -10,8 +10,10 @@
     <title>Thought-Bubble Login</title>
     <!-- Bootstrap example from http://bootsnipp.com/snippets/featured/login-screen-with-background-->
     <link href="{{ STATIC_URL }}/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
     <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
     <br>
 </head>
@@ -46,7 +48,12 @@
 
 	</form>
 
-</div>
+    {% if error_msg %}
+    <h3 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
+    {% endif %}
 
+</div>
+</body>
+</html>
 {% endblock %}
 

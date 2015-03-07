@@ -30,7 +30,7 @@ def loginPage(request):
 
     username = request.POST.get('username', None).strip()
     password = request.POST.get('username', None).strip()
-    error = None
+    error_msg = None
 
     # Check if fields are filled.
     if username and password:
@@ -39,8 +39,8 @@ def loginPage(request):
         try:
             user = Authors.objects.get(username=username)
         except ObjectDoesNotExist:
-            error = "User %s does not exist" % username
-            return render (request, 'login/login.html', {'error_msg':error})
+            error_msg = "User %s does not exist" % username
+            return render (request, 'login/login.html', {'error_msg':error_msg})
 
         if user.password == password:
             response = render_to_response('index/intro.html',
@@ -54,8 +54,8 @@ def loginPage(request):
     else:
         error = "Missing either a username or password. Please supply one "
 
-    error_msg = error_msg if error_msg else "Unknown Error."
-    return render(request, 'login/login.html', {'error_msg': error})
+    error_msg = error_msg if error else "Unknown Error."
+    return render(request, 'login/login.html', {'error_msg': error_msg})
   
 def profileMain(request):
     return render(request, 'profile.html')

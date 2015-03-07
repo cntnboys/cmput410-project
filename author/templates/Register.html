@@ -1,3 +1,6 @@
+{% extends "navbar.html" %}
+
+{% block head %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,38 +16,16 @@
     <br>
 </head>
 
+{% endblock %}
+
+
+{% block nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}  
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                    <img src="../../static/images/bubbles.png" alt="" height = "50" width = "50">
-                </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">Register</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
       
         
 <div id="fullscreen_bg" class="fullscreen_bg"/>
@@ -56,7 +37,7 @@
 	<img class="profile-img2" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Register</h1>
-        	<input type="text" class="form-control" placeholder="Name" autofocus="" name=name required>
+        	<input type="text" class="form-control" placeholder="Name" autofocus="" name="name" required>
 		<input type="text" class="form-control" placeholder="Username" autofocus="" name=username required>
 		<input type="password" class="form-control" placeholder="Password" autofocus=""name=password required>
         	<input type="password" class="form-control" placeholder="ConfirmPassword" name=confpassword required>
@@ -77,15 +58,16 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function checkempty(){
-    var valueName = $("[name='name']").value;
-    if (!valueName){
-        return false;
-    }return true;
-    //still not working
+        var valueName = $("[name='name']").value;
+        if (!valueName){
+            return false;
+        }return true;
+        //still not working
                                                  
                                                  
                                                  }
 </script>
 
-
-
+</body>
+</html>
+{% endblock %}
