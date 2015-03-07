@@ -101,6 +101,7 @@ def registerPage(request):
 
         name=request.POST["name"]
         username=request.POST["username"]
+        password=request.POST["password"]
         email=request.POST["email"]
         github=request.POST["github"]
         facebook=request.POST["facebook"]
@@ -130,7 +131,12 @@ def registerPage(request):
                # DO SOMETHING
 
             else:
-                new_author = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
+                new_user = User.objects.create(username=username, password=password)
+                new_author = Authors.objects.get_or_create(name=name, username=username, 
+                                    image=image, location=location, email=email, 
+                                    github=github, facebook=facebook, twitter=twitter)
+
+
 
 
 

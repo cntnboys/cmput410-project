@@ -7,7 +7,8 @@ from django.db import models
 from django.db import connection
 
 class Authors(models.Model):
-    author_id = UUIDField(primary_key=True, auto=True, unique=True)
+    author_id = models.AutoField(primary_key = True)
+    author_uuid = UUIDField(auto=True, unique=True)
     name = models.CharField(max_length=200, null=False)
     username = models.CharField(max_length=30, null=False, unique=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
@@ -39,7 +40,8 @@ class Friends(models.Model):
 
 
 class Posts(models.Model):
-    post_id = UUIDField(primary_key=True, auto=True, unique=True)
+    post_id = models.AutoField(primary_key = True)
+    post_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     content = models.CharField(max_length=10000)
     image = models.ImageField(upload_to="PostImages", max_length=250)
@@ -54,8 +56,10 @@ class Posts(models.Model):
 
 
 class Comments(models.Model):
-    comment_id = UUIDField(primary_key=True, auto=True, unique=True)
+    comment_id = models.AutoField(primary_key = True)
+    comment_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
+    date = models.DateTimeField('date posted', null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     content = models.CharField(max_length=2000, null=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
@@ -69,7 +73,8 @@ class Comments(models.Model):
 
 
 class GithubStreams(models.Model):
-    gh_id = UUIDField(primary_key=True, auto=True, unique=True)
+    gh_id = models.AutoField(primary_key = True)
+    gh_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
@@ -83,7 +88,8 @@ class GithubStreams(models.Model):
 
 
 class TwitterStreams(models.Model):
-    tweet_id = UUIDField(primary_key=True, auto=True, unique=True)
+    tweet_id = models.AutoField(primary_key = True)
+    tweet_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
@@ -97,7 +103,8 @@ class TwitterStreams(models.Model):
 
 
 class FacebookStreams(models.Model):
-    fbstream_id = UUIDField(primary_key=True, auto=True, unique=True)
+    fbstream_id = models.AutoField(primary_key = True)
+    fbstream_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField('date posted', null=False)
     content = models.CharField(max_length=10000)
