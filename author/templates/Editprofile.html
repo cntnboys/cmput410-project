@@ -47,7 +47,7 @@
     </nav>
 
 <!-- BODY -->
-</br></br></br></br>
+</br>
 
 <body>
 <!-- Latest compiled and minified JavaScript -->
@@ -121,11 +121,12 @@
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Update Your Profile Info</h1>
 		<br/>
-		<textarea style="height: 30px; resize: none; width: 150px;"> Insert Full name</textarea>
-		<textarea style="height: 30px; resize: none; width: 150px;"> Insert Email</textarea>
-		<textarea style="height: 30px; resize: none; width: 150px;">Github</textarea>
-		<textarea style="height: 30px; resize: none; width: 150px;">Facebook</textarea>
-		<textarea style="height: 30px; resize: none; width: 150px;">Twitter</textarea>
+		<input type="text" class="form-control" placeholder="Name" required="" autofocus="" name=username>
+		<input type="text" class="form-control" placeholder="Email" required="" autofocus="" name=username>	
+		<input type="text" class="form-control" placeholder="Github" required="" autofocus="" name=username>
+		<input type="text" class="form-control" placeholder="Facebook" required="" autofocus="" name=username>
+		<input type="text" class="form-control" placeholder="Twitter" required="" autofocus="" name=username>
+		<input type="file" class="form-control" placeholder=""  name=image>
 		
 		
 		</br>
