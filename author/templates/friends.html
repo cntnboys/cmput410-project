@@ -66,8 +66,8 @@
                 {% for link in q %}
                     <div class="bubbleWrapper">
                         <img class="avatar" src={{link.images}}>
-                        <span class="name">{{ link.name }}</span>
-                        <a href="http://thought-bubble.herokuapp.com/author/"+{{link.username}}>@{{ link.username}}</a>
+                        <span class="name">{{ link.name.0 }}</span>
+                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.username.0}}</a>
                     </div>
                 {% endfor %}
 			</div>

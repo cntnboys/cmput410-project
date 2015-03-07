@@ -75,23 +75,22 @@ def friends(request):
     # context = RequestContext(request)
     # return render_to_response('friends.html',{'links': links}, context)
     #json.loads(request.POST.get('JSONreponseobj', '{}'))
-    names = []
-    users = []
-    images = []
+    items = []
     JSONobj = {}
     if request.method == 'GET':
         #context = RequestContext(request)
         #links = Friends.objects.all()
         #for x in q.count():
             #print Friends.objects.filter(invitee_id_id)
-        #count = 0
+        c = 0
         for e in Friends.objects.filter(inviter_id_id=1):
             #print(e.invitee_id_id)
-            q = Authors.objects.filter(author_id=e.invitee_id_id)
+            a = Authors.objects.filter(author_id=e.invitee_id_id)
             #links = q
-            print q.values('name')
-            print q.values('username')
-            print q.values('image')
+            print a.values('name')
+            print a.values('username')
+            print a.values('image')
+            items[c] = a
 
             #JSONobj['qname'] = q.values('name')
             #JSONobj['quser'] = q.values('username')
@@ -102,7 +101,7 @@ def friends(request):
             #images.append(q[0].image)
 
             #print names, users, images
-            #count = count + 1
+            c = c + 1
 
             #JSONreponseobj.push(name,user,image)
             #return render_to_response('friends.html',{'name':qname, 'username':quser, 'image':qimage}, context)
@@ -114,7 +113,8 @@ def friends(request):
 
     #json_data = json.dumps(JSONobj)
     #return render(request, 'friends.html',{'names':names, 'users':users, 'images':images})
-    return render(request, 'friends.html',{'q':q})
+    #q = a
+    return render(request, 'friends.html',{'items':items})
 
 
 def profileMain(request):
