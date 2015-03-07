@@ -106,36 +106,25 @@ def registerPage(request):
         github=request.POST["github"]
         facebook=request.POST["facebook"]
         twitter=request.POST["twitter"]
-        location="local"
+        location="bubble"
 
         try:
             image=request.FILES["image"]
         except:
             image=""
 
-        if (name and username and email):
+        if Authors.objects.filter(username=username):
+            error_msg = "Username already exists"
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'image':image, 'github':github, 'facebook':facebook, 'twitter':twitter})
 
-            right = 0
-            if Authors.objects.filter(username=username):
-               request.username = "Please choose another username"
-               right = 1
-               username = "Username already exists"
-                #return HttpResponseRedirect('../register?username='+"Username&already&taken")
-                #
-               if Authors.objects.filter(email=email):
-                 right = 1
-                 email = "Email already exists"
+        if Authors.objects.filter(email=email):
+            error_msg = "Email already exists"
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
            
-            if right!=0:
-               pass
-               # DO SOMETHING
 
-            else:
-                new_user = User.objects.create(username=username, password=password)
-                new_author = Authors.objects.get_or_create(name=name, username=username, 
-                                    image=image, location=location, email=email, 
-                                    github=github, facebook=facebook, twitter=twitter)
 
+
+        new_author = Authors.objects.get_or_create(name=name, username=username, image=image, location=location, email=email, github=github, facebook=facebook, twitter=twitter)
 
 
 
