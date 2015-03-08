@@ -28,7 +28,15 @@ def redirectIndex(request):
     return redirect(indexPage)
     
 def mainPage(request):
-    return render(request, 'main.html')
+    
+    items = []
+    if request.method == "GET":
+      
+       for x in Posts.objects.all():
+	   items.append(x)
+           print(x.post_id)
+    return render(request,'main.html',{'items':items})
+        
 
 def loginPage(request):
     # TODO: Fix this Login Request
@@ -130,29 +138,7 @@ def makePost(request):
         return redirect(mainPage)
 
 
-
-def getPosts(request):
-    #if request.method == "GET":
-        #context = RequestContext(request)
-
-   # for e in Posts.all():
-
-        #make new Post object
-
-       # self.title = title
-       # self.post_id = post_id
-       # self.post_uuid = post_uuid
-      #  self.author_id = author_id
-      #  self.content = content
-      #  self.image = image
-      #  self.privacy = privacy
-      #  self.date = date
         
-   return     
-        
-
-
-
 
 def registerPage(request):
     if request.method== 'POST':
