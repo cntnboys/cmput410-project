@@ -31,10 +31,10 @@ def mainPage(request):
     
     items = []
     if request.method == "GET":
-      
-       for x in Posts.objects.all():
-	   items.append(x)
-           print(x.post_id)
+       for x in Posts.objects.all():		
+           items.insert(0,x)
+	 
+
     return render(request,'main.html',{'items':items})
         
 
