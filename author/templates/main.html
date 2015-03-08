@@ -44,14 +44,7 @@
         <!-- /.container -->
     </nav>
 
-<!-- 	<header>
-		<div class="wrapper">
-			<img src="../static/images/temp.png">
-			<form>
-				<input type="submit" id="btnLogOut" value="Log Out">
-			</form>
-		</div>
-	</header> -->
+
 	<div id="content">
 		<div class="wrapper">
 			<div id="createBubble" class="panel right">
@@ -80,7 +73,10 @@
                         <span class="name">{{ link.author_id }}</span> </br>
 			<!-- Link to profile of user who posted this post -->
                         <a href="#">@{{link.author_id}}</a> </br>
-			<span> {{link.date}} </span>
+			<span> {{link.date}} </span> </br>
+			<button type="button" onclick="alert('MessageDeleted!')">Delete</button>
+			<button type="button" onclick="alert('MessageUpdated!')">Update</button>
+				
                     </div>
                 {% endfor %}
 			</div>
