@@ -76,11 +76,11 @@
 				
                 {% for link in items %}
                     <div class="bubbleWrapper">
-                    	<!-- Need to do images -->
-                        <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br>
                         <span class="name">{{ link.author_id }}</span> </br>
-                        <a href="#"{{link.username}}>@{{link.0.username}}</a> </br>
+			<!-- Link to profile of user who posted this post -->
+                        <a href="#">@{{link.author_id}}</a> </br>
+			<span> {{link.date}} </span>
                     </div>
                 {% endfor %}
 			</div>
