@@ -17,21 +17,15 @@
     <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
     <br>
 </head>
-
-<body>
-
 {% endblock %}
-
-
+<body>
 {% block nav %}
     {{ block.super }}
 {% endblock %}
-
 {% block body %}  
 
 <div class="container">
-        <!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
-	
+    <!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
 	<form id="login" class="form-signin" action="/author/login/" method="POST">
 		<img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
 
@@ -44,9 +38,14 @@
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Sign In
 		</button>
+        {% if success %}
         <br/>
+        <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ success }}</h4>
+
+        {% endif %}
         {% if error_msg %}
-        <h3 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
+        <br/>
+        <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
         {% endif %}
 	</form>
 

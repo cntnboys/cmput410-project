@@ -165,6 +165,7 @@ def registerPage(request):
 
         #print request
         error_msg = None
+        success = None
 
         name=request.POST["name"]
         username=request.POST["username"]
@@ -194,7 +195,8 @@ def registerPage(request):
             facebook=facebook, twitter=twitter)
 
         # Successful. Redirect to Login
-        return redirect(loginPage)
+        success = "Registration complete. Please sign in."
+        return render(request, "login/login.html", {"success": success})
 
     else:
         
