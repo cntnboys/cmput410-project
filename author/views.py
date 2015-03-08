@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 import uuid
+import Post
+import Comment
 
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
@@ -117,7 +119,11 @@ def editProfile(request):
 
 def makePost(request):
     if request.method == "POST":
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 13660d8247781ed5abed40b98db8bc3e355c1f28
         
         content = request.POST["posttext"]
         image   = request.FILES["image"]
@@ -128,6 +134,34 @@ def makePost(request):
 
         return redirect(mainPage)
 
+<<<<<<< HEAD
+=======
+
+
+def getPosts(request):
+    #if request.method == "GET":
+        #context = RequestContext(request)
+
+   # for e in Posts.all():
+
+        #make new Post object
+
+       # self.title = title
+       # self.post_id = post_id
+       # self.post_uuid = post_uuid
+      #  self.author_id = author_id
+      #  self.content = content
+      #  self.image = image
+      #  self.privacy = privacy
+      #  self.date = date
+        
+   return     
+        
+
+
+
+
+>>>>>>> 13660d8247781ed5abed40b98db8bc3e355c1f28
 def registerPage(request):
     if request.method == 'POST':
 

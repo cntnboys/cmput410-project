@@ -44,6 +44,7 @@ class Posts(models.Model):
     post_uuid = UUIDField(auto=True, unique=True)
     #author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     author_id = models.CharField(max_length=20, null=False)
+    title = modelsCharField(max_length=300)
     content = models.CharField(max_length=10000)
     image = models.ImageField(upload_to="PostImages", max_length=250)
     privacy = models.CharField(max_length=20, null=False)
