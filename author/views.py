@@ -28,14 +28,18 @@ def redirectIndex(request):
 def mainPage(request):
 
     if request.user.is_authenticated():
+        
+        current_user = request.user.username
+        author_id = Authors.objects.get(username=current_user)
     
         items = []
-        #if request.method == "GET":
-           #for x in Posts.objects.all():		
-               #items.insert(0,x)
+        if request.method == "GET":
+            for x in Posts.objects.filter(author_id=author_id).order_by("date"):
+               
+               items.insert(0,x)
 	 
-        return render(request, 'main.html')
-        #return render(request,'main.html',{'items':items})
+        #return render(request, 'main.html')
+        return render(request,'main.html',{'items':items})
 
     else:
 
@@ -150,11 +154,21 @@ def editProfile(request):
     return render(request, 'Editprofile.html')
 
 def makePost(request):
-    if request.method == "POST":        
+    if request.method == "POST":
+        
+        current_user = request.user.username
+        
+        author_id = Authors.objects.get(username=current_user)
+        
         content = request.POST["posttext"]
-        image   = request.FILES["image"]
         privacy = "public"
-        author_id = "heyimcameron"
+            #author_id = "heyimcameron"
+      
+        try:
+            image=request.FILES["image"]
+        except:
+            image=""
+        
 
         new_post = Posts.objects.get_or_create(author_id = author_id,content = content, image=image, privacy = privacy )
 
