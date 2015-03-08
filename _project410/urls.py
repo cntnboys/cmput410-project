@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
-import friends.views
+#import friends.views
 import author.views
-import friendrequest.views
+#import friendrequest.views
 from django.conf.urls.static import static
 
 urlpatterns = patterns('',

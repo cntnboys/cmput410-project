@@ -13,6 +13,8 @@ body {
   background: url(../images/back.jpg) no-repeat center center fixed; 
   margin: 0;
   padding: 0;
+  padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+
 }
 
 .fullscreen_bg {
