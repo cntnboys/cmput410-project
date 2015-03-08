@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -8,7 +9,9 @@
    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../../static/css/small-business.css" rel="stylesheet">
-
+    <script src="{% static 'js/less.js' %}"></script>
+    <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
     <link href="../../static/css/login.css" rel="stylesheet">
     <br>
 </head>
@@ -56,11 +59,8 @@
 </br>
 </br>
 <div class="container">
-      <div class="row">
-   
+    <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
-   
-   
           <div class="panel panel-info" >
             <div class="panel-heading">
               <h3 class="panel-title">Username</h3>
@@ -106,19 +106,38 @@
                 </div>
               </div>
             </div>
-
-                 <div class="panel-footer">
-                       <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Follow
-</button>
-                       
-                       
-                    </div>
-            
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Follow
+                </button>
+            </div>
           </div>
+          <div class="panel left">
+              <h1>Friends</h1>
+              <div class="bubbleWrapper">
+                  <img class="avatar" src="{% static 'images/user2.png' %}">
+                      <span class="name">Kermit</span> <a href="http://thought-bubble.herokuapp.com/author/Kermit">@Kermit</a> <span class="time">15m</span>
+                      </div>
+              {% for link in items %}
+              <div class="bubbleWrapper">
+                  <!-- Need to do images -->
+                  <!--<img class="avatar" src="""+{{link.images}}+""">-->
+                  <img class="avatar" src="{% static 'images/bubbles.png' %}">
+                      <span class="name">{{ link.0.name }}</span>
+                      <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
+                      </div>
+              {% endfor %}
+          </div>
+          <!--
+          <div class="user friends">
+              <form action = "" method = "POST">
+                  
+              </form>
+          </div>
+           -->
         </div>
-      </div>
     </div>
+</div>
 
 </body>
 </html>

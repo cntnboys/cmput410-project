@@ -86,7 +86,13 @@ def friends(request):
 
 
 def profileMain(request):
-    return render(request, 'profile.html')
+    items = []
+    if request.method == 'GET':
+        #hard coded for now, "1" should be the current user/userid
+        for e in Friends.objects.filter(inviter_id_id=1):
+            a = Authors.objects.filter(author_id=e.invitee_id_id)
+            items.append(a)
+    return render(request, 'profile.html', {'items':items})
 
 def editProfile(request):
     return render(request, 'Editprofile.html')
