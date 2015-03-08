@@ -13,6 +13,8 @@ body {
   background: url(../images/back.jpg) no-repeat center center fixed; 
   margin: 0;
   padding: 0;
+  padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+
 }
 
 .fullscreen_bg {
@@ -154,6 +156,8 @@ header div.wrapper #btnLogOut {
 #content div.wrapper div.panel.left div.bubbleWrapper img.avatar {
   margin: 0 19px 0 20px;
   float: left;
+  width: 32px;
+  height: 32px;
 }
 #content div.wrapper div.panel.left div.bubbleWrapper p {
   margin: 5px 50px 0 90px;
