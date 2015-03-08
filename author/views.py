@@ -85,23 +85,15 @@ def friendRequest(request):
 
         # if logged in
         if request.user.is_authenticated():
-            for e in Friends.objects.filter(inviter_id_id=current_user.id): 
-                if e.status is False :
-                    a = Authors.objects.filter(author_id=e.invitee_id_id)
-                    items.append(a)
-                #print a.values('name')
 
             for e in Friends.objects.filter(invitee_id_id=current_user.id): 
                 if e.status is False :
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
         else: #do it anyway for now using ID 4 even if not logged in
-            for e in Friends.objects.filter(inviter_id_id=4): 
-                if e.status is False :
-                    a = Authors.objects.filter(author_id=e.invitee_id_id)
-                    items.append(a)
-
-            for e in Friends.objects.filter(invitee_id_id=4): 
+        # ex: 4 has asked 3 to be their friend.
+        # 	  2 has asked 3 to be their friend. Show 2 and 4 as followers of 3
+            for e in Friends.objects.filter(invitee_id_id=3): 
                 if e.status is False :
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
