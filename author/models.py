@@ -46,7 +46,7 @@ class Posts(models.Model):
     #author_id = models.CharField(max_length=20, null=False)
     title = models.CharField(max_length=300)
     content = models.CharField(max_length=10000)
-    image = models.ImageField(upload_to="PostImages", max_length=250)
+    image = models.ImageField(upload_to="PostImages", max_length=250, null=True)
     privacy = models.CharField(max_length=20, null=False)
     date = models.DateTimeField(auto_now_add=True, null=False)
 

@@ -69,10 +69,14 @@
 				
                 {% for link in items %}
                     <div class="bubbleWrapper">
-                        <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br>
-                        <span class="name">{{ link.author_id }}</span> </br>
+                        {% if link.image %}
+                        <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br></br>
+                        {% endif %}
+                        {% if link.content %}
+                        <span class="name">{{ link.content }}</span> </br>
+                        {% endif %}
 			<!-- Link to profile of user who posted this post -->
-                        <a href="#">@{{link.author_id}}</a> </br>
+                        <a href="#">@{{link.author_id.name}}</a> </br>
 			<span> {{link.date}} </span> </br>
 			<button type="button" onclick="alert('MessageDeleted!')">Delete</button>
 			<button type="button" onclick="alert('MessageUpdated!')">Update</button>
