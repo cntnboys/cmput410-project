@@ -1,12 +1,12 @@
 import calendar
 from datetime import timedelta
 
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.http import HttpResponse, JsonResponse
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db.models import Count
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.template import RequestContext
 
 import uuid
 import Post
@@ -15,8 +15,6 @@ import Comment
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
-from django.db.models import Count
 
 import json
 
@@ -28,14 +26,20 @@ def redirectIndex(request):
     return redirect(indexPage)
     
 def mainPage(request):
-    
-    items = []
-    if request.method == "GET":
-       for x in Posts.objects.all():		
-           items.insert(0,x)
-	 
 
-    return render(request,'main.html',{'items':items})
+    if request.user.is_authenticated():
+    
+        items = []
+        #if request.method == "GET":
+           #for x in Posts.objects.all():		
+               #items.insert(0,x)
+	 
+        return render(request, 'main.html')
+        #return render(request,'main.html',{'items':items})
+
+    else:
+
+        return render(request, 'main.html')
         
 
 def loginPage(request):
@@ -45,19 +49,20 @@ def loginPage(request):
     if len(request.POST) == 0:
         return render(request, 'login/login.html')
 
-    username = request.POST.get('username', None).strip()
-    password = request.POST.get('username', None).strip()
+    username = request.POST.get('username', "").strip()
+    password = request.POST.get('password', "").strip()
     error_msg = None
 
     # Check if fields are filled.
     if username and password:
 
         user = authenticate(username=username, password=password)
-
+        print(user)
         # Determine if user exists.
         if user is not None:
             if user.is_active:
-                login(request, user);
+                login(request, user)
+                return redirect(mainPage)
 
             else:
                 error_msg = """Account is deactivated. Please contact 
@@ -75,6 +80,10 @@ def loginPage(request):
 
     error_msg = error_msg if error else "Unknown Error."
     return render(request, 'login/login.html', {'error_msg': error_msg})
+
+def logout(request):
+    logout(request)
+    return redirect(Index)
   
 
 def friendRequest(request):
@@ -102,7 +111,6 @@ def friendRequest(request):
     return render(request, 'friendrequest.html',{'items':items})
 
 def friends(request):
-
     items = []
     if request.method == 'GET':
         current_user = request.user
@@ -141,16 +149,8 @@ def profileMain(request):
 def editProfile(request):
     return render(request, 'Editprofile.html')
 
-
-
 def makePost(request):
-    if request.method == "POST":
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 13660d8247781ed5abed40b98db8bc3e355c1f28
-        
+    if request.method == "POST":        
         content = request.POST["posttext"]
         image   = request.FILES["image"]
         privacy = "public"
@@ -188,7 +188,7 @@ def registerPage(request):
             error_msg = "Email already exists"
             return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
            
-        new_user = User.objects.create(username=username, password=password)
+        new_user = User.objects.create_user(username, email, password)
         new_author = Authors.objects.get_or_create(name=name, username=username, 
             image=image, location=location, email=email, github=github, 
             facebook=facebook, twitter=twitter)
