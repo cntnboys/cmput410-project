@@ -81,39 +81,37 @@ def friendRequest(request):
     return render(request, 'friendrequest.html')
 
 def friends(request):
-    # links = Authors.objects.all()
-    # context = RequestContext(request)
-    # return render_to_response('friends.html',{'links': links}, context)
-    #json.loads(request.POST.get('JSONreponseobj', '{}'))
-    names = []
-    users = []
-    images = []
-    if request.method == 'GET':
-        context = RequestContext(request)
-        #links = Friends.objects.all()
-        #for x in q.count():
-            #print Friends.objects.filter(invitee_id_id)
-        count = 0
-        for e in Friends.objects.filter(inviter_id_id=1):
-            print(e.invitee_id_id)
-            q = Authors.objects.filter(author_id=e.invitee_id_id)
-            links = q
-            print q.values('name', 'username', 'image')
-            # JSONreponseobj['qname'] = q[0].name
-            # JSONreponseobj['quser'] = q[0].username
-            # JSONreponseobj['qimage'] = q[0].image
-            names.append(q[0].name)
-            users.append(q[0].username)
-            images.append(q[0].image)
-            count = count + 1
 
-            #JSONreponseobj.push(name,user,image)
-            #return render_to_response('friends.html',{'name':qname, 'username':quser, 'image':qimage}, context)
-        allList = [names, users, images]
-        #Friends.objects.filter(inviter_id_id=)
-    #return render(request, 'friends.html')
-    #print JSONreponseobj
-    return render_to_response('friends.html',allList, context)
+    items = []
+    if request.method == 'GET':
+        current_user = request.user
+        print current_user.id
+        #print request.user.is_authenticated()
+
+        # if logged in
+        if request.user.is_authenticated():
+            for e in Friends.objects.filter(inviter_id_id=current_user.id): 
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                items.append(a)
+                #print a.values('name')
+
+            for e in Friends.objects.filter(invitee_id_id=current_user.id): 
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                items.append(a)
+        else: #do it anyway for now using ID 1 even if not logged in
+            for e in Friends.objects.filter(inviter_id_id=1): 
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                items.append(a)
+                #print e.values('name')
+                print a.values('name')
+                #print a.values('username')
+                #print a.values('image')
+                #print items
+            for e in Friends.objects.filter(invitee_id_id=1): 
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                items.append(a)
+
+    return render(request, 'friends.html',{'items':items})
 
 
 def profileMain(request):
