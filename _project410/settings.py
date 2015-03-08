@@ -40,20 +40,29 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'rest_framework',
     'author',
     'friends',
     'friendrequest',
 )
 
+# Remote Authentication Modifications for Basic HTTP Auth
+# https://docs.djangoproject.com/en/dev/howto/auth-remote-user/
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+#AUTHENTICATION_BACKENDS = [
+#    'django.contrib.auth.backends.RemoteUserBackend',
+#]
+
 
 ROOT_URLCONF = '_project410.urls'
 
@@ -67,8 +76,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
-        
+         #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),        
     }
 }
 
@@ -121,7 +129,6 @@ else:
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
@@ -138,3 +145,12 @@ STATIC_URL = os.path.join(PROJECT_PATH,'/static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media') # Absolute path to the media directory
+
+# Restful Framework for Django taken http://www.django-rest-framework.org/
+"""REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}"""

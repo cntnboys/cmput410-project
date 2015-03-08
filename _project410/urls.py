@@ -1,10 +1,20 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+
+from django.conf.urls.static import static
+import friends.views
+import author.views
+import friendrequest.views
+
+from rest_framework import routers, serializers, viewsets
+
+
 #import friends.views
 import author.views
 #import friendrequest.views
-from django.conf.urls.static import static
+
+
 
 urlpatterns = patterns('',
     # Examples:
