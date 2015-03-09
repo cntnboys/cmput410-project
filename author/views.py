@@ -245,7 +245,7 @@ def getyourProfile(request):
 
 
 def getaProfile(request):
-    if request.method == "GET":
+    if request.method == "POST":
 
         items = []
   
