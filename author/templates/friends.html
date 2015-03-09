@@ -22,7 +22,9 @@
         {
             var URL = document.URL;
             
-            var username = {{items.0.0.author_id}}
+            var username = {{items.0.0.author_id}};
+            
+            window.alert(username);
             
             URL+=username;
             
@@ -47,6 +49,10 @@
 
 {% block body %} 
     <div id="content">
+        <form id="search" action ="{% url 'friends' %}" method="POST">{% csrf_token%}
+            <input name=searchuser type = "text" placeholder="Search">
+            <input id="submit" type = "submit" value = "Search">
+        </form>
         <div class="wrapper">
 
             <div class="panel left">

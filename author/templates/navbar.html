@@ -31,7 +31,7 @@
                     </li>
                     <li>
                         <form id="search" action ="{% url 'SearchPage' %}" method="POST">{% csrf_token%}
-                            <input id="searchuser" type = "text" placeholder="Search">
+                            <input name=searchuser type = "text" placeholder="Search">
                             <input id="submit" type = "submit" value = "Search">
                         </form>
                     </li>
