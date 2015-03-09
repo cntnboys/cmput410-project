@@ -17,6 +17,22 @@
     <!-- JS -->
     <script src="{{ STATIC_URL }}/js/less.js"></script>
     <script src="{{ STATIC_URL }}/js/jquery-1.11.0.min.js"></script>
+    <script type ="text/javascript">
+        function createDynamicURL()
+        {
+            var URL = document.URL;
+            
+            var username = {{items.0.0.name}}
+            
+            URL+=username;
+            
+            return URL;
+        }
+        function RedirectURL()
+        {
+            window.location= createDynamicURL();
+        }
+    </script>
     <br>
 </head>
 
@@ -41,6 +57,7 @@
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                         <span class="name">{{ link.0.name }}</span>
+                        <a href="#" onclick="RedirectURL();return false;" > @{{link.0.username}} </a>
                         <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}

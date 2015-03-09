@@ -247,7 +247,7 @@ def registerPage(request):
 
 def searchPage(request):
     items = []
-    if request.method == 'POST ':
+    if request.method == 'POST':
         current_user = request.user
         print current_user.id
         #print request.user.is_authenticated()
