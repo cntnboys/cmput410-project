@@ -29,14 +29,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="author/login">Login</a>
+                        <a href="../author/yourprofile">YourProfile</a>
                     </li>
-                    <li>
-                        <a href="author/register">Register</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact/About</a>
-                    </li>
+                   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -78,8 +73,8 @@
 			<!-- Link to profile of user who posted this post -->
                         <a href="#">@{{link.author_id.name}}</a> </br>
 			<span> {{link.date}} </span> </br>
-			<button type="button" onclick="alert('MessageDeleted!')">Delete</button>
-			<button type="button" onclick="alert('MessageUpdated!')">Update</button>
+			<!-- <button type="button" onclick="alert('MessageDeleted!')">Delete</button>
+			#<button type="button" onclick="alert('MessageUpdated!')">Update</button> -->
 				
                     </div>
                 {% endfor %}

@@ -22,6 +22,7 @@ import json
 def indexPage(request):
     return render(request, 'index/intro.html')
 
+
 def redirectIndex(request):
     return redirect(indexPage)
     
@@ -44,6 +45,7 @@ def mainPage(request):
     else:
 
         return render(request, 'main.html')
+
         
 
 def loginPage(request):
@@ -219,6 +221,31 @@ def profileMain(request):
 
 
     return render(request, 'profile.html',{'items':items})
+
+
+
+def getyourProfile(request):
+    items = []
+    if request.method == "GET":
+
+        if request.user.is_authenticated():
+        
+            current_user = request.user.username
+
+            
+            
+            yourprofileobj = Authors.objects.get(username=current_user).filter(location = "bubble")
+
+            items.append(yourprofileobj)
+            
+            
+
+        
+    return render(request,'profile.html',{'items':items})
+
+        
+
+
 
 def editProfile(request):
     return render(request, 'Editprofile.html')
