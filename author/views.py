@@ -243,7 +243,25 @@ def getyourProfile(request):
         
     return render(request,'profile.html',{'items':items})
 
+
+def getaProfile(request):
+    if request.method == "GET":
+
+        items = []
+  
         
+        user = request.POST["username"]
+
+            
+
+        yourprofileobj = Authors.objects.get(username=user).filter(location = "bubble")
+
+        items.append(yourprofileobj)
+            
+            
+
+        
+    return render(request,'profile.html',{'items':items})
 
 
 
