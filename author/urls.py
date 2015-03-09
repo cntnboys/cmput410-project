@@ -12,7 +12,8 @@ urlpatterns = patterns('',
     url(r'^profile/Editprofile', views.editProfile, name='EditProfile'),
     url(r'^Editprofile/$', views.editProfile, name='EditProfile'),
     url(r'^registerPage/$', views.editProfile, name='registerPage'),
-    url(r'^makePost/$', views.makePost, name='makePost')
+    url(r'^makePost/$', views.makePost, name='makePost'),
+    url(r'^searchPage/$', views.searchPage, name='SearchPage')
     
 )
 
