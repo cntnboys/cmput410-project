@@ -69,6 +69,7 @@
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         <img class="avatar" src="{% static 'images/bubbles.png' %}">
                         <span class="name">{{ link.0.name }}</span>
+                        <!-- need form POST call here -->
                         <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}
