@@ -245,10 +245,8 @@ def getyourProfile(request):
 
 
 def getaProfile(request):
+    items = []
     if request.method == "POST":
-
-        items = []
-  
         
         user = request.POST["username"]
 
