@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     url(r'^author/', include('author.urls')),
     url(r'^friendrequest/', author.views.friendRequest, name='friendRequest'),
     url(r'^main/', author.views.mainPage, name='mainPage'),
+    url(r'^searchPage/', author.views.searchPage, name='SearchPage'),
+    url(r'^friends/(?P<userid1>\w{0,50})/(?P<userid2>\w{0,50})$', author.views.foaf, name='foaf'),
     
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

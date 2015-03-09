@@ -88,12 +88,37 @@ def loginPage(request):
 def logout(request):
     logout(request)
     return redirect(Index)
+
+# TODO: use profile template to load page of FOAF
+def foaf(request,userid1=None,userid2=None):
+	# we want to check if userid1 is friends with/is current user then check if 
+	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
+	current_user = request.user
+	user1 = Authors.objects.get(userid=userid1)
+	print user1
+	print user2
+	user2 = Authors.objects.get(userid=userid2)
+	inviter = Friends.objects.get(userid1=inviter_id_id)
+	items = []
+	# if logged in
+	#if request.user.is_authenticated():
+		# for e in Friends.objects.filter(invitee_id_id=user1): 
+		# 	if Friends.objects.filter(inviter_id_id = user2) and e.status = True:
+		# 		a = Authors.objects.filter(author_id=user2)
+		# 		items.append(a)
+        	
+  #       for e in Friends.objects.filter(inviter_id_id=user1): 
+  #           if Friends.objects.filter(invitee_id_id=user2) and e.status = True:
+  #           	a = Authors.objects.filter(author_id=user2)
+  #           	items.append(a)
+	# foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
+	return render(request, 'foaf.html',{'items':items})
   
 
 def friendRequest(request):
     items = []
+    current_user = request.user
     if request.method == 'GET':
-        current_user = request.user
         print current_user.id
         #print request.user.is_authenticated()
 
@@ -111,6 +136,8 @@ def friendRequest(request):
                 if e.status is False :
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
+    if request.method == 'POST':
+    	userid = current_user.id
 
     return render(request, 'friendrequest.html',{'items':items})
 
@@ -144,11 +171,42 @@ def friends(request):
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
 
+    print(items)
     return render(request, 'friends.html',{'items':items})
 
 
 def profileMain(request):
-    return render(request, 'profile.html')
+    items = []
+    if request.method == 'GET':
+        current_user = request.user
+        print current_user.id
+        #print request.user.is_authenticated()
+        
+        # if logged in
+        if request.user.is_authenticated():
+            for e in Friends.objects.filter(inviter_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    items.append(a)
+            #print a.values('name')
+            
+            for e in Friends.objects.filter(invitee_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    items.append(a)
+        else: #do it anyway for now using ID 1 even if not logged in
+            for e in Friends.objects.filter(inviter_id_id=1):
+                if e.status is True:
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    items.append(a)
+        
+            for e in Friends.objects.filter(invitee_id_id=1):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    items.append(a)
+
+
+    return render(request, 'profile.html',{'items':items})
 
 def editProfile(request):
     return render(request, 'Editprofile.html')
@@ -217,6 +275,35 @@ def registerPage(request):
         # Render Register Page
         return render(request, 'Register.html')
 
+def searchPage(request):
+    items = []
+    if request.method == 'POST':
+        current_user = request.user
+        print current_user.id
+        #print request.user.is_authenticated()
+        
+        # if logged in
+        if request.user.is_authenticated():
+            for e in Friends.objects.filter(inviter_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    items.append(a)
+            #print a.values('name')
+            
+            for e in Friends.objects.filter(invitee_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    items.append(a)
+        else: #do it anyway for now using ID 1 even if not logged in
+            for e in Friends.objects.filter(inviter_id_id=1):
+                if e.status is True:
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    items.append(a)
+        
+            for e in Friends.objects.filter(invitee_id_id=1):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    items.append(a)
 
-
+    return render(request, 'search.html',{'items':items})
       

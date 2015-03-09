@@ -56,11 +56,8 @@
 </br>
 </br>
 <div class="container">
-      <div class="row">
-   
+    <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
-   
-   
           <div class="panel panel-info" >
             <div class="panel-heading">
               <h3 class="panel-title">Username</h3>
@@ -117,9 +114,24 @@
                     </div>
             
           </div>
+        <div class="wrapper">
+            <div class="panel left">
+                <h1>Friends</h1>
+                {% for link in items %}
+                <div class="bubbleWrapper">
+                    <!-- Need to do images -->
+                    <!--<img class="avatar" src="""+{{link.images}}+""">-->
+                    <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
+                    <span class="name">{{ link.0.name }}</span>
+                    <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-      </div>
+
+        </div>
     </div>
+</div>
 
 </body>
 </html>
