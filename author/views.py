@@ -171,7 +171,19 @@ def friends(request):
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
 
-    print(items)
+    if request.method == 'POST':
+        current_user = request.user
+        searchField = request.POST.get("searchuser","")
+        print searchField
+        if request.user.is_authenticated():
+            if searchField != "":
+                for e in Friends.objects.filter(inviter_id_id=current_user.id):
+                    if e.status is True :
+                        a = Authors.objects.filter(name=searchField)
+                        if a.exists():
+                            items.append(a)
+            #print a.values('name')
+
     return render(request, 'friends.html',{'items':items})
 
 
@@ -276,6 +288,7 @@ def registerPage(request):
 def searchPage(request):
     items = []
     if request.method == 'POST':
+        #searchField = request.POST["searchuser"]
         current_user = request.user
         print current_user.id
         #print request.user.is_authenticated()
