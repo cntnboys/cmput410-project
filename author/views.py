@@ -144,6 +144,7 @@ def friends(request):
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
 
+    print(items)
     return render(request, 'friends.html',{'items':items})
 
 
