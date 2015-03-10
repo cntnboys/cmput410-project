@@ -7,6 +7,7 @@ from author import views
 urlpatterns = patterns('',
     url(r'^$', views.indexPage, name='IndexPage'),
     url(r'^login/$', views.loginPage, name='LoginPage'),
+    url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^profile/$', views.profileMain, name='ProfileMain'),
     url(r'^profile/Editprofile', views.editProfile, name='EditProfile'),
