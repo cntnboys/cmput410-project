@@ -267,6 +267,7 @@ def profileMain(request):
 
 
 def getyourProfile(request, current_user):
+
     items = []
     ufriends=[]
     if request.method == "GET":
@@ -306,16 +307,28 @@ def getyourProfile(request, current_user):
 
 def getaProfile(request, user_id):
     items = []
+    uFriends = []
     if request.method == "POST":
         
         user = request.POST["username"]
-
         print(user)
-
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
         items.append(yourprofileobj)
+
+        for e in Friends.objects.filter(inviter_id_id=yourprofileobj.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                ufriends.append(a)
+        #print a.values('name')
+
+        for e in Friends.objects.filter(invitee_id_id=yourprofileobj.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                ufriends.append(a)
+        
+    return render(request,'profile.html',{'items':items,'ufriends':uFriends})
             
-    return render(request,'profile.html',{'items':items})
+    #return render(request,'profile.html',{'items':items})
 
 
 
