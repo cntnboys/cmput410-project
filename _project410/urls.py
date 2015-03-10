@@ -4,28 +4,24 @@ from django.contrib import admin
 
 from django.conf.urls.static import static
 import friends.views
-import author.views
+import main.views
 import friendrequest.views
 
 from rest_framework import routers, serializers, viewsets
-
-#import friends.views
-import author.views
-#import friendrequest.views
 
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', '_project410.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', author.views.redirectIndex, name='IndexPage'),
+    url(r'^$', main.views.redirectIndex, name='IndexPage'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^friends/', author.views.friends, name='friends'),
-    url(r'^author/', include('author.urls')),
-    url(r'^friendrequest/', author.views.friendRequest, name='friendRequest'),
-    url(r'^main/', author.views.mainPage, name='mainPage'),
-    url(r'^searchPage/', author.views.searchPage, name='SearchPage'),
-    url(r'^friends/(?P<userid1>\w{0,50})/(?P<userid2>\w{0,50})$', author.views.foaf, name='foaf'),
+    url(r'^(?P<current_user>\w+)/posts/', main.views.mainPage, name='mainPage'),
+    url(r'^friends/', main.views.friends, name='friends'),
+    url(r'^main/', include('main.urls')),
+    url(r'^friendrequest/', main.views.friendRequest, name='friendRequest'),
+    url(r'^searchPage/', main.views.searchPage, name='SearchPage'),
+    url(r'^friends/(?P<userid1>\w{0,50})/(?P<userid2>\w{0,50})$', main.views.foaf, name='foaf'),
     
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
