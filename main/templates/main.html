@@ -54,7 +54,7 @@
                         <span class="name">{{ link.content }}</span> </br>
                         {% endif %}
 			<!-- Link to profile of user who posted this post -->
-			<form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
+			<form method="POST" action="{% url "getaProfile" user_id=link.author_id.username %}" enctype="multipart/form-data" name="form">
 			{% csrf_token %}
                         <input type="hidden" value="{{link.author_id.username}}" name="username">	
 			<input type="submit" value="{{link.author_id.username}}">

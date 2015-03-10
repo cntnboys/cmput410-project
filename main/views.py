@@ -236,7 +236,7 @@ def profileMain(request):
     items = []
     if request.method == 'GET':
         current_user = request.user
-        print current_user.id
+        #print current_user.id
         #print request.user.is_authenticated()
         
         # if logged in
@@ -266,17 +266,17 @@ def profileMain(request):
 
 
 
-def getyourProfile(request):
+def getyourProfile(request, current_user):
     items = []
     ufriends=[]
     if request.method == "GET":
-        current_user = request.user.username
-        if request.user.is_authenticated():        
-
+        
+        if request.user.is_authenticated(): 
+            current_user = request.user.username       
 
             yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
             items.append(yourprofileobj)
-            
+            """
             for e in Friends.objects.filter(inviter_id_id=current_user.id):
                 if e.status is True :
                     a = Authors.objects.filter(author_id=e.invitee_id_id)
@@ -300,9 +300,11 @@ def getyourProfile(request):
 
 
         return render(request,'profile.html',{'items':items},{'ufriends':ufriends})
+        """
+        return render(request,'profile.html',{'items':items})
 
 
-def getaProfile(request):
+def getaProfile(request, user_id):
     items = []
     if request.method == "POST":
         
@@ -339,7 +341,7 @@ def makePost(request):
 
         new_post = Posts.objects.get_or_create(author_id = author_id,content = content, image=image, privacy = privacy )
 
-        return redirect(mainPage)
+        return redirect(mainPage, current_user=request.user.username)
 
 def registerPage(request):
     if request.method == 'POST':
