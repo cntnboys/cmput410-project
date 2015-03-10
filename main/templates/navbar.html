@@ -68,7 +68,7 @@
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#"> Edit Profile </a>                   
+                            <a href="{% url 'EditProfile' current_user=user.username %}"> Edit Profile </a>                   
                         </li>
                         <li>
                             <a href="{% url 'logout' %}">Log Out</a>

@@ -21,7 +21,6 @@ from django.contrib.auth import logout as auth_logout
 
 import json
 
-# TODO: Fix the template pathing using settings.py
 def indexPage(request):
     context = RequestContext(request)
 
@@ -308,10 +307,26 @@ def getyourProfile(request, current_user):
 def getaProfile(request, user_id):
     items = []
     uFriends = []
+    if request.method =="GET":
+        user = Authors.objects.get(author_uuid=user_id, location="bubble")
+        items.append(user)
+
+        for e in Friends.objects.filter(inviter_id_id=user.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                ufriends.append(a)
+        #print a.values('name')
+
+        for e in Friends.objects.filter(invitee_id_id=user.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                ufriends.append(a) 
+
+        return render(request,'profile.html',{'items':items,'ufriends':uFriends})
+
     if request.method == "POST":
-        
         user = request.POST["username"]
-        print(user)
+
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
         items.append(yourprofileobj)
 
@@ -326,13 +341,13 @@ def getaProfile(request, user_id):
                 a = Authors.objects.filter(author_id=e.inviter_id_id)
                 ufriends.append(a)
         
-    return render(request,'profile.html',{'items':items,'ufriends':uFriends})
+        return render(request,'profile.html',{'items':items,'ufriends':uFriends})
             
     #return render(request,'profile.html',{'items':items})
 
 
 
-def editProfile(request):
+def editProfile(request, current_user):
     return render(request, 'Editprofile.html')
 
 def makePost(request):

@@ -43,8 +43,6 @@ body {
   border-radius:10px;
 }
 
-
-
 .triangle-isosceles:after {
   content:"";
   position:absolute;
@@ -58,9 +56,11 @@ body {
   width:0;
 }
 
-.triangle-isosceles:after:nth-child(2) {
+.triangle-isosceles:after:nth-child(even) {
   left:10%;
 }
+
+
 
 input {
   width: 98%;

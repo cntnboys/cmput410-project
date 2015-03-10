@@ -5,13 +5,11 @@
 {% load static %}
 <html>
 <head>
-	<link rel="stylesheet" href="{{ STATIC_URL }}/css/main.css">
-	<script src="{{ STATIC_URL }}/js/less.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+	<script src="{{ STATIC_URL }}js/less.js"></script>
 	    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
-    <link href="{{ STATIC_URL }}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}/css/standard_page.css" rel="stylesheet">
-
 </head>
 
 {% endblock %}
@@ -47,8 +45,10 @@
                 		{% if link.title %}
                 			<div class="posttitle">{{ link.title }}</div>
                 		{% else %}
-                			<div class="posttitle">Untitled </div>
+                			<div class="posttitle"> Untitled Post </div>
                 		{% endif %}
+                		<span style="margin-left:10pt"> Thought Pop'd by: </span><a class href={% url "getaProfile" user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+                		<br/><br/>
                     <div class="postbody">
                         {% if link.image %}
                         <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br></br>
@@ -57,18 +57,12 @@
                         <span class="name">{{ link.content }}</span> </br>
                         {% endif %}
 			<!-- Link to profile of user who posted this post -->
-			<form method="POST" action="{% url "getaProfile" user_id=link.author_id.username %}" enctype="multipart/form-data" name="form">
-			{% csrf_token %}
-            	<input type="hidden" value="{{link.author_id.username}}" name="username">	
-			<input type="submit" value="{{link.author_id.username}}">
-			</form>
-			<span> Written on: {{link.date}} </span>
                     </div></div>
                 {% endfor %}
 			</div>
 	</div>
 		<div class="wrapper">
-			<p>Copyright &copy; Thought Bubble 2015</p>
+			<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
 		</div>
 	</div>
 

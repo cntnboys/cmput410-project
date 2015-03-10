@@ -23,16 +23,12 @@
     {{ block.super }}
 {% endblock %}
 {% block body %}  
-<body>
-<!-- BODY -->
-</br></br></br></br>
+
 
 <body>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-</br>
-</br>
 <div class="container">
     <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
@@ -47,7 +43,6 @@
 
 
 			{% for link in items %}
-		
 			<tr>
                         <td>Username</td>
                         <td>{{ link.username }}</td>
@@ -61,23 +56,40 @@
               
                         <tr>
                         <td>Email</td>
-                        <td>{{ link.email }}</a></td>
+                            {% if link.email %}
+                            <td><a href="mailto:{{ link.email }}">{{ link.email }}</a></td>
+                            {% else %}
+                            <td><span style="color:grey"> E-mail not provided </span</td>
+                            {% endif %}
                         </tr>
                        
 			<tr>
                         <td>Github</td>
-                        <td> {{ link.github }} </td>
+                        {% if link.github %}
+                            <td> {{ link.github }} </td>
+                        {% else %}
+                            <td><span style="color:grey"> Github profile link not provided </span></td>
+                        {% endif %}
                         </tr>
 				
 			<tr>
-			<td>Facebook</td>
-                        <td> {{ link.facebook }} </td>
+			     <td>Facebook</td>
+                 {% if link.facebook %}
+                    <td> {{ link.facebook }} </td>
+                 {% else %}
+                    <td><span style="color:grey"> Facebook profile link not provided </span></td>
+                 {% endif %}
 			</tr>
 
 			<tr>
-			<td>Twitter</td>
-                        <td> {{ link.twitter }} </td>
-                        </tr>
+			     <td>Twitter</td>
+                    {% if link.twitter %}
+                    <td> {{ link.twitter }} </td>
+                    {% else %}
+                        <td><span style="color:grey"> Twitter profile link not provided </span></td>
+                    {% endif %}
+
+            </tr>
 
 			{% endfor %}
                     
