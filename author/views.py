@@ -283,7 +283,7 @@ def getyourProfile(request):
     return render(request,'profile.html',{'items':items})
 
 
-def getaProfile(request):
+def getaProfile(request, userid):
     items = []
     ufriends = []
     if request.method == "POST":
