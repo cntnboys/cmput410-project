@@ -27,6 +27,7 @@ def indexPage(request):
 
     return render(request, 'index/intro.html', request.session)
 
+
 def redirectIndex(request):
     return redirect(indexPage)
     
@@ -37,12 +38,11 @@ def mainPage(request):
 
     if request.user.is_authenticated():
         current_user = request.user.get_username()
-        print(current_user)
         author_id = Authors.objects.get(username=current_user)
     
         items = []
         if request.method == "GET":
-           # for x in Posts.objects.filter(author_id=author_id).order_by("date"):
+            for x in Posts.objects.all().order_by("date"):
                
             #   items.insert(0,x)
 	 
@@ -266,8 +266,37 @@ def profileMain(request):
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
 
-
     return render(request, 'profile.html',{'items':items})
+
+
+
+def getyourProfile(request):
+    items = []
+    if request.method == "GET":
+
+        if request.user.is_authenticated():        
+            current_user = request.user.username
+
+            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+            items.append(yourprofileobj)
+             
+    return render(request,'profile.html',{'items':items})
+
+
+def getaProfile(request):
+    items = []
+    if request.method == "POST":
+        
+        user = request.POST["username"]
+
+        print(user)
+
+        yourprofileobj = Authors.objects.get(username=user, location="bubble")
+        items.append(yourprofileobj)
+            
+    return render(request,'profile.html',{'items':items})
+
+
 
 def editProfile(request):
     return render(request, 'Editprofile.html')

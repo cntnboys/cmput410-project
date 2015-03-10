@@ -34,10 +34,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">Register</a>
+                        <a href="#">YourProfile</a>
                     </li>
                 </ul>
             </div>
@@ -59,9 +56,6 @@
     <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
           <div class="panel panel-info" >
-            <div class="panel-heading">
-              <h3 class="panel-title">Username</h3>
-            </div>
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/cat.jpg" class="img-circle"> </div>
@@ -70,32 +64,42 @@
                   <table class="table table-user-information">
                     <tbody>
 
+
+			{% for link in items %}
+			
+
+			<tr>
+                        <td>Username</td>
+                        <td>{{ link.username }}</td>
+                        </tr>
+              
+	
                         <tr>
                         <td>Fullname</td>
-                        <td>Cameron Alexander</td>
+                        <td>{{ link.name }}</td>
                         </tr>
               
                         <tr>
                         <td>Email</td>
-                        <td><a href="mailto:info@support.com">info@support.com</a></td>
+                        <td>{{ link.email }}</a></td>
                         </tr>
                        
 			<tr>
                         <td>Github</td>
-                        <td> https://github.com/cntnboys/cmput410-project </td>
+                        <td> {{ link.github }} </td>
                         </tr>
 				
 			<tr>
 			<td>Facebook</td>
-                        <td> https://github.com/cntnboys/cmput410-project </td>
+                        <td> {{ link.facebook }} </td>
 			</tr>
 
 			<tr>
 			<td>Twitter</td>
-                        <td> https://github.com/cntnboys/cmput410-project </td>
+                        <td> {{ link.twitter }} </td>
                         </tr>
 
-
+			{% endfor %}
                     
                      
                     </tbody>

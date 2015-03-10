@@ -20,11 +20,11 @@
     <script type ="text/javascript">
         function createDynamicURL()
         {
-            var URL = document.URL;
+            var URL = {% url 'getaProfile' %};
             
             var username = {{items.0.0.author_id}};
             
-            window.alert(username);
+            window.alert(URL);
             
             URL+=username;
             
@@ -63,7 +63,10 @@
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                         <span class="name">{{ link.0.name }}</span>
-                        <a href="#" onclick="RedirectURL();return false;" > @{{link.0.username}} </a>
+                        <form method="POST" >
+                            <a href={% url 'getaProfile' %} onclick="RedirectURL();return false;" > @{{link.0.username}} </a>
+                            <input type ="hidden" value={{link.0.username}} name=username>
+                        </form>
                         <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}
