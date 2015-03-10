@@ -34,6 +34,19 @@ Resources and References
 * Django Snippet - Basic HTTP Auth - https://djangosnippets.org/snippets/243/
 
 
+#### Heroku/local db
+* (see settings.py) Stack Overflow - http://stackoverflow.com/questions/26080303/improperlyconfigured-settings-databases-is-improperly-configured-please-supply
+
+#### Ajax PUT request with Django
+* Real Python - https://realpython.com/blog/python/django-and-ajax-form-submissions-more-practice/
+
+#### Django
+* Used the official documentation (e.g.: for setting up db/creating model objects/querying/etc.)
+
+
+#### Access request parameters
+* Stack Overflow - http://stackoverflow.com/questions/11336548/django-taking-values-from-post-request
+
 Licensing
 ===
 1.
