@@ -127,6 +127,7 @@
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
                     <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                     <span class="name">{{ link.0.name }}</span>
+                    <!--  userid=link.invitee_id.author_uuid -->
                     <form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
                         <input type="hidden" value="{{link.0.username}}" name="username">
