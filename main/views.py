@@ -70,7 +70,7 @@ def loginPage(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect(mainPage)
+                    return redirect(mainPage, current_user=request.user.get_username())
 
                     """
                     This is an attempt to get sessions up. HALP.
@@ -348,13 +348,13 @@ def registerPage(request):
         error_msg = None
         success = None
 
-        name=request.POST["name"]
+        name=request.POST.get("name", False)
         username=request.POST["username"]
         password=request.POST["password"]
-        email=request.POST["email"]
-        github=request.POST["github"]
-        facebook=request.POST["facebook"]
-        twitter=request.POST["twitter"]
+        email=request.POST.get("email", False)
+        github=request.POST.get("github", False)
+        facebook=request.POST.get("facebook", False)
+        twitter=request.POST.get("twitter", False)
         location="bubble"
 
         try:
