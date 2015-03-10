@@ -23,30 +23,33 @@
 {% block body %}
 
 <body>
-	<div id="content">
-		<div class="wrapper">
-			<div id="createBubble" class="panel right">
-				<h1>Create a Post</h1>
-				</br>
-				<p>
-					<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
-						{% csrf_token %}
-						<input type="text" class="bubbleText" name="posttext">
-						<input type="file" class="form-control" placeholder=""  name="image">
-						<input type="submit" value="Post">
-						
-					</form>
-				</p>
-			</div>
-			
-			
+	<div class="wrapper">
+		<div class="createPost triangle-isosceles">
+			<h2>Create a Post</h2>
+				<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="text" name="title" placeholder="Put a title to your thoughts...">
+					<br/>
+					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea>
+					<input type="file" class="form-control" placeholder=""  name="image">
+					<br/>
+					<input type="submit" class="rightbtn postbtn" value="Post">
+				</form>
+		</div>
+	</div>
+
+
 <div id="content">
-		<div class="wrapper">
-		<h1>Recent Posts</h1>
-			<div class="panel left">
-				
+	<div class="wrapper">	
+		<h1 class='recentPost'>Recent Posts</h1>
                 {% for link in items %}
-                    <div class="bubbleWrapper">
+                	<div class="post triangle-isoceles">
+                		{% if link.title %}
+                			<div class="posttitle">{{ link.title }}</div>
+                		{% else %}
+                			<div class="posttitle">Untitled </div>
+                		{% endif %}
+                    <div class="postbody">
                         {% if link.image %}
                         <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br></br>
                         {% endif %}
@@ -59,20 +62,16 @@
             	<input type="hidden" value="{{link.author_id.username}}" name="username">	
 			<input type="submit" value="{{link.author_id.username}}">
 			</form>
-			<span> {{link.date}} </span> </br>
-			<!-- <button type="button" onclick="alert('MessageDeleted!')">Delete</button>
-			#<button type="button" onclick="alert('MessageUpdated!')">Update</button> -->
-			
-                    </div>
+			<span> Written on: {{link.date}} </span>
+                    </div></div>
                 {% endfor %}
 			</div>
+	</div>
+		<div class="wrapper">
+			<p>Copyright &copy; Thought Bubble 2015</p>
 		</div>
 	</div>
 
-	</div>
-		<div class="wrapper">
-			Thought-Bubble - A Social Network
-		</div>
 </body>
 </html>
 {% endblock %}
