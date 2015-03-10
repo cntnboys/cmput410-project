@@ -29,13 +29,10 @@ def redirectIndex(request):
 def mainPage(request):
 
     if request.user.is_authenticated():
-        
-        current_user = request.user.username
-        author_id = Authors.objects.get(username=current_user)
     
         items = []
         if request.method == "GET":
-            for x in Posts.objects.filter(author_id=author_id).order_by("date"):
+            for x in Posts.objects.all().order_by("date"):
                
                items.insert(0,x)
 	 
@@ -234,7 +231,7 @@ def getyourProfile(request):
 
             
             
-            yourprofileobj = Authors.objects.get(username=current_user).filter(location = "bubble")
+            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
 
             items.append(yourprofileobj)
             
@@ -252,7 +249,7 @@ def getaProfile(request):
 
             
 
-        yourprofileobj = Authors.objects.get(username=user).filter(location = "bubble")
+        yourprofileobj = Authors.objects.get(username=user, location="bubble")
 
         items.append(yourprofileobj)
             
