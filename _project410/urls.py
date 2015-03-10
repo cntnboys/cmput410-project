@@ -9,12 +9,9 @@ import friendrequest.views
 
 from rest_framework import routers, serializers, viewsets
 
-
 #import friends.views
 import author.views
 #import friendrequest.views
-
-
 
 urlpatterns = patterns('',
     # Examples:
