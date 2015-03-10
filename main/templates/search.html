@@ -1,0 +1,57 @@
+{% extends "navbar.html" %}
+
+{% block head %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        
+        <title>Thought-Bubble Login</title>
+        <!-- Bootstrap example from http://bootsnipp.com/snippets/featured/login-screen-with-background-->
+         <link href="{{ STATIC_URL }}/css/bootstrap.min.css" rel="stylesheet">
+         
+         <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{ STATIC_URL }}/css/main.css">
+            
+            <!-- JS -->
+            <script src="{{ STATIC_URL }}/js/less.js"></script>
+            <script src="{{ STATIC_URL }}/js/jquery-1.11.0.min.js"></script>
+            <br>
+    </head>
+    
+    <body>
+        
+        {% endblock %}
+        
+        
+        {% block nav %}
+        {{ block.super }}
+        {% endblock %}
+        
+        {% block body %}
+        <div id="content">
+            <div class="wrapper">
+                
+                <div class="panel left">
+                    <h1>Search Results</h1>
+                    {% for link in items %}
+                    <div class="bubbleWrapper">
+                        <!-- Need to do images -->
+                        <!--<img class="avatar" src="""+{{link.images}}+""">-->
+                        <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
+                            <span class="name">{{ link.0.name }}</span>
+                            <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
+                            </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="wrapper">
+                Thought-Bubble - A Social Network
+            </div>
+        </footer>
+    </body>
+</html>
+{% endblock %}
