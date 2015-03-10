@@ -17,24 +17,6 @@
     <!-- JS -->
     <script src="{{ STATIC_URL }}/js/less.js"></script>
     <script src="{{ STATIC_URL }}/js/jquery-1.11.0.min.js"></script>
-    <script type ="text/javascript">
-        function createDynamicURL()
-        {
-            var URL = {% url 'getaProfile' %};
-            
-            var username = {{items.0.0.author_id}};
-            
-            window.alert(URL);
-            
-            URL+=username;
-            
-            return URL;
-        }
-        function RedirectURL()
-        {
-            window.location= createDynamicURL();
-        }
-    </script>
     <br>
 </head>
 
@@ -63,11 +45,11 @@
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                         <span class="name">{{ link.0.name }}</span>
-                        <form method="POST" >
-                            <a href={% url 'getaProfile' %} onclick="RedirectURL();return false;" > @{{link.0.username}} </a>
-                            <input type ="hidden" value={{link.0.username}} name=username>
+                        <form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{link.0.username}}" name="username">
+                            <input type="submit" value="{{link.0.username}}">
                         </form>
-                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
                     </div>
                 {% endfor %}
             </div>

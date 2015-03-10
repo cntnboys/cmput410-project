@@ -43,14 +43,13 @@ def mainPage(request):
         items = []
         if request.method == "GET":
             for x in Posts.objects.all().order_by("date"):
-               
-            #   items.insert(0,x)
+               items.insert(0,x)
 	 
-            return render(request, 'main.html')
-        #return render(request,'main.html',{'items':items})
+     #return render(request, 'main.html')
+    return render(request,'main.html',{'items':items})
 
-    else:
-        return render(request, 'login.html', {"error_msg" : error_msg} )
+#else:
+#       return render(request, 'login.html', {"error_msg" : error_msg} )
         
 
 def loginPage(request):
@@ -272,15 +271,38 @@ def profileMain(request):
 
 def getyourProfile(request):
     items = []
+    ufriends=[]
     if request.method == "GET":
-
+        current_user = request.user.username
         if request.user.is_authenticated():        
-            current_user = request.user.username
+
 
             yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
             items.append(yourprofileobj)
-             
-    return render(request,'profile.html',{'items':items})
+            
+            for e in Friends.objects.filter(inviter_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    ufriends.append(a)
+                        #print a.values('name')
+
+            for e in Friends.objects.filter(invitee_id_id=current_user.id):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    ufriends.append(a)
+        else: #do it anyway for now using ID 1 even if not logged in
+            for e in Friends.objects.filter(inviter_id_id=1):
+                if e.status is True:
+                    a = Authors.objects.filter(author_id=e.invitee_id_id)
+                    ufriends.append(a)
+        
+            for e in Friends.objects.filter(invitee_id_id=1):
+                if e.status is True :
+                    a = Authors.objects.filter(author_id=e.inviter_id_id)
+                    ufriends.append(a)
+
+
+        return render(request,'profile.html',{'items':items},{'ufriends':ufriends})
 
 
 def getaProfile(request):

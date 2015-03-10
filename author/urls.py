@@ -11,12 +11,13 @@ urlpatterns = patterns('',
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^profile/$', views.profileMain, name='ProfileMain'),
     url(r'^yourprofile', views.getyourProfile, name='getyourProfile'),
-    url(r'^friends/$', views.getaProfile, name='getaProfile'),
+    url(r'^friends/t1$', views.getaProfile, name='getaProfile'),
     url(r'^profile/Editprofile', views.editProfile, name='EditProfile'),
     url(r'^Editprofile/$', views.editProfile, name='EditProfile'),
     url(r'^registerPage/$', views.editProfile, name='registerPage'),
     url(r'^makePost/$', views.makePost, name='makePost'),
-    url(r'^searchPage/$', views.searchPage, name='SearchPage')
+    url(r'^searchPage/$', views.searchPage, name='SearchPage'),
+    url(r'^friends/$',views.friends, name='userFriends')
     
 )
 

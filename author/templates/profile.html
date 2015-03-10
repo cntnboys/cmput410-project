@@ -121,13 +121,17 @@
         <div class="wrapper">
             <div class="panel left">
                 <h1>Friends</h1>
-                {% for link in items %}
+                {% for link in ufriends %}
                 <div class="bubbleWrapper">
                     <!-- Need to do images -->
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
                     <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                     <span class="name">{{ link.0.name }}</span>
-                    <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
+                    <form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{link.0.username}}" name="username">
+                        <input type="submit" value="{{link.0.username}}">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
