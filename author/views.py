@@ -1,12 +1,14 @@
 import calendar
 from datetime import timedelta
+import random
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models import Count
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, loader
+from django.core.context_processors import csrf
 
 import uuid
 import Post
@@ -14,79 +16,127 @@ import Comment
 
 from author.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as auth_logout
 
 import json
 
 # TODO: Fix the template pathing using settings.py
 def indexPage(request):
-    return render(request, 'index/intro.html')
+    context = RequestContext(request)
+
+    return render(request, 'index/intro.html', request.session)
 
 
 def redirectIndex(request):
     return redirect(indexPage)
     
 def mainPage(request):
+    context = RequestContext(request)
+    error_msg = "Not Logged In. Please Login Here."
+    print(request.user.is_authenticated())
 
     if request.user.is_authenticated():
+        current_user = request.user.get_username()
+        author_id = Authors.objects.get(username=current_user)
     
         items = []
         if request.method == "GET":
             for x in Posts.objects.all().order_by("date"):
                
-               items.insert(0,x)
+            #   items.insert(0,x)
 	 
-        #return render(request, 'main.html')
-        return render(request,'main.html',{'items':items})
+            return render(request, 'main.html')
+        #return render(request,'main.html',{'items':items})
 
     else:
-
-        return render(request, 'main.html')
-
+        return render(request, 'login.html', {"error_msg" : error_msg} )
         
 
 def loginPage(request):
     context = RequestContext(request)
 
-    # Handle if signin not clicked
-    if len(request.POST) == 0:
-        return render(request, 'login/login.html')
+    if request.method == "POST":
 
-    username = request.POST.get('username', "").strip()
-    password = request.POST.get('password', "").strip()
-    error_msg = None
+        # Handle if signin not clicked
+        if len(request.POST) == 0:
+            return render(request, 'login.html')
 
-    # Check if fields are filled.
-    if username and password:
+        username = request.POST.get('username', "").strip()
+        password = request.POST.get('password', "").strip()
+        error_msg = None
 
-        user = authenticate(username=username, password=password)
-        print(user)
-        # Determine if user exists.
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect(mainPage)
+        # Check if fields are filled.
+        if username and password:
+
+            user = authenticate(username=username, password=password)
+            # Determine if user exists.
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(mainPage)
+
+                    """
+                    This is an attempt to get sessions up. HALP.
+
+                    author = Authors.objects.get(username=username, 
+                            location='bubble')
+                    author_dict = {'authors' : author}
+
+
+
+                    response = render_to_response("main.html", author_dict, context)             
+                    return response
+
+                    try:        
+
+                        template = loader.get_template('main.html')
+                        context = RequestContext(request, request.session)
+
+                        return HttpResponse(template.render(context))
+
+                    
+                        data = json.dumps({
+                                'author_uuid' : author.__dict__['author_uuid'],
+                                'username': username })
+                        return HttpResponse(data, content_type='application/json')
+                    
+
+                    except (KeyError, Authors.DoesNotExist):
+
+                        request.session['author_uuid'] = None
+                        request.session['username'] = None
+                        logout(request)
+
+                        error_msg = "Cannot store session information." 
+                        return render (request, 'login/login.html', {'error_msg':error_msg })
+                    """
+
+
+                else:
+                    error_msg = """Account is deactivated. Please contact 
+                                website hosts for further assistance."""
+
+                    return render (request, 'login.html', {'error_msg':error_msg })
 
             else:
-                error_msg = """Account is deactivated. Please contact 
-                            website hosts for further assistance."""
+                error_msg = "Username or password is not valid. Please try again." 
+                return render (request, 'login.html', {'error_msg':error_msg })
 
-                return render (request, 'login/login.html', {'error_msg':error_msg })
 
         else:
-            error_msg = "Username or password is not valid. Please try again." 
-            return render (request, 'login/login.html', {'error_msg':error_msg })
+            error = "Missing either a username or password. Please supply one "
 
+        error_msg = error_msg if error else "Unknown Error."
+        return render(request, 'login.html', {'error_msg': error_msg})
 
     else:
-        error = "Missing either a username or password. Please supply one "
-
-    error_msg = error_msg if error else "Unknown Error."
-    return render(request, 'login/login.html', {'error_msg': error_msg})
+        return render(request, 'login.html')
 
 def logout(request):
-    logout(request)
-    return redirect(Index)
+    context = RequestContext(request)
+    auth_logout(request)
+    return redirect(indexPage)
 
 # TODO: use profile template to load page of FOAF
 def foaf(request,userid1=None,userid2=None):
@@ -216,7 +266,6 @@ def profileMain(request):
                     a = Authors.objects.filter(author_id=e.inviter_id_id)
                     items.append(a)
 
-
     return render(request, 'profile.html',{'items':items})
 
 
@@ -225,19 +274,12 @@ def getyourProfile(request):
     items = []
     if request.method == "GET":
 
-        if request.user.is_authenticated():
-        
+        if request.user.is_authenticated():        
             current_user = request.user.username
 
-            
-            
             yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
-
             items.append(yourprofileobj)
-            
-            
-
-        
+             
     return render(request,'profile.html',{'items':items})
 
 
@@ -249,15 +291,9 @@ def getaProfile(request):
 
         print(user)
 
-            
-
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
-
         items.append(yourprofileobj)
             
-            
-
-        
     return render(request,'profile.html',{'items':items})
 
 
@@ -291,6 +327,7 @@ def registerPage(request):
 
         #print request
         error_msg = None
+        success = None
 
         name=request.POST["name"]
         username=request.POST["username"]
@@ -320,7 +357,8 @@ def registerPage(request):
             facebook=facebook, twitter=twitter)
 
         # Successful. Redirect to Login
-        return redirect(loginPage)
+        success = "Registration complete. Please sign in."
+        return render(request, "login/login.html", {"success": success})
 
     else:
         
