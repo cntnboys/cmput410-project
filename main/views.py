@@ -407,7 +407,8 @@ def registerPage(request):
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
-        return render(request, "login.html", {"success": success})
+        return render(request, "register.html")
+        #return render(request, "login.html", {"success": success})
 
     else:
         
