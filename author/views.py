@@ -247,6 +247,8 @@ def getaProfile(request):
         
         user = request.POST["username"]
 
+        print(user)
+
             
 
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
