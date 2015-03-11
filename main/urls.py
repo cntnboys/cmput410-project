@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
-    url(r'^friends/$',views.friends, name='userFriends')
+    url(r'^friends/$',views.friends, name='userFriends'),
+    url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),
     
 )
 
