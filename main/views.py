@@ -49,7 +49,6 @@ def mainPage(request, current_user):
         
 
 def loginPage(request):
-    context = RequestContext(request)
 
     if request.method == "POST":
 
@@ -396,13 +395,13 @@ def registerPage(request):
         error_msg = None
         success = None
 
-        name=request.POST.get("name", False)
+        name=request.POST.get("name", "")
         username=request.POST["username"]
         password=request.POST["password"]
-        email=request.POST.get("email", False)
-        github=request.POST.get("github", False)
-        facebook=request.POST.get("facebook", False)
-        twitter=request.POST.get("twitter", False)
+        email=request.POST.get("email", "")
+        github=request.POST.get("github", "")
+        facebook=request.POST.get("facebook", "")
+        twitter=request.POST.get("twitter", "")
         location="bubble"
 
         try:
@@ -425,8 +424,7 @@ def registerPage(request):
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
-        return render(request, "register.html")
-        #return render(request, "login.html", {"success": success})
+        return HttpResponseRedirect("/main/login", {"success": success})
 
     else:
         
