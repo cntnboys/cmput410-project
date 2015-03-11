@@ -196,22 +196,31 @@ def friendRequest(request):
         
         theirAuthor = Authors.objects.get(username=theirUname, location="bubble")
         ourName = Authors.objects.get(username=current_user, location="bubble")
-        new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
-        
         if request.user.is_authenticated():
             current_user = request.user.username
+
+        #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
+        if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+            print "here!"
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+        elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+            print "there!"
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+        else:
+            new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
+
             
-            #e = Friends.objects.filter(invitee_id=theirAuthor, inviter_id=ourName, status=False)
-            # f = Friends.objects.filter(inviter_id=theirAuthor, invitee_id=ourName, status=False)
+                #e = Friends.objects.filter(invitee_id=theirAuthor, inviter_id=ourName, status=False)
+                # f = Friends.objects.filter(inviter_id=theirAuthor, invitee_id=ourName, status=False)
             
             
-            # if e:
-            #    e.update(status=True)
-            #if f:
-            #   f.update(Status=True)
+                # if e:
+                #    e.update(status=True)
+                #if f:
+                #   f.update(Status=True)
             
-            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
-            items.append(yourprofileobj)
+        yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+        items.append(yourprofileobj)
             
             # for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
             #   if e.status is False :
