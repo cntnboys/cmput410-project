@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
     
-    url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)', views.getaProfile, name='getaProfile'),
-    url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)', views.getyourProfile, name='getyourProfile'),
+   
+    url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
