@@ -186,6 +186,7 @@ def friendRequest(request):
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
 
+        return render(request, 'friendrequest.html',{'items':items, "author": aUser })
 
     if request.method == 'POST':
     	userid = current_user.id
@@ -218,9 +219,10 @@ def friendRequest(request):
             #       ufriends.append(a)
         print items
 
-    return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends})
+        return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
+                        "author": yourprofileobj} )
 
-    return render(request, 'friendrequest.html',{'items':items})
+    
 
 def friends(request):
     items = []
@@ -260,9 +262,9 @@ def friends(request):
             #print a.values('name')
 
     print(items)
-    return render(request, 'friends.html',{'items':items})
+    return render(request, 'friends.html',{'items':items, 'author':aUser})
 
-def getyourProfile(request, current_user):
+def getyourProfile(request, current_user, current_userid):
     items = []
     ufriends=[]
     aUser = Authors.objects.get(username=current_user, location="bubble")
