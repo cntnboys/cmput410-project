@@ -44,7 +44,10 @@ def indexPage(request):
 # Redirect Index function just redirects back into the index page
 def redirectIndex(request):
     return redirect(indexPage)
-    
+
+# Main Page function allows user to go back to the stream of posts
+# If author was to access this page without authentication, then
+# author will be prompted to Log in first before going to that page.
 def mainPage(request, current_user):
     context = RequestContext(request)
     error_msg = "Not Logged In. Please Login Here."
@@ -64,6 +67,10 @@ def mainPage(request, current_user):
     else:
         return render(request, 'login.html', {'error_msg':error_msg})
 
+# Log in Page function is a check for authenticated author log in
+# If author inputs incorrect or non exisiting things in the fields,
+# then author will be prompted that either the input was incorrect or
+# input does not exist
 def loginPage(request):
 
     if request.method == "POST":
@@ -143,6 +150,8 @@ def loginPage(request):
     else:
         return render(request, 'login.html')
 
+# Log out function allows user to log out of the current authenticated account
+# and the author will be redirected to the intro page.
 def logout(request):
     context = RequestContext(request)
     auth_logout(request)
@@ -174,7 +183,11 @@ def foaf(request,userid1=None,userid2=None):
 	# foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
 	return render(request, 'foaf.html',{'items':items})
   
-
+# Friend Request function currently default method is GET which will retrieve
+# the friends request the logged in author has.
+# If POST method, a check to see if friend request exists, if the friend request exists
+# the the status of the friend request changes to True, and if the friend request does not
+# exist then we create a friend request from the current author to the selected author.
 def friendRequest(request):
     items = []
     ufriends = []
@@ -377,6 +390,10 @@ def getaProfile(request, theusername, user_id):
 def editProfile(request, current_user):
     return render(request, 'Editprofile.html')
 
+# Make post function retrieves the title, text, and if image exists, the three fields
+# to store into the database adding on the author who created the post.
+# After storage of the comment, author is redirected back to the main page
+# displaying the most recent post on the main page.
 def makePost(request):
     if request.method == "POST":
         
@@ -400,6 +417,15 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
+# Register Page function is called when author is on the registration page
+# All fields on the registration pages are received to store into the database.
+# If a username exists then author will be prompted that the user name exists and
+# the will have to choose a different username.
+# Same for the email if the author inputted a email that already exists,
+# then author will be prompted a message saying that email exists and have to use a
+# different email.
+# If author successfully registers a user, then they will be reidrected to the
+# log in page.
 def registerPage(request):
     if request.method == 'POST':
 
