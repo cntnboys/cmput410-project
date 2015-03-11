@@ -19,16 +19,16 @@
 </head>
 {% endblock %}
 <body>
-{% block nav %}
-    {{ block.super }}
-{% endblock %}
-{% block body %}  
+ 
 
 <div class="container">
+    {% block nav %}
+        {{ block.super }}
+    {% endblock %}
+    {% block body %} 
     <!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
 	<form id="login" class="form-signin" action="" method="POST">
-		<img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120">
-
+		<img class="profile-img" src="{{ STATIC_URL }}/images/plaeholder_icon.png" style="width:75%">
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Sign In</h1>
 		<br/>

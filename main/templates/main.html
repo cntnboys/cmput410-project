@@ -5,13 +5,11 @@
 {% load static %}
 <html>
 <head>
-	<link rel="stylesheet" href="{{ STATIC_URL }}/css/main.css">
-	<script src="{{ STATIC_URL }}/js/less.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+	<script src="{{ STATIC_URL }}js/less.js"></script>
 	    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
-    <link href="{{ STATIC_URL }}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}/css/standard_page.css" rel="stylesheet">
-
 </head>
 
 {% endblock %}
@@ -23,30 +21,35 @@
 {% block body %}
 
 <body>
-	<div id="content">
-		<div class="wrapper">
-			<div id="createBubble" class="panel right">
-				<h1>Create a Post</h1>
-				</br>
-				<p>
-					<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
-						{% csrf_token %}
-						<input type="text" class="bubbleText" name="posttext">
-						<input type="file" class="form-control" placeholder=""  name="image">
-						<input type="submit" value="Post">
-						
-					</form>
-				</p>
-			</div>
-			
-			
+	<div class="wrapper">
+		<div class="createPost triangle-isosceles">
+			<h2>Create a Post</h2>
+				<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="text" name="title" placeholder="Put a title to your thoughts...">
+					<br/>
+					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea>
+					<input type="file" class="form-control" placeholder=""  name="image">
+					<br/>
+					<input type="submit" class="rightbtn postbtn" value="Post">
+				</form>
+		</div>
+	</div>
+
+
 <div id="content">
-		<div class="wrapper">
-		<h1>Recent Posts</h1>
-			<div class="panel left">
-				
+	<div class="wrapper">	
+		<h1 class='recentPost'>Recent Posts</h1>
                 {% for link in items %}
-                    <div class="bubbleWrapper">
+                	<div class="post triangle-isoceles">
+                		{% if link.title %}
+                			<div class="posttitle">{{ link.title }}</div>
+                		{% else %}
+                			<div class="posttitle"> Untitled Post </div>
+                		{% endif %}
+                		<span style="margin-left:10pt"> Thought Pop'd by: </span><a class href={% url "getaProfile" user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+                		<br/><br/>
+                    <div class="postbody">
                         {% if link.image %}
                         <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br></br>
                         {% endif %}
@@ -54,25 +57,15 @@
                         <span class="name">{{ link.content }}</span> </br>
                         {% endif %}
 			<!-- Link to profile of user who posted this post -->
-			<form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
-			{% csrf_token %}
-                        <input type="hidden" value="{{link.author_id.username}}" name="username">	
-			<input type="submit" value="{{link.author_id.username}}">
-			</form>
-			<span> {{link.date}} </span> </br>
-			<!-- <button type="button" onclick="alert('MessageDeleted!')">Delete</button>
-			#<button type="button" onclick="alert('MessageUpdated!')">Update</button> -->
-			
-                    </div>
+                    </div></div>
                 {% endfor %}
 			</div>
+	</div>
+		<div class="wrapper">
+			<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
 		</div>
 	</div>
 
-	</div>
-		<div class="wrapper">
-			Thought-Bubble - A Social Network
-		</div>
 </body>
 </html>
 {% endblock %}

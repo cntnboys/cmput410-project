@@ -21,7 +21,6 @@ from django.contrib.auth import logout as auth_logout
 
 import json
 
-# TODO: Fix the template pathing using settings.py
 def indexPage(request):
     context = RequestContext(request)
 
@@ -50,7 +49,6 @@ def mainPage(request, current_user):
         
 
 def loginPage(request):
-    context = RequestContext(request)
 
     if request.method == "POST":
 
@@ -236,7 +234,7 @@ def profileMain(request):
     items = []
     if request.method == 'GET':
         current_user = request.user
-        print current_user.id
+        #print current_user.id
         #print request.user.is_authenticated()
         
         # if logged in
@@ -266,17 +264,18 @@ def profileMain(request):
 
 
 
-def getyourProfile(request):
+def getyourProfile(request, current_user):
+
     items = []
     ufriends=[]
     if request.method == "GET":
-        current_user = request.user.username
-        if request.user.is_authenticated():        
-
+        
+        if request.user.is_authenticated(): 
+            current_user = request.user.username       
 
             yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
             items.append(yourprofileobj)
-            
+            """
             for e in Friends.objects.filter(inviter_id_id=current_user.id):
                 if e.status is True :
                     a = Authors.objects.filter(author_id=e.invitee_id_id)
@@ -300,24 +299,54 @@ def getyourProfile(request):
 
 
         return render(request,'profile.html',{'items':items},{'ufriends':ufriends})
+        """
+        return render(request,'profile.html',{'items':items})
 
 
-def getaProfile(request):
+def getaProfile(request, user_id):
     items = []
-    if request.method == "POST":
-        
-        user = request.POST["username"]
+    uFriends = []
+    if request.method =="GET":
+        user = Authors.objects.get(author_uuid=user_id, location="bubble")
+        items.append(user)
 
-        print(user)
+        for e in Friends.objects.filter(inviter_id_id=user.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                ufriends.append(a)
+        #print a.values('name')
+
+        for e in Friends.objects.filter(invitee_id_id=user.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                ufriends.append(a) 
+
+        return render(request,'profile.html',{'items':items,'ufriends':uFriends})
+
+    if request.method == "POST":
+        user = request.POST["username"]
 
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
         items.append(yourprofileobj)
+
+        for e in Friends.objects.filter(inviter_id_id=yourprofileobj.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.invitee_id_id)
+                ufriends.append(a)
+        #print a.values('name')
+
+        for e in Friends.objects.filter(invitee_id_id=yourprofileobj.author_id):
+            if e.status is True :
+                a = Authors.objects.filter(author_id=e.inviter_id_id)
+                ufriends.append(a)
+        
+        return render(request,'profile.html',{'items':items,'ufriends':uFriends})
             
-    return render(request,'profile.html',{'items':items})
+    #return render(request,'profile.html',{'items':items})
 
 
 
-def editProfile(request):
+def editProfile(request, current_user):
     return render(request, 'Editprofile.html')
 
 def makePost(request):
@@ -339,7 +368,7 @@ def makePost(request):
 
         new_post = Posts.objects.get_or_create(author_id = author_id,content = content, image=image, privacy = privacy )
 
-        return redirect(mainPage)
+        return redirect(mainPage, current_user=request.user.username)
 
 def registerPage(request):
     if request.method == 'POST':
@@ -348,13 +377,13 @@ def registerPage(request):
         error_msg = None
         success = None
 
-        name=request.POST.get("name", False)
+        name=request.POST.get("name", "")
         username=request.POST["username"]
         password=request.POST["password"]
-        email=request.POST.get("email", False)
-        github=request.POST.get("github", False)
-        facebook=request.POST.get("facebook", False)
-        twitter=request.POST.get("twitter", False)
+        email=request.POST.get("email", "")
+        github=request.POST.get("github", "")
+        facebook=request.POST.get("facebook", "")
+        twitter=request.POST.get("twitter", "")
         location="bubble"
 
         try:
@@ -377,7 +406,7 @@ def registerPage(request):
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
-        return render(request, "login.html", {"success": success})
+        return HttpResponseRedirect("/main/login", {"success": success})
 
     else:
         
