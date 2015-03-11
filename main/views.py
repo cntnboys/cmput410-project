@@ -325,12 +325,13 @@ def getaProfile(request, theusername, user_id):
                 if not (a in items):
                     ufriends.append(a)
 
-        return render(request,'profile.html',{'items':items,'ufriends':uFriends, 'author': user})
+        return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': user})
 
 
 
     if request.method == "POST":
         user = request.POST["username"]
+        print(user)
 
         yourprofileobj = Authors.objects.get(username=user, location="bubble")
         items.append(yourprofileobj)
@@ -345,8 +346,8 @@ def getaProfile(request, theusername, user_id):
             if e.status is True :
                 a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
                 ufriends.append(a)
-    
-        return render(request,'profile.html',{'items':items,'ufriends':uFriends, 'author': user})
+        print(ufriends)
+        return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': yourprofileobj})
 
 
 
