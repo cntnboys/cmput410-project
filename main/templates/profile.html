@@ -1,4 +1,4 @@
-{% extends "navbar.html" %}
+x{% extends "navbar.html" %}
 
 {% block head %}
 
@@ -119,7 +119,7 @@
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
                     <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
                     <span class="name">{{ link.username }}</span>
-                    <form method="POST" action="{% url "getaProfile" user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
+                    <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
                         <input type="hidden" value="{{link.username}}" name="username">
                         <input type="submit" value="{{link.username}}">
