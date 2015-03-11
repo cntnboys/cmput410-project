@@ -21,6 +21,10 @@ from django.contrib.auth import logout as auth_logout
 
 import json
 
+# Index Page function is used to traverse to our introduction page
+# if you are not logged in as a user
+# If you are logged in as a user, you will be redirected to the
+# stream page with posts.
 def indexPage(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
@@ -37,6 +41,7 @@ def indexPage(request):
     else:
         return render(request, 'index/intro.html', request.session)
 
+# Redirect Index function just redirects back into the index page
 def redirectIndex(request):
     return redirect(indexPage)
     
@@ -144,6 +149,7 @@ def logout(request):
     return redirect(indexPage)
 
 # TODO: use profile template to load page of FOAF
+# Function is still a work in progress for part 2
 def foaf(request,userid1=None,userid2=None):
 	# we want to check if userid1 is friends with/is current user then check if 
 	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
@@ -230,9 +236,11 @@ def friendRequest(request):
 
         return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
                         "author": yourprofileobj} )
-
     
-
+# Friends function takes in the request for retrieving the friends
+# of the author you are logged in as. Default is a GET method retrieving
+# all friends of the author. POST method is used when searching a specific
+# friends of the current author.
 def friends(request):
     items = []
     current_user = request.user
@@ -273,6 +281,8 @@ def friends(request):
     print(items)
     return render(request, 'friends.html',{'items':items, 'author':aUser})
 
+# We are not currently using this function anymore. We have condensed this function
+# into get a profile.
 def getyourProfile(request, current_user, current_userid):
     items = []
     ufriends=[]
@@ -313,7 +323,10 @@ def getyourProfile(request, current_user, current_userid):
         return render(request,'profile.html',{'items':items,
                                                'author': yourprofileobj })
 
-
+# Get a Profile receives request and user object and Id for a selected user
+# using the GET method process the author's information is pulled from the database
+# as well as the current friends the author has will be taken from the database
+# displayed on a profile page with the author's uuid in the url.
 def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
@@ -359,8 +372,8 @@ def getaProfile(request, theusername, user_id):
         return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': yourprofileobj})
 
 
-
-
+# EditProfile is a function that we have not implemented yet.
+# This function will be implemented in part 2
 def editProfile(request, current_user):
     return render(request, 'Editprofile.html')
 
@@ -430,6 +443,8 @@ def registerPage(request):
         # Render Register Page
         return render(request, 'Register.html')
 
+# Searching User Page is a function currently unimplemented. This will be a fuction
+# that might come in handy for part 2 searching users of another host server.
 def searchPage(request):
     items = []
     if request.method == 'POST':
