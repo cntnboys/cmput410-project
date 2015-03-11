@@ -15,6 +15,7 @@
 
     <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
     <br>
+
 </head>
 
 {% endblock %}
@@ -91,7 +92,7 @@
 
             </tr>
 
-			{% endfor %}
+
                     
                      
                     </tbody>
@@ -100,15 +101,14 @@
               </div>
             </div>
 
-                 <div class="panel-footer">
-                       <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Follow
-</button>
-
-                       
-                       
-                    </div>
-            
+            <div class="panel-footer">
+                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                <input type="submit" class="rightbtn postbtn" value="Follow">
+                </form>
+                {% endfor %}
+            </div>
           </div>
         <div class="wrapper">
             <div class="panel left">
@@ -118,11 +118,11 @@
                     <!-- Need to do images -->
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
                     <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
-                    <span class="name">{{ link.0.name }}</span>
-                    <form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
+                    <span class="name">{{ link.username }}</span>
+                    <form method="POST" action="{% url "getaProfile" user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
-                        <input type="hidden" value="{{link.0.username}}" name="username">
-                        <input type="submit" value="{{link.0.username}}">
+                        <input type="hidden" value="{{link.username}}" name="username">
+                        <input type="submit" value="{{link.username}}">
                     </form>
                 </div>
                 {% endfor %}
