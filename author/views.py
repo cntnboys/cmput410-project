@@ -30,7 +30,10 @@ def indexPage(request):
 
 def redirectIndex(request):
     return redirect(indexPage)
-    
+
+
+# Called once an author logs in
+# Load all public posts on the page (and allow the user to create a post - see makePost)
 def mainPage(request):
     context = RequestContext(request)
     error_msg = "Not Logged In. Please Login Here."
@@ -41,16 +44,14 @@ def mainPage(request):
         author_id = Authors.objects.get(username=current_user)
     
         items = []
+        # Load all public posts on a user's mainpage, ordered by date most recent first
         if request.method == "GET":
             for x in Posts.objects.all().order_by("date"):
                items.insert(0,x)
 	 
-     #return render(request, 'main.html')
+    # Load the mainpage with the posts
     return render(request,'main.html',{'items':items})
 
-#else:
-#       return render(request, 'login.html', {"error_msg" : error_msg} )
-        
 
 def loginPage(request):
     context = RequestContext(request)
@@ -313,31 +314,37 @@ def getaProfile(request, userid):
 def editProfile(request):
     return render(request, 'Editprofile.html')
 
+# Create a new post for the currently authenticated author
+# Receive the post's fields
+# Create a new post model object
 def makePost(request):
     if request.method == "POST":
         
         current_user = request.user.username
         
+        # Retrieve current user
         author_id = Authors.objects.get(username=current_user)
         
         content = request.POST["posttext"]
         privacy = "public"
-            #author_id = "heyimcameron"
-      
+        
         try:
             image=request.FILES["image"]
         except:
             image=""
         
-
+        # Create a new model object in db, which references the current user
         new_post = Posts.objects.get_or_create(author_id = author_id,content = content, image=image, privacy = privacy )
 
+        # Refresh the main page to include the new post 
         return redirect(mainPage)
 
+# Called from the author registration page
+# Receive all the fields for an author object
+# Cretae a new author model object
 def registerPage(request):
     if request.method == 'POST':
 
-        #print request
         error_msg = None
         success = None
 
@@ -355,16 +362,20 @@ def registerPage(request):
         except:
             image=""
 
+        # If the given username already exists, prompt the user to choose a different username
         if Authors.objects.filter(username=username):
             error_msg = "Username already exists"
             return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'image':image, 'github':github, 'facebook':facebook, 'twitter':twitter})
 
+        # If the given email already exists, prompt the user to choose a different email
         if Authors.objects.filter(email=email):
             error_msg = "Email already exists"
             return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
-           
+
+        # Save user for authentication
         new_user = User.objects.create_user(username, email, password)
-        new_author = Authors.objects.get_or_create(name=name, username=username, 
+        # Save the new author in the db, as a new model object
+        new_author = Authors.objects.get_or_create(name=name, username=username,
             image=image, location=location, email=email, github=github, 
             facebook=facebook, twitter=twitter)
 

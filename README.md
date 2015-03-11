@@ -34,9 +34,32 @@ Resources and References
 * Django Snippet - Basic HTTP Auth - https://djangosnippets.org/snippets/243/
 
 
+#### Heroku/local db
+* (see settings.py) Stack Overflow - http://stackoverflow.com/questions/26080303/improperlyconfigured-settings-databases-is-improperly-configured-please-supply
+
+#### Ajax PUT request with Django
+* Real Python - https://realpython.com/blog/python/django-and-ajax-form-submissions-more-practice/
+
+#### Django
+* Used the official documentation (e.g.: for setting up db/creating model objects/querying/etc.)
+
+
+#### Access request parameters
+* Stack Overflow - http://stackoverflow.com/questions/11336548/django-taking-values-from-post-request
+
+### UI Html and CSS
+* For intro page and css Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ 
+* For navbar.html and css I used code from Bootstrap Components http://getbootstrap.com/components/#nav
+* For login.html and register.html and css I used code from http://bootsnipp.com/snippets/featured/login-screen-with-background 
+* For profile.hml and css I used code from http://bootsnipp.com/snippets/featured/simple-user-profile
+
+
+
+
+
 Licensing
 ===
-1.
-2.
-3.
+1. Bootstrap templates html and CSS licensed under Apache 2.0
+2. Boostrap code ex. Nav Bar is licenced under MIT https://github.com/twbs/bootstrap/blob/master/LICENSE
+3. 
 4. Django Snippets used under the TOS (https://djangosnippets.org/about/tos/) are free to use by everyone royalty free.

@@ -32,8 +32,10 @@
 		<!-- http://bootsnipp.com/snippets/featured/google-style-login-extended -->
 	<img class="profile-img2" src="{{ STATIC_URL }}/images/plaeholder_icon.png">
 		{% csrf_token %}
+        <!-- Alow the new user to enter his/her personal information to register to Bubble! Required fields are specified below.-->
 		<h1 class="form-signin-heading">Register</h1>
         
+        <!-- If the username or email is already taken, the page refreshes with a message with either to 'change you username' or 'change your email' -->
         {% if error_msg %}
         <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)" align="center">{{ error_msg }}</h4>
             
@@ -47,7 +49,7 @@
             <input type="text" class="form-control" placeholder="MyFacebook" name="twitter" value="{{ twitter }}">
             <input type="file" class="form-control" name="image" value="{{ image }}">
             
-
+        <!-- This is the default page with the input fields for the user, seen by the user when they select 'Register' in the navbar from the 'Bubble' page -->
         {% else %}
         <input type="text" class="form-control" placeholder="Name" autofocus="" name="name" required>
 		<input type="text" class="form-control" placeholder="Username" autofocus="" name="username" required>
@@ -62,6 +64,7 @@
     
         {% endif %}
 		</br>
+        <!-- Submit the new user information in order to save a new user -->
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Register
 		</button>
