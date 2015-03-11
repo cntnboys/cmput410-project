@@ -344,7 +344,7 @@ def getaProfile(request, user_id):
     if request.method == "POST":
         user = request.POST["username"]
 
-        yourprofileobj = Authors.objects.filter(username=user, location="bubble")
+        yourprofileobj = Authors.objects.get(username=user, location="bubble")
         items.append(yourprofileobj)
 
         for e in Friends.objects.filter(inviter_id=yourprofileobj):
