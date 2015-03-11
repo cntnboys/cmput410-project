@@ -118,7 +118,8 @@ HEROKU_SERVER = os.environ.get('HEROKU_SERVER')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgresql',
+        'NAME': 'www',
+        'HOST': ''
     }
 }
 # else:
