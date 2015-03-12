@@ -34,19 +34,44 @@ Resources and References
 
 #### Basic HTTP Authentication
 
-* Can I use Basic HTTP Authentication on Django? - Stack Overflow - (http://stackoverflow.com/questions/152248/can-i-use-http-basic-authentication-with-django)
-* Django Doc - Authentication using Remote User (https://docs.djangoproject.com/en/dev/howto/auth-remote-user/)
-* Django Snippet - Basic HTTP Auth - https://djangosnippets.org/snippets/243/
+* Can I use Basic HTTP Authentication on Django? - Stack Overflow
+	(http://stackoverflow.com/questions/152248/
+		can-i-use-http-basic-authentication-with-django)
+* Django Doc - Authentication using Remote User 
+	(https://docs.djangoproject.com/en/dev/howto/auth-remote-user/)
+* Django Snippet - Basic HTTP Auth 
+	(https://djangosnippets.org/snippets/243/)
 
 
 #### Heroku/local db
-* (see settings.py) Stack Overflow - http://stackoverflow.com/questions/26080303/improperlyconfigured-settings-databases-is-improperly-configured-please-supply
+* (see settings.py) Stack Overflow 
+	(http://stackoverflow.com/questions/26080303/
+	improperlyconfigured-settings-databases-is-improperly-configured-please-supply)
 
 #### Ajax PUT request with Django
-* Real Python - https://realpython.com/blog/python/django-and-ajax-form-submissions-more-practice/
+* Real Python 
+	(https://realpython.com/blog/python/django-and-ajax-form-submissions-more-practice/)
+
 
 #### Django
-* Used the official documentation (e.g.: for setting up db/creating model objects/querying/etc.)
+* Used the official documentation (e.g.: for setting up db/creating model 
+	objects/querying/etc.) (https://docs.djangoproject.com/en/1.7/)
+* Django Restful Framework was used in reference in design 
+	(http://www.django-rest-framework.org/)
+
+
+#### urls.py
+* Django Dynamic URL Tokens by werehuman were used to model urls in the project 
+	(http://stackoverflow.com/questions/21693357/django-dynamic-page-functionality-and-url)
+
+#### Views.py
+* Logout Bug Solved by Renaming django Logout by Chris Morgan 
+	(http://stackoverflow.com/questions/7357127/django-logout-crashes-python)
+* No Reverse Match / URL Debugging by mfitzp 
+	(http://stackoverflow.com/questions/16298598/noreversematch-at) 
+*
+*
+
 
 
 #### Access request parameters

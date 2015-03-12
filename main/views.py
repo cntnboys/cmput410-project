@@ -153,6 +153,9 @@ def loginPage(request):
 # Log out function allows user to log out of the current authenticated account
 # and the author will be redirected to the intro page.
 def logout(request):
+    # Logout function redefined in import statement by Chris Morgan
+    # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
+
     context = RequestContext(request)
     auth_logout(request)
     return redirect(indexPage)
@@ -429,10 +432,12 @@ def makePost(request):
 def registerPage(request):
     if request.method == 'POST':
 
-        #print request
         error_msg = None
         success = None
 
+        # Multivalue Dictionary Bug from Post by adamnfish 
+        # (http://stackoverflow.com/questions/5895588/
+        # django-multivaluedictkeyerror-error-how-do-i-deal-with-it)
         name=request.POST.get("name", "")
         username=request.POST["username"]
         password=request.POST["password"]

@@ -4,6 +4,9 @@ from django.contrib import admin
 
 from main import views
 
+# Django Dynamic URL Tokens by werehuman were used to model urls in the project 
+# (http://stackoverflow.com/questions/21693357/django-dynamic-page-functionality-and-url)
+
 urlpatterns = patterns('',
     url(r'^$', views.indexPage, name='IndexPage'),
     url(r'^login/$', views.loginPage, name='LoginPage'),
