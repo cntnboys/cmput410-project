@@ -44,7 +44,7 @@
                     <div class="bubbleWrapper">
                         <!-- Need to do images -->
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                        <img class="avatar" src={{ link.image }}>
+                        <img class="avatar" src={{ MEDIA_URL}}{{ link.image }}>
                         <span class="name">{{ link.name }}</span>
                         <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
