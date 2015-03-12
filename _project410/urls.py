@@ -16,7 +16,6 @@ urlpatterns = patterns('',
 
     url(r'^$', main.views.redirectIndex, name='IndexPage'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^(?P<current_user>\w+)/posts/', main.views.mainPage, name='mainPage'),
     url(r'^friends/', main.views.friends, name='friends'),
     url(r'^main/', include('main.urls')),
     url(r'^friendrequest/', main.views.friendRequest, name='friendRequest'),

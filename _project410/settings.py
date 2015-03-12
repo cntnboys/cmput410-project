@@ -83,13 +83,13 @@ WSGI_APPLICATION = '_project410.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-         #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),        
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#          #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),        
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -111,26 +111,40 @@ STATIC_URL = '/static/'
 #DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 #ADDEDEDD THE FOLLLOWWINGGG TO DEAAALLLL WITHTHTHT DB ERRORS WHEN LOCAL
-ON_HEROKU = os.environ.get('ON_HEROKU')
-HEROKU_SERVER = os.environ.get('HEROKU_SERVER')
 
-if ON_HEROKU:
-    
-    DATABASES = {
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+#         'PORT': '',
+#     }
+# }
+# else:
+#     DATABASES = {
+#         'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'deglt3tqs5mjfa',
+#         'HOST': 'ec2-23-21-187-45.compute-1.amazonaws.com',
+#         'USER': 'mwmqqmbieymuyq',
+#         'PASSWORD' : '3D8Ruktp2PaYUFFvDE-2jKRhaD',
+#         'PORT' : '5432',
+
+#     }
+# }
+
+DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgresql',
-    }
-}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            'USER': '',
-            'PASSWORD': '',
-            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-            'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'deglt3tqs5mjfa',
+        'HOST': 'ec2-23-21-187-45.compute-1.amazonaws.com',
+        'USER': 'mwmqqmbieymuyq',
+        'PASSWORD' : '3D8Ruktp2PaYUFFvDE-2jKRhaD',
+        'PORT' : '5432',
+
     }
 }
 # Parse database configuration from $DATABASE_URL

@@ -9,7 +9,7 @@
     <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
 	<script src="{{ STATIC_URL }}js/less.js"></script>
-	    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
+    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
 </head>
 
 {% endblock %}
@@ -41,23 +41,22 @@
 	<div class="wrapper">	
 		<h1 class='recentPost'>Recent Posts</h1>
                 {% for link in items %}
-                	<div class="post triangle-isoceles">
+                	<div class="post triangle-isosceles">
                 		{% if link.title %}
                 			<div class="posttitle">{{ link.title }}</div>
                 		{% else %}
                 			<div class="posttitle"> Untitled Post </div>
                 		{% endif %}
-                		<span style="margin-left:10pt"> Thought Pop'd by: </span><a class href={% url "getaProfile" user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+                		<span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
                 		<br/><br/>
                     <div class="postbody">
                         {% if link.image %}
-                        <img class="avatar" src= ../../media/{{link.image}} height="100" width="100"> </br></br>
+                        <img class="avatar" src= ../../../media/{{link.image}} height="100" width="100"> </br></br>
                         {% endif %}
                         {% if link.content %}
                         <span class="name">{{ link.content }}</span> </br>
                         {% endif %}
-			<!-- Link to profile of user who posted this post -->
-                    </div></div>
+                    </div></div><br/>
                 {% endfor %}
 			</div>
 	</div>

@@ -29,7 +29,7 @@
                     
                         {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url 'getyourProfile' current_user=user.username %}">{{ user.get_username }}</a>
+                            <a href="{% url 'getaProfile' theusername=user.username user_id=author.author_uuid  %}">{{ user.get_username }}</a>
                         </li>
                         <li>
                             <a href="{% url 'userFriends' %}"> View Friends List </a>                   
@@ -68,7 +68,7 @@
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{% url 'EditProfile' current_user=user.username %}"> Edit Profile </a>                   
+                            <a href="{% url 'EditProfile' current_user=user.username current_userid=author.author_uuid %}"> Edit Profile </a>                   
                         </li>
                         <li>
                             <a href="{% url 'logout' %}">Log Out</a>

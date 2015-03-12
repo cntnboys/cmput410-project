@@ -44,12 +44,12 @@
                     <div class="bubbleWrapper">
                         <!-- Need to do images -->
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                        <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
-                        <span class="name">{{ link.0.name }}</span>
-                        <form method="POST" action="{% url "getaProfile" %}" enctype="multipart/form-data" name="form">
+                        <img class="avatar" src={{ MEDIA_URL}}{{ link.image }}>
+                        <span class="name">{{ link.name }}</span>
+                        <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
-                            <input type="hidden" value="{{link.0.username}}" name="username">
-                            <input type="submit" value="{{link.0.username}}">
+                            <input type="hidden" value="{{link.username}}" name="username">
+                            <input type="submit" value="{{link.username}}">
                         </form>
                     </div>
                 {% endfor %}
