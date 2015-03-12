@@ -81,7 +81,12 @@ Resources and References
 * For login.html and register.html and css I used code from http://bootsnipp.com/snippets/featured/login-screen-with-background 
 * For profile.hml and css I used code from http://bootsnipp.com/snippets/featured/simple-user-profile
 
-
+#### Heroku
+* http://heroku.com/
+* http://thought-bubble.herokuapp.com
+* https://devcenter.heroku.com/articles/getting-started-with-django
+#### CSS/Inserting into divs
+* http://code.tutsplus.com/tutorials/building-ribbit-in-django--net-29957
 
 
 
