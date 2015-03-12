@@ -21,6 +21,10 @@ from django.contrib.auth import logout as auth_logout
 
 import json
 
+# Index Page function is used to traverse to our introduction page
+# if you are not logged in as a user
+# If you are logged in as a user, you will be redirected to the
+# stream page with posts.
 def indexPage(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
@@ -37,9 +41,13 @@ def indexPage(request):
     else:
         return render(request, 'index/intro.html', request.session)
 
+# Redirect Index function just redirects back into the index page
 def redirectIndex(request):
     return redirect(indexPage)
-    
+
+# Main Page function allows user to go back to the stream of posts
+# If author was to access this page without authentication, then
+# author will be prompted to Log in first before going to that page.
 def mainPage(request, current_user):
     context = RequestContext(request)
     error_msg = "Not Logged In. Please Login Here."
@@ -59,6 +67,10 @@ def mainPage(request, current_user):
     else:
         return render(request, 'login.html', {'error_msg':error_msg})
 
+# Log in Page function is a check for authenticated author log in
+# If author inputs incorrect or non exisiting things in the fields,
+# then author will be prompted that either the input was incorrect or
+# input does not exist
 def loginPage(request):
 
     if request.method == "POST":
@@ -138,12 +150,15 @@ def loginPage(request):
     else:
         return render(request, 'login.html')
 
+# Log out function allows user to log out of the current authenticated account
+# and the author will be redirected to the intro page.
 def logout(request):
     context = RequestContext(request)
     auth_logout(request)
     return redirect(indexPage)
 
 # TODO: use profile template to load page of FOAF
+# Function is still a work in progress for part 2
 def foaf(request,userid1=None,userid2=None):
 	# we want to check if userid1 is friends with/is current user then check if 
 	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
@@ -168,7 +183,11 @@ def foaf(request,userid1=None,userid2=None):
 	# foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
 	return render(request, 'foaf.html',{'items':items})
   
-
+# Friend Request function currently default method is GET which will retrieve
+# the friends request the logged in author has.
+# If POST method, a check to see if friend request exists, if the friend request exists
+# the the status of the friend request changes to True, and if the friend request does not
+# exist then we create a friend request from the current author to the selected author.
 def friendRequest(request):
     items = []
     ufriends = []
@@ -230,9 +249,11 @@ def friendRequest(request):
 
         return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
                         "author": yourprofileobj} )
-
     
-
+# Friends function takes in the request for retrieving the friends
+# of the author you are logged in as. Default is a GET method retrieving
+# all friends of the author. POST method is used when searching a specific
+# friends of the current author.
 def friends(request):
     items = []
     current_user = request.user
@@ -273,6 +294,8 @@ def friends(request):
     print(items)
     return render(request, 'friends.html',{'items':items, 'author':aUser})
 
+# We are not currently using this function anymore. We have condensed this function
+# into get a profile.
 def getyourProfile(request, current_user, current_userid):
     items = []
     ufriends=[]
@@ -313,7 +336,10 @@ def getyourProfile(request, current_user, current_userid):
         return render(request,'profile.html',{'items':items,
                                                'author': yourprofileobj })
 
-
+# Get a Profile receives request and user object and Id for a selected user
+# using the GET method process the author's information is pulled from the database
+# as well as the current friends the author has will be taken from the database
+# displayed on a profile page with the author's uuid in the url.
 def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
@@ -359,11 +385,15 @@ def getaProfile(request, theusername, user_id):
         return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': yourprofileobj})
 
 
-
-
+# EditProfile is a function that we have not implemented yet.
+# This function will be implemented in part 2
 def editProfile(request, current_user):
     return render(request, 'Editprofile.html')
 
+# Make post function retrieves the title, text, and if image exists, the three fields
+# to store into the database adding on the author who created the post.
+# After storage of the comment, author is redirected back to the main page
+# displaying the most recent post on the main page.
 def makePost(request):
     if request.method == "POST":
         
@@ -387,6 +417,15 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
+# Register Page function is called when author is on the registration page
+# All fields on the registration pages are received to store into the database.
+# If a username exists then author will be prompted that the user name exists and
+# the will have to choose a different username.
+# Same for the email if the author inputted a email that already exists,
+# then author will be prompted a message saying that email exists and have to use a
+# different email.
+# If author successfully registers a user, then they will be reidrected to the
+# log in page.
 def registerPage(request):
     if request.method == 'POST':
 
@@ -430,6 +469,8 @@ def registerPage(request):
         # Render Register Page
         return render(request, 'Register.html')
 
+# Searching User Page is a function currently unimplemented. This will be a fuction
+# that might come in handy for part 2 searching users of another host server.
 def searchPage(request):
     items = []
     if request.method == 'POST':
