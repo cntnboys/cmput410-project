@@ -85,6 +85,7 @@ Resources and References
 * http://heroku.com/
 * http://thought-bubble.herokuapp.com
 * https://devcenter.heroku.com/articles/getting-started-with-django
+
 #### CSS/Inserting into divs
 * http://code.tutsplus.com/tutorials/building-ribbit-in-django--net-29957
 
