@@ -499,3 +499,44 @@ def searchPage(request):
 
     return render(request, 'search.html',{'items':items})
       
+
+#getting Json objects to send to other groups 
+
+#needs authentication implemented into functions
+
+def getauthors(request):
+    items = []
+    if request.method == "GET":
+        for x in Authors.objects.all():
+            items.insert(0,x)
+    return HttpResponse(simplejson.dumps(str({'authors' : items})))
+
+
+def getfriends(request):
+    items = []
+    if request.method == "GET":
+        for x in Freinds.objects.all():
+            items.insert(0,x)
+    return HttpResponse(simplejson.dumps(str({'freinds' : items})))
+
+
+def getposts(request):
+    items = []
+    if request.method == "GET":
+        for x in Posts.objects.all():
+            items.insert(0,x)
+    return HttpResponse(simplejson.dumps(str({'posts' : items})))
+
+def getcomments(request):
+    items = []
+    if request.method == "GET":
+        for x in Comments.objects.all():
+            items.insert(0,x)
+    return HttpResponse(simplejson.dumps(str({'comments' : items})))
+
+def getgithub(request):
+    items = []
+    if request.method == "GET":
+        for x in GithubStreams.objects.all():
+            items.insert(0,x)
+    return HttpResponse(simplejson.dumps(str({'github' : items})))

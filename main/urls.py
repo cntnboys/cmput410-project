@@ -13,8 +13,15 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
-    
-   
+
+    url(r'^getauthors/$', views.getauthors, name='getauthors'),
+    url(r'^getfreinds/$', views.getfreinds, name='getfreinds'),
+    url(r'^getposts/$', views.getposts, name='getposts'),   
+    url(r'^getcomments/$', views.getcomments, name='getcomments'),
+    url(r'^getgithub/$', views.getgithub, name='getgithub'),
+
+
+
     url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
