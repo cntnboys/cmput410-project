@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
 import json
+import simplejson
 
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
