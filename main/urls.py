@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
 
     url(r'^getauthors/$', views.getauthors, name='getauthors'),
-    url(r'^getfreinds/$', views.getfreinds, name='getfreinds'),
+    url(r'^getfriends/$', views.getfriends, name='getfriends'),
     url(r'^getposts/$', views.getposts, name='getposts'),   
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),

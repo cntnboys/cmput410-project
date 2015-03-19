@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
 import json
+import simplejson
 
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
@@ -504,6 +505,8 @@ def searchPage(request):
 
 #needs authentication implemented into functions
 
+
+
 def getauthors(request):
     items = []
     if request.method == "GET":
@@ -520,12 +523,51 @@ def getfriends(request):
     return HttpResponse(simplejson.dumps(str({'freinds' : items})))
 
 
+
+
+#title, source(our url), content, author (id), host, displayname(username), urlid, 
+#need to implement function to get single posts for url
 def getposts(request):
     items = []
+   
     if request.method == "GET":
-        for x in Posts.objects.all():
-            items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'posts' : items})))
+        postobjs = Posts.objects.all()
+        for x in postobjs:
+            post = {}
+        
+            post['title'] = x.title
+            post['source'] = ""
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = x.content
+            post['pubdate'] = str(x.date)
+            post['guid'] = str(x.post_uuid)
+
+            #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+            post['visability'] = "PUBLIC"
+            
+            
+            #author
+            a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = "thought-bubble.herokuapp.com"
+            author['displayname'] = a.username
+            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+            post['author'] = author
+            
+            #comments
+            post['comments'] = []
+            
+            items.append(post)
+  #  return HttpResponse(simplejson.dumps(str({'posts' : items})))
+   # items.append({"title" : 
+    return HttpResponse(simplejson.dumps({"posts" : items}))
+
+
+
+  
 
 def getcomments(request):
     items = []

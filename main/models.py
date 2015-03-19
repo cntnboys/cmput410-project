@@ -23,7 +23,7 @@ class Authors(models.Model):
         verbose_name = "Author"
 
     def __str__(self):
-        return "author_id: " + str(self.author_id) + " name: " + str(self.name) + " username: " + str(self.username) + " image: " + str(self.image) + " email: " + str(self.email) + " location: " + str(self.location) + " github: " + str(self.github) + " twitter: " + str(self.twitter) + " facebook: " + str(self.facebook)
+        return "author_id: " + str(self.author_id) + "author_uuid: " + str(self.author_uuid) + " name: " + str(self.name) + " username: " + str(self.username) + " image: " + str(self.image) + " email: " + str(self.email) + " location: " + str(self.location) + " github: " + str(self.github) + " twitter: " + str(self.twitter) + " facebook: " + str(self.facebook)
 
 class Friends(models.Model):
     inviter_id = models.ForeignKey(Authors, related_name='inviter_id', null=False)

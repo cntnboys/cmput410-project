@@ -112,7 +112,7 @@ STATIC_URL = '/static/'
 
 #ADDEDEDD THE FOLLLOWWINGGG TO DEAAALLLL WITHTHTHT DB ERRORS WHEN LOCAL
 
- if DEBUG:
+if DEBUG:
      DATABASES = {
          'default': {
          'ENGINE': 'django.db.backends.sqlite3',
