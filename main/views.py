@@ -46,6 +46,14 @@ def indexPage(request):
 def redirectIndex(request):
     return redirect(indexPage)
 
+def onePost(request,post_uuid):
+    items = []
+    if request.user.is_authenticated():
+        post = Posts.objects.get(post_uuid=post_uuid)
+        items.append(post)
+     
+    return render(request,'authorpost.html',{'items':items})
+
 # Main Page function allows user to go back to the stream of posts
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
