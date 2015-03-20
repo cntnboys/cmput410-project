@@ -523,13 +523,72 @@ def getauthors(request):
     return HttpResponse(simplejson.dumps(str({'authors' : items})))
 
 
-def getfriends(request):
+def getfriendrequests(request):
     items = []
     if request.method == "GET":
         for x in Freinds.objects.all():
             items.insert(0,x)
     return HttpResponse(simplejson.dumps(str({'freinds' : items})))
 
+
+
+def getfriendstatus(request):
+    items = []
+    jsonfriend = {}
+  
+    if request.method == "GET":
+        x = request.GET.get('user1', '')
+        x = x.split(",")
+
+        user1 = str(x[0])
+        user2 = str(x[1])
+
+        print(user1)
+        print(user2)
+
+        authors = {}
+        authors['query']='friends'
+        authors['authors'] = [user1,user2]
+        
+    
+    #now have author uuid
+
+        #    9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
+       
+        
+        author1 = Authors.objects.get(author_uuid = user1)
+        author2 = Authors.objects.get(author_uuid = user2)
+
+        hey = str(author1.author_id)
+        hey2 = str(author2.author_id)
+
+        print("hey",hey)
+        print("hey2", hey2)
+
+        
+        #check if they are friends
+        statusobj = Friends.objects.get(invitee_id = hey2, inviter_id = hey)
+            
+        
+        if Friends.objects.filter(invitee_id=hey2, inviter_id=hey):
+            print "here!"
+            statusobj = Friends.objects.get(invitee_id = hey2, inviter_id = hey)
+        elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey):
+            print "there!"
+            statusobj = Friends.objects.get(invitee_id = hey, inviter_id = hey2)
+        else:
+            return
+
+        status = statusobj.status
+        print("status",status)
+
+        if status == True:
+            authors['friends'] = "YES"
+        else:
+            authors['friends'] = "NO"
+            
+        
+    return HttpResponse(simplejson.dumps(str(authors)))
 
 
 
