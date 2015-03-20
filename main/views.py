@@ -538,7 +538,7 @@ def getfriendstatus(request):
   
     if request.method == "GET":
         x = request.GET.get('user1', '')
-        x = x.split(",")
+        x = x.split("/")
 
         user1 = str(x[0])
         user2 = str(x[1])
