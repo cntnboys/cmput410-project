@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
 
     url(r'^getauthors/$', views.getauthors, name='getauthors'),
-    url(r'^getfriends/$', views.getfriends, name='getfriends'),
+    url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     url(r'^getposts/$', views.getposts, name='getposts'),   
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
@@ -28,6 +28,9 @@ urlpatterns = patterns('',
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
     url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),
+    url(r'^getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
+    url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
+    
     
 )
 

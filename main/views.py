@@ -20,8 +20,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
-import json
-import simplejson
+from django.views.decorators.csrf import csrf_exempt
+
+try: import simplejson as json
+except ImportError: import json
+#from django.utils import simplejson
+
+
 
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
@@ -543,16 +548,74 @@ def getauthors(request):
     if request.method == "GET":
         for x in Authors.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'authors' : items})))
+    return HttpResponse(json.dumps({'authors' : items}))
 
 
-def getfriends(request):
+def getfriendrequests(request):
     items = []
     if request.method == "GET":
         for x in Freinds.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'freinds' : items})))
+    return HttpResponse(json.dumps({'freinds' : items}))
 
+
+#/main/getfriendstatus/?=user1/user2
+def getfriendstatus(request):
+    items = []
+    jsonfriend = {}
+  
+    if request.method == "GET":
+        x = request.GET.get('user1', '')
+        x = x.split("/")
+
+        user1 = str(x[0])
+        user2 = str(x[1])
+
+        print(user1)
+        print(user2)
+
+        authors = {}
+        authors['query']='friends'
+        authors['authors'] = [user1,user2]
+        
+    
+    #now have author uuid
+
+        #    9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
+       
+        
+        author1 = Authors.objects.get(author_uuid = user1)
+        author2 = Authors.objects.get(author_uuid = user2)
+
+        hey = str(author1.author_id)
+        hey2 = str(author2.author_id)
+
+        print("hey",hey)
+        print("hey2", hey2)
+
+        
+        #check if they are friends        
+        if Friends.objects.filter(invitee_id=hey2, inviter_id=hey):
+            print "here!"
+            statusobj = Friends.objects.get(invitee_id = hey2, inviter_id = hey)
+        elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey):
+            print "there!"
+            statusobj = Friends.objects.get(invitee_id = hey, inviter_id = hey2)
+        else:
+            return
+
+        status = statusobj.status
+        print("status",status)
+
+        if status == True:
+            authors['friends'] = "YES"
+        else:
+            authors['friends'] = "NO"
+
+    print("authors",authors)
+            
+        
+    return HttpResponse(json.dumps(str(authors)))
 
 
 
@@ -594,7 +657,7 @@ def getposts(request):
             items.append(post)
   #  return HttpResponse(simplejson.dumps(str({'posts' : items})))
    # items.append({"title" : 
-    return HttpResponse(simplejson.dumps({"posts" : items}))
+    return HttpResponse(json.dumps({"posts" : items}))
 
 
 
@@ -605,11 +668,74 @@ def getcomments(request):
     if request.method == "GET":
         for x in Comments.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'comments' : items})))
+    return HttpResponse(json.dumps({'comments' : items}))
 
 def getgithub(request):
     items = []
     if request.method == "GET":
         for x in GithubStreams.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'github' : items})))
+    return HttpResponse(json.dumps({'github' : items}))
+
+
+@csrf_exempt
+def checkfriends(request):
+    #getting info in
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print 'FriendsData: "%s"' % request.body 
+
+        author = str(data['author'])
+
+        print(author)
+
+        authors = data['authors']
+        newauthors = []
+
+        author1 = Authors.objects.get(author_uuid = author)
+        hey = str(author1.author_id)
+        # ef6728777e36445d8d45d9d5125dc4c6 ng1
+        # 9e4ac346d9874b7fba14f27b26ae45bb ng3
+        print("authors",authors)
+        print("author1",author1)
+        for x in authors:
+        	newthing = str(x)
+        	print("newthing",newthing)
+        	if Authors.objects.filter(author_uuid=newthing):
+        		author2 = Authors.objects.get(author_uuid = newthing)
+        		hey2 = str(author2.author_id)
+        		print ("hey2",hey2)
+         		if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
+					newauthors.append(str(x))
+        		elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
+         			print "there!"
+         			newauthors.append(str(x))
+         		else:
+         			return
+    	myjson = {}
+    	myjson['query'] = "friends"
+    	myjson['author'] = author
+    	myjson['friends'] = newauthors
+
+            
+
+    	print("dump",json.dumps(myjson))
+
+        
+        
+
+    	return HttpResponse(json.dumps(myjson))
+
+       
+
+    #creating info out
+
+        
+
+        
+
+    
+
+
+
+    
