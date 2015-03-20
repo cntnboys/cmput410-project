@@ -21,8 +21,9 @@ from django.contrib.auth import logout as auth_logout
 
 from django.views.decorators.csrf import csrf_exempt
 
-import json
-import simplejson
+try: import simplejson as json
+except ImportError: import json
+#from django.utils import simplejson
 
 
 
@@ -524,7 +525,7 @@ def getauthors(request):
     if request.method == "GET":
         for x in Authors.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'authors' : items})))
+    return HttpResponse(json.dumps({'authors' : items}))
 
 
 def getfriendrequests(request):
@@ -532,10 +533,10 @@ def getfriendrequests(request):
     if request.method == "GET":
         for x in Freinds.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'freinds' : items})))
+    return HttpResponse(json.dumps({'freinds' : items}))
 
 
-
+#/main/getfriendstatus/?=user1/user2
 def getfriendstatus(request):
     items = []
     jsonfriend = {}
@@ -570,10 +571,7 @@ def getfriendstatus(request):
         print("hey2", hey2)
 
         
-        #check if they are friends
-        statusobj = Friends.objects.get(invitee_id = hey2, inviter_id = hey)
-            
-        
+        #check if they are friends        
         if Friends.objects.filter(invitee_id=hey2, inviter_id=hey):
             print "here!"
             statusobj = Friends.objects.get(invitee_id = hey2, inviter_id = hey)
@@ -590,9 +588,11 @@ def getfriendstatus(request):
             authors['friends'] = "YES"
         else:
             authors['friends'] = "NO"
+
+    print("authors",authors)
             
         
-    return HttpResponse(simplejson.dumps(str(authors)))
+    return HttpResponse(json.dumps(str(authors)))
 
 
 
@@ -634,7 +634,7 @@ def getposts(request):
             items.append(post)
   #  return HttpResponse(simplejson.dumps(str({'posts' : items})))
    # items.append({"title" : 
-    return HttpResponse(simplejson.dumps({"posts" : items}))
+    return HttpResponse(json.dumps({"posts" : items}))
 
 
 
@@ -645,14 +645,14 @@ def getcomments(request):
     if request.method == "GET":
         for x in Comments.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'comments' : items})))
+    return HttpResponse(json.dumps({'comments' : items}))
 
 def getgithub(request):
     items = []
     if request.method == "GET":
         for x in GithubStreams.objects.all():
             items.insert(0,x)
-    return HttpResponse(simplejson.dumps(str({'github' : items})))
+    return HttpResponse(json.dumps({'github' : items}))
 
 
 @csrf_exempt
@@ -669,16 +669,39 @@ def checkfriends(request):
         authors = data['authors']
         newauthors = []
 
+        author1 = Authors.objects.get(author_uuid = author)
+        hey = str(author1.author_id)
+        # ef6728777e36445d8d45d9d5125dc4c6 ng1
+        # 9e4ac346d9874b7fba14f27b26ae45bb ng3
+        print("authors",authors)
+        print("author1",author1)
         for x in authors:
-            newauthors.append(str(x))
+        	newthing = str(x)
+        	print("newthing",newthing)
+        	if Authors.objects.filter(author_uuid=newthing):
+        		author2 = Authors.objects.get(author_uuid = newthing)
+        		hey2 = str(author2.author_id)
+        		print ("hey2",hey2)
+         		if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
+					newauthors.append(str(x))
+        		elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
+         			print "there!"
+         			newauthors.append(str(x))
+         		else:
+         			return
+    	myjson = {}
+    	myjson['query'] = "friends"
+    	myjson['author'] = author
+    	myjson['friends'] = newauthors
+
             
 
-        print(newauthors)
+    	print("dump",json.dumps(myjson))
 
         
         
 
-    return HttpResponse("OK")
+    	return HttpResponse(json.dumps(myjson))
 
        
 
