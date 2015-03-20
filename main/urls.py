@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     url(r'^friends/$',views.friends, name='userFriends'),
     url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),
     url(r'^getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
+    url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
+    
     
 )
 

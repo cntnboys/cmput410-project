@@ -19,8 +19,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
+from django.views.decorators.csrf import csrf_exempt
+
 import json
 import simplejson
+
+
 
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
@@ -649,3 +653,43 @@ def getgithub(request):
         for x in GithubStreams.objects.all():
             items.insert(0,x)
     return HttpResponse(simplejson.dumps(str({'github' : items})))
+
+
+@csrf_exempt
+def checkfriends(request):
+    #getting info in
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print 'FriendsData: "%s"' % request.body 
+
+        author = str(data['author'])
+
+        print(author)
+
+        authors = data['authors']
+        newauthors = []
+
+        for x in authors:
+            newauthors.append(str(x))
+            
+
+        print(newauthors)
+
+        
+        
+
+    return HttpResponse("OK")
+
+       
+
+    #creating info out
+
+        
+
+        
+
+    
+
+
+
+    
