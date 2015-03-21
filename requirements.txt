@@ -8,3 +8,4 @@ static3==0.5.1
 wsgiref==0.1.2
 djangorestframework==3.1.0
 django-uuidfield==0.5.0
+requests==2.6.0
