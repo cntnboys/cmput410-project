@@ -602,9 +602,17 @@ def getfriendstatus(request):
 
         #    9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
        
-        
-        author1 = Authors.objects.get(author_uuid = user1)
-        author2 = Authors.objects.get(author_uuid = user2)
+        if Authors.objects.filter(author_uuid = user1).count() >=1:
+            author1 = Authors.objects.get(author_uuid = user1)
+        else:
+            authors['friends'] = "NO"
+            return HttpResponse(json.dumps(authors,indent=4, sort_keys=True))
+
+        if Authors.objects.filter(author_uuid = user2).count() >=1:
+            author2 = Authors.objects.get(author_uuid = user2)
+        else:
+            authors['friends'] = "NO"
+            return HttpResponse(json.dumps(authors,indent=4, sort_keys=True))
 
         hey = str(author1.author_id)
         hey2 = str(author2.author_id)
