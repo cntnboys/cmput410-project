@@ -100,19 +100,25 @@ x{% extends "navbar.html" %}
                 </div>
               </div>
             </div>
-
+            {% if link.username != user.get_username %}
+            
+            
             <div class="panel-footer">
+
                 <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
                 <input type="submit" class="rightbtn postbtn" value="Follow">
                 </form>
+
+                
                 <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
                 {% csrf_token %}
                 <input type="hidden" name="friendrequest" value="{{ link.username }}">
                 <input type="submit" class="rightbtn postbtn" value="Friend Request">
                 </form>
             </div>
+            {% endif %}
                 {% endfor %}
 
           </div>

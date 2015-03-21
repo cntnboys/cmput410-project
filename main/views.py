@@ -27,8 +27,8 @@ except ImportError: import json
 import requests
 #from django.utils import simplejson
 
-
-
+def getJsonfromothers(request):
+    return
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
 # If you are logged in as a user, you will be redirected to the
