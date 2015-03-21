@@ -128,10 +128,37 @@ x{% extends "navbar.html" %}
                 {% endfor %}
             </div>
         </div>
-
+    
         </div>
+        
     </div>
+    
+    {% if posts %}
+    <div class="wrapper">
+        <h1 class='recentPost'>Recent Posts</h1>
+        {% for link in posts %}
+        <div class="post triangle-isosceles">
+            {% if link.title %}
+            <div class="posttitle">{{ link.title }}</div>
+            {% else %}
+            <div class="posttitle"> Untitled Post </div>
+            {% endif %}
+            <span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+            <br/><br/>
+            <div class="postbody">
+                {% if link.image %}
+                <img class="avatar" src= ../../../media/{{link.image}} height="100" width="100"> </br></br>
+                    {% endif %}
+                    {% if link.content %}
+                    <span class="name">{{ link.content }}</span> </br>
+                    {% endif %}
+                    </div></div><br/>
+        {% endfor %}
+    </div>
+    
 </div>
+
+{% endif %}
 
 </body>
 </html>
