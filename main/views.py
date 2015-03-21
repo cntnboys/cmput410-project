@@ -569,14 +569,6 @@ def searchPage(request):
 
 
 
-def getauthors(request):
-    items = []
-    if request.method == "GET":
-        for x in Authors.objects.all():
-            items.insert(0,x)
-    return HttpResponse(json.dumps({'authors' : items}))
-
-
 def getfriendrequests(request):
     items = []
     if request.method == "GET":
@@ -685,6 +677,51 @@ def getposts(request):
 
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
+
+
+@csrf_exempt
+def Foafvis(request):
+    items = []
+    if request.method == "POST":
+        
+        data = json.loads(request.body)
+        
+        postid = data['id']
+        
+        authorid = data['author']['id']
+        host = data['author']['host']
+        friend = data['friends']
+
+        print(authorid)
+
+        print(postid)
+
+        print(friend)
+
+        print("host",host)
+
+        #check their host 1
+        
+        for x in friend:
+            
+            if host == "http://cs410.cs.ualberta.ca:41061/":
+                print("hi")
+                #jsonfromhost =  requests.get(host+"friends/"+author_id+"/"+x)
+                #print(jsonfromhost.ok)
+
+            else:
+                host = "http://127.0.0.1:8000/"
+                print("hi2")
+                print(host+"main/checkfriends/?user="+authorid)
+                #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
+              #  print(jsonfromhost.ok)
+                
+        
+        
+       
+
+        return HttpResponse('postworked')
+    return HttpResponse('OK')
 
 
 
