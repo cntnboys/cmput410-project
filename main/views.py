@@ -704,7 +704,7 @@ def checkfriends(request):
         
         
 
-    	return HttpResponse(json.dumps(myjson))
+    	return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
 
        
 
