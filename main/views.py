@@ -9,6 +9,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.template import RequestContext, loader
 from django.core.context_processors import csrf
+from django.db.models import Q
 
 import uuid
 import Post
@@ -68,15 +69,35 @@ def mainPage(request, current_user):
 
     if request.user.is_authenticated():
         current_user = request.user.get_username()
-        author_name = Authors.objects.get(username=current_user)
+        author_id = Authors.objects.get(username=current_user)
     
         items = []
+
         if request.method == "GET":
-            for x in Posts.objects.all().order_by("date"):
+
+            # retrieve private posts of friends
+            for f in Friends.objects.all():
+                if (f.invitee_id==author_id) and not f.status: #TRUE IF FALSE??
+                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
+                       items.insert(0,x)
+                if (f.inviter_id==author_id) and not f.status: #TRUE IF FALSE??
+                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
+                       items.insert(0,x)
+        
+            # retrieve all public posts
+            for x in Posts.objects.filter(privacy="public"):
                items.insert(0,x)
+        
+            # retrieve all private posts of current user (these have been left out in all above queries)
+            for x in Posts.objects.filter(author_id=author_id, privacy="private"):
+               items.insert(0, x)
+
+
+            items.sort(key=lambda x: x.date, reverse=True)
+
 	 
-            return render(request,'main.html',{'items':items, 
-                                                'author':author_name })
+            return render(request,'main.html',{'items':items,
+                                                'author':author_id })
     
     else:
         return render(request, 'login.html', {'error_msg':error_msg})
@@ -360,8 +381,10 @@ def getyourProfile(request, current_user, current_userid):
 def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
+    posts = []
     
     if request.method =="GET":
+        author = Authors.objects.get(username=request.user.username)
         user = Authors.objects.get(author_uuid=user_id, location="bubble")
         items.append(user)
 
@@ -377,9 +400,33 @@ def getaProfile(request, theusername, user_id):
                 if not (a in items):
                     ufriends.append(a)
 
-        return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': user})
+        # if current user views their profile, display all own posts
+        if user==author:
+            for x in Posts.objects.filter(author_id=user):
+                posts.insert(0, x)
 
 
+        else:
+
+            # BETTER than the for loop BUT cannot filter with status=True for some reason!
+            #if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
+            #   for x in Posts.objects.filter(author_id=user, privacy="private"):
+            #       posts.insert(0, x)
+            for f in Friends.objects.all():
+                if f.invitee_id==author and f.inviter_id==user and not f.status: #TRUE IF FALSE??
+                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
+                        posts.insert(0,x)
+                if f.invitee_id==user and f.inviter_id==author and not f.status: #TRUE IF FALSE??
+                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
+                        posts.insert(0,x)
+
+            for x in Posts.objects.filter(author_id=user, privacy="public"):
+                posts.insert(0, x)
+
+        posts.sort(key=lambda x: x.date, reverse=True)
+
+
+        return render(request,'profile.html',{'items':items, 'posts':posts, 'ufriends':ufriends, 'author': user})
 
     if request.method == "POST":
         user = request.POST["username"]
@@ -421,8 +468,10 @@ def makePost(request):
         author_uuid = Authors.objects.get(username=current_user)
 
         content = request.POST["posttext"]
-        privacy = "public"
-            #author_uuid = "heyimcameron"
+        
+        privacy = request.POST["privacy"]
+        
+        #author_uuid = "heyimcameron"
       
         try:
             image=request.FILES["image"]
