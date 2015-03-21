@@ -536,13 +536,13 @@ def getfriendrequests(request):
     return HttpResponse(json.dumps({'freinds' : items}))
 
 
-#/main/getfriendstatus/?=user1/user2
+#/main/getfriendstatus/?user=<user1>/<user2>
 def getfriendstatus(request):
     items = []
     jsonfriend = {}
   
     if request.method == "GET":
-        x = request.GET.get('user1', '')
+        x = request.GET.get('user', '')
         x = x.split("/")
 
         user1 = str(x[0])
@@ -592,7 +592,7 @@ def getfriendstatus(request):
     print("authors",authors)
             
         
-    return HttpResponse(json.dumps(str(authors)))
+    return HttpResponse(json.dumps(authors,indent=4, sort_keys=True))
 
 
 
@@ -602,6 +602,7 @@ def getposts(request):
     items = []
    
     if request.method == "GET":
+    	print "here!"
         postobjs = Posts.objects.all()
         for x in postobjs:
             post = {}
@@ -632,9 +633,9 @@ def getposts(request):
             post['comments'] = []
             
             items.append(post)
-  #  return HttpResponse(simplejson.dumps(str({'posts' : items})))
-   # items.append({"title" : 
-    return HttpResponse(json.dumps({"posts" : items}))
+
+    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
+    #return HttpResponse(json.dumps(post))
 
 
 
@@ -656,14 +657,16 @@ def getgithub(request):
 
 
 @csrf_exempt
+# /main/checkfriends/?user=<user>
 def checkfriends(request):
     #getting info in
     if request.method == "POST":
+    	x = request.GET.get('user', '')
         data = json.loads(request.body)
         print 'FriendsData: "%s"' % request.body 
 
-        author = str(data['author'])
-
+        #author = str(data['author'])
+        author = str(x)
         print(author)
 
         authors = data['authors']
