@@ -706,7 +706,7 @@ def newfriendrequest(request):
         #newinvite = Friends.objects.get_or_create(inviter_id = author1, invitee_id=author2)
         #print(newinvite)
 
-    return HttpResponse('Friend request created')
+    return HttpResponse('200 OK')
 
 @csrf_exempt
 def Foafvis(request):
