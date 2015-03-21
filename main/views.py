@@ -729,13 +729,15 @@ def Foafvis(request):
 
         #check their host 1
         friendslist = []
+
         for x in friend:
-            friendslist.append(x)
-            print(friendslist)
-            postreq = {}
-            postreq['query'] = "friends"
-            postreq['author'] = authorid
-            postreq['authors'] = friendslist
+            if Authors.objects.filter(author_uuid = str(x)).count() >=1:
+                friendslist.append(x)
+                print(friendslist)
+                postreq = {}
+                postreq['query'] = "friends"
+                postreq['author'] = authorid
+                postreq['authors'] = friendslist
 
         #host = "http://127.0.0.1:8000/"
         #print("hi2")
@@ -780,7 +782,7 @@ def Foafvis(request):
         #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
         post['visability'] = "FOAF"
             
-            
+        print("before author")
         #author
         a = Authors.objects.get(author_uuid = posts.author_id.author_uuid)
         author={}
@@ -794,11 +796,12 @@ def Foafvis(request):
         post['comments'] = []
             
         items.append(post)
-        #print(post)
+        print(post)
         #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
         #  print(jsonfromhost.ok)
         if (flag == True):
-            #print("nice")
+            print("nice")
+            #print (json.dumps(post, indent = 4, sort_keys=True))
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True))
 
 
