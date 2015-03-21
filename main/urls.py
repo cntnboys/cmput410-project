@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     url(r'^getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
     url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
     url(r'^Foafvis/$', views.Foafvis, name='Foafvis'),
+    url(r'^newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
     
     
 )

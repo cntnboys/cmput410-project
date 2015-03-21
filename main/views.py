@@ -24,6 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
+import requests
 #from django.utils import simplejson
 
 
@@ -678,10 +679,39 @@ def getposts(request):
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
 
+@csrf_exempt
+def newfriendrequest(request):
+    items = []
+    #print("here")
+    if request.method == "POST":
+        print("here")
+        data = json.loads(request.body)
+        authorid = data['author']['id']
+        authorhost = data['author']['host']
+        friendid = data['friend']['id']
+        friendhost = data['friend']['host']
+        authorname = data['author']['displayname']
+        friendname = data['friend']['displayname']
+        friendurl = data['friend']['url']
+
+        author1 = Authors.objects.get_or_create(name=authorname, username=authorname, 
+            image="", location=authorhost, email="", github="", 
+            facebook="", twitter="")
+        print("author1",author1)
+        author2 = Authors.objects.get(author_uuid = friendid)
+        print("author2", author2)
+
+
+
+        #newinvite = Friends.objects.get_or_create(inviter_id = author1, invitee_id=author2)
+        #print(newinvite)
+
+    return HttpResponse('Friend request created')
 
 @csrf_exempt
 def Foafvis(request):
     items = []
+    current_user = request.user
     if request.method == "POST":
         
         data = json.loads(request.body)
@@ -693,34 +723,86 @@ def Foafvis(request):
         friend = data['friends']
 
         print(authorid)
-
-        print(postid)
-
         print(friend)
 
         print("host",host)
 
         #check their host 1
-        
+        friendslist = []
         for x in friend:
+            friendslist.append(x)
+            print(friendslist)
+            postreq = {}
+            postreq['query'] = "friends"
+            postreq['author'] = authorid
+            postreq['authors'] = friendslist
+
+        #host = "http://127.0.0.1:8000/"
+        #print("hi2")
+        #print(host+"main/checkfriends/?user="+authorid)
+        url = host+"main/checkfriends/?user="+authorid
+        r = requests.post(url, data=json.dumps(postreq))
+
+        # Response, status etc
+        print(r.text)
+        print(r.status_code)
+        print(str(postid))
+        thePost = Posts.objects.get(post_uuid = str(postid))
+        #myAuthor = Authors.objects.get(author_uuid = str(lara))
+        greg = Authors.objects.get(author_uuid = str(authorid))
+        #laraFriends = []
+        flag = False
+        for friend in Friends.objects.all():
+            print(friend.inviter_id.author_uuid)
+            #print(myAuthor.author_uuid)
+            print(friend.status)
+            if (friend.inviter_id.author_uuid == greg.author_uuid and friend.status == True):
+                print("in if")
+                #laraFriends.append(str(friend.invitee_id.author_uuid))
+                flag = True
+            elif (friend.invitee_id.author_uuid == greg.author_uuid and friend.status == True):    
+                flag = True
+                print "in else"
+                #laraFriends.append(str(friend.inviter_id.author_uuid))
+
+        posts = Posts.objects.get(post_uuid = postid)
+        post = {}
+
+        post['title'] = posts.title
+        post['source'] = ""
+        post['origin']= ""
+        post['description'] = ""
+        post['content-type'] = ""
+        post['content'] = posts.content
+        post['pubdate'] = str(posts.date)
+        post['guid'] = str(posts.post_uuid)
+
+        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+        post['visability'] = "FOAF"
             
-            if host == "http://cs410.cs.ualberta.ca:41061/":
-                print("hi")
-                #jsonfromhost =  requests.get(host+"friends/"+author_id+"/"+x)
-                #print(jsonfromhost.ok)
+            
+        #author
+        a = Authors.objects.get(author_uuid = posts.author_id.author_uuid)
+        author={}
+        author['id'] = str(a.author_uuid)
+        author['host'] = "thought-bubble.herokuapp.com"
+        author['displayname'] = a.username
+        author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+        post['author'] = author
+            
+        #comments
+        post['comments'] = []
+            
+        items.append(post)
+        #print(post)
+        #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
+        #  print(jsonfromhost.ok)
+        if (flag == True):
+            #print("nice")
+            return HttpResponse(json.dumps(post, indent = 4, sort_keys=True))
 
-            else:
-                host = "http://127.0.0.1:8000/"
-                print("hi2")
-                print(host+"main/checkfriends/?user="+authorid)
-                #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
-              #  print(jsonfromhost.ok)
-                
-        
-        
-       
 
-        return HttpResponse('postworked')
+        #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
 
@@ -762,19 +844,19 @@ def checkfriends(request):
         hey = str(author1.author_id)
         # ef6728777e36445d8d45d9d5125dc4c6 ng1
         # 9e4ac346d9874b7fba14f27b26ae45bb ng3
-        print("authors",authors)
-        print("author1",author1)
+        #print("authors",authors)
+        #print("author1",author1)
         for x in authors:
             newthing = str(x)
-            print("newthing",newthing)
+            #print("newthing",newthing)
             if Authors.objects.filter(author_uuid=newthing):
                 author2 = Authors.objects.get(author_uuid = newthing)
                 hey2 = str(author2.author_id)
-                print ("hey2",hey2)
+                #print ("hey2",hey2)
                 if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
                     newauthors.append(str(x))
                 elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
-                    print "there!"
+                    #print "there!"
                     newauthors.append(str(x))
                 else:
                     return
