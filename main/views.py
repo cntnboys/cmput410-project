@@ -25,21 +25,26 @@ from django.views.decorators.csrf import csrf_exempt
 try: import simplejson as json
 except ImportError: import json
 import requests
+from requests.auth import HTTPBasicAuth
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
+#http://docs.python-requests.org/en/latest/user/authentication/
+
 def getJsonfromothers(request, flag):
     if (flag == "getFriends"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = requests.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
+        r2 = requests.get('http://service/api/friends/{AUTHOR_ID}', auth=HTTPBasicAuth('user', 'pass'))
         h1 = r.json()
         h2 = r2.json()
         #for obj in h1:
         
         return
     if (flag == "getPosts"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = requests.get('http://cs410.cs.ualberta.ca:41081/api/posts/public', auth=HTTPBasicAuth('user', 'pass'))
+        r2 = requests.get('http://service/api/posts', auth=HTTPBasicAuth('user', 'pass'))
+        h1 = r.json()
+        h2 = r2.json()
         return
     if (flag == "getFriendStatus"):
         r = requests.get("")
@@ -49,6 +54,27 @@ def getJsonfromothers(request, flag):
         r = requests.get("")
         r2 = requests.get("")
         return
+    if (flag == "getPostsToAuthUser"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getSinglePost"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getCommentofPost"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getAuthors"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getOneAuthor"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+
     return
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
