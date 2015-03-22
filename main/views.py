@@ -27,8 +27,29 @@ except ImportError: import json
 import requests
 #from django.utils import simplejson
 
-
-
+#http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
+def getJsonfromothers(request, flag):
+    if (flag == "getFriends"):
+        r = requests.get("")
+        r2 = requests.get("")
+        h1 = r.json()
+        h2 = r2.json()
+        #for obj in h1:
+        
+        return
+    if (flag == "getPosts"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getFriendStatus"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    if (flag == "getFriendRequest"):
+        r = requests.get("")
+        r2 = requests.get("")
+        return
+    return
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
 # If you are logged in as a user, you will be redirected to the
