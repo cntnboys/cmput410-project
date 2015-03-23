@@ -59,6 +59,32 @@
                         {% if link.content %}
                         <span class="name">{{ link.content }}</span> </br>
                         {% endif %}
+                        
+                        
+                        <form method="POST" action="{% url "makeComment" %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" name="comment" placeholder="Write a comment">
+                            <input type="file" class="form-control" placeholder=""  name="image">
+                            <input type="hidden" name="postid" value={{link.post_id}}>
+                            <input type="submit" class="button" value="Add">
+                        </form>
+                        
+                        {% for comment in link.comments %}
+                        
+                            <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span></br></br>
+                        
+                            <div class="postcomment">
+                                {% if comment.image %}
+                                <img class="avatar" src= ../../../media/{{comment.image}} height="100" width="100"></br></br></br></br></br></br>
+                                {% endif %}
+                                {% if comment.content %}
+                                <span class="name">{{ comment.content }}</span></br></br>
+                                {% endif %}
+                                
+                            </div>
+                        {% endfor %}
+                        
+                        
                     </div></div><br/>
                 {% endfor %}
 			</div>

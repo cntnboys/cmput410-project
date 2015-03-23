@@ -62,7 +62,7 @@ class Comments(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
-    date = models.DateTimeField('date posted', null=False)
+    date = models.DateTimeField(auto_now_add=True, null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     content = models.CharField(max_length=2000, null=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)

@@ -143,7 +143,19 @@ def mainPage(request, current_user):
 
             items.sort(key=lambda x: x.date, reverse=True)
 
-	 
+            for post in items:
+                comments = []
+                try:
+                    for c in Comments.objects.all():
+                        if (c.post_id==post):
+                            comments.insert(0,c)
+                    post.comments = comments
+                    items.sort(key=lambda x: x.date, reverse=True)
+                except:
+                    post.comments = None
+
+
+
             return render(request,'main.html',{'items':items,
                                                 'author':author_id })
     
@@ -518,8 +530,6 @@ def makePost(request):
         content = request.POST["posttext"]
         
         privacy = request.POST["privacy"]
-        
-        #author_uuid = "heyimcameron"
       
         try:
             image=request.FILES["image"]
@@ -531,6 +541,27 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
+
+def makeComment(request):
+    if request.method == "POST":
+    
+        current_user = request.user.username
+        author_id = Authors.objects.get(username=current_user)
+        
+        current_post = request.POST["postid"]
+        post_id = Posts.objects.get(post_id=current_post)
+        
+        comment = request.POST["comment"]
+        
+        try:
+            image = request.FILES["image"]
+        except:
+            image=""
+    
+        new_comment = Comments.objects.get_or_create(author_id = author_id, post_id = post_id, content = comment, image=image)
+    
+    return redirect(mainPage, current_user=request.user.username)
+    
 # Register Page function is called when author is on the registration page
 # All fields on the registration pages are received to store into the database.
 # If a username exists then author will be prompted that the user name exists and
@@ -902,6 +933,7 @@ def getcomments(request):
         for x in Comments.objects.all():
             items.insert(0,x)
     return HttpResponse(json.dumps({'comments' : items}))
+
 
 def getgithub(request):
     items = []
