@@ -76,6 +76,7 @@ def getJsonfromothers(request, flag):
         return
 
     return
+
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
 # If you are logged in as a user, you will be redirected to the
@@ -83,12 +84,10 @@ def getJsonfromothers(request, flag):
 def indexPage(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
-
         items = []
         if request.method == "GET":
             for x in Posts.objects.all().order_by("date"):
                items.insert(0,x)
-
 
         current_user = request.user.get_username()
         author = Authors.objects.get(username=current_user)
@@ -952,13 +951,7 @@ def checkfriends(request):
         myjson['author'] = author
         myjson['friends'] = newauthors
 
-            
-
         print("dump",json.dumps(myjson))
-
-        
-        
-
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
 
        
