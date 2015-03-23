@@ -24,8 +24,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
-import requests
-from requests.auth import HTTPBasicAuth
+#import request
+#from request.auth import HTTPBasicAuth
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
@@ -33,46 +33,46 @@ from requests.auth import HTTPBasicAuth
 
 def getJsonfromothers(request, flag):
     if (flag == "getFriends"):
-        r = requests.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = requests.get('http://service/api/friends/{AUTHOR_ID}', auth=HTTPBasicAuth('user', 'pass'))
+        r = request.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
+        r2 = request.get('http://service/api/friends/{AUTHOR_ID}', auth=HTTPBasicAuth('user', 'pass'))
         h1 = r.json()
         h2 = r2.json()
         #for obj in h1:
         
         return
     if (flag == "getPosts"):
-        r = requests.get('http://cs410.cs.ualberta.ca:41081/api/posts/public', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = requests.get('http://service/api/posts', auth=HTTPBasicAuth('user', 'pass'))
+        r = request.get('http://cs410.cs.ualberta.ca:41081/api/posts/public', auth=HTTPBasicAuth('user', 'pass'))
+        r2 = request.get('http://service/api/posts', auth=HTTPBasicAuth('user', 'pass'))
         h1 = r.json()
         h2 = r2.json()
         return
     if (flag == "getFriendStatus"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getFriendRequest"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getPostsToAuthUser"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getSinglePost"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getCommentofPost"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getAuthors"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
     if (flag == "getOneAuthor"):
-        r = requests.get("")
-        r2 = requests.get("")
+        r = request.get("")
+        r2 = request.get("")
         return
 
     return
@@ -826,7 +826,7 @@ def Foafvis(request):
         #print("hi2")
         #print(host+"main/checkfriends/?user="+authorid)
         url = host+"main/checkfriends/?user="+authorid
-        r = requests.post(url, data=json.dumps(postreq))
+        r = request.post(url, data=json.dumps(postreq))
 
         # Response, status etc
         print(r.text)
