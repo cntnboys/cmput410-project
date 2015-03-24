@@ -116,18 +116,13 @@
             
             <div class="panel-footer">
 
-                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
+                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
-                <input type="submit" class="rightbtn postbtn" value="Follow">
+                <input type="submit" class="rightbtn postbtn" value="FriendRequest">
                 </form>
 
-                
-                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
-                {% csrf_token %}
-                <input type="hidden" name="friendrequest" value="{{ link.username }}">
-                <input type="submit" class="rightbtn postbtn" value="Friend Request">
-                </form>
+               
             </div>
             {% endif %}
                 {% endfor %}
@@ -140,8 +135,6 @@
                 <div class="bubbleWrapper">
                     <!-- Need to do images -->
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                    <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
-                    <span class="name">{{ link.username }}</span>
                     <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
                         <input type="hidden" value="{{link.username}}" name="username">
@@ -158,7 +151,7 @@
     
     {% if posts %}
     <div class="wrapper">
-        <h1 class='recentPost'>Recent Posts</h1>
+        <h1 class="recentPost">Recent Posts</h1>
         {% for link in posts %}
         <div class="post triangle-isosceles">
             {% if link.title %}
