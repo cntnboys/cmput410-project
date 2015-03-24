@@ -135,6 +135,15 @@ def mainPage(request, current_user):
             # retrieve all public posts
             for x in Posts.objects.filter(privacy="public"):
                items.insert(0,x)
+
+            # retrieve all posts from bubble and that are friends aswell (bubblefreind)
+            for f in Friends.objects.all():
+                if (f.invitee_id==author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="bubblefriend"):
+                       items.insert(0,x)
+                if (f.inviter_id==author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="bubblefriend"):
+                       items.insert(0,x)
         
             # retrieve all private posts of current user (these have been left out in all above queries)
             for x in Posts.objects.filter(author_id=author_id, privacy="private"):
