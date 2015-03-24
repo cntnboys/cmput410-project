@@ -524,6 +524,7 @@ def makePost(request):
         content = request.POST["posttext"]
         
         privacy = request.POST["privacy"]
+        print(privacy)
       
         try:
             image=request.FILES["image"]

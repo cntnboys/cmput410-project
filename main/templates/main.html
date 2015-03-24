@@ -30,9 +30,22 @@
 					<br/>
 					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea>
 					<input type="file" class="form-control" placeholder=""  name="image">
-                    <br/>
-                    <label>Public</label><input type="radio" name="privacy" value="public" checked>
-                    <label>Private</label><input type="radio" name="privacy" value="private">
+					<br/>
+					Select your Post privacy setting:
+                    <select name="privacy">
+		      <option value="public">Public</option>
+		      <option value="private">Private</option>
+		      <option value="bubble">Freinds on my Host</option>
+		      <option value="friends">Friends Only</option>
+		      <option value="foaf">Friend of Friend Only</option>
+		      <option value="{{ user.get_username }}">Private Author</option>
+		   </select>
+
+		     <select name="privauthor">
+		      <option value=""></option>
+		      
+		   </select>
+		    
 					<br/>
 					<input type="submit" class="rightbtn postbtn" value="Post">
 				</form>
