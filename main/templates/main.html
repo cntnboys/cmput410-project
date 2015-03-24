@@ -54,7 +54,7 @@
                 		<br/><br/>
                     <div class="postbody">
                         {% if link.image %}
-                        <img class="avatar" src= ../../../media/{{link.image}} height="100" width="100"> </br></br>
+			<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}" height="115" width="150" /></a> </br></br>
                         {% endif %}
                         {% if link.content %}
                         <span class="name">{{ link.content }}</span> </br>
@@ -75,7 +75,7 @@
                         
                             <div class="postcomment">
                                 {% if comment.image %}
-                                <img class="avatar" src= ../../../media/{{comment.image}} height="100" width="100"></br></br></br></br></br></br>
+                            	<a href="../../../media/{{comment.image}}"><img src="../../../media/{{comment.image}}"  height="115" width="150" /></a>  </br></br></br></br></br></br>
                                 {% endif %}
                                 {% if comment.content %}
                                 <span class="name">{{ comment.content }}</span></br></br>
