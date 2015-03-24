@@ -20,8 +20,6 @@ urlpatterns = patterns('',
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
 
-
-
     url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),

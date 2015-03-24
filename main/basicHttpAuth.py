@@ -1,10 +1,12 @@
 import base64
-
+import json
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
+# This code snippet is taken from django snippets: 
+# https://djangosnippets.org/snippets/243/
+# and Written By Scanner. The code snippet is used to allow for basic auth
 #############################################################################
-#
 def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
     """
     This is a helper function used by both 'logged_in_or_basicauth' and
@@ -14,7 +16,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
     """
     if test_func(request.user):
         # Already logged in, just return the view.
-        #
+        print(request.user)
         return view(request, *args, **kwargs)
 
     # They are not logged in. See if they provided login credentials
@@ -24,7 +26,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
         if len(auth) == 2:
             # NOTE: We are only support basic authentication for now.
             if auth[0].lower() == "basic":
-                uname, passwd = base64.b64decode(auth[1]).decode('ascii')split(':')
+                uname, passwd = base64.b64decode(auth[1]).decode('ascii').split(':')
                 user = authenticate(username=uname, password=passwd)
                 if user is not None:
                     if user.is_active:
@@ -35,14 +37,13 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
     # Either they did not provide an authorization header or
     # something in the authorization attempt failed. Send a 401
     # back to them to ask them to authenticate.
-    #
     response = HttpResponse()
     response.status_code = 401
     response['WWW-Authenticate'] = 'Basic realm="%s"' % realm
+    response['message'] = 'not authenticated'
     return response
     
 #############################################################################
-#
 def logged_in_or_basicauth(realm = ""):
     """
     A simple decorator that requires a user to be logged in. If they are not
@@ -81,7 +82,6 @@ def logged_in_or_basicauth(realm = ""):
     return view_decorator
 
 #############################################################################
-#
 def has_perm_or_basicauth(perm, realm = ""):
     """
     This is similar to the above decorator 'logged_in_or_basicauth'

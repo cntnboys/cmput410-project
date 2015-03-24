@@ -17,6 +17,8 @@ import Comment
 
 from main.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
+from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
+from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
@@ -110,44 +112,39 @@ def onePost(request,post_uuid):
 # Main Page function allows user to go back to the stream of posts
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
+
+@logged_in_or_basicauth()
 def mainPage(request, current_user):
     context = RequestContext(request)
-    error_msg = "Not Logged In. Please Login Here."
+    current_user = request.user.get_username()
+    author_id = Authors.objects.get(username=current_user)
 
-    if request.user.is_authenticated():
-        current_user = request.user.get_username()
-        author_id = Authors.objects.get(username=current_user)
+    items = []
+
+    if request.method == "GET":
+
+        # retrieve private posts of friends
+        for f in Friends.objects.all():
+            if (f.invitee_id==author_id) and not f.status: #TRUE IF FALSE??
+                for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
+                   items.insert(0,x)
+            if (f.inviter_id==author_id) and not f.status: #TRUE IF FALSE??
+                for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
+                   items.insert(0,x)
     
-        items = []
-
-        if request.method == "GET":
-
-            # retrieve private posts of friends
-            for f in Friends.objects.all():
-                if (f.invitee_id==author_id) and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-                       items.insert(0,x)
-                if (f.inviter_id==author_id) and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-                       items.insert(0,x)
-        
-            # retrieve all public posts
-            for x in Posts.objects.filter(privacy="public"):
-               items.insert(0,x)
-        
-            # retrieve all private posts of current user (these have been left out in all above queries)
-            for x in Posts.objects.filter(author_id=author_id, privacy="private"):
-               items.insert(0, x)
-
-
-            items.sort(key=lambda x: x.date, reverse=True)
-
-	 
-            return render(request,'main.html',{'items':items,
-                                                'author':author_id })
+        # retrieve all public posts
+        for x in Posts.objects.filter(privacy="public"):
+           items.insert(0,x)
     
-    else:
-        return render(request, 'login.html', {'error_msg':error_msg})
+        # retrieve all private posts of current user (these have been left out in all above queries)
+        for x in Posts.objects.filter(author_id=author_id, privacy="private"):
+           items.insert(0, x)
+
+
+        items.sort(key=lambda x: x.date, reverse=True) 
+        return render(request,'main.html',{'items':items,
+                                            'author':author_id })
+    
 
 # Log in Page function is a check for authenticated author log in
 # If author inputs incorrect or non exisiting things in the fields,
@@ -173,44 +170,8 @@ def loginPage(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect(mainPage, current_user=request.user.get_username())
-
-                    """
-                    This is an attempt to get sessions up. HALP.
-
-                    author = Authors.objects.get(username=username, 
-                            location='bubble')
-                    author_dict = {'authors' : author}
-
-
-
-                    response = render_to_response("main.html", author_dict, context)             
+                    response = redirect(mainPage, current_user=request.user.get_username())
                     return response
-
-                    try:        
-
-                        template = loader.get_template('main.html')
-                        context = RequestContext(request, request.session)
-
-                        return HttpResponse(template.render(context))
-
-                    
-                        data = json.dumps({
-                                'author_uuid' : author.__dict__['author_uuid'],
-                                'username': username })
-                        return HttpResponse(data, content_type='application/json')
-                    
-
-                    except (KeyError, Authors.DoesNotExist):
-
-                        request.session['author_uuid'] = None
-                        request.session['username'] = None
-                        logout(request)
-
-                        error_msg = "Cannot store session information." 
-                        return render (request, 'login.html', {'error_msg':error_msg })
-                    """
-
 
                 else:
                     error_msg = """Account is deactivated. Please contact 
@@ -234,12 +195,12 @@ def loginPage(request):
 
 # Log out function allows user to log out of the current authenticated account
 # and the author will be redirected to the intro page.
+@logged_in_or_basicauth()
 def logout(request):
     # Logout function redefined in import statement by Chris Morgan
     # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
-
-    context = RequestContext(request)
     auth_logout(request)
+    Session.objects.all().delete()
     return redirect(indexPage)
 
 # TODO: use profile template to load page of FOAF
@@ -381,6 +342,7 @@ def friends(request):
 
 # We are not currently using this function anymore. We have condensed this function
 # into get a profile.
+@logged_in_or_basicauth()
 def getyourProfile(request, current_user, current_userid):
     items = []
     ufriends=[]
@@ -393,31 +355,7 @@ def getyourProfile(request, current_user, current_userid):
             current_userid =yourprofileobj.__dict__["author_uuid"]  
 
             items.append(yourprofileobj)
-            """
-            for e in Friends.objects.filter(inviter_id.author_uuid=current_user.id):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
-                    ufriends.append(a)
-                        #print a.values('name')
 
-            for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
-                    ufriends.append(a)
-        else: #do it anyway for now using ID 1 even if not logged in
-            for e in Friends.objects.filter(inviter_id.author_uuid=1):
-                if e.status is True:
-                    a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
-                    ufriends.append(a)
-        
-            for e in Friends.objects.filter(invitee_id.author_uuid=1):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
-                    ufriends.append(a)
-
-
-        return render(request,'profile.html',{'items':items},{'ufriends':ufriends})
-        """
         return render(request,'profile.html',{'items':items,
                                                'author': yourprofileobj })
 
@@ -613,9 +551,6 @@ def searchPage(request):
 #getting Json objects to send to other groups 
 
 #needs authentication implemented into functions
-
-
-
 def getfriendrequests(request):
     items = []
     if request.method == "GET":
