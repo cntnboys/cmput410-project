@@ -28,7 +28,7 @@ class Authors(models.Model):
 class Friends(models.Model):
     inviter_id = models.ForeignKey(Authors, related_name='inviter_id', null=False)
     invitee_id = models.ForeignKey(Authors, related_name='invitee_id', null=False)
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=0)
 
     class Meta:
         db_table = "friends"
