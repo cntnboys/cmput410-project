@@ -1,4 +1,4 @@
-x{% extends "navbar.html" %}
+{% extends "navbar.html" %}
 
 {% block head %}
 
@@ -14,6 +14,9 @@ x{% extends "navbar.html" %}
     <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
 
     <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+	<script src="{{ STATIC_URL }}js/less.js"></script>
     <br>
 
 </head>
@@ -167,7 +170,8 @@ x{% extends "navbar.html" %}
             <br/><br/>
             <div class="postbody">
                 {% if link.image %}
-                <img class="avatar" src= ../../../media/{{link.image}} height="100" width="100"> </br></br>
+               
+		<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}"  height="82" width="100" /></a> </br></br>
                     {% endif %}
                     {% if link.content %}
                     <span class="name">{{ link.content }}</span> </br>
