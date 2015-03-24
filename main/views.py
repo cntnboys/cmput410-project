@@ -182,6 +182,11 @@ def mainPage(request, current_user):
             for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
                items.insert(0, x)
 
+            # retreive all private posts of the current user (sent by another author to us privately :))))) )
+            for x in Posts.objects.filter(privacy=current_user):
+                items.insert(0,x)
+
+
 
             items.sort(key=lambda x: x.date, reverse=True)
 
@@ -568,7 +573,12 @@ def makePost(request):
         
         privacy = request.POST["privacy"]
         print(privacy)
-      
+        
+        privateauthor = request.POST["privateauthor"]
+
+        if privateauthor != "":
+            privacy = privateauthor
+
         try:
             image=request.FILES["image"]
         except:
