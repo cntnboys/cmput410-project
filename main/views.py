@@ -120,17 +120,50 @@ def mainPage(request, current_user):
         author_id = Authors.objects.get(username=current_user)
     
         items = []
+        ufriends=[]
+        items2 = []
 
         if request.method == "GET":
 
-            # retrieve private posts of friends
+
+
+            #get freinds of user for post input
+            author = Authors.objects.get(username=current_user)
+            user = Authors.objects.get(author_uuid=author_id.author_uuid)
+            items2.append(user)
+
+            for e in Friends.objects.filter(inviter_id=user):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    ufriends.append(a)
+      
+
+            for e in Friends.objects.filter(invitee_id=user):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        ufriends.append(a)
+            
+            print("ufreinds",ufriends)
+            for x in ufriends:
+                print(x.username)
+
+            # retrieve posts of friends
             for f in Friends.objects.all():
-                if (f.invitee_id==author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-                       items.insert(0,x)
-                if (f.inviter_id==author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-                       items.insert(0,x)
+                 print("authorid:",author_id.author_id)
+                 print("invitee_id",f.invitee_id.author_id)
+                 if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                     for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
+                         print("gothere2222")
+                         items.insert(0,x)
+                        
+                
+                 if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                     print("got here11")
+                     for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
+                        items.insert(0,x)
+                       
+           
         
             # retrieve all public posts
             for x in Posts.objects.filter(privacy="public"):
@@ -138,15 +171,15 @@ def mainPage(request, current_user):
 
             # retrieve all posts from bubble and that are friends aswell (bubblefreind)
             for f in Friends.objects.all():
-                if (f.invitee_id==author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="bubblefriend"):
+                if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
                        items.insert(0,x)
-                if (f.inviter_id==author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="bubblefriend"):
+                if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
                        items.insert(0,x)
         
             # retrieve all private posts of current user (these have been left out in all above queries)
-            for x in Posts.objects.filter(author_id=author_id, privacy="private"):
+            for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
                items.insert(0, x)
 
 
@@ -166,7 +199,8 @@ def mainPage(request, current_user):
 
 
             return render(request,'main.html',{'items':items,
-                                                'author':author_id })
+                                              'author':author_id ,
+                                               'ufriends':ufriends})
     
     else:
         return render(request, 'login.html', {'error_msg':error_msg})

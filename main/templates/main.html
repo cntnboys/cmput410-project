@@ -41,13 +41,16 @@
 		      <option value="{{ user.get_username }}">Private Author</option>
 		   </select>
 
-		     <select name="privauthor">
-		      <option value=""></option>
-		      
+		    Select author for a private post:
+		     <select name="privateauthor">
+		   
+		    {% for x in ufriends %}
+		  
+		      <option value="{{ x.username }}">{{ x.username }}</option>
+		     {% endfor %}
 		   </select>
 		    
-					<br/>
-					<input type="submit" class="rightbtn postbtn" value="Post">
+		<input type="submit" class="rightbtn postbtn" value="Post">
 				</form>
 		</div>
 	</div>
