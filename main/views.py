@@ -468,17 +468,11 @@ def getaProfile(request, theusername, user_id):
 
         else:
 
-            # BETTER than the for loop BUT cannot filter with status=True for some reason!
+ 
             if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
                 for x in Posts.objects.filter(author_id=user, privacy="private"):
                    posts.insert(0, x)
-            #for f in Friends.objects.all():
-            #   if f.invitee_id==author and f.inviter_id==user and not f.status: #TRUE IF FALSE??
-            #       for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-            #           posts.insert(0,x)
-            #   if f.invitee_id==user and f.inviter_id==author and not f.status: #TRUE IF FALSE??
-            #       for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-            #           posts.insert(0,x)
+
 
             for x in Posts.objects.filter(author_id=user, privacy="public"):
                 posts.insert(0, x)
