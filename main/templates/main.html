@@ -72,7 +72,7 @@
                         
                         {% for comment in link.comments %}
                         
-                            <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span></br></br>
+                            <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=comment.author_id.username user_id=comment.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span></br></br>
                         
                             <div class="postcomment">
                                 {% if comment.image %}

@@ -125,10 +125,10 @@ def mainPage(request, current_user):
 
             # retrieve private posts of friends
             for f in Friends.objects.all():
-                if (f.invitee_id==author_id) and not f.status: #TRUE IF FALSE??
+                if (f.invitee_id==author_id) and f.status:
                     for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
                        items.insert(0,x)
-                if (f.inviter_id==author_id) and not f.status: #TRUE IF FALSE??
+                if (f.inviter_id==author_id) and f.status:
                     for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
                        items.insert(0,x)
         
@@ -319,10 +319,10 @@ def friendRequest(request):
         #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
         if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
             print "here!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
         elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
             print "there!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
         else:
             new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
 
@@ -468,17 +468,11 @@ def getaProfile(request, theusername, user_id):
 
         else:
 
-            # BETTER than the for loop BUT cannot filter with status=True for some reason!
-            #if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
-            #   for x in Posts.objects.filter(author_id=user, privacy="private"):
-            #       posts.insert(0, x)
-            for f in Friends.objects.all():
-                if f.invitee_id==author and f.inviter_id==user and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-                        posts.insert(0,x)
-                if f.invitee_id==user and f.inviter_id==author and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-                        posts.insert(0,x)
+ 
+            if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
+                for x in Posts.objects.filter(author_id=user, privacy="private"):
+                   posts.insert(0, x)
+
 
             for x in Posts.objects.filter(author_id=user, privacy="public"):
                 posts.insert(0, x)
@@ -809,7 +803,7 @@ def newfriendrequest(request):
         print(author3)
 
         if (Friends.objects.filter(invitee_id = author3, inviter_id=author2, status = False).count() >=1):
-            f = Friends.objects.filter(invitee_id = author3, inviter_id=author2).update(status=True)
+            f = Friends.objects.filter(invitee_id = author3, inviter_id=author2).update(status=1)
             return HttpResponse('That user has already requested to be your friend. Accepting their friend request. 200 OK')
         elif (Friends.objects.filter(inviter_id = author3, invitee_id=author2, status = False).count() >=1):
             return HttpResponse('Your previous friend request to that user is still pending approval.')
