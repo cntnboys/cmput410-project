@@ -15,7 +15,7 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
+from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
@@ -24,6 +24,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
+
+# Github feed stuff
+import feedparser
+from django.utils.html import strip_tags
+
 #import request
 #from request.auth import HTTPBasicAuth
 #from django.utils import simplejson
@@ -114,11 +119,12 @@ def onePost(request,post_uuid):
 def mainPage(request, current_user):
     context = RequestContext(request)
     error_msg = "Not Logged In. Please Login Here."
+    
 
     if request.user.is_authenticated():
         current_user = request.user.get_username()
         author_id = Authors.objects.get(username=current_user)
-    
+
         items = []
         ufriends=[]
         items2 = []
@@ -491,6 +497,9 @@ def getaProfile(request, theusername, user_id):
     ufriends = []
     posts = []
     
+    # call to github to check for new posts?
+    githubAggregator(theusername)
+
     if request.method =="GET":
         author = Authors.objects.get(username=request.user.username)
         user = Authors.objects.get(author_uuid=user_id, location="bubble")
@@ -659,6 +668,11 @@ def registerPage(request):
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
+
+        # If registered user specifies a github account
+        if(github is not ""):
+            githubAggregator(username)
+
         return HttpResponseRedirect("/main/login", {"success": success})
 
     else:
@@ -1046,6 +1060,60 @@ def checkfriends(request):
        
 
     #creating info out
+
+def githubAggregator(user):
+    entries = []
+
+    author = Authors.objects.get(username = user)
+    gitname = author.github
+    giturl = "http://www.github.com/"+gitname+".atom"
+    #print("giturl",giturl)
+    feed = feedparser.parse(giturl)
+
+    for item in feed.entries:
+        title = item.title
+        #print("title", item['title'],"\n")
+
+        #print("url", item['link'])
+        gitname = item['author']
+        #print("author", gitname)
+        #print("commit", item['title'])
+        date = item['updated']
+        #print("updated", date)
+        itemid = item['id']
+        #print("ITEMID:",item['id'])
+
+        a = strip_tags(item['summary'])
+        content = a.split(gitname)
+
+        if len(content) > 1:
+            try:
+                content = content[1]
+            except IndexError:
+                print("content error")
+        else:
+            content = a
+
+        content = content.replace('\n','')
+        #print("content", content)
+        #print("desc", desc,"\n")
+        privacy = "public" # Public github data
+
+        if(GithubPosts.objects.filter(date = date, gh_uuid = itemid).count() >= 1):
+            print("post already exists")
+        else:
+            #print("new post")
+            if(Posts.objects.filter(author_id = author, title = title, content=content, privacy = privacy,image="" ).count() < 1):
+                print("adding")
+                new_post = Posts.objects.get_or_create(author_id = author, title = title, content=content, privacy = privacy,date =date,image=""  )
+                thepost = Posts.objects.get(author_id = author, title = title, content=content, privacy = privacy,image=""  )
+                gh_post = GithubPosts.objects.get_or_create(gh_uuid = itemid, post_id = thepost, date = date, content= content)
+            else:
+                print("duplicate post content (itemid and date arent the same but post is)")
+
+
+    #threading.Timer(180, githubAggregator(user)).start() # call function ever 5 mins? this infinite loops atm
+    return None
 
         
 
