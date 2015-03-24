@@ -26,7 +26,7 @@ class Authors(models.Model):
 class Friends(models.Model):
     inviter_id = models.ForeignKey(Authors, related_name='inviter_id', null=False)
     invitee_id = models.ForeignKey(Authors, related_name='invitee_id', null=False)
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=0)
 
     class Meta:
         db_table = "friends"
@@ -60,7 +60,7 @@ class Comments(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
-    date = models.DateTimeField('date posted', null=False)
+    date = models.DateTimeField(auto_now_add=True, null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     content = models.CharField(max_length=2000, null=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True)
@@ -87,6 +87,19 @@ class GithubStreams(models.Model):
     def __str__(self):
             return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
 
+class GithubPosts(models.Model):
+    gh_id = models.AutoField(primary_key = True)
+    gh_uuid = models.CharField(max_length=100)
+    post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
+    date = models.DateTimeField('date posted', null=False)
+    content = models.CharField(max_length=10000)
+
+    class Meta:
+        db_table = "githubposts"
+        verbose_name = "GithubPosts"
+
+    def __str__(self):
+            return "gh_id: " + str(self.gh_id) + "gh_uuid: " + str(self.gh_uuid) + "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date) + " content: " + str(self.content)
 
 class TwitterStreams(models.Model):
     tweet_id = models.AutoField(primary_key = True)

@@ -1,4 +1,4 @@
-x{% extends "navbar.html" %}
+{% extends "navbar.html" %}
 
 {% block head %}
 
@@ -14,6 +14,9 @@ x{% extends "navbar.html" %}
     <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
 
     <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+	<script src="{{ STATIC_URL }}js/less.js"></script>
     <br>
 
 </head>
@@ -36,14 +39,22 @@ x{% extends "navbar.html" %}
           <div class="panel panel-info" >
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/cat.jpg" class="img-circle"> </div>
-                
+		{% for link in items %}
+		
+		 {% if link.image %}
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="../../../media/{{ link.image }}" class="img-circle" height="205" width="204"> </div>
+		
+		{% else %}
+		 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/plaeholder_icon.png" class="img-circle"> </div>
+		{% endif %}
+	
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
+		    
                     <tbody>
 
 
-			{% for link in items %}
+		
 			<tr>
                         <td>Username</td>
                         <td>{{ link.username }}</td>
@@ -105,32 +116,25 @@ x{% extends "navbar.html" %}
             
             <div class="panel-footer">
 
-                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
+                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
-                <input type="submit" class="rightbtn postbtn" value="Follow">
+                <input type="submit" class="rightbtn postbtn" value="FriendRequest">
                 </form>
 
-                
-                <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="afollow">
-                {% csrf_token %}
-                <input type="hidden" name="friendrequest" value="{{ link.username }}">
-                <input type="submit" class="rightbtn postbtn" value="Friend Request">
-                </form>
+               
             </div>
             {% endif %}
                 {% endfor %}
 
           </div>
         <div class="wrapper">
-            <div class="panel left">
+            <div class="recentPost">
                 <h1>Friends</h1>
                 {% for link in ufriends %}
                 <div class="bubbleWrapper">
                     <!-- Need to do images -->
                     <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                    <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
-                    <span class="name">{{ link.username }}</span>
                     <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
                         <input type="hidden" value="{{link.username}}" name="username">
@@ -147,7 +151,7 @@ x{% extends "navbar.html" %}
     
     {% if posts %}
     <div class="wrapper">
-        <h1 class='recentPost'>Recent Posts</h1>
+        <h1 class="recentPost">Recent Posts</h1>
         {% for link in posts %}
         <div class="post triangle-isosceles">
             {% if link.title %}
@@ -159,7 +163,8 @@ x{% extends "navbar.html" %}
             <br/><br/>
             <div class="postbody">
                 {% if link.image %}
-                <img class="avatar" src= ../../../media/{{link.image}} height="100" width="100"> </br></br>
+               
+		<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}"  height="82" width="100" /></a> </br></br>
                     {% endif %}
                     {% if link.content %}
                     <span class="name">{{ link.content }}</span> </br>

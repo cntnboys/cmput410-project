@@ -15,7 +15,7 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubStreams, TwitterStreams, FacebookStreams
+from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts, TwitterStreams, FacebookStreams
 from django.contrib.auth.models import User
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
@@ -26,6 +26,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
+
+# Github feed stuff
+import feedparser
+from django.utils.html import strip_tags
+
 #import request
 #from request.auth import HTTPBasicAuth
 #from django.utils import simplejson
@@ -120,32 +125,86 @@ def mainPage(request, current_user):
     author_id = Authors.objects.get(username=current_user)
 
     items = []
+    ufriends=[]
+    items2 = []
 
     if request.method == "GET":
+        #get friends of user for post input
+        author = Authors.objects.get(username=current_user)
+        user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        items2.append(user)
 
-        # retrieve private posts of friends
+        for e in Friends.objects.filter(inviter_id=user):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                ufriends.append(a)
+  
+
+        for e in Friends.objects.filter(invitee_id=user):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                if not (a in items):
+                    ufriends.append(a)
+        
+        print("ufreinds",ufriends)
+        for x in ufriends:
+            print(x.username)
+
+        # retrieve posts of friends
         for f in Friends.objects.all():
-            if (f.invitee_id==author_id) and not f.status: #TRUE IF FALSE??
-                for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-                   items.insert(0,x)
-            if (f.inviter_id==author_id) and not f.status: #TRUE IF FALSE??
-                for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-                   items.insert(0,x)
+             print("authorid:",author_id.author_id)
+             print("invitee_id",f.invitee_id.author_id)
+             if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                 for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
+                     print("gothere2222")
+                     items.insert(0,x)
+                    
+            
+             if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                 print("got here11")
+                 for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
+                    items.insert(0,x)
+                   
+       
     
         # retrieve all public posts
         for x in Posts.objects.filter(privacy="public"):
            items.insert(0,x)
+
+        # retrieve all posts from bubble and that are friends aswell (bubblefreind)
+        for f in Friends.objects.all():
+            if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
+                   items.insert(0,x)
+            if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
+                   items.insert(0,x)
     
         # retrieve all private posts of current user (these have been left out in all above queries)
-        for x in Posts.objects.filter(author_id=author_id, privacy="private"):
+        for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
            items.insert(0, x)
 
+        # retreive all private posts of the current user (sent by another author to us privately :))))) )
+        for x in Posts.objects.filter(privacy=current_user):
+            items.insert(0,x)
 
-        items.sort(key=lambda x: x.date, reverse=True) 
+        for post in items:
+            comments = []
+            try:
+                for c in Comments.objects.all():
+                    if (c.post_id==post):
+                        comments.insert(0,c)
+                post.comments = comments
+                items.sort(key=lambda x: x.date, reverse=True)
+            except:
+                post.comments = None
+
+
+
         return render(request,'main.html',{'items':items,
-                                            'author':author_id })
+                                          'author':author_id ,
+                                           'ufriends':ufriends})
     
-
 # Log in Page function is a check for authenticated author log in
 # If author inputs incorrect or non exisiting things in the fields,
 # then author will be prompted that either the input was incorrect or
@@ -267,10 +326,10 @@ def friendRequest(request):
         #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
         if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
             print "here!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
         elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
             print "there!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=True)
+            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
         else:
             new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
 
@@ -368,6 +427,9 @@ def getaProfile(request, theusername, user_id):
     ufriends = []
     posts = []
     
+    # call to github to check for new posts?
+    githubAggregator(theusername)
+
     if request.method =="GET":
         author = Authors.objects.get(username=request.user.username)
         user = Authors.objects.get(author_uuid=user_id, location="bubble")
@@ -393,17 +455,11 @@ def getaProfile(request, theusername, user_id):
 
         else:
 
-            # BETTER than the for loop BUT cannot filter with status=True for some reason!
-            #if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
-            #   for x in Posts.objects.filter(author_id=user, privacy="private"):
-            #       posts.insert(0, x)
-            for f in Friends.objects.all():
-                if f.invitee_id==author and f.inviter_id==user and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.inviter_id, privacy="private"):
-                        posts.insert(0,x)
-                if f.invitee_id==user and f.inviter_id==author and not f.status: #TRUE IF FALSE??
-                    for x in Posts.objects.filter(author_id=f.invitee_id, privacy="private"):
-                        posts.insert(0,x)
+ 
+            if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
+                for x in Posts.objects.filter(author_id=user, privacy="private"):
+                   posts.insert(0, x)
+
 
             for x in Posts.objects.filter(author_id=user, privacy="public"):
                 posts.insert(0, x)
@@ -454,10 +510,16 @@ def makePost(request):
 
         content = request.POST["posttext"]
         
-        privacy = request.POST["privacy"]
+        privacy = str(request.POST["privacy"])
+        print("privacy",privacy)
         
-        #author_uuid = "heyimcameron"
-      
+        if privacy == current_user:
+            privateauthor = str(request.POST["privateauthor"])
+            print("privateauthor:",privateauthor)
+            if privateauthor != "":
+                privacy = privateauthor
+                print("privacy2:",privacy)
+
         try:
             image=request.FILES["image"]
         except:
@@ -468,6 +530,27 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
+
+def makeComment(request):
+    if request.method == "POST":
+    
+        current_user = request.user.username
+        author_id = Authors.objects.get(username=current_user)
+        
+        current_post = request.POST["postid"]
+        post_id = Posts.objects.get(post_id=current_post)
+        
+        comment = request.POST["comment"]
+        
+        try:
+            image = request.FILES["image"]
+        except:
+            image=""
+    
+        new_comment = Comments.objects.get_or_create(author_id = author_id, post_id = post_id, content = comment, image=image)
+    
+    return redirect(mainPage, current_user=request.user.username)
+    
 # Register Page function is called when author is on the registration page
 # All fields on the registration pages are received to store into the database.
 # If a username exists then author will be prompted that the user name exists and
@@ -515,6 +598,11 @@ def registerPage(request):
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
+
+        # If registered user specifies a github account
+        if(github is not ""):
+            githubAggregator(username)
+
         return HttpResponseRedirect("/main/login", {"success": success})
 
     else:
@@ -712,7 +800,7 @@ def newfriendrequest(request):
         print(author3)
 
         if (Friends.objects.filter(invitee_id = author3, inviter_id=author2, status = False).count() >=1):
-            f = Friends.objects.filter(invitee_id = author3, inviter_id=author2).update(status=True)
+            f = Friends.objects.filter(invitee_id = author3, inviter_id=author2).update(status=1)
             return HttpResponse('That user has already requested to be your friend. Accepting their friend request. 200 OK')
         elif (Friends.objects.filter(inviter_id = author3, invitee_id=author2, status = False).count() >=1):
             return HttpResponse('Your previous friend request to that user is still pending approval.')
@@ -826,16 +914,13 @@ def Foafvis(request):
         #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
-
-
-  
-
 def getcomments(request):
     items = []
     if request.method == "GET":
         for x in Comments.objects.all():
             items.insert(0,x)
     return HttpResponse(json.dumps({'comments' : items}))
+
 
 def getgithub(request):
     items = []
@@ -892,6 +977,60 @@ def checkfriends(request):
        
 
     #creating info out
+
+def githubAggregator(user):
+    entries = []
+
+    author = Authors.objects.get(username = user)
+    gitname = author.github
+    giturl = "http://www.github.com/"+gitname+".atom"
+    #print("giturl",giturl)
+    feed = feedparser.parse(giturl)
+
+    for item in feed.entries:
+        title = item.title
+        #print("title", item['title'],"\n")
+
+        #print("url", item['link'])
+        gitname = item['author']
+        #print("author", gitname)
+        #print("commit", item['title'])
+        date = item['updated']
+        #print("updated", date)
+        itemid = item['id']
+        #print("ITEMID:",item['id'])
+
+        a = strip_tags(item['summary'])
+        content = a.split(gitname)
+
+        if len(content) > 1:
+            try:
+                content = content[1]
+            except IndexError:
+                print("content error")
+        else:
+            content = a
+
+        content = content.replace('\n','')
+        #print("content", content)
+        #print("desc", desc,"\n")
+        privacy = "public" # Public github data
+
+        if(GithubPosts.objects.filter(date = date, gh_uuid = itemid).count() >= 1):
+            print("post already exists")
+        else:
+            #print("new post")
+            if(Posts.objects.filter(author_id = author, title = title, content=content, privacy = privacy,image="" ).count() < 1):
+                print("adding")
+                new_post = Posts.objects.get_or_create(author_id = author, title = title, content=content, privacy = privacy,date =date,image=""  )
+                thepost = Posts.objects.get(author_id = author, title = title, content=content, privacy = privacy,image=""  )
+                gh_post = GithubPosts.objects.get_or_create(gh_uuid = itemid, post_id = thepost, date = date, content= content)
+            else:
+                print("duplicate post content (itemid and date arent the same but post is)")
+
+
+    #threading.Timer(180, githubAggregator(user)).start() # call function ever 5 mins? this infinite loops atm
+    return None
 
         
 
