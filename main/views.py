@@ -571,13 +571,15 @@ def makePost(request):
 
         content = request.POST["posttext"]
         
-        privacy = request.POST["privacy"]
-        print(privacy)
+        privacy = str(request.POST["privacy"])
+        print("privacy",privacy)
         
-        privateauthor = request.POST["privateauthor"]
-
-        if privateauthor != "":
-            privacy = privateauthor
+        if privacy == current_user:
+            privateauthor = str(request.POST["privateauthor"])
+            print("privateauthor:",privateauthor)
+            if privateauthor != "":
+                privacy = privateauthor
+                print("privacy2:",privacy)
 
         try:
             image=request.FILES["image"]
