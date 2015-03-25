@@ -160,8 +160,6 @@ DATABASES = {
 
    }
 }
-
-ec2-107-22-173-230.compute-1.amazonaws.com
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
 #DATABASES['default'] =  dj_database_url.config()
