@@ -13,8 +13,6 @@ class Authors(models.Model):
     email = models.EmailField(max_length=80, null=False, unique=True)
     location = models.CharField(max_length=200, null=False)
     github = models.CharField(max_length=200, null=True)
-    twitter = models.CharField(max_length=200, null=True)
-    facebook = models.CharField(max_length=200, null=True)
 
     class Meta:
         db_table = "authors"
@@ -41,7 +39,6 @@ class Posts(models.Model):
     post_id = models.AutoField(primary_key = True)
     post_uuid = UUIDField(auto=True, unique=True)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
-    #author_id = models.CharField(max_length=20, null=False)
     title = models.CharField(max_length=300)
     content = models.CharField(max_length=10000)
     image = models.ImageField(upload_to="PostImages", max_length=250, null=True)
@@ -72,7 +69,6 @@ class Comments(models.Model):
     def __str__(self):
         return "author_id: " + str(self.author_id.author_id) + " post_id: " + str(self.post_id.post_id) + " content: " + str(self.content)
 
-
 class GithubStreams(models.Model):
     gh_id = models.AutoField(primary_key = True)
     gh_uuid = UUIDField(auto=True, unique=True)
@@ -100,33 +96,4 @@ class GithubPosts(models.Model):
 
     def __str__(self):
             return "gh_id: " + str(self.gh_id) + "gh_uuid: " + str(self.gh_uuid) + "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date) + " content: " + str(self.content)
-
-class TwitterStreams(models.Model):
-    tweet_id = models.AutoField(primary_key = True)
-    tweet_uuid = UUIDField(auto=True, unique=True)
-    author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
-    date = models.DateTimeField('date posted', null=False)
-    content = models.CharField(max_length=10000)
-    
-    class Meta:
-        db_table = "twitterstreams"
-        verbose_name = "TwitterStream"
-       
-    def __str__(self):
-        return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
-
-
-class FacebookStreams(models.Model):
-    fbstream_id = models.AutoField(primary_key = True)
-    fbstream_uuid = UUIDField(auto=True, unique=True)
-    author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
-    date = models.DateTimeField('date posted', null=False)
-    content = models.CharField(max_length=10000)
-    
-    class Meta:
-        db_table = "facebookstreams"
-        verbose_name = "FacebookStream"
-    
-    def __str__(self):
-        return "author_id: " + str(self.author_id.author_id) + " date: " + str(self.date) + " content: " + str(self.content)
 

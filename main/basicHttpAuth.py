@@ -25,7 +25,15 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
         if len(auth) == 2:
             # NOTE: We are only support basic authentication for now.
             if auth[0].lower() == "basic":
-                uname, passwd = base64.b64decode(auth[1]).decode('ascii').split(':')
+                # Require Username:Host:Passwd
+                try:
+                    uname, host, passwd = base64.b64decode(auth[1]).decode('ascii').split(':')
+                except:
+                    response = HttpResponse()
+                    response.status_code = 401
+                    response['message'] = 'not authenticated'
+                    return response
+
                 user = authenticate(username=uname, password=passwd)
                 if user is not None:
                     if user.is_active:

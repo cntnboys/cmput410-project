@@ -68,8 +68,8 @@
 			</form>
 					
 				
-				</div>
 		</div>
+	</div>
 	</div>
 
 
@@ -78,9 +78,9 @@
                 {% for link in items %}
                 	<div class="post triangle-isosceles">
                 		{% if link.title %}
-                			<div class="posttitle">{{ link.title }}</div>
+                			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}>{{ link.title }}</a></div>
                 		{% else %}
-                			<div class="posttitle"> Untitled Post </div>
+                			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}> Untitled Post </a></div>
                 		{% endif %}
                 		<span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
                 		<br/><br/>

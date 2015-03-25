@@ -15,8 +15,7 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts, TwitterStreams, FacebookStreams
-from django.contrib.auth.models import User
+from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login
@@ -31,13 +30,9 @@ except ImportError: import json
 import feedparser
 from django.utils.html import strip_tags
 
-#import request
-#from request.auth import HTTPBasicAuth
-#from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
-@logged_in_or_basicauth()
 def getJsonfromothers(request, flag):
     if (flag == "getFriends"):
         r = request.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
@@ -107,11 +102,10 @@ def redirectIndex(request):
     return redirect(indexPage)
 
 @logged_in_or_basicauth()
-def onePost(request,post_uuid):
+def onePost(request, post_uuid):
     items = []
-    if request.user.is_authenticated():
-        post = Posts.objects.get(post_uuid=post_uuid)
-        items.append(post)
+    post = Posts.objects.get(post_uuid=post_uuid)
+    items.append(post)
      
     return render(request,'authorpost.html',{'items':items})
 
@@ -120,7 +114,7 @@ def onePost(request,post_uuid):
 # author will be prompted to Log in first before going to that page.
 
 @logged_in_or_basicauth()
-def mainPage(request, current_user):
+def mainPage(request,author_name=None, current_user=None):
     context = RequestContext(request)
     current_user = request.user.get_username()
     author_id = Authors.objects.get(username=current_user)
@@ -140,7 +134,6 @@ def mainPage(request, current_user):
                 a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
                 ufriends.append(a)
   
-
         for e in Friends.objects.filter(invitee_id=user):
             if e.status is True :
                 a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
@@ -197,8 +190,6 @@ def mainPage(request, current_user):
                 items.sort(key=lambda x: x.date, reverse=True)
             except:
                 post.comments = None
-
-
 
         return render(request,'main.html',{'items':items,
                                           'author':author_id ,
@@ -399,25 +390,6 @@ def friends(request):
 
     print(items)
     return render(request, 'friends.html',{'items':items, 'author':aUser})
-
-# We are not currently using this function anymore. We have condensed this function
-# into get a profile.
-@logged_in_or_basicauth()
-def getyourProfile(request, current_user, current_userid):
-    items = []
-    ufriends=[]
-    aUser = Authors.objects.get(username=current_user, location="bubble")
-    if request.method == "GET":
-        
-        if request.user.is_authenticated():
-            yourprofileobj = Authors.objects.get(username=current_user, location="bubble") 
-            current_user = request.user.username 
-            current_userid =yourprofileobj.__dict__["author_uuid"]  
-
-            items.append(yourprofileobj)
-
-        return render(request,'profile.html',{'items':items,
-                                               'author': yourprofileobj })
 
 # Get a Profile receives request and user object and Id for a selected user
 # using the GET method process the author's information is pulled from the database
@@ -1099,11 +1071,7 @@ def singlepost(request):
                 
             items.append(post)
 
-    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True),)
-
-        
-
-        
+    return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True),)
 
 def authorposts(request):
     items = []

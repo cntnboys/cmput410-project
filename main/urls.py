@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
+    url(r'^(?P<author_name>.+?)/posts/(?P<post_uuid>.+?)', views.onePost, name='onePost'),
 
     url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     url(r'^getposts/$', views.getposts, name='getposts'),   
