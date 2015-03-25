@@ -136,17 +136,32 @@ STATIC_URL = '/static/'
 #     }
 # }
 
+# DATABASES = {
+#        'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'deglt3tqs5mjfa',
+#        'HOST': 'ec2-23-21-187-45.compute-1.amazonaws.com',
+#        'USER': 'mwmqqmbieymuyq',
+#        'PASSWORD' : '3D8Ruktp2PaYUFFvDE-2jKRhaD',
+#        'PORT' : '5432',
+
+#    }
+# }
+
+# Test
 DATABASES = {
        'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'deglt3tqs5mjfa',
-       'HOST': 'ec2-23-21-187-45.compute-1.amazonaws.com',
-       'USER': 'mwmqqmbieymuyq',
-       'PASSWORD' : '3D8Ruktp2PaYUFFvDE-2jKRhaD',
+       'NAME': 'd22b9o27sf760o',
+       'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
+       'USER': 'cqmezfkadpjetq',
+       'PASSWORD' : 'EqG59qIfOuXMu4Ozrab-yEY-PY',
        'PORT' : '5432',
 
    }
 }
+
+ec2-107-22-173-230.compute-1.amazonaws.com
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
 #DATABASES['default'] =  dj_database_url.config()
