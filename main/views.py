@@ -1315,3 +1315,57 @@ def authorposts(request):
     print(items3)       
     return HttpResponse("OK")
     #return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
+
+#curl --request GET '127.0.0.1:8000/main/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
+# how to figure out authenticated user? request.user=AnonymousUser 
+# seems like we need more backend logic to allow for specific people
+def postsbyauthor(request):
+    posts = []
+    # current_user = str(request.user.get_username())
+    if request.method == "GET":
+        print(request.user)
+        # if request.user.is_authenticated():
+        authorid = request.GET.get('authorid', '')
+        print(authorid)
+        a = Authors.objects.get(author_uuid = str(authorid))
+        for x in Posts.objects.filter(author_id = a, privacy="public"):
+            post = {}
+            post['title'] = str(x.title)
+            post['source'] = ""
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = str(x.content)
+            post['pubdate'] = str(x.date)
+            post['guid'] = str(x.post_uuid)
+
+        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+            post['visability'] = str(x.privacy)
+        
+        
+        #author
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = str(a.location)
+            author['displayname'] = str(a.username)
+            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+            post['author'] = str(author)
+            print(x.post_id,"got a public post: ", x.title)
+        #comments here
+
+        posts.append(post)
+
+        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        # ''                 foaf ?                               ''
+        # ''      privacy = current_user (all posts for me)       ''
+        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        # get posts meant for current user? can privacy be this user? friends?
+        # for x in Posts.objects.filter(author_id = a privacy=current_user):
+        #     print("for user: ", current_user)
+
+        # maybe not this one
+        # for x in Posts.objects.filter(author_id = a privacy = foaf)):
+        #     print("by current user"")
+
+
+    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True),)
