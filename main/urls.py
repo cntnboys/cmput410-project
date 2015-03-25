@@ -18,6 +18,10 @@ urlpatterns = patterns('',
     url(r'^getposts/$', views.getposts, name='getposts'),   
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
+    url(r'^author/posts2/$', views.authorposts, name='authorposts'),
+    url(r'^getapost/$', views.singlepost, name='singlepost'), 
+    url(r'^getauthorposts/$', views.postsbyauthor, name='postsbyauthor'), 
+
 
     url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),

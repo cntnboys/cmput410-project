@@ -112,17 +112,17 @@ STATIC_URL = '/static/'
 
 #ADDEDEDD THE FOLLLOWWINGGG TO DEAAALLLL WITHTHTHT DB ERRORS WHEN LOCAL
 
-if DEBUG:
-   DATABASES = {
-       'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-       'USER': '',
-       'PASSWORD': '',
-       'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-       'PORT': '',
-   }
-}
+# if DEBUG:
+#    DATABASES = {
+#        'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#        'USER': '',
+#        'PASSWORD': '',
+#        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+#        'PORT': '',
+#    }
+# }
 # else:
 #     DATABASES = {
 #         'default': {
@@ -147,6 +147,19 @@ if DEBUG:
 
 #    }
 # }
+
+# new one
+# DATABASES = {
+#        'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'd22b9o27sf760o',
+#        'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
+#        'USER': 'cqmezfkadpjetq',
+#        'PASSWORD' : 'EqG59qIfOuXMu4Ozrab-yEY-PY',
+#        'PORT' : '5432',
+
+#    }
+# }
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
 #DATABASES['default'] =  dj_database_url.config()
@@ -158,7 +171,12 @@ SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
-STATIC_ROOT = "/static/images"
+
+# trying to fix loading static files when debug false. Save for last?
+if DEBUG: 
+   STATIC_ROOT = "/static/images"
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),

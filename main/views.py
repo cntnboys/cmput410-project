@@ -727,34 +727,35 @@ def getposts(request):
         print "here!"
         postobjs = Posts.objects.all()
         for x in postobjs:
-            post = {}
+            if x.privacy == "public":
+                post = {}
         
-            post['title'] = x.title
-            post['source'] = ""
-            post['origin']= ""
-            post['description'] = ""
-            post['content-type'] = ""
-            post['content'] = x.content
-            post['pubdate'] = str(x.date)
-            post['guid'] = str(x.post_uuid)
+                post['title'] = x.title
+                post['source'] = ""
+                post['origin']= ""
+                post['description'] = ""
+                post['content-type'] = ""
+                post['content'] = x.content
+                post['pubdate'] = str(x.date)
+                post['guid'] = str(x.post_uuid)
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-            post['visability'] = "PUBLIC"
+                post['visability'] = "PUBLIC"
             
             
             #author
-            a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
-            author={}
-            author['id'] = str(a.author_uuid)
-            author['host'] = "thought-bubble.herokuapp.com"
-            author['displayname'] = a.username
-            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
-            post['author'] = author
+                a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
+                author={}
+                author['id'] = str(a.author_uuid)
+                author['host'] = "thought-bubble.herokuapp.com"
+                author['displayname'] = a.username
+                author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+                post['author'] = author
             
             #comments
-            post['comments'] = []
-            
-            items.append(post)
+                post['comments'] = []
+                
+                items.append(post)
 
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
@@ -1038,12 +1039,256 @@ def githubAggregator(user):
     #threading.Timer(180, githubAggregator(user)).start() # call function ever 5 mins? this infinite loops atm
     return None
 
+# This is for returning the JSON information of a single post
+# /service/main/posts/?=postid
+def singlepost(request):
+    items = []
+    if request.method == "GET":
+        x = request.GET.get('postid', '')
+        thepost = Posts.objects.get(post_uuid=x)
+        print(thepost.privacy)
+        if thepost.privacy == "public":
+            post = {}
+        
+            post['title'] = thepost.title
+            
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = thepost.content
+            post['pubdate'] = str(thepost.date)
+            post['guid'] = str(thepost.post_uuid)
+            print("content: ", thepost.content)
+
+            post['visability'] = "PUBLIC"
+            print(thepost.author_id.author_uuid)
+            
+            #author
+            a = Authors.objects.get(author_uuid = thepost.author_id.author_uuid)
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = "thought-bubble.herokuapp.com"
+            author['displayname'] = a.username
+            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+            post['author'] = author
+            post['source'] = "http://thought-bubble.herokuapp.com/main/getapost/?="+x+"/"
+            post['origin'] = a.location
+            
+            comments = []
+            for n in Comments.objects.filter(author_id = a, post_id = thepost.post_id):
+                commAuth = Authors.objects.get(author_uuid = str(n.author_id.author_uuid))
+                commAuthJson = {}
+                commJson= {}
+                theid = str(commAuth.author_uuid)
+                location = commAuth.location
+                theuser = commAuth.username
+                thecontent = n.content
+                thedate = n.date
+                thecommuuid = str(n.comment_uuid)
+                commAuthJson['id'] = str(theid)
+                commAuthJson['host'] = str(location)
+                commAuthJson['displayname'] = str(theuser)
+                commJson['comment'] = str(thecontent)
+                commJson['pubDate'] = str(thedate)
+                commJson['guid'] = str(thecommuuid)
+                commJson['author'] = commAuthJson
+                comments.append(commJson)
+
+            #print(comments)
+            post['comments'] = str(comments)
+                
+            items.append(post)
+
+    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True),)
+
         
 
         
 
-    
+def authorposts(request):
+    items = []
+    ufriends=[]
+    items2 = []
+    items3 = []
+
+    if request.method == "GET":
+        if request.user.is_authenticated():
+            print("yo")
+            current_user = str(request.user.get_username())
+            print("yo2")
+            print("current-user",current_user)
+            author_id = Authors.objects.get(username=str(current_user))
+            
+             #get freinds of user for post input
+            author = Authors.objects.get(username=current_user)
+            user = Authors.objects.get(author_uuid=author_id.author_uuid)
+            items2.append(user)
+
+            for e in Friends.objects.filter(inviter_id=user):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    ufriends.append(a)
+      
+
+            for e in Friends.objects.filter(invitee_id=user):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        ufriends.append(a)
+            
+            print("ufreinds",ufriends)
+            for x in ufriends:
+                print(x.username)
+
+            # retrieve posts of friends
+            for f in Friends.objects.all():
+                 print("authorid:",author_id.author_id)
+                 print("invitee_id",f.invitee_id.author_id)
+                 if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                     for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
+                         print("gothere2222")
+                         items.insert(0,x)
+                        
+                
+                 if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                     print("got here11")
+                     for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
+                        items.insert(0,x)
+                       
+           
+        
+            # retrieve all public posts
+            for x in Posts.objects.filter(privacy="public"):
+               items.insert(0,x)
+
+            # retrieve all posts from bubble and that are friends aswell (bubblefreind)
+            for f in Friends.objects.all():
+                if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
+                       items.insert(0,x)
+                if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                    for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
+                       items.insert(0,x)
+        
+            # retrieve all private posts of current user (these have been left out in all above queries)
+            for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
+               items.insert(0, x)
+
+            # retreive all private posts of the current user (sent by another author to us privately :))))) )
+            for x in Posts.objects.filter(privacy=current_user):
+                items.insert(0,x)
 
 
 
-    
+            items.sort(key=lambda x: x.date, reverse=True)
+
+            for post in items:
+                comments = []
+                try:
+                    for c in Comments.objects.all():
+                        if (c.post_id==post):
+                            comments.insert(0,c)
+                    post.comments = comments
+                    items.sort(key=lambda x: x.date, reverse=True)
+                except:
+                    post.comments = None
+
+            for x in items:
+                
+                post = {}
+        
+                post['title'] = str(x.title)
+                post['source'] = ""
+                post['origin']= ""
+                post['description'] = ""
+                post['content-type'] = ""
+                post['content'] = str(x.content)
+                post['pubdate'] = str(x.date)
+                post['guid'] = str(x.post_uuid)
+
+            #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+                post['visability'] = str(x.privacy)
+            
+            
+            #author
+                a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
+                author={}
+                author['id'] = str(a.author_uuid)
+                author['host'] = "thought-bubble.herokuapp.com"
+                author['displayname'] = str(a.username)
+                author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+                post['author'] = str(author)
+            
+            #comments
+                comments = []
+                try:
+                    for c in Comments.objects.all():
+                        if (c.post_id==x):
+                            comments.insert(0,c)
+                    c.comments = comments
+                    items.sort(key=lambda x: x.date, reverse=True)
+                except:
+                    x.comments = None
+
+                post['comments'] = comments
+                
+                items3.append(post)
+            
+            
+    print(items3)       
+    return HttpResponse("OK")
+    #return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
+
+#curl --request GET '127.0.0.1:8000/main/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
+# how to figure out authenticated user? request.user=AnonymousUser 
+# seems like we need more backend logic to allow for specific people
+def postsbyauthor(request):
+    posts = []
+    # current_user = str(request.user.get_username())
+    if request.method == "GET":
+        print(request.user)
+        # if request.user.is_authenticated():
+        authorid = request.GET.get('authorid', '')
+        print(authorid)
+        a = Authors.objects.get(author_uuid = str(authorid))
+        for x in Posts.objects.filter(author_id = a, privacy="public"):
+            post = {}
+            post['title'] = str(x.title)
+            post['source'] = ""
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = str(x.content)
+            post['pubdate'] = str(x.date)
+            post['guid'] = str(x.post_uuid)
+
+        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+            post['visability'] = str(x.privacy)
+        
+        
+            #author
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = str(a.location)
+            author['displayname'] = str(a.username)
+            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+            post['author'] = str(author)
+            print(x.post_id,"got a public post: ", x.title)
+        #comments here
+
+        posts.append(post)
+
+        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        # ''                 foaf ?                               ''
+        # ''      privacy = current_user (all posts for me)       ''
+        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        # get posts meant for current user? can privacy be this user? friends?
+        # for x in Posts.objects.filter(author_id = a privacy=current_user):
+        #     print("for user: ", current_user)
+
+        # maybe not this one
+        # for x in Posts.objects.filter(author_id = a privacy = foaf)):
+        #     print("by current user"")
+
+
+    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True),)
