@@ -158,7 +158,11 @@ SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
-STATIC_ROOT = "/static/images"
+
+if DEBUG: 
+   STATIC_ROOT = "/static/images"
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
