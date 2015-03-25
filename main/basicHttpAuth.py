@@ -2,6 +2,7 @@ import base64
 import json
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.template import RequestContext, loader
 
 # This code snippet is taken from django snippets: 
 # https://djangosnippets.org/snippets/243/
@@ -29,7 +30,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
                 try:
                     uname, host, passwd = base64.b64decode(auth[1]).decode('ascii').split(':')
                 except:
-                    response = HttpResponse()
+                    response = HttpResponse(content="{message: not authenticated}",content_type="text/HTML; charset=utf-8")
                     response.status_code = 401
                     response['message'] = 'not authenticated'
                     return response
@@ -44,9 +45,8 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
     # Either they did not provide an authorization header or
     # something in the authorization attempt failed. Send a 401
     # back to them to ask them to authenticate.
-    response = HttpResponse()
+    response = HttpResponse(content="{message: not authenticated}",content_type="text/HTML; charset=utf-8")
     response.status_code = 401
-    response['WWW-Authenticate'] = 'Basic realm="%s"' % realm
     response['message'] = 'not authenticated'
     return response
     
