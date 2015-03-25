@@ -1116,6 +1116,68 @@ def githubAggregator(user):
     #threading.Timer(180, githubAggregator(user)).start() # call function ever 5 mins? this infinite loops atm
     return None
 
+# This is for returning the JSON information of a single post
+# /service/main/posts/?=postid
+def singlepost(request):
+    items = []
+    if request.method == "GET":
+        x = request.GET.get('postid', '')
+        thepost = Posts.objects.get(post_uuid=x)
+        print(thepost.privacy)
+        if thepost.privacy == "public":
+            post = {}
+        
+            post['title'] = thepost.title
+            
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = thepost.content
+            post['pubdate'] = str(thepost.date)
+            post['guid'] = str(thepost.post_uuid)
+            print("content: ", thepost.content)
+
+            post['visability'] = "PUBLIC"
+            print(thepost.author_id.author_uuid)
+            
+            #author
+            a = Authors.objects.get(author_uuid = thepost.author_id.author_uuid)
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = "thought-bubble.herokuapp.com"
+            author['displayname'] = a.username
+            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+            post['author'] = author
+            post['source'] = "http://thought-bubble.herokuapp.com/main/getapost/?="+x+"/"
+            post['origin'] = a.location
+            
+            comments = []
+            for n in Comments.objects.filter(author_id = a, post_id = thepost.post_id):
+                commAuth = Authors.objects.get(author_uuid = str(n.author_id.author_uuid))
+                commAuthJson = {}
+                commJson= {}
+                theid = str(commAuth.author_uuid)
+                location = commAuth.location
+                theuser = commAuth.username
+                thecontent = n.content
+                thedate = n.date
+                thecommuuid = str(n.comment_uuid)
+                commAuthJson['id'] = str(theid)
+                commAuthJson['host'] = str(location)
+                commAuthJson['displayname'] = str(theuser)
+                commJson['comment'] = str(thecontent)
+                commJson['pubDate'] = str(thedate)
+                commJson['guid'] = str(thecommuuid)
+                commJson['author'] = commAuthJson
+                comments.append(commJson)
+
+            #print(comments)
+            post['comments'] = str(comments)
+                
+            items.append(post)
+
+    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True),)
+
         
 
         

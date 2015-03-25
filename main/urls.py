@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
     url(r'^author/posts2/$', views.authorposts, name='authorposts'),
+    url(r'^getapost/$', views.singlepost, name='singlepost'), 
+
 
 
 

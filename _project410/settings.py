@@ -83,13 +83,13 @@ WSGI_APPLICATION = '_project410.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#           #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
-#      }
-#  }
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+          #'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+     }
+ }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -148,18 +148,18 @@ STATIC_URL = '/static/'
 #    }
 # }
 
-# Test
-DATABASES = {
-       'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'd22b9o27sf760o',
-       'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
-       'USER': 'cqmezfkadpjetq',
-       'PASSWORD' : 'EqG59qIfOuXMu4Ozrab-yEY-PY',
-       'PORT' : '5432',
+# new one
+# DATABASES = {
+#        'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'd22b9o27sf760o',
+#        'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
+#        'USER': 'cqmezfkadpjetq',
+#        'PASSWORD' : 'EqG59qIfOuXMu4Ozrab-yEY-PY',
+#        'PORT' : '5432',
 
-   }
-}
+#    }
+# }
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
 #DATABASES['default'] =  dj_database_url.config()
@@ -172,6 +172,7 @@ PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
 
+# trying to fix loading static files when debug false. Save for last?
 if DEBUG: 
    STATIC_ROOT = "/static/images"
 else:
