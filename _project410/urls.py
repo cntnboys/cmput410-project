@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^friendrequest/', main.views.friendRequest, name='friendRequest'),
     url(r'^searchPage/', main.views.searchPage, name='SearchPage'),
     url(r'^friends/(?P<userid1>\w{0,50})/(?P<userid2>\w{0,50})$', main.views.foaf, name='foaf'),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': settings.DEBUG}),
+    #url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': settings.DEBUG}),
 
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -35,4 +35,7 @@ if settings.DEBUG:
 if not settings.DEBUG:
     urlpatterns += patterns('',
         (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+        (r'media/(?P<path>.*)',
+        'serve',
+        {'document_root': settings.MEDIA_ROOT}),
     )
