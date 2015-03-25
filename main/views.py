@@ -1266,6 +1266,7 @@ def authorposts(request):
             
             #comments
                 comments = []
+                comments2 = []
                 try:
                     for c in Comments.objects.all():
                         if (c.post_id==x):
@@ -1274,15 +1275,38 @@ def authorposts(request):
                     items.sort(key=lambda x: x.date, reverse=True)
                 except:
                     x.comments = None
+          
+            #for the comments
+                for comment in comments:
+                     
+            
+                    commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
+                    commAuthJson = {}
+                    commJson= {}
+                    theid = str(commAuth.author_uuid)
+                    location = commAuth.location
+                    theuser = commAuth.username
+                    thecontent = comment.content
+                    thedate = comment.date
+                    thecommuuid = str(comment.comment_uuid)
+                    commAuthJson['id'] = str(theid)
+                    commAuthJson['host'] = str(location)
+                    commAuthJson['displayname'] = str(theuser)
+                    commJson['comment'] = str(thecontent)
+                    commJson['pubDate'] = str(thedate)
+                    commJson['guid'] = str(thecommuuid)
+                    commJson['author'] = commAuthJson
+                    comments2.append(commJson)
+           
 
-                post['comments'] = comments
+                post['comments'] = comments2
                 
                 items3.append(post)
             
             
     print(items3)       
-    return HttpResponse("OK")
-    #return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
+    #return HttpResponse("OK")
+    return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
 
 #curl --request GET '127.0.0.1:8000/main/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
 # how to figure out authenticated user? request.user=AnonymousUser 
