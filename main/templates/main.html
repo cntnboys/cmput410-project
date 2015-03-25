@@ -23,43 +23,58 @@
 <body>
 	<div class="wrapper">
 		<div class="createPost triangle-isosceles">
-			<h2>Create a Post</h2>
-				<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
+			<div class="row">
+				<h2>Create a Thought Bubble</h2>
+					<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
 					{% csrf_token %}
-					<input type="text" name="title" placeholder="Put a title to your thoughts...">
-					<br/>
+				</div>
+				<div class="row" style="margin-left:10pt">
+					<div class="col-md-5" >
+						Select your Post privacy setting:
+	                    <select name="privacy">
+			      			<option value="public">Public</option>
+			      			<option value="private">Private</option>
+			      			<option value="bubblefriend">Friends Here Only </option>
+			      			<option value="friends">Friends Only</option>
+			      			<option value="foaf">Friend of Friend Only</option>
+			      			<option value="{{ user.get_username }}">Private To Author</option>
+			   			</select>
+			   		</div>
+
+			   		<div class="col-md-6" >
+			   			Select author for a private post: 
+				     	<select name="privateauthor"> 
+				     	{% for x in ufriends %}
+				      		<option value=""></option>
+				      		<option value="{{ x.username }}">{{ x.username }}</option>
+				     	{% endfor %}
+				   		</select>  			
+		   			</div>
+		   			<input type="file" class="form-control" placeholder=""  name="image">
+		   		</div>
+		   		<br/>
+			<div class="row">
+					<input type="text" name="title" placeholder="Title to your thoughts...">
+			</div>
+			<div class="row">
+				<div class="col-md-10" >
 					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea>
-					<input type="file" class="form-control" placeholder=""  name="image">
-					<br/>
-					Select your Post privacy setting:
-                    <select name="privacy">
-		      <option value="public">Public</option>
-		      <option value="private">Private</option>
-		      <option value="bubblefriend">Freinds on my Host</option>
-		      <option value="friends">Friends Only</option>
-		      <option value="foaf">Friend of Friend Only</option>
-		      <option value="{{ user.get_username }}">Private Author</option>
-		   </select>
-
-		    Select author for a private post:
-		     <select name="privateauthor">
-		   
-		    {% for x in ufriends %}
-		      <option value=""></option>
-		      <option value="{{ x.username }}">{{ x.username }}</option>
-		     {% endfor %}
-		   </select>
-		    </br></br>
-		<input type="submit" class="rightbtn postbtn" value="Post">
-
-				</form>
+				</div>
+				<div class="col-md-1">
+					<input type="submit" class="rightbtn postbtn" value="Post">
+				</div>
+				
+			</div>
+			</form>
+					
+				
+				</div>
 		</div>
 	</div>
 
 
-<div id="content">
-	<div class="wrapper">	
-		<h1 class='recentPost'>Recent Posts</h1>
+	<div class="wrapper" >	
+		<div class='recentPost triangle-isoscelesd'><h1>Recent Posts</h1></div>
                 {% for link in items %}
                 	<div class="post triangle-isosceles">
                 		{% if link.title %}
@@ -106,7 +121,6 @@
                     </div></div><br/>
                 {% endfor %}
 			</div>
-	</div>
 		<div class="wrapper">
 			<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
 		</div>

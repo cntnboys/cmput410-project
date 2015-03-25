@@ -14,7 +14,6 @@ urlpatterns = patterns('',
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
 
-   
     url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     url(r'^getposts/$', views.getposts, name='getposts'),   
     url(r'^getcomments/$', views.getcomments, name='getcomments'),

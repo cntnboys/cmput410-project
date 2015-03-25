@@ -37,7 +37,7 @@ from django.utils.html import strip_tags
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
-
+@logged_in_or_basicauth()
 def getJsonfromothers(request, flag):
     if (flag == "getFriends"):
         r = request.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
@@ -106,6 +106,7 @@ def indexPage(request):
 def redirectIndex(request):
     return redirect(indexPage)
 
+@logged_in_or_basicauth()
 def onePost(request,post_uuid):
     items = []
     if request.user.is_authenticated():
@@ -165,8 +166,6 @@ def mainPage(request, current_user):
                  for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
                     items.insert(0,x)
                    
-       
-    
         # retrieve all public posts
         for x in Posts.objects.filter(privacy="public"):
            items.insert(0,x)
@@ -264,6 +263,7 @@ def logout(request):
 
 # TODO: use profile template to load page of FOAF
 # Function is still a work in progress for part 2
+@logged_in_or_basicauth()
 def foaf(request,userid1=None,userid2=None):
 	# we want to check if userid1 is friends with/is current user then check if 
 	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
@@ -293,6 +293,7 @@ def foaf(request,userid1=None,userid2=None):
 # If POST method, a check to see if friend request exists, if the friend request exists
 # the the status of the friend request changes to True, and if the friend request does not
 # exist then we create a friend request from the current author to the selected author.
+@logged_in_or_basicauth()
 def friendRequest(request):
     items = []
     ufriends = []
@@ -422,6 +423,7 @@ def getyourProfile(request, current_user, current_userid):
 # using the GET method process the author's information is pulled from the database
 # as well as the current friends the author has will be taken from the database
 # displayed on a profile page with the author's uuid in the url.
+@logged_in_or_basicauth()
 def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
@@ -499,6 +501,7 @@ def editProfile(request, current_user):
 # to store into the database adding on the author who created the post.
 # After storage of the comment, author is redirected back to the main page
 # displaying the most recent post on the main page.
+@logged_in_or_basicauth()
 def makePost(request):
     if request.method == "POST":
         
@@ -530,16 +533,13 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
-
+@logged_in_or_basicauth()
 def makeComment(request):
-    if request.method == "POST":
-    
+    if request.method == "POST":  
         current_user = request.user.username
         author_id = Authors.objects.get(username=current_user)
-        
         current_post = request.POST["postid"]
         post_id = Posts.objects.get(post_id=current_post)
-        
         comment = request.POST["comment"]
         
         try:
@@ -612,6 +612,7 @@ def registerPage(request):
 
 # Searching User Page is a function currently unimplemented. This will be a fuction
 # that might come in handy for part 2 searching users of another host server.
+@logged_in_or_basicauth()
 def searchPage(request):
     items = []
     if request.method == 'POST':
@@ -637,8 +638,8 @@ def searchPage(request):
       
 
 #getting Json objects to send to other groups 
-
 #needs authentication implemented into functions
+@logged_in_or_basicauth()
 def getfriendrequests(request):
     items = []
     if request.method == "GET":
@@ -648,6 +649,7 @@ def getfriendrequests(request):
 
 
 #/main/getfriendstatus/?user=<user1>/<user2>
+@logged_in_or_basicauth()
 def getfriendstatus(request):
     items = []
     jsonfriend = {}
@@ -717,6 +719,7 @@ def getfriendstatus(request):
 
 #title, source(our url), content, author (id), host, displayname(username), urlid, 
 #need to implement function to get single posts for url
+@logged_in_or_basicauth()
 def getposts(request):
     items = []
    
@@ -756,6 +759,7 @@ def getposts(request):
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
 
+@logged_in_or_basicauth()
 @csrf_exempt
 def newfriendrequest(request):
     items = []
@@ -814,6 +818,7 @@ def newfriendrequest(request):
             return HttpResponse('200 OK')
         return HttpResponse('Friend Request Failed.')
 
+@logged_in_or_basicauth()
 @csrf_exempt
 def Foafvis(request):
     items = []
@@ -914,6 +919,7 @@ def Foafvis(request):
         #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
+@logged_in_or_basicauth()
 def getcomments(request):
     items = []
     if request.method == "GET":
@@ -921,7 +927,7 @@ def getcomments(request):
             items.insert(0,x)
     return HttpResponse(json.dumps({'comments' : items}))
 
-
+@logged_in_or_basicauth()
 def getgithub(request):
     items = []
     if request.method == "GET":
@@ -929,7 +935,7 @@ def getgithub(request):
             items.insert(0,x)
     return HttpResponse(json.dumps({'github' : items}))
 
-
+@logged_in_or_basicauth()
 @csrf_exempt
 # /main/checkfriends/?user=<user>
 def checkfriends(request):
