@@ -1343,7 +1343,7 @@ def postsbyauthor(request):
             post['visability'] = str(x.privacy)
         
         
-        #author
+            #author
             author={}
             author['id'] = str(a.author_uuid)
             author['host'] = str(a.location)
