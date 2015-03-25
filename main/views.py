@@ -797,34 +797,35 @@ def getposts(request):
         print "here!"
         postobjs = Posts.objects.all()
         for x in postobjs:
-            post = {}
+            if x.privacy == "public":
+                post = {}
         
-            post['title'] = x.title
-            post['source'] = ""
-            post['origin']= ""
-            post['description'] = ""
-            post['content-type'] = ""
-            post['content'] = x.content
-            post['pubdate'] = str(x.date)
-            post['guid'] = str(x.post_uuid)
+                post['title'] = x.title
+                post['source'] = ""
+                post['origin']= ""
+                post['description'] = ""
+                post['content-type'] = ""
+                post['content'] = x.content
+                post['pubdate'] = str(x.date)
+                post['guid'] = str(x.post_uuid)
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-            post['visability'] = "PUBLIC"
+                post['visability'] = "PUBLIC"
             
             
             #author
-            a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
-            author={}
-            author['id'] = str(a.author_uuid)
-            author['host'] = "thought-bubble.herokuapp.com"
-            author['displayname'] = a.username
-            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
-            post['author'] = author
+                a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
+                author={}
+                author['id'] = str(a.author_uuid)
+                author['host'] = "thought-bubble.herokuapp.com"
+                author['displayname'] = a.username
+                author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
+                post['author'] = author
             
             #comments
-            post['comments'] = []
-            
-            items.append(post)
+                post['comments'] = []
+                
+                items.append(post)
 
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
