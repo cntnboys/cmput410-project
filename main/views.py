@@ -29,57 +29,24 @@ except ImportError: import json
 import feedparser
 from django.utils.html import strip_tags
 
-#import request
-#from request.auth import HTTPBasicAuth
+import base64
+import requests
+from requests.auth import HTTPBasicAuth
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
-def getJsonfromothers(request, flag):
-    if (flag == "getFriends"):
-        r = request.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = request.get('http://service/api/friends/{AUTHOR_ID}', auth=HTTPBasicAuth('user', 'pass'))
-        h1 = r.json()
-        h2 = r2.json()
-        #for obj in h1:
-        
-        return
-    if (flag == "getPosts"):
-        r = request.get('http://cs410.cs.ualberta.ca:41081/api/posts/public', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = request.get('http://service/api/posts', auth=HTTPBasicAuth('user', 'pass'))
-        h1 = r.json()
-        h2 = r2.json()
-        return
-    if (flag == "getFriendStatus"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getFriendRequest"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getPostsToAuthUser"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getSinglePost"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getCommentofPost"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getAuthors"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getOneAuthor"):
-        r = request.get("")
-        r2 = request.get("")
-        return
+def getPostsFromOthers():
+    url = 'http://social-distribution.herokuapp.com/api/posts'
 
+    #Username:Host:Password
+    string = "Basic "+ base64.b64encode('nbui:fldkshfdlshflkshfl:team6')
+
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
+    r = requests.get(url, headers=headers)
+    print r.content
+    print r.status_code
     return
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
@@ -122,6 +89,7 @@ def mainPage(request, current_user):
     
 
     if request.user.is_authenticated():
+        getPostsFromOthers()
         current_user = request.user.get_username()
         author_id = Authors.objects.get(username=current_user)
 
