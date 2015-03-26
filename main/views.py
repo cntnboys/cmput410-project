@@ -15,11 +15,12 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts
+from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.models import User
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -45,12 +46,7 @@ def getPostsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/posts'
 
     #Username:Host:Password
-<<<<<<< HEAD
-    string = "Basic "+ base64.b64encode('nbui:fldkshfdlshflkshfl:team6')
-=======
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
-
->>>>>>> ed30d2ab0db84c53228240d3502163cad35ae240
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
     #print r.content
@@ -109,17 +105,7 @@ def getPostsFromOthers():
 # stream page with posts.
 def indexPage(request):
     context = RequestContext(request)
-    if request.user.is_authenticated():
-        items = []
-        if request.method == "GET":
-            for x in Posts.objects.all().order_by("date"):
-               items.insert(0,x)
-
-        current_user = request.user.get_username()
-        author = Authors.objects.get(username=current_user)
-        return render(request, "main.html", {'items' : items, 'author': author })
-    else:
-        return render(request, 'index/intro.html', request.session)
+    return render(request, 'index/intro.html', request.session)
 
 # Redirect Index function just redirects back into the index page
 def redirectIndex(request):
@@ -238,10 +224,13 @@ def loginPage(request):
 
         # Check if fields are filled.
         if username and password:
-
             user = authenticate(username=username, password=password)
             # Determine if user exists.
             if user is not None:
+                if ( Authors.objects.get(username=username).status == False ):
+                    error_msg = "Account Inactive. Please Wait for Web Administrator to Approve This Account "
+                    return render (request, 'login.html', {'error_msg':error_msg }) 
+
                 if user.is_active:
                     login(request, user)
                     response = redirect(mainPage, current_user=request.user.get_username())
@@ -564,7 +553,6 @@ def makeComment(request):
 # log in page.
 def registerPage(request):
     if request.method == 'POST':
-
         error_msg = None
         success = None
 
@@ -576,8 +564,6 @@ def registerPage(request):
         password=request.POST["password"]
         email=request.POST.get("email", "")
         github=request.POST.get("github", "")
-        facebook=request.POST.get("facebook", "")
-        twitter=request.POST.get("twitter", "")
         location="bubble"
 
         try:
@@ -587,16 +573,17 @@ def registerPage(request):
 
         if Authors.objects.filter(username=username):
             error_msg = "Username already exists"
-            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'image':image, 'github':github, 'facebook':facebook, 'twitter':twitter})
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 
+                            'email':email, 'image':image, 'github':github})
 
         if Authors.objects.filter(email=email):
             error_msg = "Email already exists"
-            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 
+                            'email':email, 'github':github})
            
         new_user = User.objects.create_user(username, email, password)
         new_author = Authors.objects.get_or_create(name=name, username=username, 
-            image=image, location=location, email=email, github=github, 
-            facebook=facebook, twitter=twitter)
+            image=image, location=location, email=email, github=github)
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
@@ -605,10 +592,10 @@ def registerPage(request):
         if(github is not ""):
             githubAggregator(username)
 
-        return HttpResponseRedirect("/main/login", {"success": success})
+        messages.add_message(request, messages.INFO, success)
+        return HttpResponseRedirect("/main/login")
 
     else:
-        
         # Render Register Page
         return render(request, 'Register.html')
 
@@ -673,7 +660,7 @@ def getfriendstatus(request):
     
     #now have author uuid
 
-        #    9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
+        #9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
        
         if Authors.objects.filter(author_uuid = user1).count() >=1:
             author1 = Authors.objects.get(author_uuid = user1)
@@ -791,8 +778,7 @@ def newfriendrequest(request):
             author1 = Authors.objects.get(username=authorname)
         else:
             author1 = Authors.objects.get_or_create(name=authorname, username=authorname, 
-            image="", email=email, github="", 
-            facebook="", twitter="", location=authorhost)
+            image="", email=email, github="", location=authorhost)
         print("author1",author1)
 
         if Authors.objects.filter(author_uuid = str(friendid)).count() >=1:
