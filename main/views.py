@@ -4,12 +4,11 @@ import random
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.template import RequestContext, loader
 from django.core.context_processors import csrf
-from django.db.models import Q
 
 import uuid
 import Post
@@ -26,57 +25,29 @@ from django.views.decorators.csrf import csrf_exempt
 try: import simplejson as json
 except ImportError: import json
 
+import base64
+import requests
+from requests.auth import HTTPBasicAuth
+
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
 
 
+#from django.utils import simplejson
+
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
-def getJsonfromothers(request, flag):
-    if (flag == "getFriends"):
-        r = request.get('http://cs410.cs.ualberta.ca:41081/api/friends', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = request.get('http://service/api/friends/{AUTHOR_ID}', auth=HTTPBasicAuth('user', 'pass'))
-        h1 = r.json()
-        h2 = r2.json()
-        #for obj in h1:
-        
-        return
-    if (flag == "getPosts"):
-        r = request.get('http://cs410.cs.ualberta.ca:41081/api/posts/public', auth=HTTPBasicAuth('user', 'pass'))
-        r2 = request.get('http://service/api/posts', auth=HTTPBasicAuth('user', 'pass'))
-        h1 = r.json()
-        h2 = r2.json()
-        return
-    if (flag == "getFriendStatus"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getFriendRequest"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getPostsToAuthUser"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getSinglePost"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getCommentofPost"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getAuthors"):
-        r = request.get("")
-        r2 = request.get("")
-        return
-    if (flag == "getOneAuthor"):
-        r = request.get("")
-        r2 = request.get("")
-        return
 
+def getPostsFromOthers():
+    url = 'http://social-distribution.herokuapp.com/api/posts'
+
+    #Username:Host:Password
+    string = "Basic "+ base64.b64encode('nbui:fldkshfdlshflkshfl:team6')
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
+    r = requests.get(url, headers=headers)
+    print r.content
+    print r.status_code
     return
 
 # Index Page function is used to traverse to our introduction page
@@ -112,6 +83,7 @@ def onePost(request, post_uuid):
 # Main Page function allows user to go back to the stream of posts
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
+
 
 @logged_in_or_basicauth()
 def mainPage(request,author_name=None, current_user=None):
@@ -1189,6 +1161,7 @@ def authorposts(request):
             
             #comments
                 comments = []
+                comments2 = []
                 try:
                     for c in Comments.objects.all():
                         if (c.post_id==x):
@@ -1197,15 +1170,38 @@ def authorposts(request):
                     items.sort(key=lambda x: x.date, reverse=True)
                 except:
                     x.comments = None
+          
+            #for the comments
+                for comment in comments:
+                     
+            
+                    commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
+                    commAuthJson = {}
+                    commJson= {}
+                    theid = str(commAuth.author_uuid)
+                    location = commAuth.location
+                    theuser = commAuth.username
+                    thecontent = comment.content
+                    thedate = comment.date
+                    thecommuuid = str(comment.comment_uuid)
+                    commAuthJson['id'] = str(theid)
+                    commAuthJson['host'] = str(location)
+                    commAuthJson['displayname'] = str(theuser)
+                    commJson['comment'] = str(thecontent)
+                    commJson['pubDate'] = str(thedate)
+                    commJson['guid'] = str(thecommuuid)
+                    commJson['author'] = commAuthJson
+                    comments2.append(commJson)
+           
 
-                post['comments'] = comments
+                post['comments'] = comments2
                 
                 items3.append(post)
             
             
     print(items3)       
-    return HttpResponse("OK")
-    #return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
+    #return HttpResponse("OK")
+    return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
 
 #curl --request GET '127.0.0.1:8000/main/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
 # how to figure out authenticated user? request.user=AnonymousUser 
