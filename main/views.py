@@ -41,7 +41,7 @@ from django.utils.html import strip_tags
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
-#/auhtor NO LONGER DOES THE FOLLOWING
+
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
     
@@ -52,16 +52,20 @@ def getAuthorsFromOthers():
     content = json.loads(r.content)
     
     for author in content["authors"]:
+        
         try:
             new_author = Authors.objects.get(author_uuid=author["id"])
         except:
-            author_uuid = author["id"]
-            name = author["displayName"]
-            username = author["displayName"]
-            email = username + "@ualberta.ca"
-            location = "social-distribution"
-            
-            new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            try:
+                author_uuid = author["id"]
+                name = author["displayName"]
+                username = author["displayName"]
+                email = username + "@ualberta.ca"
+                location = "social-distribution"
+                
+                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            except:
+                pass
     
     return None
 
@@ -200,6 +204,7 @@ def mainPage(request,author_name=None, current_user=None):
 
     if request.method == "GET":
         
+        getAuthorsFromOthers()
         getPostsFromOthers()
         getAuthorPostsFromOthers()
         
