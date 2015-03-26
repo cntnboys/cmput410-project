@@ -152,10 +152,10 @@ STATIC_URL = '/static/'
 DATABASES = {
        'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'd22b9o27sf760o',
+       'NAME': 'deqvblu3a2v0u9',
        'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
-       'USER': 'cqmezfkadpjetq',
-       'PASSWORD' : 'EqG59qIfOuXMu4Ozrab-yEY-PY',
+       'USER': 'shijubeknomhcq',
+       'PASSWORD' : 'pKlULpGCjvOibbrlt0qNHOtkr4',
        'PORT' : '5432',
 
    }
