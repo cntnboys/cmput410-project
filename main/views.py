@@ -778,7 +778,7 @@ def getposts(request):
                 post['guid'] = str(x.post_uuid)
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-                post['visability'] = "PUBLIC"
+                post['visibility'] = "public"
             
             
             #author
@@ -928,7 +928,7 @@ def Foafvis(request):
         post['guid'] = str(posts.post_uuid)
 
         #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-        post['visability'] = "FOAF"
+        post['visibility'] = "FOAF"
             
         print("before author")
         #author
@@ -1105,7 +1105,7 @@ def singlepost(request):
             post['guid'] = str(thepost.post_uuid)
             print("content: ", thepost.content)
 
-            post['visability'] = "PUBLIC"
+            post['visibility'] = "public"
             print(thepost.author_id.author_uuid)
             
             #author
@@ -1252,7 +1252,7 @@ def authorposts(request):
                 post['guid'] = str(x.post_uuid)
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-                post['visability'] = str(x.privacy)
+                post['visibility'] = str(x.privacy)
             
             
             #author
@@ -1374,7 +1374,7 @@ def postsbyauthor(request):
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
                 print("PRIVACY: ", str(x.privacy))
-                post['visability'] = str(x.privacy)
+                post['visibility'] = str(x.privacy)
             
                 #author
                 author={}
