@@ -59,7 +59,9 @@ class Posts(models.Model):
 
 class Nodes(models.Model):
     node_id = models.AutoField(primary_key = True)
+    # We will use this as our host
     node_url = models.CharField(max_length=300, unique=True)
+    # Location Name
     node_name = models.CharField(max_length=300)
     # 0 For Pending, 1 For Accepted
     node_status = models.BooleanField(default=False)

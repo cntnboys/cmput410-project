@@ -16,12 +16,12 @@ import Post
 import Comment
 
 from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
+from getAPI import getAPI
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
-
 from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
@@ -99,10 +99,8 @@ def getPostsFromOthers():
                 new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
     return
 
-# Index Page function is used to traverse to our introduction page
+# Index Page function directs to our introduction page
 # if you are not logged in as a user
-# If you are logged in as a user, you will be redirected to the
-# stream page with posts.
 def indexPage(request):
     context = RequestContext(request)
     return render(request, 'index/intro.html', request.session)
@@ -111,19 +109,9 @@ def indexPage(request):
 def redirectIndex(request):
     return redirect(indexPage)
 
-@logged_in_or_basicauth()
-def onePost(request, post_uuid):
-    items = []
-    post = Posts.objects.get(post_uuid=post_uuid)
-    items.append(post)
-     
-    return render(request,'authorpost.html',{'items':items})
-
 # Main Page function allows user to go back to the stream of posts
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
-
-
 @logged_in_or_basicauth()
 def mainPage(request,author_name=None, current_user=None):
     context = RequestContext(request)
@@ -205,7 +193,16 @@ def mainPage(request,author_name=None, current_user=None):
         return render(request,'main.html',{'items':items,
                                           'author':author_id ,
                                            'ufriends':ufriends})
-    
+
+
+@logged_in_or_basicauth()
+def onePost(request, post_uuid):
+    items = []
+    post = Posts.objects.get(post_uuid=post_uuid)
+    items.append(post)
+     
+    return render(request,'authorpost.html',{'items':items})
+
 # Log in Page function is a check for authenticated author log in
 # If author inputs incorrect or non exisiting things in the fields,
 # then author will be prompted that either the input was incorrect or
