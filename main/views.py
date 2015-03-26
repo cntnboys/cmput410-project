@@ -5,34 +5,37 @@ import time
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.template import RequestContext, loader
 from django.core.context_processors import csrf
-from django.db.models import Q
 
 import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubStreams, GithubPosts, TwitterStreams, FacebookStreams
-from django.contrib.auth.models import User
+from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
+from getAPI import getAPI
+from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
+from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
-
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
 
+import base64
+import requests
+from requests.auth import HTTPBasicAuth
+
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
 
-import base64
-import requests
-from requests.auth import HTTPBasicAuth
+
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
@@ -44,7 +47,6 @@ def getPostsFromOthers():
 
     #Username:Host:Password
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
-
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
     #print r.content
@@ -97,141 +99,109 @@ def getPostsFromOthers():
                 new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
     return
 
-# Index Page function is used to traverse to our introduction page
+# Index Page function directs to our introduction page
 # if you are not logged in as a user
-# If you are logged in as a user, you will be redirected to the
-# stream page with posts.
 def indexPage(request):
     context = RequestContext(request)
-    if request.user.is_authenticated():
-
-        items = []
-        if request.method == "GET":
-            for x in Posts.objects.all().order_by("date"):
-               items.insert(0,x)
-
-
-        current_user = request.user.get_username()
-        author = Authors.objects.get(username=current_user)
-        return render(request, "main.html", {'items' : items, 'author': author })
-    else:
-        return render(request, 'index/intro.html', request.session)
+    return render(request, 'index/intro.html', request.session)
 
 # Redirect Index function just redirects back into the index page
 def redirectIndex(request):
     return redirect(indexPage)
 
-def onePost(request,post_uuid):
-    items = []
-    if request.user.is_authenticated():
-        post = Posts.objects.get(post_uuid=post_uuid)
-        items.append(post)
-     
-    return render(request,'authorpost.html',{'items':items})
-
 # Main Page function allows user to go back to the stream of posts
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
-def mainPage(request, current_user):
+@logged_in_or_basicauth()
+def mainPage(request,author_name=None, current_user=None):
     context = RequestContext(request)
-    error_msg = "Not Logged In. Please Login Here."
-    
+    current_user = request.user.get_username()
+    author_id = Authors.objects.get(username=current_user)
 
-    if request.user.is_authenticated():
-        getPostsFromOthers()
-        current_user = request.user.get_username()
-        author_id = Authors.objects.get(username=current_user)
+    items = []
+    ufriends=[]
+    items2 = []
 
-        items = []
-        ufriends=[]
-        items2 = []
+    if request.method == "GET":
+        #get friends of user for post input
+        author = Authors.objects.get(username=current_user)
+        user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        items2.append(user)
 
-        if request.method == "GET":
-
-
-
-            #get freinds of user for post input
-            author = Authors.objects.get(username=current_user)
-            user = Authors.objects.get(author_uuid=author_id.author_uuid)
-            items2.append(user)
-
-            for e in Friends.objects.filter(inviter_id=user):
-                if e.status is True :
-                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+        for e in Friends.objects.filter(inviter_id=user):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                ufriends.append(a)
+  
+        for e in Friends.objects.filter(invitee_id=user):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                if not (a in items):
                     ufriends.append(a)
-      
+        
+        print("ufreinds",ufriends)
+        for x in ufriends:
+            print(x.username)
 
-            for e in Friends.objects.filter(invitee_id=user):
-                if e.status is True :
-                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    if not (a in items):
-                        ufriends.append(a)
+        # retrieve posts of friends
+        for f in Friends.objects.all():
+             print("authorid:",author_id.author_id)
+             print("invitee_id",f.invitee_id.author_id)
+             if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                 for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
+                     print("gothere2222")
+                     items.insert(0,x)
+                    
             
-            print("ufreinds",ufriends)
-            for x in ufriends:
-                print(x.username)
+             if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                 print("got here11")
+                 for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
+                    items.insert(0,x)
+                   
+        # retrieve all public posts
+        for x in Posts.objects.filter(privacy="public"):
+           items.insert(0,x)
 
-            # retrieve posts of friends
-            for f in Friends.objects.all():
-                 print("authorid:",author_id.author_id)
-                 print("invitee_id",f.invitee_id.author_id)
-                 if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                     for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
-                         print("gothere2222")
-                         items.insert(0,x)
-                        
-                
-                 if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                     print("got here11")
-                     for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
-                        items.insert(0,x)
-                       
-           
-        
-            # retrieve all public posts
-            for x in Posts.objects.filter(privacy="public"):
-               items.insert(0,x)
-
-            # retrieve all posts from bubble and that are friends aswell (bubblefreind)
-            for f in Friends.objects.all():
-                if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
-                       items.insert(0,x)
-                if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                    for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
-                       items.insert(0,x)
-        
-            # retrieve all private posts of current user (these have been left out in all above queries)
-            for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
-               items.insert(0, x)
-
-            # retreive all private posts of the current user (sent by another author to us privately :))))) )
-            for x in Posts.objects.filter(privacy=current_user):
-                items.insert(0,x)
-
-
-
-            items.sort(key=lambda x: x.date, reverse=True)
-
-            for post in items:
-                comments = []
-                try:
-                    for c in Comments.objects.all():
-                        if (c.post_id==post):
-                            comments.insert(0,c)
-                    post.comments = comments
-                    items.sort(key=lambda x: x.date, reverse=True)
-                except:
-                    post.comments = None
-
-
-
-            return render(request,'main.html',{'items':items,
-                                              'author':author_id ,
-                                               'ufriends':ufriends})
+        # retrieve all posts from bubble and that are friends aswell (bubblefreind)
+        for f in Friends.objects.all():
+            if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
+                   items.insert(0,x)
+            if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
+                   items.insert(0,x)
     
-    else:
-        return render(request, 'login.html', {'error_msg':error_msg})
+        # retrieve all private posts of current user (these have been left out in all above queries)
+        for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
+           items.insert(0, x)
+
+        # retreive all private posts of the current user (sent by another author to us privately :))))) )
+        for x in Posts.objects.filter(privacy=current_user):
+            items.insert(0,x)
+
+        for post in items:
+            comments = []
+            try:
+                for c in Comments.objects.all():
+                    if (c.post_id==post):
+                        comments.insert(0,c)
+                post.comments = comments
+                items.sort(key=lambda x: x.date, reverse=True)
+            except:
+                post.comments = None
+
+        return render(request,'main.html',{'items':items,
+                                          'author':author_id ,
+                                           'ufriends':ufriends})
+
+
+@logged_in_or_basicauth()
+def onePost(request, post_uuid):
+    items = []
+    post = Posts.objects.get(post_uuid=post_uuid)
+    items.append(post)
+     
+    return render(request,'authorpost.html',{'items':items})
 
 # Log in Page function is a check for authenticated author log in
 # If author inputs incorrect or non exisiting things in the fields,
@@ -251,50 +221,17 @@ def loginPage(request):
 
         # Check if fields are filled.
         if username and password:
-
             user = authenticate(username=username, password=password)
             # Determine if user exists.
             if user is not None:
+                if ( Authors.objects.get(username=username).status == False ):
+                    error_msg = "Account Inactive. Please Wait for Web Administrator to Approve This Account "
+                    return render (request, 'login.html', {'error_msg':error_msg }) 
+
                 if user.is_active:
                     login(request, user)
-                    return redirect(mainPage, current_user=request.user.get_username())
-
-                    """
-                    This is an attempt to get sessions up. HALP.
-
-                    author = Authors.objects.get(username=username, 
-                            location='bubble')
-                    author_dict = {'authors' : author}
-
-
-
-                    response = render_to_response("main.html", author_dict, context)             
+                    response = redirect(mainPage, current_user=request.user.get_username())
                     return response
-
-                    try:        
-
-                        template = loader.get_template('main.html')
-                        context = RequestContext(request, request.session)
-
-                        return HttpResponse(template.render(context))
-
-                    
-                        data = json.dumps({
-                                'author_uuid' : author.__dict__['author_uuid'],
-                                'username': username })
-                        return HttpResponse(data, content_type='application/json')
-                    
-
-                    except (KeyError, Authors.DoesNotExist):
-
-                        request.session['author_uuid'] = None
-                        request.session['username'] = None
-                        logout(request)
-
-                        error_msg = "Cannot store session information." 
-                        return render (request, 'login.html', {'error_msg':error_msg })
-                    """
-
 
                 else:
                     error_msg = """Account is deactivated. Please contact 
@@ -318,16 +255,17 @@ def loginPage(request):
 
 # Log out function allows user to log out of the current authenticated account
 # and the author will be redirected to the intro page.
+@logged_in_or_basicauth()
 def logout(request):
     # Logout function redefined in import statement by Chris Morgan
     # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
-
-    context = RequestContext(request)
     auth_logout(request)
+    Session.objects.all().delete()
     return redirect(indexPage)
 
 # TODO: use profile template to load page of FOAF
 # Function is still a work in progress for part 2
+@logged_in_or_basicauth()
 def foaf(request,userid1=None,userid2=None):
 	# we want to check if userid1 is friends with/is current user then check if 
 	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
@@ -357,6 +295,7 @@ def foaf(request,userid1=None,userid2=None):
 # If POST method, a check to see if friend request exists, if the friend request exists
 # the the status of the friend request changes to True, and if the friend request does not
 # exist then we create a friend request from the current author to the selected author.
+@logged_in_or_basicauth()
 def friendRequest(request):
     items = []
     ufriends = []
@@ -463,52 +402,11 @@ def friends(request):
     print(items)
     return render(request, 'friends.html',{'items':items, 'author':aUser})
 
-# We are not currently using this function anymore. We have condensed this function
-# into get a profile.
-def getyourProfile(request, current_user, current_userid):
-    items = []
-    ufriends=[]
-    aUser = Authors.objects.get(username=current_user, location="bubble")
-    if request.method == "GET":
-        
-        if request.user.is_authenticated():
-            yourprofileobj = Authors.objects.get(username=current_user, location="bubble") 
-            current_user = request.user.username 
-            current_userid =yourprofileobj.__dict__["author_uuid"]  
-
-            items.append(yourprofileobj)
-            """
-            for e in Friends.objects.filter(inviter_id.author_uuid=current_user.id):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
-                    ufriends.append(a)
-                        #print a.values('name')
-
-            for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
-                    ufriends.append(a)
-        else: #do it anyway for now using ID 1 even if not logged in
-            for e in Friends.objects.filter(inviter_id.author_uuid=1):
-                if e.status is True:
-                    a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
-                    ufriends.append(a)
-        
-            for e in Friends.objects.filter(invitee_id.author_uuid=1):
-                if e.status is True :
-                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
-                    ufriends.append(a)
-
-
-        return render(request,'profile.html',{'items':items},{'ufriends':ufriends})
-        """
-        return render(request,'profile.html',{'items':items,
-                                               'author': yourprofileobj })
-
 # Get a Profile receives request and user object and Id for a selected user
 # using the GET method process the author's information is pulled from the database
 # as well as the current friends the author has will be taken from the database
 # displayed on a profile page with the author's uuid in the url.
+@logged_in_or_basicauth()
 def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
@@ -591,6 +489,7 @@ def editProfile(request, current_user):
 # to store into the database adding on the author who created the post.
 # After storage of the comment, author is redirected back to the main page
 # displaying the most recent post on the main page.
+@logged_in_or_basicauth()
 def makePost(request):
     if request.method == "POST":
         
@@ -622,16 +521,13 @@ def makePost(request):
 
         return redirect(mainPage, current_user=request.user.username)
 
-
+@logged_in_or_basicauth()
 def makeComment(request):
-    if request.method == "POST":
-    
+    if request.method == "POST":  
         current_user = request.user.username
         author_id = Authors.objects.get(username=current_user)
-        
         current_post = request.POST["postid"]
         post_id = Posts.objects.get(post_id=current_post)
-        
         comment = request.POST["comment"]
         
         try:
@@ -654,7 +550,6 @@ def makeComment(request):
 # log in page.
 def registerPage(request):
     if request.method == 'POST':
-
         error_msg = None
         success = None
 
@@ -666,8 +561,6 @@ def registerPage(request):
         password=request.POST["password"]
         email=request.POST.get("email", "")
         github=request.POST.get("github", "")
-        facebook=request.POST.get("facebook", "")
-        twitter=request.POST.get("twitter", "")
         location="bubble"
 
         try:
@@ -677,16 +570,17 @@ def registerPage(request):
 
         if Authors.objects.filter(username=username):
             error_msg = "Username already exists"
-            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'image':image, 'github':github, 'facebook':facebook, 'twitter':twitter})
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 
+                            'email':email, 'image':image, 'github':github})
 
         if Authors.objects.filter(email=email):
             error_msg = "Email already exists"
-            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 'email':email, 'github':github, 'facebook':facebook, 'twitter':twitter})
+            return render (request, 'Register.html', {'error_msg':error_msg, 'name':name, 'username':username, 
+                            'email':email, 'github':github})
            
         new_user = User.objects.create_user(username, email, password)
         new_author = Authors.objects.get_or_create(name=name, username=username, 
-            image=image, location=location, email=email, github=github, 
-            facebook=facebook, twitter=twitter)
+            image=image, location=location, email=email, github=github)
 
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
@@ -695,15 +589,16 @@ def registerPage(request):
         if(github is not ""):
             githubAggregator(username)
 
-        return HttpResponseRedirect("/main/login", {"success": success})
+        messages.add_message(request, messages.INFO, success)
+        return HttpResponseRedirect("/main/login")
 
     else:
-        
         # Render Register Page
         return render(request, 'Register.html')
 
 # Searching User Page is a function currently unimplemented. This will be a fuction
 # that might come in handy for part 2 searching users of another host server.
+@logged_in_or_basicauth()
 def searchPage(request):
     items = []
     if request.method == 'POST':
@@ -729,11 +624,8 @@ def searchPage(request):
       
 
 #getting Json objects to send to other groups 
-
 #needs authentication implemented into functions
-
-
-
+@logged_in_or_basicauth()
 def getfriendrequests(request):
     items = []
     if request.method == "GET":
@@ -743,6 +635,7 @@ def getfriendrequests(request):
 
 
 #/main/getfriendstatus/?user=<user1>/<user2>
+@logged_in_or_basicauth()
 def getfriendstatus(request):
     items = []
     jsonfriend = {}
@@ -764,7 +657,7 @@ def getfriendstatus(request):
     
     #now have author uuid
 
-        #    9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
+        #9f9e584fb35e4c859d80d226f44ec150,88d23b032d0a4f46b572bb3e854c49ef
        
         if Authors.objects.filter(author_uuid = user1).count() >=1:
             author1 = Authors.objects.get(author_uuid = user1)
@@ -812,6 +705,7 @@ def getfriendstatus(request):
 
 #title, source(our url), content, author (id), host, displayname(username), urlid, 
 #need to implement function to get single posts for url
+@logged_in_or_basicauth()
 def getposts(request):
     items = []
    
@@ -852,6 +746,7 @@ def getposts(request):
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
 
+@logged_in_or_basicauth()
 @csrf_exempt
 def newfriendrequest(request):
     items = []
@@ -880,8 +775,7 @@ def newfriendrequest(request):
             author1 = Authors.objects.get(username=authorname)
         else:
             author1 = Authors.objects.get_or_create(name=authorname, username=authorname, 
-            image="", email=email, github="", 
-            facebook="", twitter="", location=authorhost)
+            image="", email=email, github="", location=authorhost)
         print("author1",author1)
 
         if Authors.objects.filter(author_uuid = str(friendid)).count() >=1:
@@ -910,6 +804,7 @@ def newfriendrequest(request):
             return HttpResponse('200 OK')
         return HttpResponse('Friend Request Failed.')
 
+@logged_in_or_basicauth()
 @csrf_exempt
 def Foafvis(request):
     items = []
@@ -1010,10 +905,7 @@ def Foafvis(request):
         #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
-
-
-  
-
+@logged_in_or_basicauth()
 def getcomments(request):
     items = []
     if request.method == "GET":
@@ -1021,7 +913,7 @@ def getcomments(request):
             items.insert(0,x)
     return HttpResponse(json.dumps({'comments' : items}))
 
-
+@logged_in_or_basicauth()
 def getgithub(request):
     items = []
     if request.method == "GET":
@@ -1029,7 +921,7 @@ def getgithub(request):
             items.insert(0,x)
     return HttpResponse(json.dumps({'github' : items}))
 
-
+@logged_in_or_basicauth()
 @csrf_exempt
 # /main/checkfriends/?user=<user>
 def checkfriends(request):
@@ -1071,13 +963,7 @@ def checkfriends(request):
         myjson['author'] = author
         myjson['friends'] = newauthors
 
-            
-
         print("dump",json.dumps(myjson))
-
-        
-        
-
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
 
        
@@ -1198,11 +1084,7 @@ def singlepost(request):
                 
             items.append(post)
 
-    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True),)
-
-        
-
-        
+    return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True),)
 
 def authorposts(request):
     items = []

@@ -38,14 +38,16 @@
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Sign In
 		</button>
-        {% if success %}
+        {% if messages %}
+        {% for message in messages %}
         <br/>
-        <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ success }}</h4>
-
+        <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ message }}</h4>
+        {% endfor %}
         {% endif %}
         {% if error_msg %}
         <br/>
         <h4 id="center" class="animated flash" style="background-color:rgba(0,0,0,0)">{{ error_msg }}</h4>
+
         {% endif %}
 	</form>
 

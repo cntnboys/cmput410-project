@@ -22,20 +22,34 @@
                     <img src="{{ STATIC_URL }}images/bubbles.png" alt="" height = "50" width = "50">
                 </a>
                 {% endif %}
+                    
+
+                
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    
+                <ul class="nav navbar-nav"> 
+                    {% if not user.is_authenticated %}
+                        <li> <a href="{% url 'IndexPage' %}">Thought Bubble </a></li>
+                    {% else %}
+                        <li> <a href="{% url 'mainPage' current_user=user.username %}">Thought Bubble </a></li>
+                    {% endif %}
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">      
                         {% if user.is_authenticated %}
+                        
                         <li>
-                            <a href="{% url 'getaProfile' theusername=user.username user_id=author.author_uuid  %}">{{ user.get_username }}</a>
+                            <a href="{% url 'getaProfile' theusername=user.username user_id=author.author_uuid  %}"><img  src="{{ STATIC_URL }}images/profileicon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hoverprofileicon.png';" onmouseout="this.src='{{ STATIC_URL }}images/profileicon.png';"> Profile </a>
                         </li>
                         <li>
-                            <a href="{% url 'userFriends' %}"> View Friends List </a>                   
+                            <a href="{% url 'EditProfile' current_user=user.username current_userid=author.author_uuid %}"><img  src="{{ STATIC_URL }}images/editprofile.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hovereditprofile.png';" onmouseout="this.src='{{ STATIC_URL }}images/editprofile.png';"> Edit Profile </a>                   
                         </li>
                         <li>
-                            <a href="{% url 'friendRequest' %}"> Manage Friends </a>                   
+                             <a href="{% url 'userFriends' %}"><img  src="{{ STATIC_URL }}images/flisticon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hoverflisticon.png';" onmouseout="this.src='{{ STATIC_URL }}images/flisticon.png';"> List Friends </a>                    
+                        </li>
+                        <li>
+                            <a href="{% url 'friendRequest' %}"><img  src="{{ STATIC_URL }}images/manageicon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hovermanageicon.png';" onmouseout="this.src='{{ STATIC_URL }}images/manageicon.png';"> Manage Friends </a>                
                         </li>
                         {% else %}
                         <li>
@@ -46,35 +60,20 @@
                             <a href="{% url 'RegisterPage' %}">Register</a>
                         </li>
                         {% endif %}
-                        </ul>
 
                         {% if not user.is_authenticated %}
-                        <ul class="nav navbar-nav navbar-right">
                             <li>
                             <a href="#">Contact/About</a>
                             </li>
-                        </ul>
+                        {% else %}
+
+                        <li>
+                            <a href="{% url 'logout' %}"><img  src="{{ STATIC_URL }}images/logouticon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hoverlogouticon.png';" onmouseout="this.src='{{ STATIC_URL }}images/logouticon.png';"> Logout</a>
+                        </li>
                         {% endif %}
 
-                    <!---
-                    <li>
-                        <form id="search" action ="{% url 'SearchPage' %}" method="POST">{% csrf_token%}
-                            <input name=searchuser type = "text" placeholder="Search">
-                            <input id="submit" type = "submit" value = "Search">
-                        </form>
-                    </li>
-                    -->
-
-                {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="{% url 'EditProfile' current_user=user.username current_userid=author.author_uuid %}"> Edit Profile </a>                   
-                        </li>
-                        <li>
-                            <a href="{% url 'logout' %}">Log Out</a>
-                        </li>
                     </ul>
-                {% endif %}
+                
             </div>
             <!-- /.navbar-collapse -->
         </div>

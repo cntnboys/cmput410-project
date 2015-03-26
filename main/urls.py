@@ -13,8 +13,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
+    url(r'^(?P<author_name>.+?)/posts/(?P<post_uuid>.+?)', views.onePost, name='onePost'),
 
-   
     url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     url(r'^getposts/$', views.getposts, name='getposts'),   
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
@@ -22,8 +22,6 @@ urlpatterns = patterns('',
     url(r'^author/posts2/$', views.authorposts, name='authorposts'),
     url(r'^getapost/$', views.singlepost, name='singlepost'), 
     url(r'^getauthorposts/$', views.postsbyauthor, name='postsbyauthor'), 
-
-
 
 
     url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
