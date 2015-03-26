@@ -1313,51 +1313,114 @@ def authorposts(request):
 # seems like we need more backend logic to allow for specific people
 def postsbyauthor(request):
     posts = []
+    items = []
     # current_user = str(request.user.get_username())
     if request.method == "GET":
-        print(request.user)
-        # if request.user.is_authenticated():
-        authorid = request.GET.get('authorid', '')
-        print(authorid)
-        a = Authors.objects.get(author_uuid = str(authorid))
-        for x in Posts.objects.filter(author_id = a, privacy="public"):
-            post = {}
-            post['title'] = str(x.title)
-            post['source'] = ""
-            post['origin']= ""
-            post['description'] = ""
-            post['content-type'] = ""
-            post['content'] = str(x.content)
-            post['pubdate'] = str(x.date)
-            post['guid'] = str(x.post_uuid)
+       # print(request.user)
+        if request.user.is_authenticated():
+            current_user = str(request.user.get_username())
+            print("current-user",current_user)
+            myid = Authors.objects.get(username=str(current_user))
+            authorid = request.GET.get('authorid', '')
+            print(authorid)
+            a = Authors.objects.get(author_uuid = str(authorid))
 
-        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-            post['visability'] = str(x.privacy)
-        
-        
-            #author
-            author={}
-            author['id'] = str(a.author_uuid)
-            author['host'] = str(a.location)
-            author['displayname'] = str(a.username)
-            author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
-            post['author'] = str(author)
-            print(x.post_id,"got a public post: ", x.title)
-        #comments here
+            # public posts by author
+            for x in Posts.objects.filter(author_id = a, privacy="public"):
+                items.insert(0,x)
 
-        posts.append(post)
+            # if current user is friends with author
+            for f in Friends.objects.all():
+                 #print("authorid:",authorid)
+                 #print("invitee_id",f.invitee_id.author_id)
+                 if (f.invitee_id.author_id==myid.author_id) and f.status:
+                    if str(f.invitee_id.username) == a.username:
+                        print("same prerson")
+                    else:
+                        for x in Posts.objects.filter(author_id=a, privacy="friends"):
+                            #print("1: ",x)
+                            #print("f: ",f.invitee_id.username,":",current_user)
+                            items.insert(0,x)
+                        
+                
+                 if (f.inviter_id.author_id==myid.author_id) and f.status:
+                    if f.inviter_id.username == a.username:
+                        print("same person")
+                    else:
+                        for x in Posts.objects.filter(author_id=a, privacy="friends"):
+                            #print("2: ",x)
+                            #print("f: ",f.inviter_id.username,":",current_user)
+                            items.insert(0,x)
+            
+            # posts by author marked for us
+            for x in Posts.objects.filter(author_id = a ,privacy=str(current_user)):
+                #print("for: ",str(current_user), "id :", x.post_id, "x: ", x)
+                items.insert(0,x)
 
-        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-        # ''                 foaf ?                               ''
-        # ''      privacy = current_user (all posts for me)       ''
-        # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-        # get posts meant for current user? can privacy be this user? friends?
-        # for x in Posts.objects.filter(author_id = a privacy=current_user):
-        #     print("for user: ", current_user)
 
-        # maybe not this one
-        # for x in Posts.objects.filter(author_id = a privacy = foaf)):
-        #     print("by current user"")
+            items.sort(key=lambda x: x.date, reverse=True)
+
+            #comments here
+            for x in items:
+                post = {}
+                post['title'] = str(x.title)
+                post['source'] = ""
+                post['origin']= ""
+                post['description'] = ""
+                post['content-type'] = ""
+                post['content'] = str(x.content)
+                post['pubdate'] = str(x.date)
+                post['guid'] = str(x.post_uuid)
+
+            #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+                print("PRIVACY: ", str(x.privacy))
+                post['visability'] = str(x.privacy)
+            
+                #author
+                author={}
+                author['id'] = str(a.author_uuid)
+                author['host'] = str(a.location)
+                author['displayname'] = str(a.username)
+                author['url'] = str("thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid))
+                post['author'] = str(author)
+
+            # comments
+                comments = []
+                for comment in Comments.objects.filter(post_id = x.post_id):
+                    print("comment: ",comment)
+                    commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
+                    commAuthJson = {}
+                    commJson= {}
+                    theid = str(commAuth.author_uuid)
+                    location = commAuth.location
+                    theuser = commAuth.username
+                    thecontent = comment.content
+                    thedate = comment.date
+                    thecommuuid = str(comment.comment_uuid)
+                    commAuthJson['id'] = str(theid)
+                    commAuthJson['host'] = str(location)
+                    commAuthJson['displayname'] = str(theuser)
+                    commJson['comment'] = str(thecontent)
+                    commJson['pubDate'] = str(thedate)
+                    commJson['guid'] = str(thecommuuid)
+                    commJson['author'] = commAuthJson
+                    comments.append(commJson)
+           
+                    post['comments'] = comments
+
+                posts.append(post)
+
+            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            # ''                 foaf ?                               ''
+            # ''      privacy = current_user (all posts for me)       ''
+            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            # get posts meant for current user? can privacy be this user? friends?
+            # for x in Posts.objects.filter(author_id = a privacy=current_user):
+            #     print("for user: ", current_user)
+
+            # maybe not this one
+            # for x in Posts.objects.filter(author_id = a privacy = foaf)):
+            #     print("by current user"")
 
 
     return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True),)
