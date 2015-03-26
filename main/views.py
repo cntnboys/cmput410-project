@@ -1,6 +1,7 @@
 import calendar
 from datetime import timedelta
 import random
+import time
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -37,17 +38,65 @@ from requests.auth import HTTPBasicAuth
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
+
 def getPostsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/posts'
 
     #Username:Host:Password
-    string = "Basic "+ base64.b64encode('nbui:fldkshfdlshflkshfl:team6')
+    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
 
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
-    print r.content
-    print r.status_code
+    #print r.content
+    #print r.status_code
+    
+    content = json.loads(r.content)
+
+    for post in content["posts"]:
+        try:
+            author = Authors.objects.get(author_uuid=post["author"]["id"])
+        except:
+            author_uuid = post["author"]["id"]
+            name = post["author"]["displayName"]
+            username = post["author"]["displayName"]
+            email = username + "@ualberta.ca"
+            location = "social-distribution"
+            
+            author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+        try:
+            new_post = Posts.objects.get(post_uuid=post["guid"])
+        except:
+            post_uuid = post["guid"]
+            privacy = post["visibility"].lower()
+            content = post["description"]
+            #date = post["pubDate"]
+            #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+            title = post["title"]
+
+            new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
+
+        for comment in post["comments"]:
+            
+            try:
+                comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
+            except:
+                author_uuid = comment["author"]["id"]
+                name = comment["author"]["displayName"]
+                username = comment["author"]["displayName"]
+                email = username + "@ualberta.ca"
+                location = "social-distribution"
+                
+                comment_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+
+            try:
+                new_comment = Comments.objects.get(comment_uuid=comment["guid"])
+            except: #comment date?
+                comment_uuid = comment["guid"]
+                content = comment["comment"]
+
+                new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
     return
+
 # Index Page function is used to traverse to our introduction page
 # if you are not logged in as a user
 # If you are logged in as a user, you will be redirected to the
@@ -465,12 +514,17 @@ def getaProfile(request, theusername, user_id):
     ufriends = []
     posts = []
     
+    # git_author = Authors.objects.get(author_uuid=user_id)
+    
     # call to github to check for new posts?
     githubAggregator(theusername)
 
     if request.method =="GET":
         author = Authors.objects.get(username=request.user.username)
-        user = Authors.objects.get(author_uuid=user_id, location="bubble")
+        try:
+            user = Authors.objects.get(author_uuid=user_id, location="bubble")
+        except:
+            user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
         items.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
