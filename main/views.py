@@ -42,29 +42,35 @@ from django.utils.html import strip_tags
 #http://docs.python-requests.org/en/latest/user/authentication/
 
 
-def getPostsFromOthers():
-    url = 'http://social-distribution.herokuapp.com/api/posts'
-
-    #Username:Host:Password
+def getAuthorsFromOthers():
+    url = 'http://social-distribution.herokuapp.com/api/author'
+    
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
-    #print r.content
-    #print r.status_code
     
     content = json.loads(r.content)
-
-    for post in content["posts"]:
+    
+    for author in content["authors"]:
         try:
-            author = Authors.objects.get(author_uuid=post["author"]["id"])
+            new_author = Authors.objects.get(author_uuid=author["id"])
         except:
-            author_uuid = post["author"]["id"]
-            name = post["author"]["displayName"]
-            username = post["author"]["displayName"]
+            author_uuid = author["id"]
+            name = author["displayName"]
+            username = author["displayName"]
             email = username + "@ualberta.ca"
             location = "social-distribution"
             
-            author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+    
+    return None
+
+def updateThePosts(content):
+    
+    for post in content["posts"]:
+        
+        author = Authors.objects.get(author_uuid=post["author"]["id"])
+        
         try:
             new_post = Posts.objects.get(post_uuid=post["guid"])
         except:
@@ -74,30 +80,82 @@ def getPostsFromOthers():
             #date = post["pubDate"]
             #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
             title = post["title"]
-
+            
             new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
-
+        
         for comment in post["comments"]:
             
-            try:
-                comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
-            except:
-                author_uuid = comment["author"]["id"]
-                name = comment["author"]["displayName"]
-                username = comment["author"]["displayName"]
-                email = username + "@ualberta.ca"
-                location = "social-distribution"
-                
-                comment_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
-
+            comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
+            
+            
             try:
                 new_comment = Comments.objects.get(comment_uuid=comment["guid"])
             except: #comment date?
                 comment_uuid = comment["guid"]
                 content = comment["comment"]
-
+                
                 new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
-    return
+    
+    return None
+
+def getAuthorPostsFromOthers():
+    
+    url = 'http://social-distribution.herokuapp.com/api/author/posts'
+    
+    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
+    r = requests.get(url, headers=headers)
+    
+    content = json.loads(r.content)
+    
+    updateThePosts(content)
+    
+    return None
+
+
+def getPostsFromOthers():
+    
+    url = 'http://social-distribution.herokuapp.com/api/posts'
+    
+    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
+    r = requests.get(url, headers=headers)
+    
+    
+    content = json.loads(r.content)
+    
+    updateThePosts(content)
+    
+    return None
+
+
+def getFriendsOfAuthors(username):
+    
+    url = 'http://social-distribution.herokuapp.com/api/friends/'
+    
+    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com', 'Content-Type': 'application/json', 'Accept':'*/*'}
+    
+    author_list = []
+    
+    author = Authors.objects.get(username=username)
+    
+    for author in Authors.objects.all():
+        
+        author_list.insert(0,str(author.author_uuid))
+    
+    data = { "query":"friends","author":str(author.author_uuid), "authors":author_list}
+    
+    #print data
+    
+    r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
+    
+    print r.text
+    
+    return None
 
 # Index Page function directs to our introduction page
 # if you are not logged in as a user
@@ -123,6 +181,12 @@ def mainPage(request,author_name=None, current_user=None):
     items2 = []
 
     if request.method == "GET":
+        
+        #UNCOMMENT OUT!!!
+        #getAuthorsFromOthers()
+        #getPostsFromOthers()
+        #getAuthorPostsFromOthers()
+        
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
         user = Authors.objects.get(author_uuid=author_id.author_uuid)
@@ -320,8 +384,79 @@ def friendRequest(request):
         print userid
         print "in post"
         theirUname = request.POST["follow"]
+        try:
+            theirAuthor = Authors.objects.get(username=theirUname, location="bubble")
+            ourName = Authors.objects.get(username=current_user, location="bubble")
+            if request.user.is_authenticated():
+                current_user = request.user.username
+
+            #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+                print "here!"
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+                print "there!"
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+            else:
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
+
+
+            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+            items.append(yourprofileobj)
         
-        theirAuthor = Authors.objects.get(username=theirUname, location="bubble")
+            print items
+        
+            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
+                      "author": yourprofileobj} )
+
+        except:
+            print ("not local author")
+        try:
+            theirAuthor = Authors.objects.get(username=theirUname, location= "social-distribution")
+            ourName = Authors.objects.get(username=current_user, location="bubble")
+            url = "http://social-distribution.herokuapp.com/api/friendrequest"
+            string = "Basic "+ base64.b64encode("nbui:social-distribution.herokuapp.com:team6")
+            headers = {"Authorization":string, "Host": "social-distribution.herokuapp.com", "Content-Type": "application/json"}
+            payload =  {    "query": "friendrequest",
+                            "author":{
+                                "id":str(ourName.author_uuid),
+                                "host":"http://thought-bubble.herokuapp.com/",
+                                "displayname":str(ourName.username)
+                                },
+                            "friend": {
+                                "id":str(theirAuthor.author_uuid),
+                                "host":"http://social-distribution.herokuapp.com/",
+                                "displayname":str(theirAuthor.username),
+                                "url":"http://social-distribution.herokuapp.com/"+"author/"+str(theirAuthor.author_uuid)
+                                }
+                        }
+            print theirAuthor.username
+            print headers
+            print url
+            print payload
+            r = requests.post(url,data=json.dumps(payload), headers=headers)
+            print r
+            if request.user.is_authenticated():
+                current_user = request.user.username
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+                print "here!"
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+                print "there!"
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+            else:
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
+
+            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+            items.append(yourprofileobj)
+            print items
+            print "items on top"
+        
+            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
+                      "author": yourprofileobj} )
+
+        except:
+            print ("not author on this host")
         ourName = Authors.objects.get(username=current_user, location="bubble")
         if request.user.is_authenticated():
             current_user = request.user.username
