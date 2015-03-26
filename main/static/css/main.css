@@ -7,24 +7,75 @@ body {
     background-attachment: fixed;
     background-size:cover;
     background-image: url(../images/back.jpg);
-
 }
 
 .createPost {
   border-radius: 10px;
-  padding-left: 2%;
   padding-top: 1pt;
   padding-bottom: 2%;
+  margin-right: auto;
+  margin-left: 10pt;
   background-color: rgba(0,55,155,0.2);
 
 }
+.row h2 {
+  padding-left: 10pt;
+}
+
+@media (min-width: 300px) {
+  .createPost{
+    width: 350px;
+  }
+}
+@media (min-width: 550px) {
+  .createPost {
+    width: 500px;
+  }
+}
+@media (min-width: 800px) {
+  .createPost {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .createPost {
+    width: 1000px;
+  }
+}
 
 .recentPost {
+  width: 1000px;
+  padding-top: 1%;
+  padding-bottom: 1%;
   border-radius: 10px;
-  padding-left: 2%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  background-color: rgba(0,55,155,0.2);
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(0,185,155,0.2);
+}
+
+.recentPost h1 {
+  margin-left: 10pt;  
+}
+
+@media (min-width: 300px) {
+  .recentPost{
+    width: 350px;
+  }
+}
+@media (min-width: 550px) {
+  .recentPost {
+    width: 500px;
+  }
+}
+@media (min-width: 800px) {
+  .recentPost {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .recentPost {
+    width: 1000px;
+  }
 }
 
 .triangle-isosceles {
@@ -47,7 +98,7 @@ body {
   content:"";
   position:absolute;
   bottom:-20px; /* value = - border-top-width - border-bottom-width */
-  left:90%; /* controls horizontal position */
+  left:85%; /* controls horizontal position */
   border-width:20px 20px 0; /* vary these values to change the angle of the vertex */
   border-style:solid;
   border-color:rgba(0,55,155,0.2) transparent;
@@ -85,19 +136,58 @@ body {
   width:0;
 }
 
+.triangle-isoscelesd {
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  color:#000;
+  background:rgba(0,55,155,0.2); /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(rgba(0,55,155,0.2)), to(rgba(0,55,155,0.2)));
+  background:-moz-linear-gradient(rgba(0,55,155,0.2), rgba(0,55,155,0.2));
+  background:-o-linear-gradient(rgba(0,55,155,0.2), rgba(0,55,155,0.2));
+  background:linear-gradient(rgba(0,55,155,0.2), rgba(0,55,155,0.2));
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
 input {
-  width: 98%;
+  width: 85%;
+  margin-left: 10pt;
+  margin-right: auto;
   height: 2em;
   border: 1px solid #d2d2d2;
   outline: none;
   font-size: 18px;
 }
 
+@media (min-width: 300px) {
+  input {
+    width: 60%;
+  }
+}
+@media (min-width: 550px) {
+  input {
+    width: 70%;
+  }
+}
+@media (min-width: 800px) {
+  input {
+    width: 80%;
+  }
+}
+@media (min-width: 1200px) {
+  input {
+    width: 85%;
+  }
+}
+
 
 textarea {
-  width: 98%;
-  height: 6em; 
-
+  height: 6em;
+  width: 95.8%; 
+  margin-left: -1pt;
   padding-left:0 px;
   padding-top:0 px;
   border: 1px solid #d2d2d2;
@@ -105,10 +195,35 @@ textarea {
  
 }
 
+@media (min-width: 300px) {
+  textarea {
+    width: 10%;
+  }
+}
+@media (min-width: 550px) {
+  textarea {
+    width: 50%;
+  }
+}
+
+@media (min-width: 800px) {
+  textarea {
+    width: 91.3%;
+  }
+}
+@media (min-width: 1200px) {
+  textarea {
+    width: 95.8%;
+  }
+}
+
+
 input[type="file"] {
   width: 88%;
   height: 2.2em;
   border: 1px solid #d2d2d2;
+  margin-right: auto;
+  margin-left: auto;
   outline: none;
   font-size: 18px;
 }
@@ -174,9 +289,29 @@ input[type="submit"] {
   background:rgba(0,55,155,0.2)    
 }
 
+@media (min-width: 300px) {
+  .post{
+    width: 350px;
+  }
+}
+@media (min-width: 550px) {
+  .post {
+    width: 500px;
+  }
+}
+@media (min-width: 800px) {
+  .post {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .post {
+    width: 1000px;
+  }
+}
+
 .posttitle {
   margin-left: 10pt;
-
   font-size: 18pt;
   text-decoration: underline;
 
