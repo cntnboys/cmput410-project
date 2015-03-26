@@ -183,9 +183,9 @@ def mainPage(request,author_name=None, current_user=None):
     if request.method == "GET":
         
         #UNCOMMENT OUT!!!
-        #getAuthorsFromOthers()
-        #getPostsFromOthers()
-        #getAuthorPostsFromOthers()
+        getAuthorsFromOthers()
+        getPostsFromOthers()
+        getAuthorPostsFromOthers()
         
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
