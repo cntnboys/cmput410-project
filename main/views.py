@@ -916,7 +916,7 @@ def getcomments(request):
 def getgithub(request):
     items = []
     if request.method == "GET":
-        for x in GithubStreams.objects.all():
+        for x in GithubPosts.objects.all():
             items.insert(0,x)
     return HttpResponse(json.dumps({'github' : items}))
 
@@ -969,7 +969,6 @@ def checkfriends(request):
 
     #creating info out
 
-@logged_in_or_basicauth()
 def githubAggregator(user):
     entries = []
 
