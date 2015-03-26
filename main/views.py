@@ -41,7 +41,7 @@ from django.utils.html import strip_tags
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
-
+#/auhtor NO LONGER DOES THE FOLLOWING
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
     
@@ -69,7 +69,16 @@ def updateThePosts(content):
     
     for post in content["posts"]:
         
-        author = Authors.objects.get(author_uuid=post["author"]["id"])
+        try:
+            author = Authors.objects.get(author_uuid=post["author"]["id"])
+        except:
+            author_uuid = post["author"]["id"]
+            name = post["author"]["displayName"]
+            username = post["author"]["displayName"]
+            email = username + "@ualberta.ca"
+            location = "social-distribution"
+        
+            author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
         
         try:
             new_post = Posts.objects.get(post_uuid=post["guid"])
@@ -85,8 +94,16 @@ def updateThePosts(content):
         
         for comment in post["comments"]:
             
-            comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
+            try:
+                comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
+            except:
+                author_uuid = comment["author"]["id"]
+                name = comment["author"]["displayName"]
+                username = comment["author"]["displayName"]
+                email = username + "@ualberta.ca"
+                location = "social-distribution"
             
+                comment_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
             try:
                 new_comment = Comments.objects.get(comment_uuid=comment["guid"])
@@ -149,10 +166,11 @@ def getFriendsOfAuthors(username):
     
     data = { "query":"friends","author":str(author.author_uuid), "authors":author_list}
     
-    #print data
+    print data
     
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
     
+    print r
     print r.text
     
     return None
@@ -182,8 +200,6 @@ def mainPage(request,author_name=None, current_user=None):
 
     if request.method == "GET":
         
-        #UNCOMMENT OUT!!!
-        getAuthorsFromOthers()
         getPostsFromOthers()
         getAuthorPostsFromOthers()
         
@@ -550,6 +566,8 @@ def getaProfile(request, theusername, user_id):
     posts = []
     
     # git_author = Authors.objects.get(author_uuid=user_id)
+    
+    getFriendsOfAuthors(theusername)
     
     # call to github to check for new posts?
     githubAggregator(theusername)
