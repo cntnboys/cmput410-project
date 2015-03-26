@@ -192,6 +192,9 @@ def mainPage(request,author_name=None, current_user=None):
         user = Authors.objects.get(author_uuid=author_id.author_uuid)
         items2.append(user)
 
+        #Grabs Github Materials
+        githubAggregator(current_user)
+
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
                 a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
@@ -319,7 +322,6 @@ def loginPage(request):
 
 # Log out function allows user to log out of the current authenticated account
 # and the author will be redirected to the intro page.
-@logged_in_or_basicauth()
 def logout(request):
     # Logout function redefined in import statement by Chris Morgan
     # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
@@ -720,10 +722,6 @@ def registerPage(request):
         # Successful. Redirect to Login
         success = "Registration complete. Please sign in."
 
-        # If registered user specifies a github account
-        if(github is not ""):
-            githubAggregator(username)
-
         messages.add_message(request, messages.INFO, success)
         return HttpResponseRedirect("/main/login")
 
@@ -1051,7 +1049,7 @@ def getcomments(request):
 def getgithub(request):
     items = []
     if request.method == "GET":
-        for x in GithubStreams.objects.all():
+        for x in GithubPosts.objects.all():
             items.insert(0,x)
     return HttpResponse(json.dumps({'github' : items}))
 
@@ -1100,14 +1098,8 @@ def checkfriends(request):
         print("dump",json.dumps(myjson))
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
 
-       
-
-    #creating info out
-
-@logged_in_or_basicauth()
 def githubAggregator(user):
     entries = []
-
     author = Authors.objects.get(username = user)
     gitname = author.github
     giturl = "http://www.github.com/"+gitname+".atom"
@@ -1222,15 +1214,17 @@ def singlepost(request):
 
     return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True),)
 
+
+#
 @logged_in_or_basicauth()
 def authorposts(request):
+    print "hello"
     items = []
     ufriends=[]
     items2 = []
     items3 = []
 
     if request.method == "GET":
-        #if request.user.is_authenticated():
         print("yo")
         current_user = str(request.user.get_username())
         print("yo2")
