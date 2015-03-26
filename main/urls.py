@@ -12,11 +12,18 @@ urlpatterns = patterns('',
     url(r'^login/$', views.loginPage, name='LoginPage'),
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
+
+    # Logged In Pages
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
     url(r'^(?P<author_name>.+?)/posts/(?P<post_uuid>.+?)', views.onePost, name='onePost'),
 
+    # Get Our Data
+    url(r'^getposts/$', views.getposts, name='getposts'),
+
+
+
     url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
-    url(r'^getposts/$', views.getposts, name='getposts'),   
+    
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
     url(r'^author/posts2/$', views.authorposts, name='authorposts'),
