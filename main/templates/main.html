@@ -22,7 +22,7 @@
 
 <body>
 	<div class="wrapper">
-		<div class="createPost triangle-isosceles">
+		<div class="createPost">
 			<div class="row">
 				<h2>Create a Thought Bubble</h2>
 					<form method="POST" action="{% url "makePost" %}" enctype="multipart/form-data">
@@ -50,18 +50,18 @@
 				     	{% endfor %}
 				   		</select>  			
 		   			</div>
-		   			<input type="file" class="form-control" placeholder=""  name="image">
 		   		</div>
 		   		<br/>
 			<div class="row">
-					<input type="text" name="title" placeholder="Title to your thoughts...">
-			</div>
-			<div class="row">
-				<div class="col-md-10" >
-					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea>
+				<div class="col-md-11" >
+					<input type="text" name="title" placeholder="Title to your thoughts..."><br/>
+					<textarea placeholder="Stay a while and type your thoughts here..." name="posttext"></textarea><br/>
+					Attach an Image:
+					<input type="file" class="form-control" name="image">
 				</div>
+
 				<div class="col-md-1">
-					<input type="submit" class="rightbtn postbtn" value="Post">
+					<div class="postbtn"><input type="submit" value="Post"></div>
 				</div>
 				
 			</div>
@@ -72,11 +72,11 @@
 	</div>
 	</div>
 
-
+	<br/>
 	<div class="wrapper" >	
-		<div class='recentPost triangle-isoscelesd'><h1>Recent Posts</h1></div>
+		<div class='headerbox'><h1>Recent Posts</h1></div>
                 {% for link in items %}
-                	<div class="post triangle-isosceles">
+                	<div class="contentbox">
                 		{% if link.title %}
                 			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}>{{ link.title }}</a></div>
                 		{% else %}
@@ -84,29 +84,38 @@
                 		{% endif %}
                 		<span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
                 		<br/><br/>
-                    <div class="postbody">
+
                         {% if link.image %}
 			<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}" height="82" width="100" /> </br></a>
                         {% endif %}
                         {% if link.content %}
-			</br>
-                        <span class="name">{{ link.content }}</span> </br>
+                        <p style="margin-left:10pt">{{ link.content }}</p>
                         {% endif %}
-                        
-                        
-                        <form method="POST" action="{% url "makeComment" %}" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="text" name="comment" placeholder="Write a comment">
-                            <input type="file" class="form-control" placeholder=""  name="image">
-                            <input type="hidden" name="postid" value={{link.post_id}}>
-                            <input type="submit" class="button" value="Add">
+                        </div>
+
+
+                    	<div class="contentbox" style="background-color:rgba(120,12,120,0.2); border-color:rgba(120,12,12s0,0.3)">
+                    	<div class="row">
+              				<div class="col-md-11" >
+                        		<form method="POST" action="{% url "makeComment" %}" enctype="multipart/form-data">
+                            	{% csrf_token %}
+                            	<input type="text" name="comment" placeholder="Write a comment"><br/>
+                            	Attach an image:
+                            	<input type="file" class="form-control" placeholder=""  name="image">
+                            	<input type="hidden" name="postid" value={{link.post_id}}>
+                       	 	</div>
+                       	 	<div class="col-md-1">
+                            	<div class="addComment"><input type="submit" class="button" value="Add"></div>
+                        	</div>
                         </form>
-                        
+                        </div>
+                        </div>
+                       
                         {% for comment in link.comments %}
+                        	<div class="contentbox comment">
+                            <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=comment.author_id.username user_id=comment.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span>
                         
-                            <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=comment.author_id.username user_id=comment.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span></br></br>
-                        
-                            <div class="postcomment">
+                            
                                 {% if comment.image %}
                             	<a href="../../../media/{{comment.image}}"><img src="../../../media/{{comment.image}}"  height="82" width="100" /></a>  </br></br></br></br></br></br>
                                 {% endif %}
@@ -115,12 +124,14 @@
                                 {% endif %}
                                 
                             </div>
+                           
                         {% endfor %}
                         
-                        
-                    </div></div><br/>
+                         <br/>
+                    </div></div>
                 {% endfor %}
 			</div>
+		<br/><br/><br/>	
 		<div class="wrapper">
 			<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
 		</div>

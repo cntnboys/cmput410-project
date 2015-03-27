@@ -222,15 +222,15 @@ def mainPage(request,author_name=None, current_user=None):
 
     if request.method == "GET":
 
-        try:
-            getAuthorsFromOthers()
-            getPostsFromOthers()
+        #try:
+            #getAuthorsFromOthers()
+            #getPostsFromOthers()
             
-            for author in Authors.objects.all():
-                getOneAuthorPosts(author.author_uuid)
+            #for author in Authors.objects.all():
+                #getOneAuthorPosts(author.author_uuid)
             #getAuthorPostsFromOthers()
-        except:
-            print ("Offline Cannot Get Authors from Others")
+        #except:
+        #    print ("Offline Cannot Get Authors from Others")
         
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
@@ -238,7 +238,7 @@ def mainPage(request,author_name=None, current_user=None):
         items2.append(user)
 
         #Grabs Github Materials
-        githubAggregator(current_user)
+        #githubAggregator(current_user)
 
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
@@ -601,8 +601,6 @@ def getaProfile(request, theusername, user_id):
         if author.location != "bubble":
             getOneAuthorPosts(author.auhtor_uuid)
         getFriendsOfAuthors(theusername)
-        # call to github to check for new posts?
-        githubAggregator(theusername)
     except:
         print("Offline")
 
@@ -611,7 +609,8 @@ def getaProfile(request, theusername, user_id):
         try:
             user = Authors.objects.get(author_uuid=user_id, location="thought-bubble.herokuapp.com")
         except:
-            user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
+            user = Authors.objects.get(author_uuid=user_id, location="bubble")
+            #user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
         items.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):

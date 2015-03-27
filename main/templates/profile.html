@@ -171,8 +171,22 @@
     </div>
     </div></div>
 </div>
+    {% else %}
+    <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+    <div class="panel-body">
+    <div class="row">
+    <div class="wrapper">
+        <div class="headerbox"><h1>Recent Posts</h1></div>
+        <div class="contentbox text-center">
+         <img style="width:20%; height:20%;" src="{{ STATIC_URL }}images/sad.png"/><br/>
+         You have no posts, go post something!
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
 
-{% endif %}
+    {% endif %}
 
 </body>
 </html>
