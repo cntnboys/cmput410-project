@@ -4,11 +4,7 @@ from django.contrib import admin
 
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-import friends.views
 import main.views
-import friendrequest.views
-
-from rest_framework import routers, serializers, viewsets
 
 urlpatterns = patterns('',
     # Examples:
