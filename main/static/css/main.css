@@ -11,10 +11,13 @@ body {
 
 .createPost {
   border-radius: 10px;
-  padding-top: 1pt;
-  padding-bottom: 2%;
+  position:relative;
+  padding:15px;
+  border: 2px solid rgba(0,55,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
   margin-right: auto;
-  margin-left: 10pt;
+  margin-left: auto;
   background-color: rgba(0,55,155,0.2);
 
 }
@@ -45,9 +48,13 @@ body {
 
 .recentPost {
   width: 1000px;
-  padding-top: 1%;
-  padding-bottom: 1%;
+  position:relative;
+  padding:15px;
+  border: 2px solid rgba(0,185,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
   border-radius: 10px;
+
   margin-right: auto;
   margin-left: auto;
   background-color: rgba(0,185,155,0.2);
@@ -82,6 +89,7 @@ body {
 .headerbox {
   position:relative;
   padding:15px;
+
   width: 1000px;
   border-radius: 10px;
   border: 2px solid rgba(0,185,155,0.3);
@@ -161,10 +169,22 @@ body {
   }
 }
 
+.comment {
+  border: 2px solid rgba(140,33,170,0.3);
+  background-color: rgba(140,33,170,0.2);
+
+}
+
+.comment:nth-child(odd) {
+    border: 2px solid rgba(110,33,70,0.3);
+    background-color: rgba(110,33,70,0.2);
+
+}
+
 
 input {
-  width: 85%;
-  margin-left: 10pt;
+  width: 95%;
+  margin-left: 0pt;
   margin-right: auto;
   height: 2em;
   border: 1px solid #d2d2d2;
@@ -184,20 +204,20 @@ input {
 }
 @media (min-width: 800px) {
   input {
-    width: 80%;
+    width: 85%;
   }
 }
 @media (min-width: 1200px) {
   input {
-    width: 85%;
+    width: 95%;
   }
 }
 
 
 textarea {
   height: 6em;
-  width: 95.8%; 
-  margin-left: -1pt;
+  width: 95%; 
+  margin-left: 0pt;
   padding-left:0 px;
   padding-top:0 px;
   border: 1px solid #d2d2d2;
@@ -207,61 +227,64 @@ textarea {
 
 @media (min-width: 300px) {
   textarea {
-    width: 10%;
+    width: 60%;
   }
 }
 @media (min-width: 550px) {
   textarea {
-    width: 50%;
+    width: 70%;
   }
 }
 
 @media (min-width: 800px) {
   textarea {
-    width: 91.3%;
+    width: 85%;
   }
 }
 @media (min-width: 1200px) {
   textarea {
-    width: 95.8%;
+    width: 95%;
   }
 }
 
 
 input[type="file"] {
-  width: 88%;
+  width: 95%;
   height: 2.2em;
   border: 1px solid #d2d2d2;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 0pt;
   outline: none;
   font-size: 18px;
 }
 
 
-div.upload {
-    width: 157px;
-    height: 57px;
-    background-color:blue ;
-    overflow: hidden;
+@media (min-width: 300px) {
+  input[type="file"] {
+    width: 60%;
+  }
+}
+@media (min-width: 550px) {
+  input[type="file"] {
+    width: 70%;
+  }
 }
 
-div.upload input {
-    display: block;
-    width: 157px;
-    height: 57px;
-    opacity: 0;
-    overflow: hidden;
+@media (min-width: 800px) {
+  input[type="file"] {
+    width: 85%;
+  }
 }
-
-input:focus {
-  background: #FFFDF2;
+@media (min-width: 1200px) {
+  input[type="file"] {
+    width: 95%;
+  }
 }
 
 .friendreq {
+  height: 60px;
   position: absolute;
   top: 20%;
-  margin-left: 84%;
 }
 
 @media (min-width: 300px) {
@@ -286,43 +309,65 @@ input:focus {
   }
 }
 
+input:focus {
+  background: #FFFDF2;
+}
 
-.rightbtn {
-  margin-left: 84%;
+.addComment {
+  position: absolute;
 }
 
 @media (min-width: 300px) {
-.rightbtn {
-    margin-left: 57%;
+  .addComment  {
+    margin-left: 65%;
+    bottom: 12pt;
   }
 }
 @media (min-width: 550px) {
-.rightbtn  {
-    margin-left: 69%;
+  .addComment {
+    top: -60pt;
+    margin-left: 280pt;
   }
 }
 
 @media (min-width: 800px) {
-.rightbtn  {
-    margin-left: 78%;
+  .addComment   {
+    top: 11pt;
+    margin-left: -58pt;
   }
 }
+
 @media (min-width: 1200px) {
-.rightbtn {
-    margin-left: 84%;
+  .addComment   {
+    top: 15pt;
+    margin-left: -28pt;
   }
 }
 
-.postbtn {
-  position: absolute;
-  top: 20%;
-
+.addComment input[type="submit"] {
+  height: 70px;
+  width: 70px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
 }
+
+.addComment input[type="submit"]:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
 
 input[type="submit"] {
   height: 60px;
   width: auto;
-
   border: 2px solid #7BC574;
   border-radius: 50px;
   color: black;
@@ -334,24 +379,77 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  height: 60px;
-  width: auto;
-
   border: 2px solid #7BC574;
   border-radius: 50px;
   color: black;
   background: rgba(140,213,183,0.9)
 }
 
-.post {
-  border-radius: 10px;
-  padding: 20px 0;
-  background:rgba(10,105,155,0.2)
+input:focus {
+  background: #FFFDF2;
 }
 
-.post:nth-child(even) {
-  background:rgba(0,55,155,0.2)    
+.postbtn {
+  position: absolute;
 }
+
+.postbtn input[type="submit"] {
+  height: 100px;
+  width: 100px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.postbtn input[type="submit"]:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+
+@media (min-width: 300px) {
+  .postbtn  {
+    margin-left: 60%;
+    bottom: 30pt;
+  }
+}
+@media (min-width: 550px) {
+  .postbtn {
+
+    margin-left: 72%;
+    bottom: 30pt;
+  }
+}
+
+@media (min-width: 800px) {
+  .postbtn  {
+    top: 20pt;
+    margin-left: -68pt;
+  }
+}
+
+@media (min-width: 1200px) {
+  .postbtn {
+    top: 25pt;
+    margin-left: -40pt;
+  }
+
+
+@media (min-width: 1200px) {
+  .postbtn {
+    top:30pt;
+    margin-left: -40pt;
+  }
+
+
+
 
 @media (min-width: 300px) {
   .post{

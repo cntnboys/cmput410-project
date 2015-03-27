@@ -83,6 +83,7 @@ WSGI_APPLICATION = '_project410.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+
 # DATABASES = {
 #      'default': {
 #          'ENGINE': 'django.db.backends.sqlite3',
@@ -90,6 +91,7 @@ WSGI_APPLICATION = '_project410.wsgi.application'
 #          'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
 #      }
 #  }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -149,6 +151,7 @@ DATABASES = {
 # }
 
 # new one
+<<<<<<< HEAD
 #DATABASES = {
 #      'default': {
 #      'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -159,6 +162,19 @@ DATABASES = {
 #      'PORT' : '5432',
 
 #  }
+=======
+
+#DATABASES = {
+#       'default': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'deqvblu3a2v0u9',
+#       'HOST': 'ec2-107-22-173-230.compute-1.amazonaws.com',
+#       'USER': 'shijubeknomhcq',
+#       'PASSWORD' : 'pKlULpGCjvOibbrlt0qNHOtkr4',
+#       'PORT' : '5432',
+
+#   }
+>>>>>>> djphan
 #}
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
