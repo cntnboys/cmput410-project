@@ -42,7 +42,7 @@ from django.utils.html import strip_tags
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
-#/auhtor NO LONGER DOES THE FOLLOWING
+
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
     
@@ -53,16 +53,20 @@ def getAuthorsFromOthers():
     content = json.loads(r.content)
     
     for author in content["authors"]:
+        
         try:
             new_author = Authors.objects.get(author_uuid=author["id"])
         except:
-            author_uuid = author["id"]
-            name = author["displayName"]
-            username = author["displayName"]
-            email = username + "@ualberta.ca"
-            location = "social-distribution"
-            
-            new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            try:
+                author_uuid = author["id"]
+                name = author["displayName"]
+                username = author["displayName"]
+                email = username + "@ualberta.ca"
+                location = "social-distribution"
+                
+                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            except:
+                pass # Not all authors do save
     
     return None
 
@@ -116,6 +120,26 @@ def updateThePosts(content):
     
     return None
 
+def getOneAuthorPosts(author_id):
+    url = 'http://social-distribution.herokuapp.com/api/author/posts/'+str(author_id)
+    
+    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    
+    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
+    r = requests.get(url, headers=headers)
+    
+    try: #if the author actually has posts
+        content = json.loads(r.content)
+
+        print r
+        updateThePosts(content)
+
+    except:
+        pass
+
+    return None
+
+#REDUNDANT API
 def getAuthorPostsFromOthers():
     
     url = 'http://social-distribution.herokuapp.com/api/author/posts'
@@ -165,15 +189,15 @@ def getFriendsOfAuthors(username):
         
         author_list.insert(0,str(author.author_uuid))
     
-    data = { "query":"friends","author":str(author.author_uuid), "authors":author_list}
+    data = { "query":"friends","authors":author_list, "author":str(author.author_uuid)}
     
-    print data
+    #print data
     
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
     
     print r
     print r.text
-    
+    # SAVE THE FRIENDS HERE
     return None
 
 # Index Page function directs to our introduction page
@@ -201,8 +225,12 @@ def mainPage(request,author_name=None, current_user=None):
 
     if request.method == "GET":
         
+        getAuthorsFromOthers()
         getPostsFromOthers()
-        getAuthorPostsFromOthers()
+        
+        for author in Authors.objects.all():
+            getOneAuthorPosts(author.author_uuid)
+        #getAuthorPostsFromOthers()
         
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
@@ -568,13 +596,19 @@ def getaProfile(request, theusername, user_id):
     
     # git_author = Authors.objects.get(author_uuid=user_id)
     
+    author = Authors.objects.get(username=request.user.username)
+    
+    if author.location != "bubble":
+        getOneAuthorPosts(author.auhtor_uuid)
+    
+    
     getFriendsOfAuthors(theusername)
     
     # call to github to check for new posts?
     githubAggregator(theusername)
 
     if request.method =="GET":
-        author = Authors.objects.get(username=request.user.username)
+        
         try:
             user = Authors.objects.get(author_uuid=user_id, location="bubble")
         except:
