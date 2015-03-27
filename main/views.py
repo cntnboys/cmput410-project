@@ -59,8 +59,8 @@ def getAuthorsFromOthers():
         except:
             try:
                 author_uuid = author["id"]
-                name = author["displayName"]
-                username = author["displayName"]
+                name = author["displayname"]
+                username = author["displayname"]
                 email = username + "@ualberta.ca"
                 location = "social-distribution"
                 
@@ -78,8 +78,8 @@ def updateThePosts(content):
             author = Authors.objects.get(author_uuid=post["author"]["id"])
         except:
             author_uuid = post["author"]["id"]
-            name = post["author"]["displayName"]
-            username = post["author"]["displayName"]
+            name = post["author"]["displayname"]
+            username = post["author"]["displayname"]
             email = username + "@ualberta.ca"
             location = "social-distribution"
         
@@ -103,8 +103,8 @@ def updateThePosts(content):
                 comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
             except:
                 author_uuid = comment["author"]["id"]
-                name = comment["author"]["displayName"]
-                username = comment["author"]["displayName"]
+                name = comment["author"]["displayname"]
+                username = comment["author"]["displayname"]
                 email = username + "@ualberta.ca"
                 location = "social-distribution"
             
