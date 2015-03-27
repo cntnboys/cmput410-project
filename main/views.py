@@ -456,7 +456,9 @@ def friendRequest(request):
             print ("not local author")
         try:
             theirAuthor = Authors.objects.get(username=theirUname, location= "social-distribution")
+            print "their author"
             ourName = Authors.objects.get(username=current_user, location="bubble")
+            print "our author"
             url = "http://social-distribution.herokuapp.com/api/friendrequest"
             string = "Basic "+ base64.b64encode("nbui:social-distribution.herokuapp.com:team6")
             headers = {"Authorization":string, "Host": "social-distribution.herokuapp.com", "Content-Type": "application/json"}
@@ -506,19 +508,20 @@ def friendRequest(request):
 
         except:
             print ("not author on this host")
-        ourName = Authors.objects.get(username=current_user, location="bubble")
-        if request.user.is_authenticated():
-            current_user = request.user.username
+
+# ourName = Authors.objects.get(username=current_user, location="bubble")
+#       if request.user.is_authenticated():
+#           current_user = request.user.username
 
         #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
-        if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
-            print "here!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
-        elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
-            print "there!"
-            updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
-        else:
-            new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
+        #       if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+        #   print "here!"
+#   updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+#        elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+#           print "there!"
+#           updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+#       else:
+#           new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
 
             
                 #e = Friends.objects.filter(invitee_id=theirAuthor, inviter_id=ourName, status=False)
@@ -530,14 +533,14 @@ def friendRequest(request):
                 #if f:
                 #   f.update(Status=True)
             
-        yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
-        items.append(yourprofileobj)
+#       yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+#       items.append(yourprofileobj)
             
             # for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
             #   if e.status is False :
             #       a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
             #       ufriends.append(a)
-        print items
+#       print items
 
         return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
                         "author": yourprofileobj} )
