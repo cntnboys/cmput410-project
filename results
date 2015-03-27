@@ -1,0 +1,830 @@
+ #### Get A Post ID: 37c1792353234b90abe6f4c9e316fab8 ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "x", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "d8634b9e2e304323ab18ad16eae7a9fe", 
+                "url": "thought-bubble.herokuapp.com/main/x/d8634b9e2e304323ab18ad16eae7a9fe/"
+            }, 
+            "comments": "[]", 
+            "content": "pubb", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "37c1792353234b90abe6f4c9e316fab8", 
+            "origin": "bubble", 
+            "pubdate": "2015-03-26 21:10:11.457178+00:00", 
+            "source": "http://thought-bubble.herokuapp.com/main/getapost/?=37c1792353234b90abe6f4c9e316fab8/", 
+            "title": "MRx's public", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get all public posts ###
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "213f6df00cbe41bbb0e888a62d5780ae", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/213f6df00cbe41bbb0e888a62d5780ae/"
+            }, 
+            "comments": [], 
+            "content": "How is everyone today?", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "812874f2451640978308bba4ad6c6a49", 
+            "origin": "", 
+            "pubdate": "2015-03-26 07:58:14.889935+00:00", 
+            "source": "", 
+            "title": "Hey! This is Btrinh's public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "nbui", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "f69fe7fe441e4bf4a261facb7f3daa67", 
+                "url": "thought-bubble.herokuapp.com/main/nbui/f69fe7fe441e4bf4a261facb7f3daa67/"
+            }, 
+            "comments": [], 
+            "content": "description", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0b4a1ff4d29711e4abc9363c05ba9b40", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:30.816088+00:00", 
+            "source": "", 
+            "title": "first public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "hi", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "59d137685c15491eb6a08f8a5b5326d5", 
+                "url": "thought-bubble.herokuapp.com/main/hi/59d137685c15491eb6a08f8a5b5326d5/"
+            }, 
+            "comments": [], 
+            "content": "Hi", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "dfa67264d33411e4a823de2d37980906", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:32.009208+00:00", 
+            "source": "", 
+            "title": "Hi", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "nbui2", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "19c5cef385dc46d7ae4dcb7e19bcc9ac", 
+                "url": "thought-bubble.herokuapp.com/main/nbui2/19c5cef385dc46d7ae4dcb7e19bcc9ac/"
+            }, 
+            "comments": [], 
+            "content": "description", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2220dfd6d34811e4b3bb228858166321", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:33.082527+00:00", 
+            "source": "", 
+            "title": "gotta create posts so people can test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "test", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "df90444a8cae423ead13e2058ef915e9", 
+                "url": "thought-bubble.herokuapp.com/main/test/df90444a8cae423ead13e2058ef915e9/"
+            }, 
+            "comments": [], 
+            "content": "test", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "63a89af0d35411e4872e9694628d52eb", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:33.754187+00:00", 
+            "source": "", 
+            "title": "test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tester", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "963ce0fce1ba4fbabd9f8e682b65d162", 
+                "url": "thought-bubble.herokuapp.com/main/tester/963ce0fce1ba4fbabd9f8e682b65d162/"
+            }, 
+            "comments": [], 
+            "content": "testing", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b0985522d36711e4a2b8ea9077837efa", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:34.465746+00:00", 
+            "source": "", 
+            "title": "testing ", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "nga", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "073da573c0794ddb85cfd9800dd56196", 
+                "url": "thought-bubble.herokuapp.com/main/nga/073da573c0794ddb85cfd9800dd56196/"
+            }, 
+            "comments": [], 
+            "content": "hey all", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "87112d39228244e99212934584b36398", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:51:51.865596+00:00", 
+            "source": "", 
+            "title": "nga's public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              b26552f                                    trying new stuff on basicauth                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "40d95ce86fcb403e855bdc80126dd3a6", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:07.380577+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              a4c8f5b                                    visability -&gt; visibility                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "dd41d06db34f4940a5a89671760218b0", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:08.179623+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              f641674                                    posts by author visible to user                                                                                35731ce                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "1a4dcd66c468446680114a26975d3f39", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:08.945145+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              13c0203                                    comments working for singleposts; started last get                                                                                0b2996a                                    comments for singleposts; started last get                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e885cf5d63f5451bbbb1e6d2c07e2734", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:09.756627+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              199ef1e                                    get single post                                                                                1b66e7e                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      7 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "74655d2236a341dfbe24fcea809667e5", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:10.529221+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              dd6b5f1                                    github posts load and display; date needs to be fixed                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "d936e2344adf461ea84bb3e6f4e1ee66", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:11.325308+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b6a289197368442395b63501bf0ca9ff", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:12.196130+00:00", 
+            "source": "", 
+            "title": "btrinh1 edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              cab8a18                                    newfriendrequest working                                                                                c9806b6                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5f22710f20424d768a7df7305776e40c", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:13.028159+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              2afd059                                    fixed NO in getfriendsdstatus                                                                                ad86a3a                                    heroku try                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "78125556950f4937a474219c152b6b0e", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:13.847495+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              1883342                                    newfriendreq response = 200ok                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8d4302a54ad1498eaafd128c0078deb0", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:14.935546+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              0612d1a                                    fixed foafvis                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "08001dc66d5b414b8e018857a0614399", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:16.104397+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              cb45f73                                    did foafvis and newfriendreq kinda works                                                                                f213641                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2e9504fee66f4cb697e32a697d3f79b2", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:16.866572+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              4e62b4c                                    modified views                                                                                450af5e                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "71773cdf14f949afa76699bcbb96f82a", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:17.663123+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "llkay", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "40e454acecf84e7684771031c3c78751", 
+                "url": "thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/"
+            }, 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              2cb8f84                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                41e0bf2                                    pretty print                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9880be4976cd409c906f77b7dbe4e582", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:18.433345+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "x", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "d8634b9e2e304323ab18ad16eae7a9fe", 
+                "url": "thought-bubble.herokuapp.com/main/x/d8634b9e2e304323ab18ad16eae7a9fe/"
+            }, 
+            "comments": [], 
+            "content": "pubb", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "37c1792353234b90abe6f4c9e316fab8", 
+            "origin": "", 
+            "pubdate": "2015-03-26 21:10:11.457178+00:00", 
+            "source": "", 
+            "title": "MRx's public", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get specific author posts for authenticated user ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": "{'host': 'bubble', 'displayname': 'x', 'id': 'd8634b9e2e304323ab18ad16eae7a9fe', 'url': 'thought-bubble.herokuapp.com/main/x/d8634b9e2e304323ab18ad16eae7a9fe'}", 
+            "content": "pubb", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "37c1792353234b90abe6f4c9e316fab8", 
+            "origin": "", 
+            "pubdate": "2015-03-26 21:10:11.457178+00:00", 
+            "source": "", 
+            "title": "MRx's public", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get posts for currently authenticated user ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'x', 'id': 'd8634b9e2e304323ab18ad16eae7a9fe', 'url': u'thought-bubble.herokuapp.com/main/x/d8634b9e2e304323ab18ad16eae7a9fe/'}", 
+            "comments": [], 
+            "content": "pubb", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "37c1792353234b90abe6f4c9e316fab8", 
+            "origin": "", 
+            "pubdate": "2015-03-26 21:10:11.457178+00:00", 
+            "source": "", 
+            "title": "MRx's public", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              2cb8f84                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                41e0bf2                                    pretty print                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9880be4976cd409c906f77b7dbe4e582", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:18.433345+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "llkay", 
+                        "host": "bubble", 
+                        "id": "40e454acecf84e7684771031c3c78751"
+                    }, 
+                    "comment": "yo", 
+                    "guid": "ab2510e23c654ebb83c2b5819afabdb4", 
+                    "pubDate": "2015-03-26 23:18:51.721649+00:00"
+                }
+            ], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              4e62b4c                                    modified views                                                                                450af5e                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "71773cdf14f949afa76699bcbb96f82a", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:17.663123+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              cb45f73                                    did foafvis and newfriendreq kinda works                                                                                f213641                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2e9504fee66f4cb697e32a697d3f79b2", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:16.866572+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              0612d1a                                    fixed foafvis                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "08001dc66d5b414b8e018857a0614399", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:16.104397+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              1883342                                    newfriendreq response = 200ok                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8d4302a54ad1498eaafd128c0078deb0", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:14.935546+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              2afd059                                    fixed NO in getfriendsdstatus                                                                                ad86a3a                                    heroku try                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "78125556950f4937a474219c152b6b0e", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:13.847495+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              cab8a18                                    newfriendrequest working                                                                                c9806b6                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5f22710f20424d768a7df7305776e40c", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:13.028159+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b6a289197368442395b63501bf0ca9ff", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:12.196130+00:00", 
+            "source": "", 
+            "title": "btrinh1 edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              dd6b5f1                                    github posts load and display; date needs to be fixed                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "d936e2344adf461ea84bb3e6f4e1ee66", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:11.325308+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              199ef1e                                    get single post                                                                                1b66e7e                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      7 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "74655d2236a341dfbe24fcea809667e5", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:10.529221+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              13c0203                                    comments working for singleposts; started last get                                                                                0b2996a                                    comments for singleposts; started last get                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e885cf5d63f5451bbbb1e6d2c07e2734", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:09.756627+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              f641674                                    posts by author visible to user                                                                                35731ce                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "1a4dcd66c468446680114a26975d3f39", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:08.945145+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              a4c8f5b                                    visability -&gt; visibility                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "dd41d06db34f4940a5a89671760218b0", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:08.179623+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'llkay', 'id': '40e454acecf84e7684771031c3c78751', 'url': u'thought-bubble.herokuapp.com/main/llkay/40e454acecf84e7684771031c3c78751/'}", 
+            "comments": [], 
+            "content": " pushed to master at cntnboys/cmput410-project                                                              b26552f                                    trying new stuff on basicauth                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "40d95ce86fcb403e855bdc80126dd3a6", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:54:07.380577+00:00", 
+            "source": "", 
+            "title": "btrinh1 pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'nga', 'id': '073da573c0794ddb85cfd9800dd56196', 'url': u'thought-bubble.herokuapp.com/main/nga/073da573c0794ddb85cfd9800dd56196/'}", 
+            "comments": [], 
+            "content": "hey all", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "87112d39228244e99212934584b36398", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:51:51.865596+00:00", 
+            "source": "", 
+            "title": "nga's public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'tester', 'id': '963ce0fce1ba4fbabd9f8e682b65d162', 'url': u'thought-bubble.herokuapp.com/main/tester/963ce0fce1ba4fbabd9f8e682b65d162/'}", 
+            "comments": [], 
+            "content": "testing", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b0985522d36711e4a2b8ea9077837efa", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:34.465746+00:00", 
+            "source": "", 
+            "title": "testing ", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'test', 'id': 'df90444a8cae423ead13e2058ef915e9', 'url': u'thought-bubble.herokuapp.com/main/test/df90444a8cae423ead13e2058ef915e9/'}", 
+            "comments": [], 
+            "content": "test", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "63a89af0d35411e4872e9694628d52eb", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:33.754187+00:00", 
+            "source": "", 
+            "title": "test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'nbui2', 'id': '19c5cef385dc46d7ae4dcb7e19bcc9ac', 'url': u'thought-bubble.herokuapp.com/main/nbui2/19c5cef385dc46d7ae4dcb7e19bcc9ac/'}", 
+            "comments": [], 
+            "content": "description", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2220dfd6d34811e4b3bb228858166321", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:33.082527+00:00", 
+            "source": "", 
+            "title": "gotta create posts so people can test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'hi', 'id': '59d137685c15491eb6a08f8a5b5326d5', 'url': u'thought-bubble.herokuapp.com/main/hi/59d137685c15491eb6a08f8a5b5326d5/'}", 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "hi", 
+                        "host": "social-distribution", 
+                        "id": "59d137685c15491eb6a08f8a5b5326d5"
+                    }, 
+                    "comment": "None", 
+                    "guid": "4163285ed34811e4890a228858166321", 
+                    "pubDate": "2015-03-26 20:50:32.683798+00:00"
+                }
+            ], 
+            "content": "Hi", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "dfa67264d33411e4a823de2d37980906", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:32.009208+00:00", 
+            "source": "", 
+            "title": "Hi", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'nbui', 'id': 'f69fe7fe441e4bf4a261facb7f3daa67', 'url': u'thought-bubble.herokuapp.com/main/nbui/f69fe7fe441e4bf4a261facb7f3daa67/'}", 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "nbui", 
+                        "host": "social-distribution", 
+                        "id": "f69fe7fe441e4bf4a261facb7f3daa67"
+                    }, 
+                    "comment": "None", 
+                    "guid": "10892802d29711e49f93363c05ba9b40", 
+                    "pubDate": "2015-03-26 20:50:31.298054+00:00"
+                }
+            ], 
+            "content": "description", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0b4a1ff4d29711e4abc9363c05ba9b40", 
+            "origin": "", 
+            "pubdate": "2015-03-26 20:50:30.816088+00:00", 
+            "source": "", 
+            "title": "first public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": "{'host': 'thought-bubble.herokuapp.com', 'displayname': 'btrinh', 'id': '213f6df00cbe41bbb0e888a62d5780ae', 'url': u'thought-bubble.herokuapp.com/main/btrinh/213f6df00cbe41bbb0e888a62d5780ae/'}", 
+            "comments": [], 
+            "content": "How is everyone today?", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "812874f2451640978308bba4ad6c6a49", 
+            "origin": "", 
+            "pubdate": "2015-03-26 07:58:14.889935+00:00", 
+            "source": "", 
+            "title": "Hey! This is Btrinh's public post", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get post if FOAF ###
+
+
+Response: 
+{
+    "author": {
+        "displayname": "btrinh", 
+        "host": "thought-bubble.herokuapp.com", 
+        "id": "213f6df00cbe41bbb0e888a62d5780ae", 
+        "url": "thought-bubble.herokuapp.com/main/btrinh/213f6df00cbe41bbb0e888a62d5780ae/"
+    }, 
+    "comments": [], 
+    "content": "foaf btrinh", 
+    "content-type": "", 
+    "description": "", 
+    "guid": "c5dfe13b15084fd49e08c90f8b244537", 
+    "origin": "", 
+    "pubdate": "2015-03-26 22:58:15.822405+00:00", 
+    "source": "", 
+    "title": "btrinh FOAF", 
+    "visibility": "FOAF"
+}########################################################
+
+ ###### Post new friend request #####
+
+
+Response: 
+
+
+Your previous friend request to that user is still pending approval.########################################################
+
+ ####### Check if friends #######
+
+
+Response: 
+
+
+{
+    "author": "213f6df00cbe41bbb0e888a62d5780ae", 
+    "friends": [
+        "40e454acecf84e7684771031c3c78751", 
+        "073da573c0794ddb85cfd9800dd56196"
+    ], 
+    "query": "friends"
+}########################################################
+

@@ -2,6 +2,7 @@ import calendar
 from datetime import timedelta
 import random
 import time
+import urllib2
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -746,7 +747,7 @@ def registerPage(request):
         password=request.POST["password"]
         email=request.POST.get("email", "")
         github=request.POST.get("github", "")
-        location="bubble"
+        location="thought-bubble.herokuapp.com"
 
         try:
             image=request.FILES["image"]
@@ -926,7 +927,7 @@ def getposts(request):
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
     #return HttpResponse(json.dumps(post))
 
-@logged_in_or_basicauth()
+#@logged_in_or_basicauth()
 @csrf_exempt
 def newfriendrequest(request):
     items = []
@@ -984,7 +985,7 @@ def newfriendrequest(request):
             return HttpResponse('200 OK')
         return HttpResponse('Friend Request Failed.')
 
-@logged_in_or_basicauth()
+#@logged_in_or_basicauth()
 @csrf_exempt
 def Foafvis(request):
     items = []
@@ -992,7 +993,6 @@ def Foafvis(request):
     if request.method == "POST":
         
         data = json.loads(request.body)
-        
         postid = data['id']
         
         authorid = data['author']['id']
@@ -1015,20 +1015,28 @@ def Foafvis(request):
                 postreq['query'] = "friends"
                 postreq['author'] = authorid
                 postreq['authors'] = friendslist
+                print ("oj: ",postreq['author'])
 
         #host = "http://127.0.0.1:8000/"
-        #print("hi2")
-        #print(host+"main/checkfriends/?user="+authorid)
-        url = host+"main/checkfriends/?user="+authorid
-        r = request.post(url, data=json.dumps(postreq))
+        #print("postreq: "postreq)
+        print(host+"main/checkfriends/?user="+authorid+"/")
+        #url = host+"main/checkfriends/?user="+str(authorid)
+        #print("url: ", url)
+        #r = requests.post(url, data=json.dumps(postreq))
+        #r = urllib2.urlopen(str(url), json.dumps(postreq))
+        #content = r.read()
+        newauthors = []
 
+        print("here")
         # Response, status etc
-        print(r.text)
-        print(r.status_code)
-        print(str(postid))
+        #print(r.status_code)
+        print(str(authorid))
         thePost = Posts.objects.get(post_uuid = str(postid))
+        print("post: ", thePost )
         #myAuthor = Authors.objects.get(author_uuid = str(lara))
-        greg = Authors.objects.get(author_uuid = str(authorid))
+        print("ok",str(data['author']['id']))
+        greg = Authors.objects.get(author_uuid = str(data['author']['id']))
+        print("greg: ",greg)
         #laraFriends = []
         flag = False
         for friend in Friends.objects.all():
@@ -1044,7 +1052,7 @@ def Foafvis(request):
                 print "in else"
                 #laraFriends.append(str(friend.inviter_id.author_uuid))
 
-        posts = Posts.objects.get(post_uuid = postid)
+        posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
 
         post['title'] = posts.title
@@ -1101,7 +1109,7 @@ def getgithub(request):
             items.insert(0,x)
     return HttpResponse(json.dumps({'github' : items}))
 
-@logged_in_or_basicauth()
+#@logged_in_or_basicauth()
 @csrf_exempt
 # /main/checkfriends/?user=<user>
 def checkfriends(request):
@@ -1118,11 +1126,13 @@ def checkfriends(request):
         authors = data['authors']
         newauthors = []
 
-        author1 = Authors.objects.get(author_uuid = author)
+        print("authors",authors)
+        author1 = Authors.objects.get(author_uuid = str(x))
+        print("ajsd")
         hey = str(author1.author_id)
         # ef6728777e36445d8d45d9d5125dc4c6 ng1
         # 9e4ac346d9874b7fba14f27b26ae45bb ng3
-        #print("authors",authors)
+        print("author1: ",author1)
         #print("author1",author1)
         for x in authors:
             newthing = str(x)
@@ -1143,7 +1153,7 @@ def checkfriends(request):
         myjson['author'] = author
         myjson['friends'] = newauthors
 
-        print("dump",json.dumps(myjson))
+        #print("dump",json.dumps(myjson))
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
 
 def githubAggregator(user):
@@ -1199,15 +1209,13 @@ def githubAggregator(user):
     #threading.Timer(180, githubAggregator(user)).start() # call function ever 5 mins? this infinite loops atm
     return None
 
-# This is for returning the JSON information of a single post
-# /service/main/posts/?=postid
 @logged_in_or_basicauth()
 def singlepost(request):
     items = []
     if request.method == "GET":
         x = request.GET.get('postid', '')
+        print(x)
         thepost = Posts.objects.get(post_uuid=x)
-        print(thepost.privacy)
         if thepost.privacy == "public":
             post = {}
         
@@ -1217,7 +1225,7 @@ def singlepost(request):
             post['description'] = ""
             post['content-type'] = ""
             post['content'] = thepost.content
-            post['pubdate'] = thepost.date
+            post['pubdate'] = str(thepost.date)
             post['guid'] = str(thepost.post_uuid)
             print("content: ", thepost.content)
 
@@ -1261,7 +1269,6 @@ def singlepost(request):
             items.append(post)
 
     return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True),)
-
 
 #
 @logged_in_or_basicauth()
