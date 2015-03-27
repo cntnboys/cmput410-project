@@ -173,6 +173,7 @@ def getPostsFromOthers():
 
 
 def getFriendsOfAuthors(username):
+    author = Authors.objects.get(username=username)
     
     url = 'http://social-distribution.herokuapp.com/api/friends/'
     
@@ -182,16 +183,12 @@ def getFriendsOfAuthors(username):
     
     author_list = []
     
-    author = Authors.objects.get(username=username)
-    
     for author in Authors.objects.all():
         
         author_list.insert(0,str(author.author_uuid))
     
     data = { "query":"friends","authors":author_list, "author":str(author.author_uuid)}
-    
-    #print data
-    
+
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
     
     print r
@@ -229,7 +226,6 @@ def mainPage(request,author_name=None, current_user=None):
         
         for author in Authors.objects.all():
             getOneAuthorPosts(author.author_uuid)
-        #getAuthorPostsFromOthers()
         
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
