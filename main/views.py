@@ -460,17 +460,22 @@ def friendRequest(request):
             url = "http://social-distribution.herokuapp.com/api/friendrequest"
             string = "Basic "+ base64.b64encode("nbui:social-distribution.herokuapp.com:team6")
             headers = {"Authorization":string, "Host": "social-distribution.herokuapp.com", "Content-Type": "application/json"}
+            oid = str(ourName.author_uuid)
+            odname = str(ourName.username)
+            furl ="http://social-distribution.herokuapp.com/author/%s" % str(theirAuthor.author_uuid)
+            fdname = str(theirAuthor.username)
+            fid = str(theirAuthor.author_uuid)
             payload =  {    "query": "friendrequest",
                             "author":{
-                                "id":str(ourName.author_uuid),
+                                "id":oid,
                                 "host":"http://thought-bubble.herokuapp.com/",
-                                "displayname":str(ourName.username)
+                                "displayname":odname
                                 },
                             "friend": {
-                                "id":str(theirAuthor.author_uuid),
+                                "id":fid,
                                 "host":"http://social-distribution.herokuapp.com/",
-                                "displayname":str(theirAuthor.username),
-                                "url":"http://social-distribution.herokuapp.com/"+"author/"+str(theirAuthor.author_uuid)
+                                "displayname":fdname,
+                                "url":furl
                                 }
                         }
             print theirAuthor.username
@@ -479,6 +484,7 @@ def friendRequest(request):
             print payload
             r = requests.post(url,data=json.dumps(payload), headers=headers)
             print r
+#print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
