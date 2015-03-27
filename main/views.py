@@ -417,7 +417,7 @@ def friendRequest(request):
 
         # if logged in
         if request.user.is_authenticated():
-            aUser = Authors.objects.get(username=current_user, location="bubble")
+            aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             for e in Friends.objects.filter(invitee_id=aUser):
                 if e.status is False :
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
@@ -431,8 +431,8 @@ def friendRequest(request):
         print "in post"
         theirUname = request.POST["follow"]
         try:
-            theirAuthor = Authors.objects.get(username=theirUname, location="bubble")
-            ourName = Authors.objects.get(username=current_user, location="bubble")
+            theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             if request.user.is_authenticated():
                 current_user = request.user.username
 
@@ -447,7 +447,7 @@ def friendRequest(request):
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
 
 
-            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+            yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
         
             print items
@@ -460,7 +460,7 @@ def friendRequest(request):
         try:
             theirAuthor = Authors.objects.get(username=theirUname, location= "social-distribution")
             print "their author"
-            ourName = Authors.objects.get(username=current_user, location="bubble")
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             print "our author"
             url = "http://social-distribution.herokuapp.com/api/friendrequest"
             string = "Basic "+ base64.b64encode("nbui:social-distribution.herokuapp.com:team6")
@@ -501,7 +501,7 @@ def friendRequest(request):
             else:
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName)
 
-            yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
+            yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
             print items
             print "items on top"
@@ -536,8 +536,8 @@ def friendRequest(request):
                 #if f:
                 #   f.update(Status=True)
             
-#       yourprofileobj = Authors.objects.get(username=current_user, location="bubble")
-#       items.append(yourprofileobj)
+        yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+        items.append(yourprofileobj)
             
             # for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
             #   if e.status is False :
@@ -545,8 +545,7 @@ def friendRequest(request):
             #       ufriends.append(a)
 #       print items
 
-        return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
-                        "author": yourprofileobj} )
+        return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends, "author": yourprofileobj} )
     
 # Friends function takes in the request for retrieving the friends
 # of the author you are logged in as. Default is a GET method retrieving
@@ -555,7 +554,7 @@ def friendRequest(request):
 def friends(request):
     items = []
     current_user = request.user
-    aUser = Authors.objects.get(username=current_user, location="bubble")
+    aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
     if request.method == 'GET':
         current_user = request.user
         print current_user.id
@@ -954,7 +953,7 @@ def newfriendrequest(request):
         authorname = data['author']['displayname']
         friendname = data['friend']['displayname']
         friendurl = data['friend']['url']
-        location="bubble"
+        location="thought-bubble.herokuapp.com"
 
         print("authorid",authorid)
         print("authorhost",authorhost)
