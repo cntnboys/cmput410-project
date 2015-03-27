@@ -598,8 +598,8 @@ def getaProfile(request, theusername, user_id):
     
     author = Authors.objects.get(username=request.user.username)
     
-    if author.location != "bubble":
-        getOneAuthorPosts(author.auhtor_uuid)
+    if author.location != "thought-bubble.herokuapp.com":
+        getOneAuthorPosts(author.author_uuid)
     
     
     getFriendsOfAuthors(theusername)
@@ -610,7 +610,7 @@ def getaProfile(request, theusername, user_id):
     if request.method =="GET":
         
         try:
-            user = Authors.objects.get(author_uuid=user_id, location="bubble")
+            user = Authors.objects.get(author_uuid=user_id, location="thought-bubble.herokuapp.com")
         except:
             user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
         items.append(user)
