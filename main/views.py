@@ -221,12 +221,16 @@ def mainPage(request,author_name=None, current_user=None):
     items2 = []
 
     if request.method == "GET":
-        
-        getAuthorsFromOthers()
-        getPostsFromOthers()
-        
-        for author in Authors.objects.all():
-            getOneAuthorPosts(author.author_uuid)
+
+        try:
+            getAuthorsFromOthers()
+            getPostsFromOthers()
+            
+            for author in Authors.objects.all():
+                getOneAuthorPosts(author.author_uuid)
+            #getAuthorPostsFromOthers()
+        except:
+            print ("Offline Cannot Get Authors from Others")
         
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
@@ -318,7 +322,6 @@ def onePost(request, post_uuid):
 def loginPage(request):
 
     if request.method == "POST":
-
         # Handle if signin not clicked
         if len(request.POST) == 0:
             return render(request, 'login.html')
@@ -603,14 +606,14 @@ def getaProfile(request, theusername, user_id):
     
     author = Authors.objects.get(username=request.user.username)
     
-    if author.location != "thought-bubble.herokuapp.com":
-        getOneAuthorPosts(author.author_uuid)
-    
-    
-    getFriendsOfAuthors(theusername)
-    
-    # call to github to check for new posts?
-    githubAggregator(theusername)
+    try:
+        if author.location != "bubble":
+            getOneAuthorPosts(author.auhtor_uuid)
+        getFriendsOfAuthors(theusername)
+        # call to github to check for new posts?
+        githubAggregator(theusername)
+    except:
+        print("Offline")
 
     if request.method =="GET":
         
@@ -1204,6 +1207,7 @@ def githubAggregator(user):
 
         if(GithubPosts.objects.filter(date = date, gh_uuid = itemid).count() >= 1):
             print("post already exists")
+            continue
         else:
             #print("new post")
             if(Posts.objects.filter(author_id = author, title = title, content=content, privacy = privacy,image="" ).count() < 1):
@@ -1393,7 +1397,7 @@ def authorposts(request):
             author['host'] = "thought-bubble.herokuapp.com"
             author['displayname'] = str(a.username)
             author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
-            post['author'] = str(author)
+            post['author'] = author
         
         #comments
             comments = []
@@ -1514,7 +1518,7 @@ def postsbyauthor(request):
             author['host'] = str(a.location)
             author['displayname'] = str(a.username)
             author['url'] = str("thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid))
-            post['author'] = str(author)
+            post['author'] = author
 
             # comments
             comments = []
