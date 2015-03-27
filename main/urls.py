@@ -19,9 +19,6 @@ urlpatterns = patterns('',
 
     # Get Our Data
     url(r'^getposts/$', views.getposts, name='getposts'),
-
-
-
     url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     
     url(r'^getcomments/$', views.getcomments, name='getcomments'),
