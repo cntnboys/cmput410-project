@@ -1,4 +1,5 @@
 import datetime
+import uuid
 from django.utils import timezone
 from uuidfield import UUIDField
 from django.db import models
@@ -6,7 +7,7 @@ from django.db import connection
 
 class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
-    author_uuid = UUIDField(auto=True, unique=True)
+    author_uuid = models.CharField(max_length=60, unique=True, default=uuid.uuid4)
     name = models.CharField(max_length=200, null=False)
     username = models.CharField(max_length=30, null=False, unique=True)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True, blank=True)
@@ -43,7 +44,7 @@ class Friends(models.Model):
 
 class Posts(models.Model):
     post_id = models.AutoField(primary_key = True)
-    post_uuid = UUIDField(auto=True, unique=True)
+    post_uuid = models.CharField(max_length=60, unique=True, default=uuid.uuid4)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     title = models.CharField(max_length=300, blank=True)
     content = models.CharField(max_length=10000, blank=True)
@@ -77,7 +78,7 @@ class Nodes(models.Model):
 
 class Comments(models.Model):
     comment_id = models.AutoField(primary_key = True)
-    comment_uuid = UUIDField(auto=True, unique=True)
+    comment_uuid = models.CharField(max_length=60, unique=True, default=uuid.uuid4)
     author_id = models.ForeignKey(Authors, db_column="author_id", null=False)
     date = models.DateTimeField(auto_now_add=True, null=False)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
