@@ -1558,3 +1558,15 @@ def postsbyauthor(request):
 
 
     return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
+
+@logged_in_or_basicauth()
+def deletepost(request):
+    if request.method == 'POST':
+        current_post = request.POST["id"]
+        try:
+            Posts.delete(post_id = str(current_post))
+            print("post deleted")
+        except:
+            print("post does not exist")
+ 
+    return HttpResponse("OK")

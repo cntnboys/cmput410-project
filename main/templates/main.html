@@ -91,6 +91,20 @@
                         {% if link.content %}
                         <p style="margin-left:10pt">{{ link.content }}</p>
                         {% endif %}
+
+
+			{% if link.author_id.username == user.username %}
+
+			<form method="POST" action="#" >
+                          {% csrf_token %}
+                          <input type="hidden" name="id" value={{ link.post_id }} >
+                          <input type="submit" class="button" value="Delete">
+                        </div>
+			</form>
+
+			{% endif %}
+
+
                         </div>
 
 

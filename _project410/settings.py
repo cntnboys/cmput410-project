@@ -151,7 +151,6 @@ DATABASES = {
 # }
 
 # new one
-<<<<<<< HEAD
 #DATABASES = {
 #      'default': {
 #      'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -162,8 +161,6 @@ DATABASES = {
 #      'PORT' : '5432',
 
 #  }
-=======
-
 #DATABASES = {
 #       'default': {
 #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -174,7 +171,7 @@ DATABASES = {
 #       'PORT' : '5432',
 
 #   }
->>>>>>> djphan
+
 #}
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
