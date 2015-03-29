@@ -18,6 +18,23 @@
 	<script src="{{ STATIC_URL }}js/less.js"></script>
     <br>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+
+
+
+$(document).ready(function(){
+
+    $("form").hide();
+
+    $("#show").click(function(){
+        $("form").show();
+    });
+
+    initialize();
+});
+</script>
+
 </head>
 
 {% endblock %}
@@ -86,12 +103,40 @@
                             {% else %}
                             <td><span style="color:grey"> Github profile link not provided </span></td>
                             {% endif %}
-                        </tr>                    
+			    </br>
+                        </tr> 
+	                 {% if link.username == user.username %}
+		        <tr>
+			<td>  <button id="show">Edit Profile</button> </td>
+			</tr>
+                       	{% endif %}
+
+		        <tr>
+
+			  <td>
+			   
+
+			<form method="POST" action="#" name="updateform" >
+                          {% csrf_token %}
+                         Full name: <input type="text" name="fullname" value={{ link.name }} >
+		         Email: <input type="text" name="fullname" value={{ link.email }} >
+			 Github: <input type="text" name="fullname" value={{ link.github }} >
+			 Save your changes:
+                          <input type="submit" class="button" value="Update">
+                        </div>
+			</form>
+		       
+
+		
+	   	       </td>
+			</tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
+
+	    
 
                 {% endfor %}
 
