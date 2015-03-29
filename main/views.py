@@ -206,11 +206,13 @@ def getFriendsOfAuthors(username):
         author_list.insert(0,str(author.author_uuid))
     
     data = { "query":"friends","authors":author_list, "author":str(author.author_uuid)}
-    
+
+    print data
+
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
     
     print r
-    print r.text
+    #print r.text
     # SAVE THE FRIENDS HERE
     return None
 
@@ -631,8 +633,8 @@ def getaProfile(request, theusername, user_id):
         try:
             user = Authors.objects.get(author_uuid=user_id, location="thought-bubble.herokuapp.com")
         except:
-            user = Authors.objects.get(author_uuid=user_id, location="bubble")
-            #user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
+#user = Authors.objects.get(author_uuid=user_id, location="bubble")
+            user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
         items.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
