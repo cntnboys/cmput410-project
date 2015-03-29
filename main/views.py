@@ -1559,6 +1559,26 @@ def postsbyauthor(request):
 
     return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
 
+# API call for all authors from our server
+@logged_in_or_basicauth()
+def getAllAuthors(request):
+    authors = []
+    if request.method == "GET":
+        print "before for"
+        for auth in Authors.objects.filter(location = "thought-bubble.herokuapp.com"):
+            print "after for"
+            author={}
+            author['id'] = str(auth.author_uuid)
+            author['host'] = str(auth.location)
+            author['displayname'] = str(auth.username)
+            author['url'] = str("thought-bubble.herokuapp.com/main/" + auth.username + "/" + str(auth.author_uuid))
+            authors.append(author)
+            print authors
+
+
+    return HttpResponse(json.dumps({"authors" : authors},indent=4, sort_keys=True))
+
+
 @logged_in_or_basicauth()
 def deletepost(request):
     if request.method == 'POST':

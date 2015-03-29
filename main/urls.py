@@ -25,7 +25,8 @@ urlpatterns = patterns('',
     url(r'^getgithub/$', views.getgithub, name='getgithub'),
     url(r'^author/posts2/$', views.authorposts, name='authorposts'),
     url(r'^getapost/$', views.singlepost, name='singlepost'), 
-    url(r'^getauthorposts/$', views.postsbyauthor, name='postsbyauthor'), 
+    url(r'^getauthorposts/$', views.postsbyauthor, name='postsbyauthor'),
+    url(r'^getallauthors/$', views.getAllAuthors, name = 'getAllAuthors'),
 
 
     url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
