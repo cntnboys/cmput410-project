@@ -105,16 +105,16 @@ $(document).ready(function(){
                             {% endif %}
 			    </br>
                         </tr> 
-
+	                 {% if link.username == user.username %}
 		        <tr>
 			<td>  <button id="show">Edit Profile</button> </td>
 			</tr>
-
+                       	{% endif %}
 
 		        <tr>
 
 			  <td>
-			    {% if link.username == user.username %}
+			   
 
 			<form method="POST" action="#" name="updateform" >
                           {% csrf_token %}
@@ -127,7 +127,7 @@ $(document).ready(function(){
 			</form>
 		       
 
-			{% endif %}
+		
 	   	       </td>
 			</tr>
                     </tbody>
