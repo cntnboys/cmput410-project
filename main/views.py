@@ -138,7 +138,7 @@ def updateThePosts(content):
 
 
 def getOneAuthorPosts(author_id):
-    url = 'http://social-distribution.herokuapp.com/api/author/posts/'+str(author_id)
+    url = 'http://social-distribution.herokuapp.com/api/author/'+str(author_id)+'posts/'
     
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
     
@@ -206,7 +206,7 @@ def getFriendsOfAuthors(username):
         author_list.insert(0,str(author.author_uuid))
     
     data = { "query":"friends","authors":author_list, "author":str(author.author_uuid)}
-
+    
     print data
 
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
@@ -431,6 +431,7 @@ def friendRequest(request):
         print "in get"
         #print request.user.is_authenticated()
 
+
         # if logged in
         if request.user.is_authenticated():
             aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
@@ -619,14 +620,15 @@ def getaProfile(request, theusername, user_id):
     
     # git_author = Authors.objects.get(author_uuid=user_id)
     
-    author = Authors.objects.get(username=request.user.username)
+    author = Authors.objects.get(username=theusername)
     
-    try:
-        if author.location != "bubble":
-            getOneAuthorPosts(author.auhtor_uuid)
-        getFriendsOfAuthors(theusername)
-    except:
-        print("Offline")
+    #try:
+    if author.location != "thought-bubble.herokuapp.com":
+        getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
+    getFriendsOfAuthors(theusername)
+
+#except:
+#       print("Offline")
 
     if request.method =="GET":
         
