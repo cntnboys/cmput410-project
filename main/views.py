@@ -52,63 +52,79 @@ def getAuthorsFromOthers():
     
     content = json.loads(r.content)
     
+    
     for author in content["authors"]:
         
         try:
             new_author = Authors.objects.get(author_uuid=author["id"])
         except:
-            try:
-                author_uuid = author["id"]
-                name = author["displayname"]
-                username = author["displayname"]
-                email = username + "@ualberta.ca"
-                location = "social-distribution"
-                
-                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
-            except:
-                pass # Not all authors do save
+            #try:
+            author_uuid = author["id"]
+            name = author["displayname"]
+            username = author["displayname"]
+            email = username + "@ualberta.ca"
+            location = "social-distribution"
+            
+            new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
     
     return None
+
+def formatUuid(id):
+    
+    if id.find("-"):
+        compare_id = id[:8]+"-"+id[8:12]+"-"+id[12:16]+"-"+id[16:20]+"-"+id[20:]
+    else:
+        compare_id = id.replace("-", "")
+    
+    return compare_id
 
 def updateThePosts(content):
     
     for post in content["posts"]:
         
-        try:
-            author = Authors.objects.get(author_uuid=post["author"]["id"])
-        except:
-            author_uuid = post["author"]["id"]
-            name = post["author"]["displayname"]
-            username = post["author"]["displayname"]
-            email = username + "@ualberta.ca"
-            location = "social-distribution"
+        author_uuid = post["author"]["id"]
         
-            author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+        try:
+            author = Authors.objects.get(author_uuid=author_uuid)
+        except:
+            
+            try:
+                author_uuid = formatUuid(author_uuid)
+                author = Authors.objects.get(author_uuid=author_uuid)
+            except:
+                author_uuid = post["author"]["id"]
+                name = post["author"]["displayname"]
+                username = post["author"]["displayname"]
+                email = username + "@ualberta.ca"
+                location = "social-distribution"
+                
+                author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
         
         try:
             new_post = Posts.objects.get(post_uuid=post["guid"])
         except:
-            post_uuid = post["guid"]
-            privacy = post["visibility"].lower()
-            content = post["description"]
-            #date = post["pubDate"]
-            #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
-            title = post["title"]
             
-            new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
+            try:
+                post_uuid = formatUuid(post["guid"])
+                new_post = Posts.objects.get(post_uuid=post_uuid)
+            except:
+                post_uuid = post["guid"]
+                privacy = post["visibility"].lower()
+                content = post["description"]
+                #date = post["pubDate"]
+                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+                title = post["title"]
+                
+                new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
         
         for comment in post["comments"]:
             
+            author_uuid = comment["author"]["id"]
             try:
-                comment_author = Authors.objects.get(author_uuid=comment["author"]["id"])
+                comment_author = Authors.objects.get(author_uuid=author_uuid)
             except:
-                author_uuid = comment["author"]["id"]
-                name = comment["author"]["displayname"]
-                username = comment["author"]["displayname"]
-                email = username + "@ualberta.ca"
-                location = "social-distribution"
-            
-                comment_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+                author_uuid = formatUuid(author_uuid)
+                comment_author = Authors.objects.get(author_uuid=author_uuid)
             
             try:
                 new_comment = Comments.objects.get(comment_uuid=comment["guid"])
@@ -120,8 +136,9 @@ def updateThePosts(content):
     
     return None
 
+
 def getOneAuthorPosts(author_id):
-    url = 'http://social-distribution.herokuapp.com/api/author/posts/'+str(author_id)
+    url = 'http://social-distribution.herokuapp.com/api/author/'+str(author_id)+'posts/'
     
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
     
@@ -130,13 +147,13 @@ def getOneAuthorPosts(author_id):
     
     try: #if the author actually has posts
         content = json.loads(r.content)
-
+        
         print r
         updateThePosts(content)
-
+    
     except:
         pass
-
+    
     return None
 
 #REDUNDANT API
@@ -189,13 +206,16 @@ def getFriendsOfAuthors(username):
         author_list.insert(0,str(author.author_uuid))
     
     data = { "query":"friends","authors":author_list, "author":str(author.author_uuid)}
+    
+    print data
 
     r = requests.post(url+str(author.author_uuid), data=data, headers=headers)
     
     print r
-    print r.text
+    #print r.text
     # SAVE THE FRIENDS HERE
     return None
+
 
 # Index Page function directs to our introduction page
 # if you are not logged in as a user
@@ -222,16 +242,12 @@ def mainPage(request,author_name=None, current_user=None):
 
     if request.method == "GET":
 
-        #try:
-            #getAuthorsFromOthers()
-            #getPostsFromOthers()
-            
-            #for author in Authors.objects.all():
-                #getOneAuthorPosts(author.author_uuid)
-            #getAuthorPostsFromOthers()
-        #except:
-        #    print ("Offline Cannot Get Authors from Others")
-        
+        getAuthorsFromOthers()
+        getPostsFromOthers()
+
+        for author in Authors.objects.all():
+            getOneAuthorPosts(author.author_uuid)
+
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
         user = Authors.objects.get(author_uuid=author_id.author_uuid)
@@ -414,6 +430,7 @@ def friendRequest(request):
         print current_user.id
         print "in get"
         #print request.user.is_authenticated()
+
 
         # if logged in
         if request.user.is_authenticated():
@@ -603,22 +620,23 @@ def getaProfile(request, theusername, user_id):
     
     # git_author = Authors.objects.get(author_uuid=user_id)
     
-    author = Authors.objects.get(username=request.user.username)
+    author = Authors.objects.get(username=theusername)
     
-    try:
-        if author.location != "bubble":
-            getOneAuthorPosts(author.auhtor_uuid)
-        getFriendsOfAuthors(theusername)
-    except:
-        print("Offline")
+    #try:
+    if author.location != "thought-bubble.herokuapp.com":
+        getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
+    getFriendsOfAuthors(theusername)
+
+#except:
+#       print("Offline")
 
     if request.method =="GET":
         
         try:
             user = Authors.objects.get(author_uuid=user_id, location="thought-bubble.herokuapp.com")
         except:
-            user = Authors.objects.get(author_uuid=user_id, location="bubble")
-            #user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
+#user = Authors.objects.get(author_uuid=user_id, location="bubble")
+            user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
         items.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
