@@ -1606,3 +1606,51 @@ def deletepost(request):
             print("post does not exist")
  
     return HttpResponse("OK")
+
+@logged_in_or_basicauth()
+def unfriend(request):
+    if request.user.is_authenticated():
+        items = []
+        current_user = request.user
+        if request.method == 'POST':
+                userid = current_user.id
+                print userid
+                print "in unfriend"
+                theirUname = request.POST["follow"]
+                theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+                ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+
+
+                #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
+                if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=True):
+                    print "here!"
+                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=0)
+                elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=True):
+                    print "there!"
+                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=0)
+
+
+                for e in Friends.objects.filter(inviter_id=ourName):
+                    if e.status is True :
+                        a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                        items.append(a)
+                        print a
+
+                for e in Friends.objects.filter(invitee_id=ourName):
+                    if e.status is True :
+                        a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                        if not (a in items):
+                            items.append(a)
+                #items.append(yourprofileobj)
+
+                print("items",items)
+
+                return render(request, 'friends.html',{'items':items, 'author':ourName})
+    return None
+
+@logged_in_or_basicauth()
+def unfollow(request):
+    return None
+@logged_in_or_basicauth()
+def follow(request):
+    return None

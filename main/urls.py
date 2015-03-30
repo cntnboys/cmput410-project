@@ -41,7 +41,9 @@ urlpatterns = patterns('',
     url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
     url(r'^Foafvis/$', views.Foafvis, name='Foafvis'),
     url(r'^newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
-    
+    url(r'^unfriend/$', views.unfriend, name='unfriend'),
+    url(r'^unfollow/$', views.unfollow, name='unfollow'),
+    url(r'^follow/$', views.follow, name='follow'),
     
 )
 

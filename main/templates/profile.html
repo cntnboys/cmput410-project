@@ -25,10 +25,10 @@
 
 $(document).ready(function(){
 
-    $("form").hide();
+    $("#updateform").hide();
 
     $("#show").click(function(){
-        $("form").show();
+        $("#updateform").show();
     });
 
     initialize();
@@ -116,16 +116,15 @@ $(document).ready(function(){
 			  <td>
 			   
 
-			<form method="POST" action="#" name="updateform" >
+            <form method="POST" action="#" id=updateform name="updateform">
                           {% csrf_token %}
-			 <input type="hidden" name="username" value={{ link.username }} >
                          Full name: <input type="text" name="fullname" value={{ link.name }} >
-		         Email: <input type="text" name="email" value={{ link.email }} >
-			 Github: <input type="text" name="github" value={{ link.github }} >
-	
-                          <input type="submit" value="Update">
+                 Email: <input type="text" name="fullname" value={{ link.email }} >
+             Github: <input type="text" name="fullname" value={{ link.github }} >
+             Save your changes:
+                          <input type="submit" class="button" value="Update">
                         </div>
-			</form>
+            </form>
 		       
 
 		
