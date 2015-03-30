@@ -113,21 +113,20 @@ $(document).ready(function(){
 
 		        <tr>
 
-			  <td>
-			   
-
+			
+                         <td>
             <form method="POST" action="#" id=updateform name="updateform">
                           {% csrf_token %}
-                          <input type="hidden" name="username" value={{ link.username }} >
-                         Full name: <input type="text" name="fullname" value={{ link.name }} >
-                 Email: <input type="text" name="email" value={{ link.email }} >
-             Github: <input type="text" name="github" value={{ link.github }} >
-             Save your changes:
-                          <input type="submit" value="Update">
-                        </div>
+                      
+                       <div>  Name: <input type="text" name="fullname"  maxlength="5" value={{ link.name }} > </div>
+                       <div>  Email: <input type="text" name="email"  maxlength="5" value={{ link.email }} > </div>
+                       <div>  Github: <input type="text" name="github"  maxlength="5" value={{ link.github }} > </div>
+                       <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
+                       <div>  <input type="submit" value="Update"> </div>
+                       <div> <input type="hidden" name="username" value={{ link.username }} > </div>
             </form>
 		
-	   	       </td>
+	   	      </td>
 			</tr>
                     </tbody>
                   </table>
