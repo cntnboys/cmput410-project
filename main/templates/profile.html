@@ -107,7 +107,7 @@ $(document).ready(function(){
                         </tr> 
 	                 {% if link.username == user.username %}
 		        <tr>
-			<td>  <button id="show">Edit Profile</button> </td>
+			<td>  <button id="show" class="button">Edit Profile</button> </td>
 			</tr>
                        	{% endif %}
 
@@ -118,11 +118,12 @@ $(document).ready(function(){
 
 			<form method="POST" action="#" name="updateform" >
                           {% csrf_token %}
+			 <input type="hidden" name="username" value={{ link.username }} >
                          Full name: <input type="text" name="fullname" value={{ link.name }} >
-		         Email: <input type="text" name="fullname" value={{ link.email }} >
-			 Github: <input type="text" name="fullname" value={{ link.github }} >
-			 Save your changes:
-                          <input type="submit" class="button" value="Update">
+		         Email: <input type="text" name="email" value={{ link.email }} >
+			 Github: <input type="text" name="github" value={{ link.github }} >
+	
+                          <input type="submit" value="Update">
                         </div>
 			</form>
 		       

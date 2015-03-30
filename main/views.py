@@ -679,7 +679,23 @@ def getaProfile(request, theusername, user_id):
 # EditProfile is a function that we have not implemented yet.
 # This function will be implemented in part 2
 def editProfile(request, current_user):
-    return render(request, 'Editprofile.html')
+    if request.method == "POST":
+        usernamein=request.POST["username"]
+        fullname =request.POST["fullname"]
+        emailin = request.POST["email"]
+        githubin = request.POST["github"]
+
+        #find author object needed to update
+        
+        try:
+            Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin)
+            error_message = "Profile updated"
+            print("Profile updated")
+        except:
+            print("email already exists")
+            error_message = "Email already exists"
+            
+    return render(request, 'profile.html',{'error_msg': error_message})
 
 # Make post function retrieves the title, text, and if image exists, the three fields
 # to store into the database adding on the author who created the post.
