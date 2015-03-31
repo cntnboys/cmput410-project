@@ -1,0 +1,30 @@
+{% extends "navbar.html" %}
+
+{% block head %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Thought-Bubble 404 </title>
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+	<script src="{{ STATIC_URL }}js/less.js"></script>
+    <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
+</head>
+
+{% endblock %}
+
+    {% block nav %}
+        {{ block.super }}
+    {% endblock %}
+
+{% block body %}
+
+	<div class="wrapper">
+		<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
+	</div>
+
+</body>
+</html>
+{% endblock %}

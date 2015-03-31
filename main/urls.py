@@ -13,34 +13,35 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
 
+    # Get Our Data
+    url(r'^api/getallauthors/', views.getAllAuthors, name = 'getAllAuthors'),
+    url(r'^api/getposts/', views.getposts, name='getposts'),
+    url(r'^api/getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
+    url(r'^api/getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
+    url(r'^api/author/posts2/$', views.authorposts, name='authorposts'),
+    url(r'^api/getapost/$', views.singlepost, name='singlepost'), 
+    url(r'^api/getpostsbyauthor/$', views.getPostsByAuthor, name='postsbyauthor'),
+    url(r'^api/newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
+
     # Logged In Pages
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
     url(r'^(?P<author_name>.+?)/posts/(?P<post_uuid>.+?)', views.onePost, name='onePost'),
-
-    # Get Our Data
-    url(r'^getposts/$', views.getposts, name='getposts'),
-    url(r'^getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
-    
-    url(r'^getcomments/$', views.getcomments, name='getcomments'),
-    url(r'^getgithub/$', views.getgithub, name='getgithub'),
-    url(r'^author/posts2/$', views.authorposts, name='authorposts'),
-    url(r'^getapost/$', views.singlepost, name='singlepost'), 
-    url(r'^getauthorposts/$', views.postsbyauthor, name='postsbyauthor'),
-    url(r'^getallauthors/$', views.getAllAuthors, name = 'getAllAuthors'),
-
-
-    url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/$', views.getaProfile, name='getaProfile'),
+    url(r'^(?P<theusername>.+?)/(?P<user_id>.+?)/', views.getaProfile, name='getaProfile'),
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
     url(r'^makeComment/$', views.makeComment, name='makeComment'),
     url(r'^deletepost/$', views.deletepost, name='deletepost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
-    url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),
-    url(r'^getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
+
+
+    
+    
+
+    url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),    
     url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
     url(r'^Foafvis/$', views.Foafvis, name='Foafvis'),
-    url(r'^newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
+
     url(r'^unfriend/$', views.unfriend, name='unfriend'),
     url(r'^unfollow/$', views.unfollow, name='unfollow'),
     url(r'^follow/$', views.follow, name='follow'),

@@ -42,9 +42,7 @@
                         <li>
                             <a href="{% url 'getaProfile' theusername=user.username user_id=author.author_uuid  %}"><img  src="{{ STATIC_URL }}images/profileicon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hoverprofileicon.png';" onmouseout="this.src='{{ STATIC_URL }}images/profileicon.png';"> Profile </a>
                         </li>
-                        <li>
-                            <a href="{% url 'EditProfile' current_user=user.username current_userid=author.author_uuid %}"><img  src="{{ STATIC_URL }}images/editprofile.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hovereditprofile.png';" onmouseout="this.src='{{ STATIC_URL }}images/editprofile.png';"> Edit Profile </a>                   
-                        </li>
+
                         <li>
                              <a href="{% url 'userFriends' %}"><img  src="{{ STATIC_URL }}images/flisticon.png" alt ="" height="35", width="35" onmouseover="this.src='{{ STATIC_URL }}images/hoverflisticon.png';" onmouseout="this.src='{{ STATIC_URL }}images/flisticon.png';"> List Friends </a>                    
                         </li>

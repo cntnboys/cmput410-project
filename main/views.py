@@ -37,6 +37,159 @@ import feedparser
 from django.utils.html import strip_tags
 
 
+
+#################################################################################
+#                          API Function Calls Are Here                          #
+#                          Part 1: Get                                          #
+#################################################################################
+# API call for all authors from our server
+@logged_in_or_basicauth()
+def getAllAuthors(request):
+    authors = []
+    if request.method == "GET":
+        #print "before for"
+        for auth in Authors.objects.filter(location = "thought-bubble.herokuapp.com"):
+            #print "after for"
+            author={}
+            author['id'] = str(auth.author_uuid)
+            author['host'] = str(auth.location)
+            author['displayname'] = str(auth.username)
+            author['url'] = str("thought-bubble.herokuapp.com/main/" + auth.username + "/" + str(auth.author_uuid))
+            authors.append(author)
+            #print authors
+            
+    return HttpResponse(json.dumps({"authors" : authors}, indent=8, sort_keys=True))
+
+
+# curl --request GET '127.0.0.1:8000/main/api/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
+# how to figure out authenticated user? request.user=AnonymousUser 
+# seems like we need more backend logic to allow for specific people
+@logged_in_or_basicauth()
+def getPostsByAuthor(request):
+    print("start")
+    posts = []
+    items = []
+
+    if request.method == "GET":        
+        current_user = str(request.user.get_username())
+        #print("current-user",current_user)
+        myid = Authors.objects.get(username=str(current_user))
+        #print("start")
+        authorid = request.GET.get('authorid', '')
+        #print("end")
+        #print(authorid)
+
+        try:
+            a = Authors.objects.get(author_uuid = str(authorid))
+        except:
+            response = HttpResponse(content="{message: not authenticated}",content_type="text/HTML; charset=utf-8")
+            response.status_code = 404
+            response['message'] = 'not authenticated'
+            return response
+
+
+
+        # public posts by author
+        for x in Posts.objects.filter(author_id = a, privacy="public"):
+            items.insert(0,x)
+
+        # if current user is friends with author
+        for f in Friends.objects.all():
+             #print("authorid:",authorid)
+             #print("invitee_id",f.invitee_id.author_id)
+             if (f.invitee_id.author_id==myid.author_id) and f.status:
+                if str(f.invitee_id.username) == a.username:
+                    print("same prerson")
+                else:
+                    for x in Posts.objects.filter(author_id=a, privacy="friends"):
+                        #print("1: ",x)
+                        #print("f: ",f.invitee_id.username,":",current_user)
+                        items.insert(0,x)
+                    
+            
+             if (f.inviter_id.author_id==myid.author_id) and f.status:
+                if f.inviter_id.username == a.username:
+                    print("same person")
+                else:
+                    for x in Posts.objects.filter(author_id=a, privacy="friends"):
+                        #print("2: ",x)
+                        #print("f: ",f.inviter_id.username,":",current_user)
+                        items.insert(0,x)
+        
+        # posts by author marked for us
+        for x in Posts.objects.filter(author_id = a ,privacy=str(current_user)):
+            #print("for: ",str(current_user), "id :", x.post_id, "x: ", x)
+            items.insert(0,x)
+
+
+        items.sort(key=lambda x: x.date, reverse=True)
+
+        #comments here
+        for x in items:
+            post = {}
+            post['title'] = str(x.title)
+            post['source'] = ""
+            post['origin']= ""
+            post['description'] = ""
+            post['content-type'] = ""
+            post['content'] = x.content
+            post['pubdate'] = str(x.date)
+            post['guid'] = str(x.post_uuid)
+
+        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
+            print("PRIVACY: ", str(x.privacy))
+            post['visibility'] = str(x.privacy)
+        
+            #author
+            author={}
+            author['id'] = str(a.author_uuid)
+            author['host'] = str(a.location)
+            author['displayname'] = str(a.username)
+            author['url'] = str("thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid))
+            post['author'] = author
+
+            # comments
+            comments = []
+            for comment in Comments.objects.filter(post_id = x.post_id):
+                print("comment: ",comment)
+                commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
+                commAuthJson = {}
+                commJson= {}
+                theid = str(commAuth.author_uuid)
+                location = commAuth.location
+                theuser = commAuth.username
+                thecontent = comment.content
+                thedate = comment.date
+                thecommuuid = str(comment.comment_uuid)
+                commAuthJson['id'] = str(theid)
+                commAuthJson['host'] = str(location)
+                commAuthJson['displayname'] = str(theuser)
+                commJson['comment'] = str(thecontent)
+                commJson['pubDate'] = str(thedate)
+                commJson['guid'] = str(thecommuuid)
+                commJson['author'] = commAuthJson
+                comments.append(commJson)
+       
+                post['comments'] = comments
+
+            posts.append(post)
+
+            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            # ''                 foaf ?                               ''
+            # ''      privacy = current_user (all posts for me)       ''
+            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            # get posts meant for current user? can privacy be this user? friends?
+            # for x in Posts.objects.filter(author_id = a privacy=current_user):
+            #     print("for user: ", current_user)
+
+            # maybe not this one
+            # for x in Posts.objects.filter(author_id = a privacy = foaf)):
+            #     print("by current user"")
+
+
+    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
+
+
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
@@ -45,32 +198,25 @@ from django.utils.html import strip_tags
 
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
-    
     string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
-    
     content = json.loads(r.content)
     
-    
-    for author in content["authors"]:
-        
+    for author in content["authors"]:    
         try:
             new_author = Authors.objects.get(author_uuid=author["id"])
         except:
-            #try:
             author_uuid = author["id"]
             name = author["displayname"]
             username = author["displayname"]
             email = username + "@ualberta.ca"
             location = "social-distribution"
-            
             new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
     
     return None
 
 def formatUuid(id):
-    
     if id.find("-"):
         compare_id = id[:8]+"-"+id[8:12]+"-"+id[12:16]+"-"+id[16:20]+"-"+id[20:]
     else:
@@ -79,11 +225,8 @@ def formatUuid(id):
     return compare_id
 
 def updateThePosts(content):
-    
     for post in content["posts"]:
-        
         author_uuid = post["author"]["id"]
-        
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
@@ -221,7 +364,12 @@ def getFriendsOfAuthors(username):
 # if you are not logged in as a user
 def indexPage(request):
     context = RequestContext(request)
-    return render(request, 'index/intro.html', request.session)
+
+    if request.user.is_authenticated():
+        author = Authors.objects.get(username=request.user.get_username())
+        return render(request, "main.html", {"author":author})
+
+    return render(request, 'index/intro.html')
 
 # Redirect Index function just redirects back into the index page
 def redirectIndex(request):
@@ -231,10 +379,12 @@ def redirectIndex(request):
 # If author was to access this page without authentication, then
 # author will be prompted to Log in first before going to that page.
 @logged_in_or_basicauth()
-def mainPage(request,author_name=None, current_user=None):
+def mainPage(request, current_user):
     context = RequestContext(request)
     current_user = request.user.get_username()
+    print(current_user)
     author_id = Authors.objects.get(username=current_user)
+
 
     items = []
     ufriends=[]
@@ -254,7 +404,7 @@ def mainPage(request,author_name=None, current_user=None):
         items2.append(user)
 
         #Grabs Github Materials
-        #githubAggregator(current_user)
+        githubAggregator(current_user)
 
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
@@ -267,14 +417,14 @@ def mainPage(request,author_name=None, current_user=None):
                 if not (a in items):
                     ufriends.append(a)
         
-        print("ufreinds",ufriends)
+        #print("ufreinds",ufriends)
         for x in ufriends:
             print(x.username)
 
         # retrieve posts of friends
         for f in Friends.objects.all():
-             print("authorid:",author_id.author_id)
-             print("invitee_id",f.invitee_id.author_id)
+             #print("authorid:",author_id.author_id)
+             #print("invitee_id",f.invitee_id.author_id)
              if (f.invitee_id.author_id==author_id.author_id) and f.status:
                  for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
                      print("gothere2222")
@@ -318,8 +468,7 @@ def mainPage(request,author_name=None, current_user=None):
             except:
                 post.comments = None
 
-        return render(request,'main.html',{'items':items,
-                                          'author':author_id ,
+        return render(request,'main.html',{'items':items, 'author':author_id ,
                                            'ufriends':ufriends})
 
 
@@ -336,7 +485,6 @@ def onePost(request, post_uuid):
 # then author will be prompted that either the input was incorrect or
 # input does not exist
 def loginPage(request):
-
     if request.method == "POST":
         # Handle if signin not clicked
         if len(request.POST) == 0:
@@ -357,6 +505,9 @@ def loginPage(request):
 
                 if user.is_active:
                     login(request, user)
+                    uuid = Authors.objects.get(username=username).author_uuid
+                    request.session['username']= username
+                    request.session['uuid']= uuid
                     response = redirect(mainPage, current_user=request.user.get_username())
                     return response
 
@@ -392,7 +543,7 @@ def logout(request):
 # TODO: use profile template to load page of FOAF
 # Function is still a work in progress for part 2
 @logged_in_or_basicauth()
-def foaf(request,userid1=None,userid2=None):
+def foaf(request, userid1, userid2):
 	# we want to check if userid1 is friends with/is current user then check if 
 	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
 	current_user = request.user
@@ -617,26 +768,26 @@ def getaProfile(request, theusername, user_id):
     items = []
     ufriends = []
     posts = []
-    
+    current_user = request.user
     # git_author = Authors.objects.get(author_uuid=user_id)
     
-    author = Authors.objects.get(username=theusername)
+    author = Authors.objects.get(username=current_user)
+    authoruuid = Authors.objects.get(username=current_user).author_uuid
     
     #try:
     if author.location != "thought-bubble.herokuapp.com":
         getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
-    getFriendsOfAuthors(theusername)
+    getFriendsOfAuthors(current_user)
 
 #except:
 #       print("Offline")
 
     if request.method =="GET":
-        
         try:
-            user = Authors.objects.get(author_uuid=user_id, location="thought-bubble.herokuapp.com")
+            user = Authors.objects.get(author_uuid=authoruuid, location="thought-bubble.herokuapp.com")
         except:
 #user = Authors.objects.get(author_uuid=user_id, location="bubble")
-            user = Authors.objects.get(author_uuid=user_id, location="social-distribution")
+            user = Authors.objects.get(author_uuid=authoruuid, location="social-distribution")
         items.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
@@ -656,14 +807,10 @@ def getaProfile(request, theusername, user_id):
             for x in Posts.objects.filter(author_id=user):
                 posts.insert(0, x)
 
-
         else:
-
- 
             if Friends.objects.filter(inviter_id=author, invitee_id=user, status=True) or Friends.objects.filter(inviter_id=user, invitee_id=author, status=True):
                 for x in Posts.objects.filter(author_id=user, privacy="private"):
                    posts.insert(0, x)
-
 
             for x in Posts.objects.filter(author_id=user, privacy="public"):
                 posts.insert(0, x)
@@ -704,7 +851,6 @@ def editProfile(request, current_user):
         githubin = request.POST["github"]
 
         #find author object needed to update
-        
         try:
             Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin)
             error_message = "Profile updated"
@@ -1137,21 +1283,6 @@ def Foafvis(request):
         #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
-@logged_in_or_basicauth()
-def getcomments(request):
-    items = []
-    if request.method == "GET":
-        for x in Comments.objects.all():
-            items.insert(0,x)
-    return HttpResponse(json.dumps({'comments' : items}))
-
-@logged_in_or_basicauth()
-def getgithub(request):
-    items = []
-    if request.method == "GET":
-        for x in GithubPosts.objects.all():
-            items.insert(0,x)
-    return HttpResponse(json.dumps({'github' : items}))
 
 #@logged_in_or_basicauth()
 @csrf_exempt
@@ -1475,142 +1606,7 @@ def authorposts(request):
     #return HttpResponse("OK")
     return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
 
-#curl --request GET '127.0.0.1:8000/main/getauthorposts/?authorid=293d3415aaa14f779efc7f11ce8e0306/'
-# how to figure out authenticated user? request.user=AnonymousUser 
-# seems like we need more backend logic to allow for specific people
-@logged_in_or_basicauth()
-def postsbyauthor(request):
-    posts = []
-    items = []
-    # current_user = str(request.user.get_username())
-    if request.method == "GET":
-       # print(request.user)
-        
-        current_user = str(request.user.get_username())
-        print("current-user",current_user)
-        myid = Authors.objects.get(username=str(current_user))
-        authorid = request.GET.get('authorid', '')
-        print(authorid)
-        a = Authors.objects.get(author_uuid = str(authorid))
 
-        # public posts by author
-        for x in Posts.objects.filter(author_id = a, privacy="public"):
-            items.insert(0,x)
-
-        # if current user is friends with author
-        for f in Friends.objects.all():
-             #print("authorid:",authorid)
-             #print("invitee_id",f.invitee_id.author_id)
-             if (f.invitee_id.author_id==myid.author_id) and f.status:
-                if str(f.invitee_id.username) == a.username:
-                    print("same prerson")
-                else:
-                    for x in Posts.objects.filter(author_id=a, privacy="friends"):
-                        #print("1: ",x)
-                        #print("f: ",f.invitee_id.username,":",current_user)
-                        items.insert(0,x)
-                    
-            
-             if (f.inviter_id.author_id==myid.author_id) and f.status:
-                if f.inviter_id.username == a.username:
-                    print("same person")
-                else:
-                    for x in Posts.objects.filter(author_id=a, privacy="friends"):
-                        #print("2: ",x)
-                        #print("f: ",f.inviter_id.username,":",current_user)
-                        items.insert(0,x)
-        
-        # posts by author marked for us
-        for x in Posts.objects.filter(author_id = a ,privacy=str(current_user)):
-            #print("for: ",str(current_user), "id :", x.post_id, "x: ", x)
-            items.insert(0,x)
-
-
-        items.sort(key=lambda x: x.date, reverse=True)
-
-        #comments here
-        for x in items:
-            post = {}
-            post['title'] = str(x.title)
-            post['source'] = ""
-            post['origin']= ""
-            post['description'] = ""
-            post['content-type'] = ""
-            post['content'] = x.content
-            post['pubdate'] = str(x.date)
-            post['guid'] = str(x.post_uuid)
-
-        #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
-            print("PRIVACY: ", str(x.privacy))
-            post['visibility'] = str(x.privacy)
-        
-            #author
-            author={}
-            author['id'] = str(a.author_uuid)
-            author['host'] = str(a.location)
-            author['displayname'] = str(a.username)
-            author['url'] = str("thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid))
-            post['author'] = author
-
-            # comments
-            comments = []
-            for comment in Comments.objects.filter(post_id = x.post_id):
-                print("comment: ",comment)
-                commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
-                commAuthJson = {}
-                commJson= {}
-                theid = str(commAuth.author_uuid)
-                location = commAuth.location
-                theuser = commAuth.username
-                thecontent = comment.content
-                thedate = comment.date
-                thecommuuid = str(comment.comment_uuid)
-                commAuthJson['id'] = str(theid)
-                commAuthJson['host'] = str(location)
-                commAuthJson['displayname'] = str(theuser)
-                commJson['comment'] = str(thecontent)
-                commJson['pubDate'] = str(thedate)
-                commJson['guid'] = str(thecommuuid)
-                commJson['author'] = commAuthJson
-                comments.append(commJson)
-       
-                post['comments'] = comments
-
-            posts.append(post)
-
-            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            # ''                 foaf ?                               ''
-            # ''      privacy = current_user (all posts for me)       ''
-            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            # get posts meant for current user? can privacy be this user? friends?
-            # for x in Posts.objects.filter(author_id = a privacy=current_user):
-            #     print("for user: ", current_user)
-
-            # maybe not this one
-            # for x in Posts.objects.filter(author_id = a privacy = foaf)):
-            #     print("by current user"")
-
-
-    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
-
-# API call for all authors from our server
-@logged_in_or_basicauth()
-def getAllAuthors(request):
-    authors = []
-    if request.method == "GET":
-        print "before for"
-        for auth in Authors.objects.filter(location = "thought-bubble.herokuapp.com"):
-            print "after for"
-            author={}
-            author['id'] = str(auth.author_uuid)
-            author['host'] = str(auth.location)
-            author['displayname'] = str(auth.username)
-            author['url'] = str("thought-bubble.herokuapp.com/main/" + auth.username + "/" + str(auth.author_uuid))
-            authors.append(author)
-            print authors
-
-
-    return HttpResponse(json.dumps({"authors" : authors},indent=4, sort_keys=True))
 
 
 @logged_in_or_basicauth()
@@ -1666,9 +1662,17 @@ def unfriend(request):
                 return render(request, 'friends.html',{'items':items, 'author':ourName})
     return None
 
+
+# TODO: Check on This
 @logged_in_or_basicauth()
 def unfollow(request):
     return None
 @logged_in_or_basicauth()
 def follow(request):
     return None
+
+
+def custom404(request):
+    return render(request, 'custom404.html')
+
+
