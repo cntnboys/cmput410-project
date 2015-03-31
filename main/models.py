@@ -43,7 +43,7 @@ class Friends(models.Model):
     def __str__(self):
         return ( "inviter_id: " + str(self.inviter_id.author_id) + 
                  " invitee_id: " + str(self.invitee_id.author_id) + 
-                 " status: " + str(self.status)+ " follow: " + str(self.follow) )
+                 " status: " + str(self.status) + " follow: " + str(self.follow) )
 
 
 class Posts(models.Model):
@@ -62,8 +62,7 @@ class Posts(models.Model):
 
     def __str__(self):
         return ( "post_id: " + str(self.post_id) + " author_id: " + str(self.author_id.author_id) + 
-                 " content: " + str(self.content) + " image: " + str(self.image) + 
-                 " privacy: " + str(self.privacy) )
+                 " image: " + str(self.image) + " privacy: " + str(self.privacy) )
 
 class Nodes(models.Model):
     node_id = models.AutoField(primary_key = True)
@@ -105,7 +104,7 @@ class GithubPosts(models.Model):
     gh_uuid = models.CharField(max_length=100)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     date = models.DateTimeField('date posted', null=False)
-    content = models.CharField(max_length=10000, blank=True)
+    content = models.CharField(max_length=2000, blank=True)
 
     class Meta:
         db_table = "githubposts"
@@ -113,6 +112,5 @@ class GithubPosts(models.Model):
 
     def __str__(self):
             return ("gh_id: " + str(self.gh_id) + "gh_uuid: " + str(self.gh_uuid) + 
-                    "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date) + 
-                    " content: " + str(self.content) )
+                    "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date))
 
