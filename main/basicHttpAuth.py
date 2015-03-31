@@ -37,7 +37,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
                     response['message'] = 'not authenticated'
                     return response
 
-
+                """
                 try: 
                     node = Nodes.objects.get(node_name=host)
 
@@ -54,7 +54,8 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
                         response.status_code = 401
                         response['message'] = 'node not approved, contact admin'
                         return response
-
+                """
+                
                 user = authenticate(username=uname, password=passwd)
                 if user is not None:
                     if user.is_active:
