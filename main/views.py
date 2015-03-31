@@ -1415,7 +1415,6 @@ def Foafvis(request):
         
         data = json.loads(request.body)
         postid = data['id']
-        
         authorid = data['author']['id']
         host = data['author']['host']
         friend = data['friends']
@@ -1452,7 +1451,12 @@ def Foafvis(request):
         # Response, status etc
         #print(r.status_code)
         print(str(authorid))
-        thePost = Posts.objects.get(post_uuid = str(postid))
+
+        try:
+            thePost = Posts.objects.get(post_uuid=str(postid))
+        except ObjectDoesNotExist:
+            return HttpResponse("Bad Post ID")
+
         print("post: ", thePost )
         #myAuthor = Authors.objects.get(author_uuid = str(lara))
         print("ok",str(data['author']['id']))
@@ -1508,7 +1512,7 @@ def Foafvis(request):
         if (flag == True):
             print("nice")
             #print (json.dumps(post, indent = 4, sort_keys=True))
-            return HttpResponse(json.dumps(post, indent = 4, sort_keys=True))
+            return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
 
 
         #return HttpResponse(json.dumps(post))
@@ -1517,8 +1521,11 @@ def Foafvis(request):
 
 #@logged_in_or_basicauth()
 @csrf_exempt
-# /main/checkfriends/?user=<user>
+# /main/api/checkfriends/?user=<user>
 def checkfriends(request):
+    myjson = {}
+    newauthors = []
+
     #getting info in
     if request.method == "POST":
         x = request.GET.get('user', '')
@@ -1527,18 +1534,15 @@ def checkfriends(request):
 
         #author = str(data['author'])
         author = str(x)
-        print(author)
-
+        #print(author)
         authors = data['authors']
-        newauthors = []
-
-        print("authors",authors)
+        #print("authors",authors)
         author1 = Authors.objects.get(author_uuid = str(x))
-        print("ajsd")
+        #print("ajsd")
         hey = str(author1.author_id)
         # ef6728777e36445d8d45d9d5125dc4c6 ng1
         # 9e4ac346d9874b7fba14f27b26ae45bb ng3
-        print("author1: ",author1)
+        #print("author1: ",author1)
         #print("author1",author1)
         for x in authors:
             newthing = str(x)
@@ -1554,13 +1558,13 @@ def checkfriends(request):
                     newauthors.append(str(x))
                 else:
                     return
-        myjson = {}
+        
         myjson['query'] = "friends"
         myjson['author'] = author
         myjson['friends'] = newauthors
 
         #print("dump",json.dumps(myjson))
-        return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
+        return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True),)
 
 def githubAggregator(user):
     entries = []
