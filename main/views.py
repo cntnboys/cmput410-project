@@ -379,7 +379,21 @@ def getOneAuthorPosts(author_id):
     
     except:
         pass
+    url2 = 'http://cs410.cs.ualberta.ca:41084/api/author/'+str(author_id)+'posts/'
     
+    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    
+    headers2 = {'Authorization':string2, 'Host': 'host'}
+    r2 = requests.get(url2, headers=headers2)
+    
+    try: #if the author actually has posts
+        content2 = json.loads(r2.content)
+        
+        print r2
+        updateThePosts(content2)
+    
+    except:
+        pass
     return None
 
 #REDUNDANT API
@@ -453,6 +467,26 @@ def getFriendsOfAuthors(username):
     print r
     #print r.text
     # SAVE THE FRIENDS HERE
+    #NOT WORKING PROPERLY GETTING A 400 ERROR FOR BAD  REQUESTS 
+    url2 = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
+    
+    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    
+    headers2 = {'Authorization':string2, 'Host': 'host', 'Content-Type': 'application/json', 'Accept':'*/*'}
+    
+    author_list2 = []
+    
+    for author in Authors.objects.all():
+        
+        author_list.insert(0,str(author.author_uuid))
+
+    data2 = { "query":"friends","authors":author_list2, "author":str(author.author_uuid)}
+    
+    print data2
+    
+    r2 = requests.post(url2+str(author.author_uuid), data=data2, headers=headers2)
+    
+    print r2
     return None
 
 
@@ -776,6 +810,63 @@ def friendRequest(request):
 
         except:
             print ("not author on this host")
+#second group friend request
+# not working because of csrf token problems
+        try:
+            theirAuthor = Authors.objects.get(username=theirUname, location= "cs410.cs.ualberta.ca:41084")
+            print "their author"
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+            print "our author"
+            url = "http://cs410.cs.ualberta.ca:41084/api/friendrequest"
+            string = "Basic "+ base64.b64encode("dan:host:password")
+            headers = {"Authorization":string, "Host": "host", "Content-Type": "application/json"}
+            oid = str(ourName.author_uuid)
+            odname = str(ourName.username)
+            furl ="http://cs410.cs.ualberta.ca:41084/author/%s" % str(theirAuthor.author_uuid)
+            fdname = str(theirAuthor.username)
+            fid = str(theirAuthor.author_uuid)
+            payload =  {    "query": "friendrequest",
+                "author":{
+                    "id":oid,
+                        "host":"http://thought-bubble.herokuapp.com/",
+                            "displayname":odname
+                                },
+                            "friend": {
+                                "id":fid,
+                                "host":"http://cs410.cs.ualberta.ca:41084/",
+                                "displayname":fdname,
+                                "url":furl
+                            }
+                }
+            print theirAuthor.username
+            print headers
+            print url
+            print payload
+            r = requests.post(url,data=json.dumps(payload), headers=headers)
+            print r
+            #print r.status_code
+            if request.user.is_authenticated():
+                current_user = request.user.username
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+                print "here!"
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+                print "there!"
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1)
+            else:
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
+
+            yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+            items.append(yourprofileobj)
+            print items
+            print "items on top"
+                
+            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
+                              "author": yourprofileobj} )
+
+        except:
+            print ("not author on this host")
+
 
 # ourName = Authors.objects.get(username=current_user, location="bubble")
 #       if request.user.is_authenticated():
