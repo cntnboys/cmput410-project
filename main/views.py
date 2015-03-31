@@ -1946,6 +1946,24 @@ def follow(request):
     if request.user.is_authenticated():
         items = []
         current_user = request.user
+        if request.method =='GET':
+            userid = current_user.id
+            #print("in follow")]
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+
+                        # IF they follow YOU then you are never the inviter
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        items.append(a)
+            #items.append(yourprofileobj)
+
+            print("items",items)
+
+            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return None 
+
         if request.method == 'POST':
             userid = current_user.id
             #print("in follow")

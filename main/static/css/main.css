@@ -21,6 +21,16 @@ body {
   background-color: rgba(0,55,155,0.2);
 
 }
+
+.friendfollow {
+  border-radius: 10px;
+  position:relative;
+  border: 2px solid rgba(0,55,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  background-color: rgba(0,55,155,0.2);
+
+}
 .row h2 {
   padding-left: 10pt;
 }
