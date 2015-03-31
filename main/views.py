@@ -213,7 +213,27 @@ def getAuthorsFromOthers():
             email = username + "@ualberta.ca"
             location = "social-distribution"
             new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
-    
+
+
+    #curl -u dan:host:password http://cs410.cs.ualberta.ca:41084/api/friends
+    url2 = 'http://cs410.cs.ualberta.ca:41084/api/friends'
+    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    headers2 = {'Authorization':string2, 'Host': 'host'}
+    r2 = requests.get(url2, headers=headers2)
+    content2 = json.loads(r2.content)
+    for author in content2:
+        try:
+            new_author = Authors.objects.get(author_uuid=author["id"])
+        except:
+            author_uuid = author["id"]
+            name = author["displayname"]
+            username = author["displayname"]
+            email = username + "@ualberta.ca"
+            location = "social-distribution"
+            try:
+                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+            except:
+                print "user exists"
     return None
 
 def formatUuid(id):
@@ -225,58 +245,121 @@ def formatUuid(id):
     return compare_id
 
 def updateThePosts(content):
-    for post in content["posts"]:
-        author_uuid = post["author"]["id"]
-        try:
-            author = Authors.objects.get(author_uuid=author_uuid)
-        except:
-            
+    try:
+        for post in content["posts"]:
+            author_uuid = post["author"]["id"]
             try:
-                author_uuid = formatUuid(author_uuid)
                 author = Authors.objects.get(author_uuid=author_uuid)
             except:
-                author_uuid = post["author"]["id"]
-                name = post["author"]["displayname"]
-                username = post["author"]["displayname"]
-                email = username + "@ualberta.ca"
-                location = "social-distribution"
                 
-                author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
-        
-        try:
-            new_post = Posts.objects.get(post_uuid=post["guid"])
-        except:
+                try:
+                    author_uuid = formatUuid(author_uuid)
+                    author = Authors.objects.get(author_uuid=author_uuid)
+                except:
+                    author_uuid = post["author"]["id"]
+                    name = post["author"]["displayname"]
+                    username = post["author"]["displayname"]
+                    email = username + "@ualberta.ca"
+                    location = "social-distribution"
+                    
+                    author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
             try:
-                post_uuid = formatUuid(post["guid"])
-                new_post = Posts.objects.get(post_uuid=post_uuid)
+                new_post = Posts.objects.get(post_uuid=post["guid"])
             except:
-                post_uuid = post["guid"]
-                privacy = post["visibility"].lower()
-                content = post["description"]
-                #date = post["pubDate"]
-                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
-                title = post["title"]
                 
-                new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
-        
-        for comment in post["comments"]:
+                try:
+                    post_uuid = formatUuid(post["guid"])
+                    new_post = Posts.objects.get(post_uuid=post_uuid)
+                except:
+                    post_uuid = post["guid"]
+                    privacy = post["visibility"].lower()
+                    content = post["description"]
+                    #date = post["pubDate"]
+                    #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+                    title = post["title"]
+                    
+                    new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
             
-            author_uuid = comment["author"]["id"]
+            for comment in post["comments"]:
+                
+                author_uuid = comment["author"]["id"]
+                try:
+                    comment_author = Authors.objects.get(author_uuid=author_uuid)
+                except:
+                    author_uuid = formatUuid(author_uuid)
+                    comment_author = Authors.objects.get(author_uuid=author_uuid)
+                
+                try:
+                    new_comment = Comments.objects.get(comment_uuid=comment["guid"])
+                except: #comment date?
+                    comment_uuid = comment["guid"]
+                    content = comment["comment"]
+                    
+                    new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
+
+        return None
+    except:
+        print "Not for the first team"
+    try:
+        print(content)
+        for post in content:
+            print "in for"
+            author_uuid = post["author"]["id"]
+            print author_uuid
             try:
-                comment_author = Authors.objects.get(author_uuid=author_uuid)
+                print"here"
+                author = Authors.objects.get(author_uuid=author_uuid)
             except:
-                author_uuid = formatUuid(author_uuid)
-                comment_author = Authors.objects.get(author_uuid=author_uuid)
+                print "here1"
+                try:
+                    author_uuid = formatUuid(author_uuid)
+                    author = Authors.objects.get(author_uuid=author_uuid)
+                except:
+                    author_uuid = post["author"]["id"]
+                    name = post["author"]["displayname"]
+                    username = post["author"]["displayname"]
+                    email = username + "@ualberta.ca"
+                    location = "cs410.cs.ualberta.ca:41084"
+                    
+                    author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+                print"here2"
+                try:
+                    new_post = Posts.objects.get(post_uuid=post["guid"])
+                except:
+                    
+                    try:
+                        post_uuid = post["guid"]
+                        new_post = Posts.objects.get(post_uuid=post_uuid)
+                    except:
+                        post_uuid = post["guid"]
+                        privacy = post["visibility"].lower()
+                        content = post["description"]
+                        #date = post["pubDate"]
+                        #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+                        title = post["title"]
+                        
+                        new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
             
-            try:
-                new_comment = Comments.objects.get(comment_uuid=comment["guid"])
-            except: #comment date?
-                comment_uuid = comment["guid"]
-                content = comment["comment"]
+                for comment in post["comment"]:
                 
-                new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
-    
+                    author_uuid = comment["author"]["id"]
+                    try:
+                        comment_author = Authors.objects.get(author_uuid=author_uuid)
+                    except:
+                        author_uuid = formatUuid(author_uuid)
+                        comment_author = Authors.objects.get(author_uuid=author_uuid)
+                    
+                    try:
+                        new_comment = Comments.objects.get(comment_uuid=comment["guid"])
+                    except: #comment date?
+                        comment_uuid = comment["guid"]
+                        content = comment["comment"]
+                        
+                        new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
+        return None
+    except:
+        print "Not the second team"
     return None
 
 
@@ -328,6 +411,17 @@ def getPostsFromOthers():
     content = json.loads(r.content)
     
     updateThePosts(content)
+    
+    url2 = 'http://cs410.cs.ualberta.ca:41084/api/posts'
+    
+    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    
+    headers2 = {'Authorization':string2, 'Host': 'host'}
+    r2 = requests.get(url2, headers=headers2)
+    
+    content2 = json.loads(r2.content)
+    
+    updateThePosts(content2)
     
     return None
 
