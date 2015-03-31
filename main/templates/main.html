@@ -93,19 +93,19 @@
                         {% endif %}
 
 
-			{% if link.author_id.username == user.username %}
+						{% if link.author_id.username == user.username %}
 
-			<form method="POST" action="#" >
-                          {% csrf_token %}
-                          <input type="hidden" name="id" value={{ link.post_id }} >
-                          <input type="submit" class="button" value="Delete">
-                        </div>
-			</form>
+						<form method="POST" action="{% url "deletepost" %}" >
+			            	{% csrf_token %}
+			                <input type="hidden" name="id" value={{ link.post_id }} >
+			                <input type="image" src="{{ STATIC_URL }}images/delicon.png" alt="Delete" class ="del" onmouseover="this.src='{{ STATIC_URL }}images/deliconhover.png';" onmouseout="this.src='{{ STATIC_URL }}images/delicon.png';"/>
+			                        
+						</form>
 
-			{% endif %}
+						{% endif %}
 
 
-                        </div>
+                 </div>
 
 
                     	<div class="contentbox" style="background-color:rgba(120,12,120,0.2); border-color:rgba(120,12,12s0,0.3)">

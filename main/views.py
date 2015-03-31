@@ -16,7 +16,7 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
+from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes,Blocked
 from getAPI import getAPI
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
@@ -36,7 +36,7 @@ from requests.auth import HTTPBasicAuth
 import feedparser
 from django.utils.html import strip_tags
 
-
+counter = 0
 
 #################################################################################
 #                          API Function Calls Are Here                          #
@@ -190,11 +190,16 @@ def getPostsByAuthor(request):
     return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
 
 
+#################################################################################
+#                          API Function Calls Are Here                          #
+#                          Part 2: Get Others                                          #
+#################################################################################
+
+
 #from django.utils import simplejson
 
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
-
 
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
@@ -490,11 +495,17 @@ def getFriendsOfAuthors(author_uuid):
     return None
 
 
+#################################################################################
+#                            Django Pages                                       #
+#                                                                               #
+#################################################################################
 # Index Page function directs to our introduction page
 # if you are not logged in as a user
 def indexPage(request):
     context = RequestContext(request)
 
+    # Makes sure pages get author information when logged in when
+    # navigating to main.
     if request.user.is_authenticated():
         author = Authors.objects.get(username=request.user.get_username())
         return render(request, "main.html", {"author":author})
@@ -504,111 +515,6 @@ def indexPage(request):
 # Redirect Index function just redirects back into the index page
 def redirectIndex(request):
     return redirect(indexPage)
-
-# Main Page function allows user to go back to the stream of posts
-# If author was to access this page without authentication, then
-# author will be prompted to Log in first before going to that page.
-@logged_in_or_basicauth()
-def mainPage(request, current_user):
-    context = RequestContext(request)
-    current_user = request.user.get_username()
-    print(current_user)
-    author_id = Authors.objects.get(username=current_user)
-
-
-    items = []
-    ufriends=[]
-    items2 = []
-
-    if request.method == "GET":
-
-        getAuthorsFromOthers()
-        getPostsFromOthers()
-
-        for author in Authors.objects.all():
-            getOneAuthorPosts(author.author_uuid)
-
-        #get friends of user for post input
-        author = Authors.objects.get(username=current_user)
-        user = Authors.objects.get(author_uuid=author_id.author_uuid)
-        items2.append(user)
-
-        #Grabs Github Materials
-        githubAggregator(current_user)
-
-        for e in Friends.objects.filter(inviter_id=user):
-            if e.status is True :
-                a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-                ufriends.append(a)
-  
-        for e in Friends.objects.filter(invitee_id=user):
-            if e.status is True :
-                a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                if not (a in items):
-                    ufriends.append(a)
-        
-        #print("ufreinds",ufriends)
-        for x in ufriends:
-            print(x.username)
-
-        # retrieve posts of friends
-        for f in Friends.objects.all():
-             #print("authorid:",author_id.author_id)
-             #print("invitee_id",f.invitee_id.author_id)
-             if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                 for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="friends"):
-                     print("gothere2222")
-                     items.insert(0,x)
-                    
-            
-             if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                 print("got here11")
-                 for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
-                    items.insert(0,x)
-                   
-        # retrieve all public posts
-        for x in Posts.objects.filter(privacy="public"):
-           items.insert(0,x)
-
-        # retrieve all posts from bubble and that are friends aswell (bubblefreind)
-        for f in Friends.objects.all():
-            if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
-                   items.insert(0,x)
-            if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
-                   items.insert(0,x)
-    
-        # retrieve all private posts of current user (these have been left out in all above queries)
-        for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
-           items.insert(0, x)
-
-        # retreive all private posts of the current user (sent by another author to us privately :))))) )
-        for x in Posts.objects.filter(privacy=current_user):
-            items.insert(0,x)
-
-        for post in items:
-            comments = []
-            try:
-                for c in Comments.objects.all():
-                    if (c.post_id==post):
-                        comments.insert(0,c)
-                post.comments = comments
-                items.sort(key=lambda x: x.date, reverse=True)
-            except:
-                post.comments = None
-
-        return render(request,'main.html',{'items':items, 'author':author_id ,
-                                           'ufriends':ufriends})
-
-
-@logged_in_or_basicauth()
-def onePost(request, post_uuid):
-    items = []
-    post = Posts.objects.get(post_uuid=post_uuid)
-    items.append(post)
-     
-    return render(request,'authorpost.html',{'items':items})
 
 # Log in Page function is a check for authenticated author log in
 # If author inputs incorrect or non exisiting things in the fields,
@@ -670,32 +576,127 @@ def logout(request):
     Session.objects.all().delete()
     return redirect(indexPage)
 
+# Main Page function allows user to go back to the stream of posts
+# If author was to access this page without authentication, then
+# author will be prompted to Log in first before going to that page.
+@logged_in_or_basicauth()
+def mainPage(request, current_user):
+    context = RequestContext(request)
+    current_user = request.user.get_username()
+    author = Authors.objects.get(username=current_user)
+
+    items = []
+    ufriends=[]
+    items2 = []
+
+    if request.method == "GET":
+
+        try:
+            if counter % 20 == 0:
+                counter += 1
+                getAuthorsFromOthers()
+                getPostsFromOthers()
+
+                for author in Authors.objects.all():
+                    getOneAuthorPosts(author.author_uuid)
+
+                #Grabs Github Materials
+                githubAggregator(current_user)
+                print "endgit"
+            else:
+                counter+=1
+        except:
+            print "Errors Here"
+
+        #get friends of user for post input
+        items2.append(author)
+
+        for e in Friends.objects.filter(inviter_id=author):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                ufriends.append(a)
+  
+        for e in Friends.objects.filter(invitee_id=author):
+            if e.status is True :
+                a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                if not (a in items):
+                    ufriends.append(a)
+        
+        #print("ufreinds",ufriends)
+        for x in ufriends:
+            print(x.username)
+
+        # retrieve posts of friends
+        for f in Friends.objects.all():
+            #print("authorid:",author_id.author_id)
+            #print("invitee_id",f.invitee_id.author_id)
+            if (f.invitee_id.author_id==author.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.inviter_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
+                    print("gothere2222")
+                    items.insert(0,x)
+                    
+            if (f.inviter_id.author_id==author.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.invitee_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
+                    items.insert(0,x)
+
+
+        # retrieve all public posts
+        # retrieve all private posts of current user (these have been left out in all above queries)
+        # retrieve all private posts of current user (these have been left out in all above queries)
+        for x in Posts.objects.filter(Q(privacy="public") | 
+            Q(author_id=author.author_id, privacy="private") | Q(privacy=current_user) ):
+           items.insert(0,x)
+
+        for post in items:
+            comments = []
+            try:
+                for c in Comments.objects.all():
+                    if (c.post_id==post):
+                        comments.insert(0,c)
+                post.comments = comments
+                items.sort(key=lambda x: x.date, reverse=True)
+            except:
+                post.comments = None
+
+        return render(request,'main.html',{'items':items, 'author':author ,
+                                           'ufriends':ufriends})
+
+
+@logged_in_or_basicauth()
+def onePost(request, post_uuid):
+    items = []
+    post = Posts.objects.get(post_uuid=post_uuid)
+    items.append(post)
+     
+    return render(request,'authorpost.html',{'items':items})
+
+
 # TODO: use profile template to load page of FOAF
 # Function is still a work in progress for part 2
 @logged_in_or_basicauth()
 def foaf(request, userid1, userid2):
-	# we want to check if userid1 is friends with/is current user then check if 
-	# userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
-	current_user = request.user
-	user1 = Authors.objects.get(userid=userid1)
-	print user1
-	print user2
-	user2 = Authors.objects.get(userid=userid2)
-	inviter = Friends.objects.get(userid1=inviter_id.author_uuid)
-	items = []
-	# if logged in
-	#if request.user.is_authenticated():
-		# for e in Friends.objects.filter(invitee_id.author_uuid=user1): 
-		# 	if Friends.objects.filter(inviter_id.author_uuid = user2) and e.status = True:
-		# 		a = Authors.objects.filter(author_uuid=user2)
-		# 		items.append(a)
-        	
+    # we want to check if userid1 is friends with/is current user then check if 
+    # userid1 is friends with userid2.. if so load userid2's profile so they can be friended?
+    current_user = request.user
+    user1 = Authors.objects.get(userid=userid1)
+    print user1
+    print user2
+    user2 = Authors.objects.get(userid=userid2)
+    inviter = Friends.objects.get(userid1=inviter_id.author_uuid)
+    items = []
+    # if logged in
+    #if request.user.is_authenticated():
+        # for e in Friends.objects.filter(invitee_id.author_uuid=user1): 
+        #   if Friends.objects.filter(inviter_id.author_uuid = user2) and e.status = True:
+        #       a = Authors.objects.filter(author_uuid=user2)
+        #       items.append(a)
+            
   #       for e in Friends.objects.filter(inviter_id.author_uuid=user1): 
   #           if Friends.objects.filter(invitee_id.author_uuid=user2) and e.status = True:
-  #           	a = Authors.objects.filter(author_uuid=user2)
-  #           	items.append(a)
-	# foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
-	return render(request, 'foaf.html',{'items':items})
+  #             a = Authors.objects.filter(author_uuid=user2)
+  #             items.append(a)
+    # foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
+    return render(request, 'foaf.html',{'items':items})
   
 # Friend Request function currently default method is GET which will retrieve
 # the friends request the logged in author has.
@@ -712,7 +713,6 @@ def friendRequest(request):
         print "in get"
         #print request.user.is_authenticated()
 
-
         # if logged in
         if request.user.is_authenticated():
             aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
@@ -724,7 +724,7 @@ def friendRequest(request):
         return render(request, 'friendrequest.html',{'items':items, "author": aUser })
 
     if request.method == 'POST':
-    	userid = current_user.id
+        userid = current_user.id
         print userid
         print "in post"
         theirUname = request.POST["follow"]
@@ -742,7 +742,7 @@ def friendRequest(request):
                 print("there!")
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, follow=1)
             else:
-            	print("create try")
+                print("create try")
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1) # new friend request means u auto-follow
 
 
@@ -986,35 +986,35 @@ def getaProfile(request, theusername, user_id):
 
         # Loading Friend/follow logic
         for e in Friends.objects.filter(inviter_id=user):
-        	#print("inviter=: ", e.inviter_id.username)
-        	#print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
-        	if(str(e.invitee_id.username) == str(current_user)):
-        		friends.append(e)
+            #print("inviter=: ", e.inviter_id.username)
+            #print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+            if(str(e.invitee_id.username) == str(current_user)):
+                friends.append(e)
 
         for e in Friends.objects.filter(invitee_id=user,status=1, follow = 0):
             #print("invitee=: ", e.invitee_id.username)
             #print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.inviter_id.username) == str(current_user)):
-            	print("Friend but not following") # waiting on their response
-            	friends.append(1)
+                print("Friend but not following") # waiting on their response
+                friends.append(1)
         for e in Friends.objects.filter(invitee_id=user,status=0, follow = 1):
            # print("invitee=: ", e.invitee_id.username)
            # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.inviter_id.username) == str(current_user)):
-            	print("following")
-            	friends.append(2)
+                print("following")
+                friends.append(2)
         for e in Friends.objects.filter(invitee_id=user,status=1, follow = 1):
             #print("invitee=: ", e.invitee_id.username)
            # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.inviter_id.username) == str(current_user)):
-            	print("friend/follow")
-            	friends.append(3)
+                print("friend/follow")
+                friends.append(3)
         for e in Friends.objects.filter(inviter_id=user,status=1, follow = 1):
            # print("invitee=: ", e.invitee_id.username)
            # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.invitee_id.username) == str(current_user)):
-            	print("friend/following")
-            	friends.append(3)
+                print("friend/following")
+                friends.append(3)
 
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
@@ -1044,7 +1044,7 @@ def getaProfile(request, theusername, user_id):
         posts.sort(key=lambda x: x.date, reverse=True)
 
         if(len(friends)==0):
-        	friends.append(0)
+            friends.append(0)
 
         print("Friends: ", friends)
 
@@ -1054,7 +1054,7 @@ def getaProfile(request, theusername, user_id):
         user = request.POST["username"]
         print(user)
 
-        yourprofileobj = Authors.objects.get(username=user, location="bubble")
+        yourprofileobj = Authors.objects.get(username=user, location="thought-bubble.herokuapp.com")
         items.append(yourprofileobj)
 
         for e in Friends.objects.filter(inviter_id=yourprofileobj):
@@ -1311,7 +1311,12 @@ def getfriendstatus(request):
 @logged_in_or_basicauth()
 def getposts(request):
     items = []
-   
+    current_user = request.user.get_username()
+    blocked = Blocked.objects.all()
+    for x in blocked:
+        if (x.blockedname == current_user):
+
+            return HttpResponse("You're blocked.")
     if request.method == "GET":
         print "here!"
         postobjs = Posts.objects.all()
@@ -1349,6 +1354,7 @@ def getposts(request):
     #return HttpResponse(json.dumps(post))
 
 #@logged_in_or_basicauth()
+
 @csrf_exempt
 def newfriendrequest(request):
     items = []
@@ -1415,7 +1421,6 @@ def Foafvis(request):
         
         data = json.loads(request.body)
         postid = data['id']
-        
         authorid = data['author']['id']
         host = data['author']['host']
         friend = data['friends']
@@ -1452,7 +1457,12 @@ def Foafvis(request):
         # Response, status etc
         #print(r.status_code)
         print(str(authorid))
-        thePost = Posts.objects.get(post_uuid = str(postid))
+
+        try:
+            thePost = Posts.objects.get(post_uuid=str(postid))
+        except ObjectDoesNotExist:
+            return HttpResponse("Bad Post ID")
+
         print("post: ", thePost )
         #myAuthor = Authors.objects.get(author_uuid = str(lara))
         print("ok",str(data['author']['id']))
@@ -1508,7 +1518,7 @@ def Foafvis(request):
         if (flag == True):
             print("nice")
             #print (json.dumps(post, indent = 4, sort_keys=True))
-            return HttpResponse(json.dumps(post, indent = 4, sort_keys=True))
+            return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
 
 
         #return HttpResponse(json.dumps(post))
@@ -1517,8 +1527,11 @@ def Foafvis(request):
 
 #@logged_in_or_basicauth()
 @csrf_exempt
-# /main/checkfriends/?user=<user>
+# /main/api/checkfriends/?user=<user>
 def checkfriends(request):
+    myjson = {}
+    newauthors = []
+
     #getting info in
     if request.method == "POST":
         x = request.GET.get('user', '')
@@ -1527,18 +1540,15 @@ def checkfriends(request):
 
         #author = str(data['author'])
         author = str(x)
-        print(author)
-
+        #print(author)
         authors = data['authors']
-        newauthors = []
-
-        print("authors",authors)
+        #print("authors",authors)
         author1 = Authors.objects.get(author_uuid = str(x))
-        print("ajsd")
+        #print("ajsd")
         hey = str(author1.author_id)
         # ef6728777e36445d8d45d9d5125dc4c6 ng1
         # 9e4ac346d9874b7fba14f27b26ae45bb ng3
-        print("author1: ",author1)
+        #print("author1: ",author1)
         #print("author1",author1)
         for x in authors:
             newthing = str(x)
@@ -1554,13 +1564,13 @@ def checkfriends(request):
                     newauthors.append(str(x))
                 else:
                     return
-        myjson = {}
+        
         myjson['query'] = "friends"
         myjson['author'] = author
         myjson['friends'] = newauthors
 
         #print("dump",json.dumps(myjson))
-        return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True))
+        return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True),)
 
 def githubAggregator(user):
     entries = []
@@ -1838,19 +1848,21 @@ def authorposts(request):
     return HttpResponse(json.dumps({"posts" : items3},indent=4, sort_keys=True))
 
 
-
-
+# This is the function call to delete the post
 @logged_in_or_basicauth()
-def deletepost(request):
+def deletePost(request):
+    current_user = request.user.get_username()
+    author = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
     if request.method == 'POST':
         current_post = request.POST["id"]
         try:
-            Posts.delete(post_id = str(current_post))
-            print("post deleted")
-        except:
-            print("post does not exist")
- 
-    return HttpResponse("OK")
+            Posts.objects.get(post_id = str(current_post)).delete()
+            #print("Post deleted")  
+        except ObjectDoesNotExist:
+            #print("Post does not exist")
+            return redirect(mainPage, current_user=author.username)
+
+    return redirect(mainPage, current_user=author.username)
 
 @logged_in_or_basicauth()
 def unfriend(request):
@@ -1928,46 +1940,65 @@ def unfollow(request):
 
                 return render(request, 'follow.html',{'items':items, 'author':ourName})
     return None
+
 @logged_in_or_basicauth()
 def follow(request):
     if request.user.is_authenticated():
         items = []
         current_user = request.user
-        if request.method == 'POST':
-			userid = current_user.id
-			#print("in follow")
-			theirUname = request.POST["follow"]
-			theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
-			ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+        if request.method =='GET':
+            userid = current_user.id
+            #print("in follow")]
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
 
-            #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
-			if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, follow=False):
-				#print("foolow here!")
-				updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(follow=1)
-			elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, follow=False):
-				#print("follow there!")
-				updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(follow=1)
-			else:
-				new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
-
-			for e in Friends.objects.filter(inviter_id=ourName):
-				if e.follow is True :
-					a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-					items.append(a)
-					print a
-
-			# IF they follow YOU then you are never the inviter
-			for e in Friends.objects.filter(invitee_id=ourName):
-				if e.follow is True :
-					a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-					if not (a in items):
-						items.append(a)
+                        # IF they follow YOU then you are never the inviter
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        items.append(a)
             #items.append(yourprofileobj)
 
-			print("items",items)
+            print("items",items)
 
-			return render(request, 'follow.html',{'items':items, 'author':ourName})
-			return None
+            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return None 
+
+        if request.method == 'POST':
+            userid = current_user.id
+            #print("in follow")
+            theirUname = request.POST["follow"]
+            theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+
+            #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, follow=False):
+                #print("foolow here!")
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(follow=1)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, follow=False):
+                #print("follow there!")
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(follow=1)
+            else:
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
+
+            for e in Friends.objects.filter(inviter_id=ourName):
+                if e.follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    items.append(a)
+                    print a
+
+            # IF they follow YOU then you are never the inviter
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        items.append(a)
+            #items.append(yourprofileobj)
+
+            print("items",items)
+
+            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return None
 
 
 def custom404(request):

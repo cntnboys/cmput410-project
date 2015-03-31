@@ -45,8 +45,11 @@
                     <div class="bubbleWrapper">
                         <!-- Need to do images -->
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                        <img class="avatar" src={{ MEDIA_URL}}{{ link.image }}>
-                        <span class="name">{{ link.name }}</span>
+                        {% if link.image %}
+                        <img class="avatar" src="../../../media/{{ link.image }}">
+                        {% else %}
+                        <img class="avatar" src="/static/images/plaeholder_icon.png">
+                        {% endif %}
                         <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
                             <input type="hidden" value="{{link.username}}" name="username">

@@ -9,9 +9,9 @@ class Authors(models.Model):
     author_id = models.AutoField(primary_key = True)
     author_uuid = models.CharField(max_length=60, unique=True, default=uuid.uuid4)
     name = models.CharField(max_length=200, null=False)
-    username = models.CharField(max_length=30, null=False, unique=True)
+    username = models.CharField(max_length=30, null=False)
     image = models.ImageField(upload_to="ProfileImages", max_length=250, null=True, blank=True)
-    email = models.EmailField(max_length=80, null=False, unique=True)
+    email = models.EmailField(max_length=80, null=False)
     location = models.CharField(max_length=200, null=False)
     github = models.CharField(max_length=200, null=True, blank=True)
 
@@ -21,6 +21,7 @@ class Authors(models.Model):
     class Meta:
         db_table = "authors"
         verbose_name = "Author"
+        unique_together = (("username","location"),)
 
     def __str__(self):
         return ("author_id: " + str(self.author_id) + "author_uuid: " + str(self.author_uuid) + 
@@ -33,6 +34,7 @@ class Friends(models.Model):
     invitee_id = models.ForeignKey(Authors, related_name='invitee_id', null=False)
     status = models.BooleanField(default=False)
     follow = models.BooleanField(default=False)
+    frequest = models.BooleanField(default=False)
 
     class Meta:
         db_table = "friends"
@@ -40,7 +42,21 @@ class Friends(models.Model):
         unique_together = (("inviter_id", "invitee_id"),)
 
     def __str__(self):
-        return "inviter_id: " + str(self.inviter_id.author_id) + " invitee_id: " + str(self.invitee_id.author_id) + " status: " + str(self.status)+ " follow: " + str(self.follow)
+        return ( "inviter_id: " + str(self.inviter_id.author_id) + 
+                 " invitee_id: " + str(self.invitee_id.author_id) + 
+                 " status: " + str(self.status) + " follow: " + str(self.follow) )
+
+class Blocked(models.Model):
+    blockedname = models.CharField(max_length=30, null=False)
+
+    class Meta:
+        db_table = "Blocked"
+        verbose_name = "Blocked"
+        unique_together = (("blockedname"),)
+
+    def __str__(self):
+        return ( "blockedname: " + str(self.blockedname))
+
 
 
 class Posts(models.Model):
@@ -58,7 +74,8 @@ class Posts(models.Model):
         verbose_name = "Post"
 
     def __str__(self):
-        return "post_id: " + str(self.post_id) + " author_id: " + str(self.author_id.author_id) + " content: " + str(self.content) + " image: " + str(self.image) + " privacy: " + str(self.privacy)
+        return ( "post_id: " + str(self.post_id) + " author_id: " + str(self.author_id.author_id) + 
+                 " image: " + str(self.image) + " privacy: " + str(self.privacy) )
 
 class Nodes(models.Model):
     node_id = models.AutoField(primary_key = True)
@@ -91,20 +108,22 @@ class Comments(models.Model):
         verbose_name = "Comment"
 
     def __str__(self):
-        return "author_id: " + str(self.author_id.author_id) + " post_id: " + str(self.post_id.post_id) + " content: " + str(self.content)
-
+        return ( "author_id: " + str(self.author_id.author_id) + 
+                 " post_id: " + str(self.post_id.post_id) + 
+                 " content: " + str(self.content) )
 
 class GithubPosts(models.Model):
     gh_id = models.AutoField(primary_key = True)
     gh_uuid = models.CharField(max_length=100)
     post_id = models.ForeignKey(Posts, db_column="post_id", null=False)
     date = models.DateTimeField('date posted', null=False)
-    content = models.CharField(max_length=10000, blank=True)
+    content = models.CharField(max_length=2000, blank=True)
 
     class Meta:
         db_table = "githubposts"
-        verbose_name = "GithubPosts"
+        verbose_name = "GithubPost"
 
     def __str__(self):
-            return "gh_id: " + str(self.gh_id) + "gh_uuid: " + str(self.gh_uuid) + "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date) + " content: " + str(self.content)
+            return ("gh_id: " + str(self.gh_id) + "gh_uuid: " + str(self.gh_uuid) + 
+                    "post_id: " + str(self.post_id.post_id) + " date: " + str(self.date))
 

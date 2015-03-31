@@ -3,6 +3,9 @@ import json
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.template import RequestContext, loader
+from django.core.exceptions import ObjectDoesNotExist
+from main.models import Nodes
+from django.db.models import Q
 
 # This code snippet is taken from django snippets: 
 # https://djangosnippets.org/snippets/243/
@@ -26,6 +29,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
         if len(auth) == 2:
             # NOTE: We are only support basic authentication for now.
             if auth[0].lower() == "basic":
+                
                 # Require Username:Host:Passwd
                 try:
                     uname, host, passwd = base64.b64decode(auth[1]).decode('ascii').split(':')
@@ -34,6 +38,18 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
                     response.status_code = 401
                     response['message'] = 'not authenticated'
                     return response
+
+                # Node Checking
+                try:
+                    node = Nodes.objects.get(Q(node_name=host) | Q(node_status = False))
+                except ObjectDoesNotExist:
+                        print("except")
+                        response = HttpResponse(content="{message: node approved, contact admin}",
+                                                content_type="text/HTML; charset=utf-8")
+                        response.status_code = 401
+                        response['message'] = 'node not approved, contact admin'
+                        return response
+                
 
                 user = authenticate(username=uname, password=passwd)
                 if user is not None:

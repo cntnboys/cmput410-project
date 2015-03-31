@@ -21,6 +21,16 @@ body {
   background-color: rgba(0,55,155,0.2);
 
 }
+
+.friendfollow {
+  border-radius: 10px;
+  position:relative;
+  border: 2px solid rgba(0,55,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  background-color: rgba(0,55,155,0.2);
+
+}
 .row h2 {
   padding-left: 10pt;
 }
@@ -391,6 +401,54 @@ input:focus {
 }
 
 
+.del { 
+  position: absolute;
+  bottom: 55pt;
+  margin-left: 690pt;
+
+  width: 50px;
+  height: 50px;
+  border: 0px;
+  outline: 0;
+}
+
+@media (min-width: 300px) {
+  .del  {
+  bottom: 80pt;
+  margin-left: 225pt;
+  width: 25px;
+  height: 25px;
+  }
+}
+@media (min-width: 550px) {
+  .del {
+  bottom: 45pt;
+  margin-left: 315pt;
+  width: 50px;
+  height: 50px;
+  }
+}
+
+@media (min-width: 800px) {
+  .del   {
+  bottom: 45pt;
+  margin-left: 500pt;
+  width: 50px;
+  height: 50px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .del   {
+  bottom: 55pt;
+  margin-left: 690pt;
+  width: 50px;
+  height: 50px;
+  }
+}
+
+  
+
 input[type="submit"] {
   height: 60px;
   width: auto;
@@ -412,8 +470,9 @@ input[type="submit"]:hover {
 }
 
 input:focus {
-  background: #FFFDF2;
+  background: rgba(140,213,183,0.0);
 }
+
 
 .postbtn {
   position: absolute;
@@ -513,6 +572,8 @@ input:focus {
   word-wrap:break-word;
 
 }
+
+
 
 a.postlink {
   text-decoration: none;

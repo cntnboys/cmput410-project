@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
 
-    # Get Our Data
+    # Get Our Dataa
     url(r'^api/getallauthors/', views.getAllAuthors, name = 'getAllAuthors'),
     url(r'^api/getposts/', views.getposts, name='getposts'),
     url(r'^api/getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^api/getapost/$', views.singlepost, name='singlepost'), 
     url(r'^api/getpostsbyauthor/$', views.getPostsByAuthor, name='postsbyauthor'),
     url(r'^api/newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
+    url(r'^api/friendRequest/$', views.friendRequest, name='friendRequest'),    
+    url(r'^api/checkfriends/$', views.checkfriends, name='checkfriends'),
+    url(r'^api/Foafvis/$', views.Foafvis, name='Foafvis'),
 
     # Logged In Pages
     url(r'^(?P<current_user>.+?)/posts/', views.mainPage, name='mainPage'),
@@ -30,17 +33,11 @@ urlpatterns = patterns('',
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
     url(r'^makeComment/$', views.makeComment, name='makeComment'),
-    url(r'^deletepost/$', views.deletepost, name='deletepost'),
+    url(r'^deletepost/$', views.deletePost, name='deletepost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
 
 
-    
-    
-
-    url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),    
-    url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),
-    url(r'^Foafvis/$', views.Foafvis, name='Foafvis'),
 
     url(r'^unfriend/$', views.unfriend, name='unfriend'),
     url(r'^unfollow/$', views.unfollow, name='unfollow'),

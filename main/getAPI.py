@@ -1,7 +1,7 @@
 import base64
 import requests
 import json
-from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
+
 
 # Note current URLS that work:
 # 'http://social-distribution.herokuapp.com/api/posts'
@@ -12,3 +12,4 @@ def getAPI (url, username, password, host):
 	req = requests.get(str(url), headers=headers)
 	content = json.loads(req.content)
 	return content
+
