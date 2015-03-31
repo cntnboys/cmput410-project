@@ -849,10 +849,11 @@ def editProfile(request, current_user):
         fullname =request.POST["fullname"]
         emailin = request.POST["email"]
         githubin = request.POST["github"]
+        imagein = request.POST["image"]
 
         #find author object needed to update
         try:
-            Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin)
+            Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin,image=imagein)
             error_message = "Profile updated"
             print("Profile updated")
         except:
