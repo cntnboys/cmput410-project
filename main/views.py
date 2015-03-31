@@ -495,41 +495,24 @@ def mainPage(request, current_user):
 
         # retrieve posts of friends
         for f in Friends.objects.all():
-             #print("authorid:",author_id.author_id)
-             #print("invitee_id",f.invitee_id.author_id)
-             if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                 for x in Posts.objects.filter(author_id=f.inviter_id.author_id), privacy="friends"):
-                     print("gothere2222")
-                     items.insert(0,x)
+            #print("authorid:",author_id.author_id)
+            #print("invitee_id",f.invitee_id.author_id)
+            if (f.invitee_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.inviter_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
+                    print("gothere2222")
+                    items.insert(0,x)
                     
-            
-             if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                 print("got here11")
-                 for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="friends"):
+            if (f.inviter_id.author_id==author_id.author_id) and f.status:
+                for x in Posts.objects.filter(author_id=f.invitee_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
                     items.insert(0,x)
 
-            if (f.invitee_id.author_id==author_id.author_id) and f.status:
-                for x in Posts.objects.filter(author_id=f.inviter_id.author_id, privacy="bubblefriend"):
-                   items.insert(0,x)
 
-            if (f.inviter_id.author_id==author_id.author_id) and f.status:
-                for x in Posts.objects.filter(author_id=f.invitee_id.author_id, privacy="bubblefriend"):
-                   items.insert(0,x)
-         
         # retrieve all public posts
-        for x in Posts.objects.filter(privacy="public"):
-           items.insert(0,x)
-
-        # retrieve all posts from bubble and that are friends aswell (bubblefreind)
-        for f in Friends.objects.all():
-            
         # retrieve all private posts of current user (these have been left out in all above queries)
-        for x in Posts.objects.filter(author_id=author_id.author_id, privacy="private"):
-           items.insert(0, x)
-
-        # retreive all private posts of the current user (sent by another author to us privately :))))) )
-        for x in Posts.objects.filter(privacy=current_user):
-            items.insert(0,x)
+        # retrieve all private posts of current user (these have been left out in all above queries)
+        for x in Posts.objects.filter(Q(privacy="public") | 
+            Q(author_id=author_id.author_id, privacy="private") | Q(privacy=current_user) ):
+           items.insert(0,x)
 
         for post in items:
             comments = []
@@ -597,7 +580,6 @@ def friendRequest(request):
         print current_user.id
         print "in get"
         #print request.user.is_authenticated()
-
 
         # if logged in
         if request.user.is_authenticated():

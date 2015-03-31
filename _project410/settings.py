@@ -181,10 +181,10 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
 
 # trying to fix loading static files when debug false. Save for last?
-#if DEBUG: 
-STATIC_ROOT = "/static/images"
-#else:
-#   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+if DEBUG: 
+    STATIC_ROOT = "/static/images"
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),

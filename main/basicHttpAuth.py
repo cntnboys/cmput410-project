@@ -3,6 +3,8 @@ import json
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.template import RequestContext, loader
+from django.core.exceptions import ObjectDoesNotExist
+from main.models import Nodes
 
 # This code snippet is taken from django snippets: 
 # https://djangosnippets.org/snippets/243/
@@ -34,6 +36,24 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
                     response.status_code = 401
                     response['message'] = 'not authenticated'
                     return response
+
+
+                try: 
+                    node = Nodes.objects.get(node_name=host)
+
+                    if node.status == False:
+                        response = HttpResponse(content="{message: node not approved, contact admin}",
+                                                content_type="text/HTML; charset=utf-8")
+                        response.status_code = 401
+                        response['message'] = 'node not approved, contact admin'
+                        return response
+
+                except:
+                        response = HttpResponse(content="{message: node approved, contact admin}",
+                                                content_type="text/HTML; charset=utf-8")
+                        response.status_code = 401
+                        response['message'] = 'node not approved, contact admin'
+                        return response
 
                 user = authenticate(username=uname, password=passwd)
                 if user is not None:
