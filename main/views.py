@@ -1054,7 +1054,7 @@ def getaProfile(request, theusername, user_id):
         user = request.POST["username"]
         print(user)
 
-        yourprofileobj = Authors.objects.get(username=user, location="bubble")
+        yourprofileobj = Authors.objects.get(username=user, location="thought-bubble.herokuapp.com")
         items.append(yourprofileobj)
 
         for e in Friends.objects.filter(inviter_id=yourprofileobj):
