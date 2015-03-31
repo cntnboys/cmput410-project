@@ -16,7 +16,7 @@ import uuid
 import Post
 import Comment
 
-from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
+from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes,Blocked
 from getAPI import getAPI
 from basicHttpAuth import view_or_basicauth, logged_in_or_basicauth, has_perm_or_basicauth 
 from django.contrib.sessions.models import Session
@@ -1311,7 +1311,12 @@ def getfriendstatus(request):
 @logged_in_or_basicauth()
 def getposts(request):
     items = []
-   
+    current_user = request.user.get_username()
+    blocked = Blocked.objects.all()
+    for x in blocked:
+        if (x.blockedname == current_user):
+
+            return HttpResponse("You're blocked.")
     if request.method == "GET":
         print "here!"
         postobjs = Posts.objects.all()
@@ -1349,6 +1354,7 @@ def getposts(request):
     #return HttpResponse(json.dumps(post))
 
 #@logged_in_or_basicauth()
+
 @csrf_exempt
 def newfriendrequest(request):
     items = []

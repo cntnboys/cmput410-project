@@ -34,6 +34,7 @@ class Friends(models.Model):
     invitee_id = models.ForeignKey(Authors, related_name='invitee_id', null=False)
     status = models.BooleanField(default=False)
     follow = models.BooleanField(default=False)
+    frequest = models.BooleanField(default=False)
 
     class Meta:
         db_table = "friends"
@@ -44,6 +45,18 @@ class Friends(models.Model):
         return ( "inviter_id: " + str(self.inviter_id.author_id) + 
                  " invitee_id: " + str(self.invitee_id.author_id) + 
                  " status: " + str(self.status) + " follow: " + str(self.follow) )
+
+class Blocked(models.Model):
+    blockedname = models.CharField(max_length=30, null=False)
+
+    class Meta:
+        db_table = "Blocked"
+        verbose_name = "Blocked"
+        unique_together = (("blockedname"),)
+
+    def __str__(self):
+        return ( "blockedname: " + str(self.blockedname))
+
 
 
 class Posts(models.Model):
