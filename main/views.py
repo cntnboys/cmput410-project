@@ -229,7 +229,7 @@ def getAuthorsFromOthers():
             name = author["displayname"]
             username = author["displayname"]
             email = username + "@ualberta.ca"
-            location = "social-distribution"
+            location = "cs410.cs.ualberta.ca:41084"
             try:
                 new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             except:
@@ -887,7 +887,10 @@ def getaProfile(request, theusername, user_id):
             user = Authors.objects.get(author_uuid=authoruuid, location="thought-bubble.herokuapp.com")
         except:
 #user = Authors.objects.get(author_uuid=user_id, location="bubble")
-            user = Authors.objects.get(author_uuid=authoruuid, location="social-distribution")
+            try:
+                user = Authors.objects.get(author_uuid=authoruuid, location="social-distribution")
+            except:
+                user = Authors.objects.get(author_uuid=authoruuid, location="cs410.cs.ualberta.ca:41084")
         items.append(user)
 
         # Loading Friend/follow logic
