@@ -280,31 +280,57 @@ input[type="file"] {
     width: 95%;
   }
 }
-
 .friendreq {
-  height: 60px;
+  height: 30px;
   position: absolute;
   top: 20%;
 }
 
 @media (min-width: 300px) {
 .friendreq {
-    margin-left: 57%;
+    margin-left: 35%;
   }
 }
 @media (min-width: 550px) {
 .friendreq  {
-    margin-left: 69%;
+    margin-left: 43%;
   }
 }
 
 @media (min-width: 800px) {
 .friendreq {
-    margin-left: 78%;
+    margin-left: 60%;
   }
 }
 @media (min-width: 1200px) {
 .friendreq {
+    margin-left: 70%;
+  }
+}
+.followreq {
+  height: 30px;
+  position: absolute;
+  top: 20%;
+}
+
+@media (min-width: 300px) {
+.followreq {
+    margin-left: 57%;
+  }
+}
+@media (min-width: 550px) {
+.followreq  {
+    margin-left: 69%;
+  }
+}
+
+@media (min-width: 800px) {
+.followreq {
+    margin-left: 78%;
+  }
+}
+@media (min-width: 1200px) {
+.followreq {
     margin-left: 84%;
   }
 }
