@@ -198,7 +198,7 @@ def getPostsByAuthor(request):
 
 def getAuthorsFromOthers():
     url = 'http://social-distribution.herokuapp.com/api/author'
-    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
@@ -283,7 +283,7 @@ def updateThePosts(content):
 def getOneAuthorPosts(author_id):
     url = 'http://social-distribution.herokuapp.com/api/author/'+str(author_id)+'posts/'
     
-    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
     
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
@@ -304,7 +304,7 @@ def getAuthorPostsFromOthers():
     
     url = 'http://social-distribution.herokuapp.com/api/author/posts'
     
-    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
     
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
@@ -320,11 +320,10 @@ def getPostsFromOthers():
     
     url = 'http://social-distribution.herokuapp.com/api/posts'
     
-    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
     
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
     r = requests.get(url, headers=headers)
-    
     
     content = json.loads(r.content)
     
@@ -338,7 +337,7 @@ def getFriendsOfAuthors(username):
     
     url = 'http://social-distribution.herokuapp.com/api/friends/'
     
-    string = "Basic "+ base64.b64encode('nbui:social-distribution.herokuapp.com:team6')
+    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
     
     headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com', 'Content-Type': 'application/json', 'Accept':'*/*'}
     
@@ -631,7 +630,7 @@ def friendRequest(request):
             ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             print "our author"
             url = "http://social-distribution.herokuapp.com/api/friendrequest"
-            string = "Basic "+ base64.b64encode("nbui:social-distribution.herokuapp.com:team6")
+            string = "Basic "+ base64.b64encode("nbui3:social-distribution.herokuapp.com:team6")
             headers = {"Authorization":string, "Host": "social-distribution.herokuapp.com", "Content-Type": "application/json"}
             oid = str(ourName.author_uuid)
             odname = str(ourName.username)
