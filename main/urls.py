@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^register/$', views.registerPage, name='RegisterPage'),
 
-    # Get Our Data
+    # Get Our Dataa
     url(r'^api/getallauthors/', views.getAllAuthors, name = 'getAllAuthors'),
     url(r'^api/getposts/', views.getposts, name='getposts'),
     url(r'^api/getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
@@ -33,10 +33,6 @@ urlpatterns = patterns('',
     url(r'^deletepost/$', views.deletepost, name='deletepost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
-
-
-    
-    
 
     url(r'^friendRequest/$', views.friendRequest, name='friendRequest'),    
     url(r'^checkfriends/$', views.checkfriends, name='checkfriends'),

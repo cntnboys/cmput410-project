@@ -93,7 +93,7 @@ class Comments(models.Model):
     def __str__(self):
         return "author_id: " + str(self.author_id.author_id) + " post_id: " + str(self.post_id.post_id) + " content: " + str(self.content)
 
-
+#curl -u djphan:host:djphan --request GET 'http://127.0.0.1:8000/main/api/getpostsbyauthor/?authorid=a5fb49be-c5e3-4235-b440-3682abf4b75a/'
 class GithubPosts(models.Model):
     gh_id = models.AutoField(primary_key = True)
     gh_uuid = models.CharField(max_length=100)

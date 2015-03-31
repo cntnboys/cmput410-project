@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import dj_database_url
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 #PROJECT_ROOT = os.path.normpath(os.path.join(BASE_DIR, '..'))
 
 # Quick-start development settings - unsuitable for production
@@ -25,14 +23,11 @@ SECRET_KEY = '+ei^7v4d_$7vf+$&cdsrr4zl0$$+c7hxn*ay02vnx+#^snfrp6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = [".herokuapp.com"]
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -186,10 +181,10 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
 
 # trying to fix loading static files when debug false. Save for last?
-if DEBUG: 
-   STATIC_ROOT = "/static/images"
-else:
-   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+#if DEBUG: 
+STATIC_ROOT = "/static/images"
+#else:
+#   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -202,11 +197,3 @@ STATIC_URL = os.path.join(PROJECT_PATH,'/static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media') # Absolute path to the media directory
 
-# Restful Framework for Django taken http://www.django-rest-framework.org/
-"""REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}"""
