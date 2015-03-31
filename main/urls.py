@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^(?P<current_user>.+?)/(?P<current_userid>.+?)/edit', views.editProfile, name='EditProfile'),
     url(r'^makePost/$', views.makePost, name='makePost'),
     url(r'^makeComment/$', views.makeComment, name='makeComment'),
-    url(r'^deletepost/$', views.deletepost, name='deletepost'),
+    url(r'^deletepost/$', views.deletePost, name='deletepost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
 

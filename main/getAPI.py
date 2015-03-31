@@ -13,6 +13,3 @@ def getAPI (url, username, password, host):
 	content = json.loads(req.content)
 	return content
 
-
-a = getAPI("http://cs410.cs.ualberta.ca:41084/api/posts", "dan", "password", "host")
-print a

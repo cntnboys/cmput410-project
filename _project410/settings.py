@@ -24,7 +24,8 @@ SECRET_KEY = '+ei^7v4d_$7vf+$&cdsrr4zl0$$+c7hxn*ay02vnx+#^snfrp6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = [".herokuapp.com"]
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1", 
+                 "compute-1.amazonaws.com"]
 
 
 # Application definition
@@ -110,16 +111,16 @@ STATIC_URL = '/static/'
 #ADDEDEDD THE FOLLLOWWINGGG TO DEAAALLLL WITHTHTHT DB ERRORS WHEN LOCAL
 
 # if DEBUG:
-#DATABASES = {
-#      'default': {
-#       'ENGINE': 'django.db.backends.sqlite3',
-#      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#        'USER': '',
-#       'PASSWORD': '',
-#        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-#       'PORT': '',
-#   }
-#}
+DATABASES = {
+      'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': '',
+       'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+       'PORT': '',
+   }
+}
 # else:
 #     DATABASES = {
 #         'default': {
@@ -146,7 +147,7 @@ STATIC_URL = '/static/'
 # }
 
 # new one
-
+"""
 DATABASES = {
        'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -159,6 +160,7 @@ DATABASES = {
    }
 
 }
+"""
 # Parse database configuration from $DATABASE_URL
 #COMMMENTEED OUT THIIIISSS LINNENENENENE
 #DATABASES['default'] =  dj_database_url.config()
@@ -173,9 +175,9 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, '/author/templates'), )
 
 # trying to fix loading static files when debug false. Save for last?
 if DEBUG: 
-    STATIC_ROOT = "/static/images"
+  STATIC_ROOT = "/static/images"
 else:
-   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+  STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
