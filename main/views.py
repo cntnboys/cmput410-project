@@ -37,6 +37,7 @@ import feedparser
 from django.utils.html import strip_tags
 
 
+counter = 0
 
 #################################################################################
 #                          API Function Calls Are Here                          #
@@ -592,19 +593,31 @@ def mainPage(request, current_user):
 
     if request.method == "GET":
 
-        getAuthorsFromOthers()
-        getPostsFromOthers()
+        try:
+            if counter % 20 == 0:
+                counter += 1
+                print "gAFA"
+                getAuthorsFromOthers()
+                print "gPFA"
+                getPostsFromOthers()
 
-        for author in Authors.objects.all():
-            getOneAuthorPosts(author.author_uuid)
+                print "loop"
+                for author in Authors.objects.all():
+                    getOneAuthorPosts(author.author_uuid)
+                print "endloop"
+
+                #Grabs Github Materials
+                githubAggregator(current_user)
+                print "endgit"
+            else:
+                counter+=1
+        except:
+            print "Errors Here"
 
         #get friends of user for post input
         author = Authors.objects.get(username=current_user)
         user = Authors.objects.get(author_uuid=author_id.author_uuid)
         items2.append(user)
-
-        #Grabs Github Materials
-        githubAggregator(current_user)
 
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
