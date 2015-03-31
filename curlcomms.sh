@@ -7,10 +7,10 @@ echo " #### Get A Post ID: 37c1792353234b90abe6f4c9e316fab8 ###"
 echo "$N"
 echo "Response: "
 echo "$N"
-curl -u admin:host:admin --request GET 'http://thought-bubble.herokuapp.com/main/getapost/?postid=37c1792353234b90abe6f4c9e316fab8'
+curl -u admin:localhost:admin --request GET 'http://thought-bubble.herokuapp.com/main/getapost/?postid=37c1792353234b90abe6f4c9e316fab8'
 echo "$STR"
 echo " #### Get all public posts ###"
-curl -u btrinh:127.0.0.1:a --request GET 'http://thought-bubble.herokuapp.com/main/getposts/'
+curl -u btrinh:localhost:a --request GET 'http://thought-bubble.herokuapp.com/main/getposts/'
 echo "$STR"
 echo " #### Get specific author posts for authenticated user ###"
 echo "$N"
@@ -43,16 +43,16 @@ echo " ###### Post new friend request #####"
 echo "$N"
 echo "Response: "
 echo "$N"
-curl http://thought-bubble.herokuapp.com/main/newfriendrequest/  -X POST  -H "Content-Type: application/json"  -H "Accept: */*"  -d '{"query":"friendrequest",
+curl http://thought-bubble.herokuapp.com/main/api/newfriendrequest/  -X POST  -H "Content-Type: application/json"  -H "Accept: */*"  -d '{"query":"friendrequest",
     "author":{
-    "id":"d8634b9e2e304323ab18ad16eae7a9fe ",
+    "id":"d8634b9e2e304323ab18ad16eae7a9fe",
     "host":"http://thought-bubble.herokuapp.com/",
     "displayname":"mrX"
     },
     "friend": {
-                 "id":"213f6df00cbe41bbb0e888a62d5780ae",
+                 "id":"56798ffc-392c-402b-97d8-cf51b091db52",
                  "host":"http://thought-bubble.herokuapp.com/",
-                 "displayname":"llkay",
+                 "displayname":"btrinh",
                  "url":"http://thought-bubble.herokuapp.com/author/9de17f29c12e8f97bcbbd34cc908f1baba40658e"
            }
     }'
