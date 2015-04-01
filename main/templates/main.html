@@ -118,14 +118,14 @@ $(document).ready(function(){
 						</form>
 
 
-			 <form method="POST" action="#" id=updateform name="updateform">
-                          {% csrf_token %}
+						<form method="POST" action="#" id=updateform name="updateform">
+						  {% csrf_token %}
                       
-                       <div>  Content: <input type="text" name="fullname"  maxlength="5" value={{ link.content }} > </div>
-                       <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
-                       <div>  <input type="submit" value="Update"> </div>
-                       <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
-            </form>
+						  <div>  Content: <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
+						  <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
+						  <div>  <input type="submit" value="Update"> </div>
+						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
+						</form>
 
 					
 			
