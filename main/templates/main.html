@@ -82,7 +82,9 @@
                 		{% else %}
                 			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}> Untitled Post </a></div>
                 		{% endif %}
-                		<span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+                		<span> Domain: {{ link.author_id.location }}</br>
+                                By: <a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a>
+				  on {{link.date}}</span>
                 		<br/><br/>
 
                         {% if link.image %}

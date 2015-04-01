@@ -486,7 +486,7 @@ def mainPage(request, current_user):
 #               counter += 1
         getAuthorsFromOthers()
         getPostsFromOthers()
-        getFriendsOfAuthors(author.author_uuid)
+       # getFriendsOfAuthors(author.author_uuid)
 
 #for author in Authors.objects.all():
             #getOneAuthorPosts(author.author_uuid)
