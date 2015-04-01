@@ -486,6 +486,7 @@ def mainPage(request, current_user):
 #               counter += 1
         getAuthorsFromOthers()
         getPostsFromOthers()
+        getFriendsOfAuthors(author.author_uuid)
 
 #for author in Authors.objects.all():
             #getOneAuthorPosts(author.author_uuid)
@@ -681,6 +682,9 @@ def friendRequest(request):
             print payload
             r = requests.post(url,data=json.dumps(payload), headers=headers)
             print r
+
+            # SAVE POTENTIAL FRIEND
+            new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, status=0, frequest=1)[0]
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
