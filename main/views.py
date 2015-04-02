@@ -362,26 +362,29 @@ def getFriendsOfAuthors(author_uuid):
 
     data2 = { "query":"friends","authors":author_list2, "author":str(author_uuid)}
     
-    print data2
-    print author_uuid
+    print ("d2: ", data2)
+    print ("au: ",author_uuid)
     r2 = requests.post(url2+str(author_uuid), data=json.dumps(data2), headers=headers2)
     
-    print r2.content
+    print ("r2content: " ,r2.content)
     
     content2 = json.loads(r2.content)
 
     author = Authors.objects.get(author_uuid=author_uuid)
 
-    for friend_uuid in content2["authors"]:
-        author2 = Authors.objects.get(author_uuid=friend_uuid)
-        try:
-            new_friend=Friends.objects.get(inviter_id=author, invitee_id=author2).update(status=1)
-        except:
+            #find author object needed to update
+    try:
+        for friend_uuid in content2["authors"]:
+            author2 = Authors.objects.get(author_uuid=friend_uuid)
             try:
-                new_friend=Friends.objects.get(inviter_id=author2, invitee_id=author).update(status=1)
+                new_friend=Friends.objects.get(inviter_id=author, invitee_id=author2).update(status=1)
             except:
-                new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)[0]
-
+                try:
+                    new_friend=Friends.objects.get(inviter_id=author2, invitee_id=author).update(status=1)
+                except:
+                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)[0]
+    except:
+        print("user doesnt exist on their server")
     return None
 
 
@@ -606,7 +609,7 @@ def friendRequest(request):
         # if logged in
         if request.user.is_authenticated():
             aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
-            for e in Friends.objects.filter(invitee_id=aUser):
+            for e in Friends.objects.filter(invitee_id=aUser, frequest=True):
                 if e.status is False :
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
@@ -625,16 +628,22 @@ def friendRequest(request):
                 current_user = request.user.username
 
             #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
-            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
                 print("here!")
-                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, follow =1)
-            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow =1, frequest=0)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
                 print("there!")
-                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, follow=1)
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=False):
+                print("newthere")
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=0, inviter_follow=1, frequest=1)
+            elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False):
+                print("newthere")
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=0, invitee_follow=1, frequest=1)
             else:
                 print("create try")
-                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1) # new friend request means u auto-follow
-
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1, status =0) # new friend request means u auto-follow
+                print("ni: ", new_invite)
 
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
@@ -684,14 +693,14 @@ def friendRequest(request):
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
-            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
                 print "here!"
-                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
-            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow=1, frequest=0)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
                 print "there!"
-                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1)
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
             else:
-                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1)
 
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
@@ -796,6 +805,7 @@ def getaProfile(request, theusername, user_id):
     current_user = request.user
 
     friends = []
+    locationflag = 1
     # git_author = Authors.objects.get(author_uuid=user_id)
     
     author = Authors.objects.get(username=current_user)
@@ -826,32 +836,99 @@ def getaProfile(request, theusername, user_id):
             #print("inviter=: ", e.inviter_id.username)
             #print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.invitee_id.username) == str(current_user)):
-                friends.append(e)
+            	print("AL: ",author.location)
+            	if(author.location != "thought-bubble.herokuapp.com"):
+            		locationflag = 0
+            		print("loc0: ", locationflag)
+            		friends.append(e)
+            	else:
+                	friends.append(e)
 
-        for e in Friends.objects.filter(invitee_id=user,status=1, follow = 0):
-            #print("invitee=: ", e.invitee_id.username)
+                	locationflag = 1
+                	print("loc1: ", locationflag)
+        for e in Friends.objects.filter(invitee_id=user):
+            #print("inviter=: ", e.inviter_id.username)
             #print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
             if(str(e.inviter_id.username) == str(current_user)):
-                print("Friend but not following") # waiting on their response
-                friends.append(1)
-        for e in Friends.objects.filter(invitee_id=user,status=0, follow = 1):
-           # print("invitee=: ", e.invitee_id.username)
-           # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
-            if(str(e.inviter_id.username) == str(current_user)):
-                print("following")
-                friends.append(2)
-        for e in Friends.objects.filter(invitee_id=user,status=1, follow = 1):
-            #print("invitee=: ", e.invitee_id.username)
-           # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
-            if(str(e.inviter_id.username) == str(current_user)):
-                print("friend/follow")
-                friends.append(3)
-        for e in Friends.objects.filter(inviter_id=user,status=1, follow = 1):
-           # print("invitee=: ", e.invitee_id.username)
-           # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
-            if(str(e.invitee_id.username) == str(current_user)):
-                print("friend/following")
-                friends.append(3)
+            	print("AL: ",author.location)
+            	if(author.location != "thought-bubble.herokuapp.com"):
+            		locationflag = 0
+            		print("loc0: ", locationflag)
+            		friends.append(e)
+            	else:
+                	friends.append(e)
+
+                	locationflag = 1
+                	print("loc1: ", locationflag)
+
+        # IF i dont follow them and dont have them freqed but they previously reqed me after I unfriended
+        # invitee_follow = true and freq=false status = false inviter_follow=false and all false
+        for e in Friends.objects.filter(invitee_follow)
+
+        # for e in Friends.objects.filter(invitee_id=user,status=1, follow = 0, frequest=0):
+        #     #print("invitee=: ", e.invitee_id.username)
+        #     #print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("Friend but not following") # waiting on their response
+        #         friends.append(e)
+        # for e in Friends.objects.filter(invitee_id=user,status=0, follow = 1,frequest=0):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("following")
+        #         friends.append(e)
+
+        # for e in Friends.objects.filter(inviter_id=user,status=0, follow = 1,frequest=0):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("following")
+        #         friends.append(e)
+        # for e in Friends.objects.filter(invitee_id=user,status=1, follow = 1,frequest=0):
+        #     #print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("friend/follow")
+        #         friends.append(e)
+        # for e in Friends.objects.filter(inviter_id=user,status=1, follow = 1,frequest=0):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.invitee_id.username) == str(current_user)):
+        #         print("friend/following")
+        #         friends.append(e)
+
+        # for e in Friends.objects.filter(invitee_id=user,status=1, follow = 1,frequest=0):
+        #     #print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("friend/follow")
+        #         friends.append(e)
+        # for e in Friends.objects.filter(inviter_id=user,status=1, follow = 1,frequest=0):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.invitee_id.username) == str(current_user)):
+        #         print("friend/following")
+        #         friends.append(e)
+
+        # for e in Friends.objects.filter(invitee_id=user,status=0, follow = 1,frequest=1):
+        #     #print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.inviter_id.username) == str(current_user)):
+        #         print("follow and want to be friends friendreq")
+        #         friends.append(e)
+        # for e in Friends.objects.filter(inviter_id=user,status=0, follow = 1,frequest=1):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.invitee_id.username) == str(current_user)):
+        #         print("they want to be your friend")
+        #         friends.append(e)
+        # for e in Friends.objects.filter(inviter_id=user,status=0, follow = 0,frequest=1):
+        #    # print("invitee=: ", e.invitee_id.username)
+        #    # print("inviter : ",str(e.inviter_id.username), " : ", str(current_user))
+        #     if(str(e.invitee_id.username) == str(current_user)):
+        #         print("not follow but want to be friends")
+        #         friends.append(e)
+
 
         for e in Friends.objects.filter(inviter_id=user):
             if e.status is True :
@@ -885,7 +962,7 @@ def getaProfile(request, theusername, user_id):
 
         print("Friends: ", friends)
 
-        return render(request,'profile.html',{'items':items, 'posts':posts, 'ufriends':ufriends, 'author': user, 'friends' :friends})
+        return render(request,'profile.html',{'items':items, 'posts':posts, 'ufriends':ufriends, 'author': user, 'friends' :friends, 'location': locationflag})
 
     if request.method == "POST":
         user = request.POST["username"]
@@ -1718,10 +1795,10 @@ def unfriend(request):
                 #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
                 if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=True):
                     print "here!"
-                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).delete()
+                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=0)
                 elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=True):
                     print "there!"
-                    updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).delete()
+                    updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=0)
 
 
                 for e in Friends.objects.filter(inviter_id=ourName):
@@ -1756,22 +1833,27 @@ def unfollow(request):
                 theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
                 ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
 
+                #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
+                if Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, inviter_follow=True):
+                    print("unfollow: IM INVITER; INVFOLLOW=True")
+                    updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(inviter_follow=0)
+                elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, invitee_follow=True):
+                    print("unfollow: IM INVITEE; INVFOLLOW=True")
+                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(invitee_follow=0)
+
 
                 #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
-                if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, follow=True):
-                    print("here!")
-                    updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(follow=0)
-                elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, follow=True):
-                    print("there!")
-                    updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(follow=0)
-
-                # IF they follow YOU then you are never the inviter
                 for e in Friends.objects.filter(invitee_id=ourName):
-                    if e.follow is True :
+                    if e.inviter_follow is True :
                         a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                        if not (a in items):
-                            items.append(a)
-                #items.append(yourprofileobj)
+                        items.append(a)
+                        print a
+
+                for e in Friends.objects.filter(inviter_id=ourName):
+                    if e.invitee_follow is True :
+                        a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                        items.append(a)
+                        print a
 
                 print("items",items)
 
@@ -1788,18 +1870,23 @@ def follow(request):
             #print("in follow")]
             ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
 
-                        # IF they follow YOU then you are never the inviter
+            # IF they follow YOU then you are never the inviter
+            for e in Friends.objects.filter(inviter_id=ourName):
+                print("e: ",e)
+                if e.invitee_follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    items.append(a)
             for e in Friends.objects.filter(invitee_id=ourName):
-                if e.follow is True :
+                if e.inviter_follow is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    if not (a in items):
-                        items.append(a)
+                    items.append(a)
+                    print a
             #items.append(yourprofileobj)
 
             print("items",items)
+            print("ourName: ",ourName.username)
 
             return render(request, 'follow.html',{'items':items, 'author':ourName})
-            return None 
 
         if request.method == 'POST':
             userid = current_user.id
@@ -1809,33 +1896,30 @@ def follow(request):
             ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
 
             #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
-            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, follow=False):
-                #print("foolow here!")
-                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(follow=1)
-            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, follow=False):
-                #print("follow there!")
-                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(follow=1)
+            if Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, inviter_follow=False):
+                print("IM INVITER; INVFOLLOW=False")
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(inviter_follow=1)
+            elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, invitee_follow=False):
+                print("IM INVITEE; INVFOLLOW=False")
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(invitee_follow=1)
             else:
-                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1)
 
             for e in Friends.objects.filter(inviter_id=ourName):
-                if e.follow is True :
+                print("e: ",e)
+                if e.invitee_follow is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    items.append(a)
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.inviter_follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
                     print a
 
-            # IF they follow YOU then you are never the inviter
-            for e in Friends.objects.filter(invitee_id=ourName):
-                if e.follow is True :
-                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    if not (a in items):
-                        items.append(a)
-            #items.append(yourprofileobj)
 
             print("items",items)
 
             return render(request, 'follow.html',{'items':items, 'author':ourName})
-            return None
 
 
 def custom404(request):
