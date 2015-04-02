@@ -1,4 +1,4 @@
-{% extends "navbar.html" %}
+c{% extends "navbar.html" %}
 
 {% block head %}
 
@@ -145,119 +145,110 @@ $(document).ready(function(){
                 <h1>Friends</h1>
                     {% for link in items %}
                     {% if link.username != user.get_username %}
-<!--                     <div class="atitle">On someone else's profile : 1</div>
-                    {% if location == 0 %}
-                    <div class="atitle">LOCATION ={{location}}</div>
-                    {% elif location == 1 %}
-                    <div class="atitle">LOCATION ={{location}}</div>
-                    {% endif %}
+                    <div class="atitle">On someone else's profile : 1</div>
                     {% for fstatus in friends %}
-                    <div class="atitle">inviter_follow ={{fstatus.inviter_follow}}</div>
-                    <div class="atitle">invitee_follow ={{fstatus.invitee_follow}}</div>
-                    <div class="atitle">freq ={{fstatus.frequest}}</div>
-                   <div class="atitle">status ={{fstatus.status}}</div>
-                    <div class="atitle">name ={{fstatus.invitee_id.username}}</div>
-                    <div class="atitle">var username ={{user.username}}</div>
-                    <div class="atitle">fstatus val = {{fstatus}}</div> -->
-
-                    {% if fstatus.inviter_id.username == user.username %}
-                    {% if fstatus.inviter_follow = True %}
-                    {% if location == 1 %}
-                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="followreq" value="Unfollow">
-                    </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% elif fstatus.inviter_follow = False %}
-                    {% if location == 1 %}
-                    <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="followreq" value="Follow">
-                    </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}
-                    {% if fstatus.invitee_id.username == user.username %}
-                    {% if fstatus.invitee_follow = False %}
-                    {% if location == 1 %}
-                    <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="followreq" value="Follow">
-                    </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% elif fstatus.invitee_follow = True %}
-                    {% if location == 1 %}
-                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="followreq" value="Unfollow">
-                    </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% else %}
-                    {% if location == 1 %}
-                    {% if location == 1 %}
-                    <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="followreq" value="Follow">
-                    </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}
-
-                    {% if fstatus.status = True %}
+                    <div class="atitle">length: {{ fstatus }}</div>
+                    {% if fstatus == 1 %}
+                    <div class="atitle">Friend not follow</div>
                     <form method="POST" action="{% url "unfriend" %}" enctype="multipart/form-data" name="unfriend">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
                     <input type="submit" class="friendreq" value="Unfriend">
                     </form>
-                    {% elif fstatus.frequest = True %}
-                    {% if fstatus.inviter_id.username = user.username %}
-                    <input type="submit" class="friendreq" value="Request Pending">
-                    {% elif fstatus.invitee_id.username = user.username %}
-                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="friendreq" value="Accept Request">
-                    </form>
-
-                    {% endif %}
-                    {% elif fstatus.frequest = False %}
-                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="friendreq" value="Friend Request">
-                    {% endif %}
-                    {% if fstatus = 0 %}
-                    {% if location == 1 %}
                     <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
                     <input type="submit" class="followreq" value="Follow">
                     </form>
-                    {% elif location == 0 %}
-                    <div class="atitle">User is from another node.</div>
-                    {% endif %}
+                    {% elif fstatus == 2 %}
+                    <div class="atitle">Following but not friends nor frequest</div>
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
                     <input type="submit" class="friendreq" value="Friend Request">
+                    </form>
+                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Unfollow">
+                    </form>
+                    {% elif fstatus == 3 %}
+                    <div class="atitle">Following AND Friends</div>
+                    <form method="POST" action="{% url "unfriend" %}" enctype="multipart/form-data" name="unfriend">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Unfriend">
+                    </form>
+                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Unfollow">
+                    </form>
+                    {% elif fstatus.status = False %}
+                    <div class="atitle">here {{fstatus.status}}</div>
+                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Accept Request">
+                    </form>
+                    {% elif fstatus == 0 %}
+                    <div class="atitle">No existing friend/follow relationship</div>
+                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Friend Request">
+                    </form>
+                    <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Follow">
+                    </form>
+                    {% elif fstatus.status = True %}
+                    <div class="atitle">Friends already</div>
+                    <form method="POST" action="{% url "unfriend" %}" enctype="multipart/form-data" name="unfriend">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Unfriend">
+                    </form>
+                    {% elif fstatus == 4 %}
+                    <div class="atitle">you = invitee status=0, follow = 1,frequest=1 - they want to be your friend and you're following</div>
+                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Accept Request">
+                    </form>
+                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Unfollow">
+                    </form>
+                    {% elif fstatus == 5 %}
+                    <div class="atitle">status=0, follow = 1,frequest=1 - Unfollow/request pending you=inviter</div>
+                    <input type="submit" class="friendreq" value="Request Pending">
+                    </form>
+                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Unfollow">
+                    </form>
+                    {% elif fstatus == 6 %}
+                    <div class="atitle">you = invitee status=0, follow = 1,frequest=1 - they want to be your friend and you're following</div>
+                    <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Accept Request">
+                    </form>
+                    <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Unfollow">
+                    </form>
+                    {% endif %}
+                    {% if fstatus.follow = False %}
+                    <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="followreq" value="Follow">
                     </form>
                     {% endif %}
                     {% endfor %}
