@@ -145,7 +145,7 @@ $(document).ready(function(){
                 <h1>Friends</h1>
                     {% for link in items %}
                     {% if link.username != user.get_username %}
-                    <div class="atitle">On someone else's profile : 1</div>
+<!--                     <div class="atitle">On someone else's profile : 1</div>
                     {% if location == 0 %}
                     <div class="atitle">LOCATION ={{location}}</div>
                     {% elif location == 1 %}
@@ -158,21 +158,11 @@ $(document).ready(function(){
                    <div class="atitle">status ={{fstatus.status}}</div>
                     <div class="atitle">name ={{fstatus.invitee_id.username}}</div>
                     <div class="atitle">var username ={{user.username}}</div>
-                    <div class="atitle">fstatus val = {{fstatus}}</div>
+                    <div class="atitle">fstatus val = {{fstatus}}</div> -->
 
-                    {% if fstatus.status = True %}
-                    <div class="atitle">Friends already</div>
-                    <form method="POST" action="{% url "unfriend" %}" enctype="multipart/form-data" name="unfriend">
-                    {% csrf_token %}
-                    <input type="hidden" name="follow" value="{{ link.username }}">
-                    <input type="submit" class="friendreq" value="Unfriend">
-                    </form>
-                    {% endif %}
                     {% if fstatus.inviter_id.username == user.username %}
                     {% if fstatus.inviter_follow = True %}
-                    <div class="atitle">follow=1</div>
                     {% if location == 1 %}
-                    <div class="atitle">0 : {{location}}</div>
                     <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -183,7 +173,6 @@ $(document).ready(function(){
                     {% endif %}
                     {% elif fstatus.inviter_follow = False %}
                     {% if location == 1 %}
-                    <div class="atitle">1 : {{location}}</div>
                     <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -196,9 +185,7 @@ $(document).ready(function(){
                     {% endif %}
                     {% if fstatus.invitee_id.username == user.username %}
                     {% if fstatus.invitee_follow = False %}
-                    <div class="atitle">invitee_id = btrinh; inviter=false</div>
                     {% if location == 1 %}
-                    <div class="atitle">0 : {{location}}</div>
                     <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -208,9 +195,7 @@ $(document).ready(function(){
                     <div class="atitle">User is from another node.</div>
                     {% endif %}
                     {% elif fstatus.invitee_follow = True %}
-                    <div class="atitle">follow=1</div>
                     {% if location == 1 %}
-                    <div class="atitle">0 : {{location}}</div>
                     <form method="POST" action="{% url "unfollow" %}" enctype="multipart/form-data" name="unfollow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -221,9 +206,7 @@ $(document).ready(function(){
                     {% endif %}
                     {% else %}
                     {% if location == 1 %}
-                    <div class="atitle">1 : {{location}}</div>
                     {% if location == 1 %}
-                    <div class="atitle">0 : {{location}}</div>
                     <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -237,12 +220,17 @@ $(document).ready(function(){
                     {% endif %}
                     {% endif %}
                     {% endif %}
-                    {% if fstatus.frequest = True %}
+
+                    {% if fstatus.status = True %}
+                    <form method="POST" action="{% url "unfriend" %}" enctype="multipart/form-data" name="unfriend">
+                    {% csrf_token %}
+                    <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="submit" class="friendreq" value="Unfriend">
+                    </form>
+                    {% elif fstatus.frequest = True %}
                     {% if fstatus.inviter_id.username = user.username %}
-                    <div class="atitle">fr=1 inviter=u</div>
                     <input type="submit" class="friendreq" value="Request Pending">
                     {% elif fstatus.invitee_id.username = user.username %}
-                    <div class="atitle">fr=1 inviter=them</div>
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
@@ -257,9 +245,7 @@ $(document).ready(function(){
                     <input type="submit" class="friendreq" value="Friend Request">
                     {% endif %}
                     {% if fstatus = 0 %}
-                    <div class="atitle">!=</div>
                     {% if location == 1 %}
-                    <div class="atitle">0 : {{location}}</div>
                     <form method="POST" action="{% url "follow" %}" enctype="multipart/form-data" name="follow">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
