@@ -9,6 +9,18 @@
     <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
 	<script src="{{ STATIC_URL }}js/less.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+ 
+    $("#updateform").hide();
+  
+    $("#show").click(function(){
+        $("#updateform").show();
+        $("#show").hide();
+    });
+});
+</script>
     <!-- Bootstrap example from http://startbootstrap.com/template-overviews/small-business/ -->
 </head>
 
@@ -74,7 +86,8 @@
 
 	<br/>
 	<div class="wrapper" >	
-		<div class='headerbox'><h1>Recent Posts</h1></div>
+		<div class='headerbox'><h1>Recent Posts</h1><div style="float: right;"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></br></br></br></div>
+
                 {% for link in items %}
                 	<div class="contentbox">
                 		{% if link.title %}
@@ -82,7 +95,9 @@
                 		{% else %}
                 			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}> Untitled Post </a></div>
                 		{% endif %}
-                		<span style="margin-left:10pt"> Thought Bubble'd by: </span><a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a><span> on {{link.date}}</span>
+                		<span> Domain: {{ link.author_id.location }}</br>
+                                By: <a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a>
+				  on {{link.date}}</span>
                 		<br/><br/>
 
                         {% if link.image %}
@@ -101,6 +116,19 @@
 			                <input type="image" src="{{ STATIC_URL }}images/delicon.png" alt="Delete" class ="del" onmouseover="this.src='{{ STATIC_URL }}images/deliconhover.png';" onmouseout="this.src='{{ STATIC_URL }}images/delicon.png';"/>
 			                        
 						</form>
+
+
+						<form method="POST" action="#" id=updateform name="updateform">
+						  {% csrf_token %}
+                      
+						  <div>  Content: <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
+						  <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
+						  <div>  <input type="submit" value="Update"> </div>
+						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
+						</form>
+
+					
+			
 
 						{% endif %}
 
