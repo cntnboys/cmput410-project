@@ -378,7 +378,7 @@ def getFriendsOfAuthors(author_uuid):
                     print "INVITER ID AUTHOR222"
                 
                 except:
-                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)
+                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=0, frequest=1)
                     print "NEW FRIEND!"
 
     except:
