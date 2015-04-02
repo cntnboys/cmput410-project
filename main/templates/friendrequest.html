@@ -34,17 +34,21 @@
 		<div class="wrapper">
 
 			<div class="panel left">
-				<h1>Friends</h1>
+				<h1>Friend Requests</h1>
                 {% for link in items %}
                     <div class="bubbleWrapper">
                         <!-- Need to do images -->
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
-                        <img class="avatar" src={{ MEDIA_URL }}{{link.0.image}}>
-                        <span class="name">{{ link.0.name }}</span>
-                        <a href="http://thought-bubble.herokuapp.com/author/"{{link.username}}>@{{link.0.username}}</a>
-                    <p>
-                        Has followed you
-                    </p>
+                        {% if link.image %}
+                        <img class="avatar" src="../../../media/{{ link.0.image }}">
+                        {% else %}
+                        <img class="avatar" src="/static/images/plaeholder_icon.png">
+                        {% endif %}
+                            <form method="POST" action="{% url "getaProfile" theusername=link.0.username user_id=link.0.author_uuid %}" enctype="multipart/form-data" name="form">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{link.0.username}}" name="username">
+                            <input type="submit" value="{{link.0.username}}">
+                        </form>
                     </div>
                 {% endfor %}
 			</div>

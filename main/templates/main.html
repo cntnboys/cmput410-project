@@ -11,13 +11,18 @@
 	<script src="{{ STATIC_URL }}js/less.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
+
+window.onload = function() {
+ 
+    $(".updateform").hide();
+};
 $(document).ready(function(){
  
-    $("#updateform").hide();
+    $(".updateform").hide();
   
     $("#show").click(function(){
-        $("#updateform").show();
-        $("#show").hide();
+        $(".updateform").show();
+       
     });
 });
 </script>
@@ -86,7 +91,7 @@ $(document).ready(function(){
 
 	<br/>
 	<div class="wrapper" >	
-		<div class='headerbox'><h1>Recent Posts</h1><div style="float: right;"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></br></br></br></div>
+		<div class='headerbox'><h1>Recent Posts</h1>	<div style="float: right;"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></br></br></br></div>
 
                 {% for link in items %}
                 	<div class="contentbox">
@@ -118,16 +123,16 @@ $(document).ready(function(){
 						</form>
 
 
-						<form method="POST" action="#" id=updateform name="updateform">
+						<form method="POST" action="#" id=updateform name="updateform" class="updateform">
 						  {% csrf_token %}
-                      
-						  <div>  Content: <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
+                                                  <div>  Title:</br> <input type="text" name="title"  maxlength="5" value={{ link.title }} > </div>
+						  <div>  Content:</br> <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
 						  <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
 						  <div>  <input type="submit" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>
 
-					
+				
 			
 
 						{% endif %}
