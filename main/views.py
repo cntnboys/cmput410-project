@@ -497,16 +497,12 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Posts from Others"
 
-<<<<<<< HEAD
         try:
             for author in Authors.objects.all():
                 getFriendsOfAuthors(author.author_uuid)
         except:
             print "Cannot Get Friends of Authors"
-=======
-        for author in Authors.objects.all():
-            getFriendsOfAuthors(author.author_uuid)
->>>>>>> ab61a970f7f22d66916b8c23b2fa3dc5b5f6fe95
+
 
         try:
             for author in Authors.objects.all():
