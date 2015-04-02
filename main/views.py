@@ -372,17 +372,15 @@ def getFriendsOfAuthors(author_uuid):
             try:
                 new_friend=Friends.objects.get(inviter_id=author, invitee_id=author2)
                 new_friend.update(status=1)
-                print "INVITER ID AUTHOR"
-        
+
             except:
                 try:
                     new_friend=Friends.objects.get(inviter_id=author2, invitee_id=author)
                     new_friend.update(status=1)
-                    print "INVITER ID AUTHOR222"
+                
                 
                 except:
-                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=0, frequest=1)
-                    print "NEW FRIEND!"
+                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1, frequest=1)
 
     except:
         print "This author is local only!"
