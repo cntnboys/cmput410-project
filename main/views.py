@@ -497,16 +497,11 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Posts from Others"
 
-<<<<<<< HEAD
         try:
             for author in Authors.objects.all():
                 getFriendsOfAuthors(author.author_uuid)
         except:
             print "Cannot Get Friends of Authors"
-=======
-        for author in Authors.objects.all():
-            getFriendsOfAuthors(author.author_uuid)
->>>>>>> ab61a970f7f22d66916b8c23b2fa3dc5b5f6fe95
 
         try:
             for author in Authors.objects.all():
@@ -521,7 +516,7 @@ def mainPage(request, current_user):
             print "Cannot Get Github"
 
 
-        #get friends of user for post input
+        #Get friends of user for post input
         items2.append(author)
 
         for e in Friends.objects.filter(inviter_id=author):
@@ -857,17 +852,17 @@ def getaProfile(request, theusername, user_id):
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
     try:
-            getFriendsOfAuthors(user_id)
+        getFriendsOfAuthors(user_id)
     except:
         print("Offline")
 
     if request.method =="GET" or request.method=="POST":
+        # Only duplication errors should be of users of our local host
         try:
-            user = Authors.objects.get(author_uuid=authoruuid, location="thought-bubble.herokuapp.com")
+            user = Authors.objects.get(author_uuid=authoruuid)
         except:
-#user = Authors.objects.get(author_uuid=user_id, location="bubble")
+            user = Authors.objects.get(author_uuid=authoruuid, location=home)
 
-            user = Authors.objects.get(author_uuid=authoruuid, location="cs410.cs.ualberta.ca:41084")
         items.append(user)
 
         # Loading Friend/follow logic
@@ -965,15 +960,13 @@ def editProfile(request, current_user):
             
     return render(request, 'profile.html',{'error_msg': error_message})
 
-#editpost
+# Edit Post
 def editpost(request):
     if request.method == "POST":
         titlein = request.POST["title"]
         imagein = request.POST["image"]
         postidin = request.POST["postid"]
         contentin = request.POST["content"]
-
-        #find post to update
 
         try:
             Posts.objects.filter(post_id=str(postidin)).update(title=str(titlein),image=imagein,content=str(contentin))
@@ -1188,10 +1181,7 @@ def getfriendstatus(request):
             authors['friends'] = "NO"
 
     print("authors",authors)
-            
-        
     return HttpResponse(json.dumps(authors,indent=4, sort_keys=True))
-
 
 
 #title, source(our url), content, author (id), host, displayname(username), urlid, 
