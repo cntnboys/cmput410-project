@@ -689,16 +689,16 @@ def friendRequest(request):
             print r
 
             # SAVE POTENTIAL FRIEND
-            new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, status=0, frequest=1)[0]
+#new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, follow=0, status=0, frequest=1)
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False):
                 print "here!"
-                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1)
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, follow =1)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False):
                 print "there!"
-                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1)
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, follow=1)
             else:
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, follow = 1)
 
