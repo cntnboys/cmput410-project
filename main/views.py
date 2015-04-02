@@ -212,7 +212,6 @@ def getPostsByAuthor(request):
 #http://docs.python-requests.org/en/latest/user/authentication/
 
 def getAuthorsFromOthers():
-    
     #curl -u dan:host:password http://cs410.cs.ualberta.ca:41084/api/friends
     url2 = 'http://cs410.cs.ualberta.ca:41084/api/friends'
     string2 = "Basic "+ base64.b64encode('dan:host:password')
@@ -242,12 +241,10 @@ def formatUuid(id):
     return compare_id
 
 def updateThePosts(content):
-    
-    print(content)
+    #print(content)
     for post in content:
-    
         author_uuid = post["author"]["id"]
-        print author_uuid
+        #print author_uuid
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
@@ -261,7 +258,6 @@ def updateThePosts(content):
                 username = post["author"]["displayname"]
                 email = username + "@ualberta.ca"
                 location = "cs410.cs.ualberta.ca:41084"
-                    
                 author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
         try:
@@ -303,11 +299,8 @@ def updateThePosts(content):
 
 
 def getOneAuthorPosts(author_id):
-
     url2 = 'http://cs410.cs.ualberta.ca:41084/api/author/'+str(author_id)+'posts/'
-    
     string2 = "Basic "+ base64.b64encode('dan:host:password')
-    
     headers2 = {'Authorization':string2, 'Host': 'host'}
     r2 = requests.get(url2, headers=headers2)
     
@@ -419,7 +412,7 @@ def redirectIndex(request):
     return redirect(indexPage)
 
 # Log in Page function is a check for authenticated author log in
-# If author inputs incorrect or non exisiting things in the fields,
+# If author inputs incorrect or non existing things in the fields,
 # then author will be prompted that either the input was incorrect or
 # input does not exist
 def loginPage(request):
@@ -485,7 +478,6 @@ def logout(request):
 def mainPage(request, current_user):
     context = RequestContext(request)
     current_user = request.user.get_username()
-
 
     author = Authors.objects.get(username=current_user, location=home)
 
@@ -1468,7 +1460,7 @@ def githubAggregator(user):
     gitname = ""
     author = Authors.objects.get(username = user)
 
-    if author.gitname == "" or author.gitname == None:
+    if author.github == "" or author.github == None:
         return None
     else:
         gitname = author.github
