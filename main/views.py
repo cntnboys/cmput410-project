@@ -948,7 +948,7 @@ def editpost(request):
         try:
             Posts.objects.filter(post_id=str(postidin)).update(image=imagein,content=str(contentin))
         except:
-            continue
+            pass
 
     return render(request, 'main.html')
             
