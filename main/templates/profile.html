@@ -151,21 +151,6 @@ $(document).ready(function(){
                 <h1>Friends</h1>
                     {% for link in items %}
                     {% if link.username != user.get_username %}
-<!--                     <div class="atitle">On someone else's profile : 1</div>
-                    {% if location == 0 %}
-                    <div class="atitle">LOCATION ={{location}}</div>
-                    {% elif location == 1 %}
-                    <div class="atitle">LOCATION ={{location}}</div>
-                    {% endif %}
-                    {% for fstatus in friends %}
-                    <div class="atitle">inviter_follow ={{fstatus.inviter_follow}}</div>
-                    <div class="atitle">invitee_follow ={{fstatus.invitee_follow}}</div>
-                    <div class="atitle">freq ={{fstatus.frequest}}</div>
-                   <div class="atitle">status ={{fstatus.status}}</div>
-                    <div class="atitle">name ={{fstatus.invitee_id.username}}</div>
-                    <div class="atitle">var username ={{user.username}}</div>
-                    <div class="atitle">fstatus val = {{fstatus}}</div> -->
-
                     {% if fstatus.inviter_id.username == user.username %}
                     {% if fstatus.inviter_follow = True %}
                     {% if location == 1 %}
