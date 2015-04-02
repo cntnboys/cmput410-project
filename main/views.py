@@ -36,6 +36,8 @@ from requests.auth import HTTPBasicAuth
 import feedparser
 from django.utils.html import strip_tags
 
+
+home = "thought-bubble.herokuapp.com"
 counter = 0
 
 #################################################################################
@@ -48,7 +50,7 @@ def getAllAuthors(request):
     authors = []
     if request.method == "GET":
         #print "before for"
-        for auth in Authors.objects.filter(location = "thought-bubble.herokuapp.com"):
+        for auth in Authors.objects.filter(location = home):
             #print "after for"
             author={}
             author['id'] = str(auth.author_uuid)
@@ -73,35 +75,43 @@ def getPostsByAuthor(request):
     if request.method == "GET":        
         current_user = str(request.user.get_username())
         #print("current-user",current_user)
-        myid = Authors.objects.get(username=str(current_user))
+
+        try:
+            myid = Authors.objects.get(username=str(current_user))
+        except ObjectDoesNotExist:
+            print "Current User Not in DB"
+
         #print("start")
         authorid = request.GET.get('authorid', '')
         #print("end")
         #print(authorid)
 
         try:
-            a = Authors.objects.get(author_uuid = str(authorid))
-        except:
-            response = HttpResponse(content="{message: not authenticated}",content_type="text/HTML; charset=utf-8")
+            a = Authors.objects.get(author_uuid = str(authorid), location=home)
+        except ObjectDoesNotExist:
+            response = HttpResponse(content="{message: author does not exist}",content_type="text/HTML; charset=utf-8")
             response.status_code = 404
-            response['message'] = 'not authenticated'
+            response['message'] = 'author does not exist'
             return response
 
 
-
         # public posts by author
-        for x in Posts.objects.filter(author_id = a, privacy="public"):
-            items.insert(0,x)
+        try:
+            for x in Posts.objects.filter(author_id=a, location=home, privacy="public"):
+                items.insert(0,x)
+        except ObjectDoesNotExist:
+            print "No Posts"
+
 
         # if current user is friends with author
         for f in Friends.objects.all():
              #print("authorid:",authorid)
              #print("invitee_id",f.invitee_id.author_id)
-             if (f.invitee_id.author_id==myid.author_id) and f.status:
+             if (f.invitee_id.author_id==myid.author_id and f.invitee_id.location==home) and f.status:
                 if str(f.invitee_id.username) == a.username:
-                    print("same prerson")
+                    print("Same person")
                 else:
-                    for x in Posts.objects.filter(author_id=a, privacy="friends"):
+                    for x in Posts.objects.filter(author_id=a, location=home, privacy="friends"):
                         #print("1: ",x)
                         #print("f: ",f.invitee_id.username,":",current_user)
                         items.insert(0,x)
@@ -109,7 +119,7 @@ def getPostsByAuthor(request):
             
              if (f.inviter_id.author_id==myid.author_id) and f.status:
                 if f.inviter_id.username == a.username:
-                    print("same person")
+                    print("Same person")
                 else:
                     for x in Posts.objects.filter(author_id=a, privacy="friends"):
                         #print("2: ",x)
@@ -399,7 +409,7 @@ def indexPage(request):
     # Makes sure pages get author information when logged in when
     # navigating to main.
     if request.user.is_authenticated():
-        author = Authors.objects.get(username=request.user.get_username())
+        author = Authors.objects.get(username=request.user.get_username(), location=home)
         return render(request, "main.html", {"author":author})
 
     return render(request, 'index/intro.html')
@@ -427,13 +437,13 @@ def loginPage(request):
             user = authenticate(username=username, password=password)
             # Determine if user exists.
             if user is not None:
-                if ( Authors.objects.get(username=username).status == False ):
+                if ( Authors.objects.get(username=username, location=home).status == False ):
                     error_msg = "Account Inactive. Please Wait for Web Administrator to Approve This Account "
                     return render (request, 'login.html', {'error_msg':error_msg }) 
 
                 if user.is_active:
                     login(request, user)
-                    uuid = Authors.objects.get(username=username).author_uuid
+                    uuid = Authors.objects.get(username=username, location=home).author_uuid
                     request.session['username']= username
                     request.session['uuid']= uuid
                     response = redirect(mainPage, current_user=request.user.get_username())
@@ -475,39 +485,46 @@ def logout(request):
 def mainPage(request, current_user):
     context = RequestContext(request)
     current_user = request.user.get_username()
-    author = Authors.objects.get(username=current_user)
+
+
+    author = Authors.objects.get(username=current_user, location=home)
 
     items = []
     ufriends=[]
     items2 = []
 
     if request.method == "GET":
+        # Try Except Chain for Offline Capabilities
+        try:
+            getAuthorsFromOthers()
+        except:
+            print "Cannot Get Authors from Others"
 
         try:
-#           if counter % 20 == 0:
-#               counter += 1
-            getAuthorsFromOthers()
             getPostsFromOthers()
+        except:
+            print "Cannot Get Posts from Others"
 
+        try:
             for author in Authors.objects.all():
                 getFriendsOfAuthors(author.author_uuid)
+        except:
+            print "Cannot Get Friends of Authors"
 
-
+        try:
             for author in Authors.objects.all():
                 getOneAuthorPosts(author.author_uuid)
-
-                    #Grabs Github Materials
-            githubAggregator(current_user)
-
         except:
-            print " Error Here"
-                #print "endgit"
-                #else:
-                #   counter+=1
-                #except:
-                #    print "Errors Here"
+            print "Cannot get One Author Posts"
 
-            #get friends of user for post input
+        try:
+            print "GitHub Start"
+            githubAggregator(current_user)
+        except:
+            print "Cannot Get Github"
+
+
+        #get friends of user for post input
         items2.append(author)
 
         for e in Friends.objects.filter(inviter_id=author):
@@ -835,7 +852,7 @@ def getaProfile(request, theusername, user_id):
     locationflag = 1
     # git_author = Authors.objects.get(author_uuid=user_id)
     
-    author = Authors.objects.get(username=current_user)
+    author = Authors.objects.get(username=current_user, location=home)
     authoruuid = Authors.objects.get(author_uuid=user_id).author_uuid
     #authoruuid = Authors.objects.get(username=current_user).author_uuid #gets current user uuid instead of the person clicked on
     
@@ -978,24 +995,20 @@ def editpost(request):
 def makePost(request):
     if request.method == "POST":
         
-        current_user = request.user.username
-        
-        author_id = Authors.objects.get(username=current_user)
-        title = request.POST["title"]
-        author_uuid = Authors.objects.get(username=current_user)
+        current_user = request.user.username        
+        author_id = Authors.objects.get(username=current_user, location=home)
 
+        title = request.POST["title"]
         content = request.POST["posttext"]
-        
         privacy = str(request.POST["privacy"])
-        print("privacy",privacy)
+        #print("privacy",privacy)
         
         if privacy == current_user:
             privateauthor = str(request.POST["privateauthor"])
-            print("privateauthor:",privateauthor)
+            #print("privateauthor:",privateauthor)
             if privateauthor != "":
                 privacy = privateauthor
-                print("privacy2:",privacy)
-
+                #print("privacy2:",privacy)
         try:
             image=request.FILES["image"]
         except:
@@ -1452,8 +1465,14 @@ def checkfriends(request):
 
 def githubAggregator(user):
     entries = []
+    gitname = ""
     author = Authors.objects.get(username = user)
-    gitname = author.github
+
+    if author.gitname == "" or author.gitname == None:
+        return None
+    else:
+        gitname = author.github
+
     giturl = "http://www.github.com/"+gitname+".atom"
     #print("giturl",giturl)
     feed = feedparser.parse(giturl)
@@ -1465,7 +1484,7 @@ def githubAggregator(user):
         #print("url", item['link'])
         gitname = item['author']
         #print("author", gitname)
-        #print("commit", item['title'])
+        #print("commit", itezm['title'])
         date = item['updated']
         #print("updated", date)
         itemid = item['id']

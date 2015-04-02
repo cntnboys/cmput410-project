@@ -422,9 +422,6 @@ input:focus {
 
 .del { 
   position: absolute;
-  bottom: 80%;
-  margin-left: 690pt;
-
   width: 50px;
   height: 50px;
   border: 0px;
@@ -433,7 +430,7 @@ input:focus {
 
 @media (min-width: 300px) {
   .del  {
-  bottom: 90%;
+  top: 5%;
   margin-left: 88%;
   width: 25px;
   height: 25px;
@@ -441,7 +438,7 @@ input:focus {
 }
 @media (min-width: 550px) {
   .del {
-  bottom: 80%;
+  top: 10%;
   margin-left: 85%;
   width: 50px;
   height: 50px;
@@ -450,7 +447,7 @@ input:focus {
 
 @media (min-width: 800px) {
   .del   {
-  bottom: 80%;
+  top: 10%;
   margin-left: 90%;
   width: 50px;
   height: 50px;
@@ -459,7 +456,7 @@ input:focus {
 
 @media (min-width: 1200px) {
   .del   {
-  bottom: 82%;
+  top: 5%;
   margin-left: 93%;
   width: 50px;
   height: 50px;
@@ -467,7 +464,6 @@ input:focus {
 }
 
   
-
 input[type="submit"] {
   height: 60px;
   width: auto;
@@ -577,7 +573,7 @@ input:focus {
 }
 
 .posttitle {
-  margin-left: 10pt;
+  margin-left: 5pt;
   font-size: 18pt;
   text-decoration: underline;
 
