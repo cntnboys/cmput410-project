@@ -311,22 +311,6 @@ def getOneAuthorPosts(author_id):
         pass
     return None
 
-#REDUNDANT API
-def getAuthorPostsFromOthers():
-    
-    url = 'http://social-distribution.herokuapp.com/api/author/posts'
-    
-    string = "Basic "+ base64.b64encode('nbui3:social-distribution.herokuapp.com:team6')
-    
-    headers = {'Authorization':string, 'Host': 'social-distribution.herokuapp.com'}
-    r = requests.get(url, headers=headers)
-    
-    content = json.loads(r.content)
-    
-    updateThePosts(content)
-    
-    return None
-
 
 def getPostsFromOthers():
     
@@ -340,6 +324,11 @@ def getPostsFromOthers():
     content2 = json.loads(r2.content)
     
     updateThePosts(content2)
+    
+    #url = 'http://grepme.github.io/cmput410-project/api/posts'
+    #r = requests.get(url)
+    #content = json.loads(r.content)
+    #updateThePosts(content)
     
     return None
 
@@ -372,15 +361,28 @@ def getFriendsOfAuthors(author_uuid):
 
     author = Authors.objects.get(author_uuid=author_uuid)
 
-    for friend_uuid in content2["authors"]:
-        author2 = Authors.objects.get(author_uuid=friend_uuid)
-        try:
-            new_friend=Friends.objects.get(inviter_id=author, invitee_id=author2).update(status=1)
-        except:
+    try:
+        for friend_uuid in content2["authors"]:
+            author2 = Authors.objects.get(author_uuid=friend_uuid)
+            print author.author_uuid
+            print author2.author_uuid
             try:
-                new_friend=Friends.objects.get(inviter_id=author2, invitee_id=author).update(status=1)
+                new_friend=Friends.objects.get(inviter_id=author, invitee_id=author2)
+                new_friend.update(status=1)
+                print "INVITER ID AUTHOR"
+        
             except:
-                new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)[0]
+                try:
+                    new_friend=Friends.objects.get(inviter_id=author2, invitee_id=author)
+                    new_friend.update(status=1)
+                    print "INVITER ID AUTHOR222"
+                
+                except:
+                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)
+                    print "NEW FRIEND!"
+
+    except:
+        print "This author is local only!"
 
     return None
 
@@ -486,7 +488,8 @@ def mainPage(request, current_user):
 #               counter += 1
         getAuthorsFromOthers()
         getPostsFromOthers()
-        getFriendsOfAuthors(author.author_uuid)
+        for auhtor in Authors.objects.all():
+            getFriendsOfAuthors(author.author_uuid)
 
 #for author in Authors.objects.all():
             #getOneAuthorPosts(author.author_uuid)
@@ -807,8 +810,8 @@ def getaProfile(request, theusername, user_id):
     #authoruuid = Authors.objects.get(username=current_user).author_uuid #gets current user uuid instead of the person clicked on
     
     #try:
-    if author.location != "thought-bubble.herokuapp.com":
-        getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
+    #if author.location != "thought-bubble.herokuapp.com":
+    #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
     getFriendsOfAuthors(user_id)
 
 #except:
@@ -819,10 +822,8 @@ def getaProfile(request, theusername, user_id):
             user = Authors.objects.get(author_uuid=authoruuid, location="thought-bubble.herokuapp.com")
         except:
 #user = Authors.objects.get(author_uuid=user_id, location="bubble")
-            try:
-                user = Authors.objects.get(author_uuid=authoruuid, location="social-distribution")
-            except:
-                user = Authors.objects.get(author_uuid=authoruuid, location="cs410.cs.ualberta.ca:41084")
+
+            user = Authors.objects.get(author_uuid=authoruuid, location="cs410.cs.ualberta.ca:41084")
         items.append(user)
 
         # Loading Friend/follow logic
