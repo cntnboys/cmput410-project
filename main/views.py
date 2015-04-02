@@ -489,6 +489,7 @@ def mainPage(request, current_user):
 #               counter += 1
         getAuthorsFromOthers()
         getPostsFromOthers()
+       # getFriendsOfAuthors(author.author_uuid)
 
 #for author in Authors.objects.all():
             #getOneAuthorPosts(author.author_uuid)
@@ -690,6 +691,9 @@ def friendRequest(request):
             print payload
             r = requests.post(url,data=json.dumps(payload), headers=headers)
             print r
+
+            # SAVE POTENTIAL FRIEND
+            new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, status=0, frequest=1)[0]
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
@@ -1005,6 +1009,24 @@ def editProfile(request, current_user):
             error_message = "Email already exists"
             
     return render(request, 'profile.html',{'error_msg': error_message})
+
+#editpost
+def editpost(request):
+    if request.method == "POST":
+        imagein = request.POST["image"]
+        postidin = request.POST["postid"]
+        contentin = request.POST["content"]
+
+        #find post to update
+
+        try:
+            Posts.objects.filter(post_id=str(postidin)).update(image=imagein,content=str(contentin))
+        except:
+            continue
+
+    return render(request, 'main.html')
+            
+                                                    
 
 # Make post function retrieves the title, text, and if image exists, the three fields
 # to store into the database adding on the author who created the post.
