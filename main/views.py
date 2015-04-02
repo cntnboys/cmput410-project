@@ -483,28 +483,31 @@ def mainPage(request, current_user):
 
     if request.method == "GET":
 
-#try:
+        try:
 #           if counter % 20 == 0:
 #               counter += 1
-        getAuthorsFromOthers()
-        getPostsFromOthers()
+            getAuthorsFromOthers()
+            getPostsFromOthers()
 
-        for auhtor in Authors.objects.all():
-            getFriendsOfAuthors(author.author_uuid)
+            for author in Authors.objects.all():
+                getFriendsOfAuthors(author.author_uuid)
 
 
-#for author in Authors.objects.all():
-            #getOneAuthorPosts(author.author_uuid)
+            for author in Authors.objects.all():
+                getOneAuthorPosts(author.author_uuid)
 
-                #Grabs Github Materials
-        githubAggregator(current_user)
-            #print "endgit"
-            #else:
-            #   counter+=1
-            #except:
-            #    print "Errors Here"
+                    #Grabs Github Materials
+            githubAggregator(current_user)
 
-        #get friends of user for post input
+        except:
+            print " Error Here"
+                #print "endgit"
+                #else:
+                #   counter+=1
+                #except:
+                #    print "Errors Here"
+
+            #get friends of user for post input
         items2.append(author)
 
         for e in Friends.objects.filter(inviter_id=author):
@@ -814,10 +817,10 @@ def getaProfile(request, theusername, user_id):
     #try:
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
-    getFriendsOfAuthors(user_id)
-
-#except:
-#       print("Offline")
+    try:
+            getFriendsOfAuthors(user_id)
+    except:
+        print("Offline")
 
     if request.method =="GET":
         try:
