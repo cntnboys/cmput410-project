@@ -381,7 +381,7 @@ def getFriendsOfAuthors(author_uuid):
                     print "INVITER ID AUTHOR222"
                 
                 except:
-                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=1)
+                    new_friend = Friends.objects.get_or_create(inviter_id=author, invitee_id=author2, status=0, frequest=1)
                     print "NEW FRIEND!"
 
     except:
@@ -497,11 +497,16 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Posts from Others"
 
+<<<<<<< HEAD
         try:
             for author in Authors.objects.all():
                 getFriendsOfAuthors(author.author_uuid)
         except:
             print "Cannot Get Friends of Authors"
+=======
+        for author in Authors.objects.all():
+            getFriendsOfAuthors(author.author_uuid)
+>>>>>>> ab61a970f7f22d66916b8c23b2fa3dc5b5f6fe95
 
         try:
             for author in Authors.objects.all():
@@ -571,7 +576,7 @@ def mainPage(request, current_user):
 
 
 @logged_in_or_basicauth()
-def onePost(request, post_uuid):
+def onePost(request,author_name, post_uuid):
     items = []
     post = Posts.objects.get(post_uuid=post_uuid)
     items.append(post)
@@ -744,7 +749,7 @@ def friendRequest(request):
             print r
 
             # SAVE POTENTIAL FRIEND
-            new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, status=0, frequest=1)[0]
+#new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, follow=0, status=0, frequest=1)
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
@@ -1276,8 +1281,10 @@ def newfriendrequest(request):
             print(friendid)
 
             return HttpResponse('Friend Request Failed: Friend does not exist.')
-
-        author3 = Authors.objects.get(username=authorname)
+        try:
+        	author3 = Authors.objects.get(username=authorname)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Author not found"}')
         print(author3)
 
         if (Friends.objects.filter(invitee_id = author3, inviter_id=author2, status = False).count() >=1):
@@ -1324,22 +1331,12 @@ def Foafvis(request):
                 postreq['query'] = "friends"
                 postreq['author'] = authorid
                 postreq['authors'] = friendslist
-                print ("oj: ",postreq['author'])
 
-        #host = "http://127.0.0.1:8000/"
-        #print("postreq: "postreq)
         print(host+"main/checkfriends/?user="+authorid+"/")
-        #url = host+"main/checkfriends/?user="+str(authorid)
-        #print("url: ", url)
-        #r = requests.post(url, data=json.dumps(postreq))
-        #r = urllib2.urlopen(str(url), json.dumps(postreq))
-        #content = r.read()
         newauthors = []
 
-        print("here")
         # Response, status etc
         #print(r.status_code)
-        print(str(authorid))
 
         try:
             thePost = Posts.objects.get(post_uuid=str(postid))
@@ -1426,13 +1423,11 @@ def checkfriends(request):
         #print(author)
         authors = data['authors']
         #print("authors",authors)
-        author1 = Authors.objects.get(author_uuid = str(x))
-        #print("ajsd")
+        try:
+        	author1 = Authors.objects.get(author_uuid = str(x))
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Author not found"}')
         hey = str(author1.author_id)
-        # ef6728777e36445d8d45d9d5125dc4c6 ng1
-        # 9e4ac346d9874b7fba14f27b26ae45bb ng3
-        #print("author1: ",author1)
-        #print("author1",author1)
         for x in authors:
             newthing = str(x)
             #print("newthing",newthing)
@@ -1451,6 +1446,7 @@ def checkfriends(request):
         myjson['query'] = "friends"
         myjson['author'] = author
         myjson['friends'] = newauthors
+
 
         #print("dump",json.dumps(myjson))
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True),)
@@ -1521,7 +1517,11 @@ def singlepost(request):
     if request.method == "GET":
         x = request.GET.get('postid', '')
         print(x)
-        thepost = Posts.objects.get(post_uuid=x)
+
+        try:
+        	thepost = Posts.objects.get(post_uuid=x)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "No such post."}')
         if thepost.privacy == "public":
             post = {}
         
@@ -1590,6 +1590,7 @@ def authorposts(request):
         current_user = str(request.user.get_username())
         print("yo2")
         print("current-user",current_user)
+
         author_id = Authors.objects.get(username=str(current_user))
         
          #get freinds of user for post input
