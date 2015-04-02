@@ -13,7 +13,7 @@
     <link href="{{ STATIC_URL }}/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
 	<script src="{{ STATIC_URL }}js/less.js"></script>
     <br>
@@ -107,7 +107,7 @@ $(document).ready(function(){
                         </tr> 
 	                 {% if link.username == user.username %}
 		        <tr>
-			<td>  <button id="show" class="button">Edit Profile</button> </td>
+			<td>  <button id="show" class="editbutton">Edit Profile</button> </td>
 			</tr>
                        	{% endif %}
 
@@ -122,7 +122,7 @@ $(document).ready(function(){
                        <div>  Email: <input type="text" name="email"  maxlength="5" value={{ link.email }} > </div>
                        <div>  Github: <input type="text" name="github"  maxlength="5" value={{ link.github }} > </div>
                        <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
-                       <div>  <input type="submit" value="Update"> </div>
+                       <div>  <input type="submit" value="Update"  </div>
                        <div> <input type="hidden" name="username" value={{ link.username }} > </div>
             </form>
 		

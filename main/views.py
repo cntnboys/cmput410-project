@@ -489,7 +489,7 @@ def mainPage(request, current_user):
         getAuthorsFromOthers()
         getPostsFromOthers()
 
-        for auhtor in Authors.objects.all():
+        for author in Authors.objects.all():
             getFriendsOfAuthors(author.author_uuid)
 
 
@@ -732,7 +732,7 @@ def friendRequest(request):
             print r
 
             # SAVE POTENTIAL FRIEND
-            new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, status=0, frequest=1)[0]
+#new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, follow=0, status=0, frequest=1)
             #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
