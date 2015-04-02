@@ -1014,7 +1014,7 @@ def makePost(request):
 def makeComment(request):
     if request.method == "POST":  
         current_user = request.user.username
-        author_id = Authors.objects.get(username=current_user)
+        author_id = Authors.objects.get(username=current_user, location=home)
         current_post = request.POST["postid"]
         post_id = Posts.objects.get(post_id=current_post)
         comment = request.POST["comment"]

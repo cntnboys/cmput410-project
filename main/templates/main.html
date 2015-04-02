@@ -163,12 +163,12 @@ $(document).ready(function(){
                         	<div class="contentbox comment">
                             <span style="margin-left:10pt"> Commented by: </span><a class href={% url "getaProfile" theusername=comment.author_id.username user_id=comment.author_id.author_uuid %}>{{ comment.author_id.username }}</a><span> on {{comment.date}}</span>
                         
-                            
+                            	<br/><br/>
                                 {% if comment.image %}
-                            	<a href="../../../media/{{comment.image}}"><img src="../../../media/{{comment.image}}"  height="82" width="100" /></a>  </br></br></br></br></br></br>
+                            	<a href="../../../media/{{comment.image}}"><img src="../../../media/{{comment.image}}"  height="82" width="100" /></a> <br/>
                                 {% endif %}
                                 {% if comment.content %}
-                                <span class="name">{{ comment.content }}</span></br></br>
+                                <span class="name" style="margin-left:10pt">{{ comment.content }}</span></br>
                                 {% endif %}
                                 
                             </div>

@@ -104,22 +104,25 @@ $(document).ready(function(){
                             <td><span style="color:grey"> Github profile link not provided </span></td>
                             {% endif %}
                         </tr> 
+
+                        <tr>
+                            <td style="float: left;">
+                            {% if link.username == user.username %}
+                             <div class="editprofile"><button id="show" class="editbutton">Edit Profile</button> </div>
+                            {% endif %} 
+                            <br/>
+                            </td>
+                        </tr>
                         <br/>
 	                 
 		 
-                    <td>
 
-		
-	   	      </td>
-			</tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            {% if link.username == user.username %}
-            <div class="editprofile"><button id="show" class="editbutton">Edit Profile</button> </div>
-            {% endif %}
+
 	    
 
                 {% endfor %}
