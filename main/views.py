@@ -951,6 +951,7 @@ def editProfile(request, current_user):
 #editpost
 def editpost(request):
     if request.method == "POST":
+        titlein = request.POST["title"]
         imagein = request.POST["image"]
         postidin = request.POST["postid"]
         contentin = request.POST["content"]
@@ -958,7 +959,7 @@ def editpost(request):
         #find post to update
 
         try:
-            Posts.objects.filter(post_id=str(postidin)).update(image=imagein,content=str(contentin))
+            Posts.objects.filter(post_id=str(postidin)).update(title=str(titlein),image=imagein,content=str(contentin))
         except:
             pass
 
