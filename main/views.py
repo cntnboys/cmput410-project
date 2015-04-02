@@ -503,6 +503,7 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Friends of Authors"
 
+
         try:
             for author in Authors.objects.all():
                 getOneAuthorPosts(author.author_uuid)
@@ -1277,17 +1278,17 @@ def newfriendrequest(request):
             return HttpResponse('{"message": "Author not found"}')
         print(author3)
 
-        if (Friends.objects.filter(invitee_id = author3, inviter_id=author2, status = False).count() >=1):
+        if (Friends.objects.filter(invitee_id = author3, inviter_id=author2, frequest = False).count() >=1):
             f = Friends.objects.filter(invitee_id = author3, inviter_id=author2).update(status=1)
             return HttpResponse('That user has already requested to be your friend. Accepting their friend request. 200 OK')
-        elif (Friends.objects.filter(inviter_id = author3, invitee_id=author2, status = False).count() >=1):
+        elif (Friends.objects.filter(inviter_id = author3, invitee_id=author2, frequest=1).count() >=1):
             return HttpResponse('Your previous friend request to that user is still pending approval.')
         elif (Friends.objects.filter(invitee_id = author3, inviter_id=author2, status = True).count() >=1):
             return HttpResponse('You are already friends.')
         elif (Friends.objects.filter(inviter_id = author3, invitee_id=author2, status = True).count() >=1):
             return HttpResponse('You are already friends.')
         else:
-            newinvite = Friends.objects.get_or_create(inviter_id = author3, invitee_id=author2)
+            newinvite = Friends.objects.get_or_create(inviter_id = author3, invitee_id=author2, frequest=1)
             print(newinvite)
             return HttpResponse('200 OK')
         return HttpResponse('Friend Request Failed.')
