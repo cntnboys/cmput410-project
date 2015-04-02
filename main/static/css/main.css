@@ -38,6 +38,13 @@ body {
   font-size: 20px;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
+
+}
+
+.editprofile {
+  position:absolute;
+  top:170pt;
+  margin-left: 45pt;
 }
 
 
@@ -198,6 +205,15 @@ body {
   }
 }
 
+.contentbox img {
+  margin-left: 10pt;
+  padding-bottom: 10pt;
+}
+
+.contentbox p{
+  position: relative;
+}
+
 .comment {
   border: 2px solid rgba(140,33,170,0.3);
   background-color: rgba(140,33,170,0.2);
@@ -275,7 +291,6 @@ textarea {
     width: 95%;
   }
 }
-
 
 input[type="file"] {
   width: 95%;
@@ -419,7 +434,6 @@ input:focus {
   background: rgba(140,213,183,0.9)
 }
 
-
 .del { 
   position: absolute;
   width: 50px;
@@ -463,55 +477,37 @@ input:focus {
   }
 }
 
-  
-input[type="submit"] {
-  height: 60px;
-  width: auto;
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 20px;
-  cursor: pointer;
-  background: rgba(140,213,133,0.7);
-}
-
-input[type="submit"]:hover {
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  background: rgba(140,213,183,0.9)
-}
-
-input:focus {
-  background: rgba(140,213,183,0.0);
-}
-
-
-.postbtn {
+.editmode {
   position: absolute;
 }
 
-.postbtn input[type="submit"] {
-  height: 100px;
-  width: 100px;
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 20px;
-  cursor: pointer;
-  background: rgba(140,213,133,0.7);
+@media (min-width: 300px) {
+  .editmode  {
+    height: 20px;
+    width: 20px;
+    top: 10%;
+    margin-left: 67%;  
+  }
+}
+@media (min-width: 550px) {
+  .editmode {
+    top: 10%;
+    margin-left: 75%;
+  }
 }
 
-.postbtn input[type="submit"]:hover {
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  background: rgba(140,213,183,0.9)
+@media (min-width: 800px) {
+  .editmode {
+    top: 10%;
+    margin-left: 84%;
+  }
 }
+
+@media (min-width: 1200px) {
+  .editmode {
+    top: 10%;
+    margin-left: 88%;
+  }
 
 
 @media (min-width: 300px) {
@@ -548,6 +544,60 @@ input:focus {
     margin-left: -40pt;
   }
 
+.postbtn input[type="submit"] {
+  height: 100px;
+  width: 100px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.postbtn input[type="submit"]:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+input[type="submit"] {
+  height: 60px;
+  width: auto;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+input[type="submit"]:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+input:focus {
+  background: rgba(140,213,183,0.0);
+}
+
+.update {
+  position: absolute;
+  bottom: 2%;
+  margin-left: 88%;
+} 
+  
+.postbtn {
+  position: absolute;
+}
+
 
 
 
@@ -583,10 +633,14 @@ input:focus {
   margin-left: 10pt;
   margin-right: 10pt;
   width: auto;
-
   word-wrap:break-word;
 
 }
+
+
+
+
+
 
 
 
@@ -626,16 +680,8 @@ header div.wrapper span {
   font-size: 18px;
   margin: 0 42px 0 0;
 }
-header div.wrapper form {
-  display: inline;
-}
-header div.wrapper form input {
-  margin: 0 0 0 14px;
-}
-header div.wrapper #btnLogOut {
-  float: right;
-  margin: 14px 0 0 0;
-}
+
+
 #content {
   margin-bottom: 15px;
   min-height: 560px;

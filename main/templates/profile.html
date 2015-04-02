@@ -103,28 +103,12 @@ $(document).ready(function(){
                             {% else %}
                             <td><span style="color:grey"> Github profile link not provided </span></td>
                             {% endif %}
-			    </br>
                         </tr> 
-	                 {% if link.username == user.username %}
-		        <tr>
-			<td>  <button id="show" class="editbutton">Edit Profile</button> </td>
-			</tr>
-                       	{% endif %}
+                        <br/>
+	                 
+		 
+                    <td>
 
-		        <tr>
-
-			
-                         <td>
-            <form method="POST" action="#" id=updateform name="updateform">
-                          {% csrf_token %}
-                      
-                       <div>  Name: <input type="text" name="fullname"  maxlength="5" value={{ link.name }} > </div>
-                       <div>  Email: <input type="text" name="email"  maxlength="5" value={{ link.email }} > </div>
-                       <div>  Github: <input type="text" name="github"  maxlength="5" value={{ link.github }} > </div>
-                       <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
-                       <div>  <input type="submit" value="Update"  </div>
-                       <div> <input type="hidden" name="username" value={{ link.username }} > </div>
-            </form>
 		
 	   	      </td>
 			</tr>
@@ -133,12 +117,34 @@ $(document).ready(function(){
                 </div>
               </div>
             </div>
-
+            {% if link.username == user.username %}
+            <div class="editprofile"><button id="show" class="editbutton">Edit Profile</button> </div>
+            {% endif %}
 	    
 
                 {% endfor %}
+               
 
           </div>
+
+<form method="POST" action="#" id=updateform name="updateform">
+<div class="container" style="width:80%">
+    <div class="row">
+          <div class="panel panel-info" >
+            <div class="panel-body">
+
+                      
+                          {% csrf_token %}
+                      
+                       <div>  Name: <br/> <input type="text" name="fullname"  maxlength="5" value={{ link.name }} > </div>
+                       <div>  Email: <br/> <input type="text" name="email"  maxlength="5" value={{ link.email }} > </div>
+                       <div>  Github: <br/> <input type="text" name="github"  maxlength="5" value={{ link.github }} > </div>
+                       <div>  Image: <br/><input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
+                       <div>  <input type="submit" value="Update">  </div>
+                       <div> <input type="hidden" name="username" value={{ link.username }} > </div>
+
+            </div></div></div></div>
+                        </form>
 
         <div class="wrapper">
             <div class="headerbox"> 
@@ -314,7 +320,7 @@ $(document).ready(function(){
             <div class="postbody">
                 {% if link.image %}
                
-		<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}"  height="82" width="100" /></a> </br></br>
+		<a href="../../../media/{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}"  height="82" width="100" /></a> </br>
                     {% endif %}
                     {% if link.content %}
                     <span class="name">{{ link.content }}</span> </br>

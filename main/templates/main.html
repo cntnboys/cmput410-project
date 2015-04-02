@@ -91,7 +91,8 @@ $(document).ready(function(){
 
 	<br/>
 	<div class="wrapper" >	
-		<div class='headerbox'><h1>Recent Posts</h1>	<div style="float: right;"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></br></br></br></div>
+		<div class='headerbox'><h1>Recent Posts</h1>	
+		<div class="editmode"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></div>
 
                 {% for link in items %}
                 	<div class="contentbox">
@@ -106,7 +107,7 @@ $(document).ready(function(){
                 		<br/><br/>
 
                         {% if link.image %}
-			<a href="../../../media/{{link.image}}"><img src="../../../media/{{link.image}}" height="82" width="100" /> </br></a>
+			<a href="{{ MEDIA_URL }}/{{link.image}}"><img src="../../../media/{{link.image}}" height="82" width="100" /> </br></a>
                         {% endif %}
                         {% if link.content %}
                         <p style="margin-left:10pt">{{ link.content }}</p>
@@ -128,7 +129,7 @@ $(document).ready(function(){
                                                   <div>  Title:</br> <input type="text" name="title"  maxlength="5" value={{ link.title }} > </div>
 						  <div>  Content:</br> <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
 						  <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
-						  <div>  <input type="submit" value="Update"> </div>
+						  <div class="update">  <input type="submit" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>
 

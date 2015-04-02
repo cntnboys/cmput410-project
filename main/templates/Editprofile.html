@@ -9,11 +9,11 @@
 
     <title>Thought-Bubble Login</title>
     <!-- Bootstrap example from http://bootsnipp.com/snippets/featured/login-screen-with-background-->
-   <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+   <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="../../static/css/small-business.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/small-business.css" rel="stylesheet">
 
-    <link href="{{ STATIC_URL }}/css/login.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
     <br>
 </head>
 
@@ -93,25 +93,25 @@
                     </div>
 
 
-		<form id="login" class="form-signin" action="#" method="POST">
+    <form id="login" class="form-signin" action="#" method="POST">
 
-		{% csrf_token %}
-		<h1 class="form-signin-heading">Update Your Profile Info</h1>
-		<br/>
-		<input type="text" class="form-control" placeholder="Name" required="" autofocus="" name=username>
-		<input type="text" class="form-control" placeholder="Email" required="" autofocus="" name=username>	
-		<input type="text" class="form-control" placeholder="Github" required="" autofocus="" name=username>
-		<input type="text" class="form-control" placeholder="Facebook" required="" autofocus="" name=username>
-		<input type="text" class="form-control" placeholder="Twitter" required="" autofocus="" name=username>
-		<input type="file" class="form-control" placeholder=""  name=image>
-		
-		
-		</br>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">
-			Update
-		</button>
+    {% csrf_token %}
+    <h1 class="form-signin-heading">Update Your Profile Info</h1>
+    <br/>
+    <input type="text" class="form-control" placeholder="Name" required="" autofocus="" name=username>
+    <input type="text" class="form-control" placeholder="Email" required="" autofocus="" name=username> 
+    <input type="text" class="form-control" placeholder="Github" required="" autofocus="" name=username>
+    <input type="text" class="form-control" placeholder="Facebook" required="" autofocus="" name=username>
+    <input type="text" class="form-control" placeholder="Twitter" required="" autofocus="" name=username>
+    <input type="file" class="form-control" placeholder=""  name=image>
+    
+    
+    </br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      Update
+    </button>
 
-	</form>
+  </form>
 
 
             
