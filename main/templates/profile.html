@@ -151,6 +151,7 @@ $(document).ready(function(){
                 <h1>Friends</h1>
                     {% for link in items %}
                     {% if link.username != user.get_username %}
+                    {% for fstatus in friends %}
                     {% if fstatus.inviter_id.username == user.username %}
                     {% if fstatus.inviter_follow = True %}
                     {% if location == 1 %}
