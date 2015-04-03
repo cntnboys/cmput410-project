@@ -39,7 +39,7 @@ from django.utils.html import strip_tags
 
 home = "thought-bubble.herokuapp.com"
 counter = 0
-
+cs410 = "cs410.cs.ualberta.ca:41084"
 #################################################################################
 #                          API Function Calls Are Here                          #
 #                          Part 1: Get                                          #
@@ -387,6 +387,36 @@ def getFriendsOfAuthors(author_uuid):
 
     return None
 
+def makeFriendRequest(theirUName,ourUName, locations):
+    if locations == "cs410.cs.ualberta.ca:41084":
+        theirAuthor = Authors.objects.get(username=theirUName, location=locations)
+        ourName = Authors.objects.get(username=ourUName, location="thought-bubble.herokuapp.com")
+        url = "http://cs410.cs.ualberta.ca:41084/api/friendrequest"
+        string = "Basic "+ base64.b64encode("dan:host:password")
+        headers = {"Authorization":string, "Host":"host", "Content-Type":"application/json"}
+        oid = str(ourName.author_uuid)
+        odname = str(ourName.username)
+        furl ="http://cs410.cs.ualberta.ca:41084/author/%s" % str(theirAuthor.author_uuid)
+        fdname = str(theirAuthor.username)
+        fid = str(theirAuthor.author_uuid)
+        payload =  {    "query": "friendrequest",
+                        "author":{
+                            "id":oid,
+                            "host":"http://thought-bubble.herokuapp.com/",
+                            "displayname":odname
+                        },
+                        "friend": {
+                            "id":fid,
+                            "host":"http://cs410.cs.ualberta.ca:41084/",
+                            "displayname":fdname,
+                            "url":furl
+                        }
+                    }
+        r = requests.post(url,data=json.dumps(payload), headers=headers)
+        print r
+
+    return None
+
 
 #################################################################################
 #                            Django Pages                                       #
@@ -710,41 +740,9 @@ def friendRequest(request):
 #second group friend request
 # not working because of csrf token problems
         try:
-            theirAuthor = Authors.objects.get(username=theirUname, location= "cs410.cs.ualberta.ca:41084")
-            print "their author"
-            ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
-            print "our author"
-            url = "http://cs410.cs.ualberta.ca:41084/api/friendrequest"
-            string = "Basic "+ base64.b64encode("dan:host:password")
-            headers = {"Authorization":string, "Host":"host", "Content-Type":"application/json"}
-            oid = str(ourName.author_uuid)
-            odname = str(ourName.username)
-            furl ="http://cs410.cs.ualberta.ca:41084/author/%s" % str(theirAuthor.author_uuid)
-            fdname = str(theirAuthor.username)
-            fid = str(theirAuthor.author_uuid)
-            payload =  {    "query": "friendrequest",
-                            "author":{
-                                "id":oid,
-                                "host":"http://thought-bubble.herokuapp.com/",
-                                "displayname":odname
-                            },
-                            "friend": {
-                                "id":fid,
-                                "host":"http://cs410.cs.ualberta.ca:41084/",
-                                "displayname":fdname,
-                                "url":furl
-                            }
-                }
-            print theirAuthor.username
-            print headers
-            print url
-            print payload
-            r = requests.post(url,data=json.dumps(payload), headers=headers)
-            print r
+            makeFriendRequest(theirUname,current_user, cs410)
 
             # SAVE POTENTIAL FRIEND
-#new_friend = Friends.get_or_create(inviter_id=ourName, invitee_id = theirAuthor, follow=0, status=0, frequest=1)
-            #print r.status_code
             if request.user.is_authenticated():
                 current_user = request.user.username
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
@@ -765,7 +763,7 @@ def friendRequest(request):
                               "author": yourprofileobj} )
 
         except:
-            print ("not author on this host")
+            print ("Not author on CMPUT410 host")
 
             
         yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
