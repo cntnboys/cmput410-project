@@ -39,6 +39,7 @@ from django.utils.html import strip_tags
 
 home = "thought-bubble.herokuapp.com"
 cs410 = "cs410.cs.ualberta.ca:41084"
+projecthub = "projecthub.ca"
 counter = 0
 
 #################################################################################
@@ -215,28 +216,65 @@ def getPostsByAuthor(request):
 def getAuthorsFromOthers(location):
     #curl -u dan:host:password http://cs410.cs.ualberta.ca:41084/api/friends
     
-    if location=="cs410.cs.ualberta.ca:41084":
+    if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/friends'
         string = "Basic "+ base64.b64encode('uuid:host:password')
         headers = {'Authorization':string, 'Host': 'host'}
-            #else if location=="":
-            #url =
-            # string =
-            #headers =
+
+    elif location==projecthub:
+        url = 'http://projecthub.ca/api/authors'
+        #string = "Basic "+ base64.b64encode('node:host:api')
+        headers = {}
+    
 
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
 
-    for author in content:
-        try:
-            new_author = Authors.objects.get(author_uuid=author["id"])
-        except:
-            author_uuid = author["id"]
-            name = author["displayname"]
-            username = author["displayname"]
-            email = username + "@ualberta.ca"
+
+    print "THESE ARE AUTHORS!!!"
+    print location
+    print r
+    print r.content
+
+    if location==projecthub:
+        for author in content["authors"]:
+            try:
+                new_author = Authors.objects.get(author_uuid=author["id"])
+            except:
+                author_uuid = author["id"]
+                name = author["displayname"]
+                username = author["displayname"]
+                email = username + "@ualberta.ca"
+                
+                host = author["host"]
+                if "thought-bubble" in host:
+                    host = home
+                if "project" in host:
+                    host = location;
             
-            new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
+                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=host, github="")[0]
+
+    if location==cs410:
+        for author in content:
+            try:
+                new_author = Authors.objects.get(author_uuid=author["id"])
+            except:
+                author_uuid = author["id"]
+                name = author["displayname"]
+                username = author["displayname"]
+                email = username + "@ualberta.ca"
+            
+                host = author["host"]
+
+                if "thought-bubble" in host:
+                    host = home
+                if "cs410" in host:
+                    host = location
+                if host=="host":
+                    host=location
+                
+            
+                new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=host, github="")[0]
 
     return None
 
@@ -317,16 +355,25 @@ def getOneAuthorPosts(author_id):
 
 def getPostsFromOthers(location):
     
-    if location=="cs410.cs.ualberta.ca:41084":
+    if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/posts'
         string = "Basic "+ base64.b64encode('uuid:host:password')
         headers = {'Authorization':string, 'Host': 'host'}
-
-
+    
+    elif location==projecthub:
+        url = 'http://projecthub.ca/api/posts'
+        #string = string = "Basic "+ base64.b64encode('node:host:api')
+        headers = {}
 
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
-    
+
+
+    print "THESE ARE POSTS"
+    print location
+    print r
+    print r.content
+
     updateThePosts(content, location)
     
 
@@ -511,12 +558,21 @@ def mainPage(request, current_user):
     if request.method == "GET":
         # Try Except Chain for Offline Capabilities
         try:
-            getAuthorsFromOthers(cs410)
+           getAuthorsFromOthers(cs410)
+        
         except:
-            print "Cannot Get Authors from Others"
+           print "Cannot Get Authors from Others"
+        try:
+             getAuthorsFromOthers(projecthub)
+        except:
+            print "Cannot Get Authors from projecthub"
 
         try:
             getPostsFromOthers(cs410)
+        except:
+            print "Cannot Get Posts from projecthub"
+        try:
+            getPostsFromOthers(projecthub)
         except:
             print "Cannot Get Posts from Others"
 
