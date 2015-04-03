@@ -1155,15 +1155,6 @@ def searchPage(request):
     return render(request, 'search.html',{'items':items})
       
 
-#getting Json objects to send to other groups 
-#needs authentication implemented into functions
-@logged_in_or_basicauth()
-def getfriendrequests(request):
-    items = []
-    if request.method == "GET":
-        for x in Freinds.objects.all():
-            items.insert(0,x)
-    return HttpResponse(json.dumps({'freinds' : items}))
 
 
 #/main/getfriendstatus/?user=<user1>/<user2>
@@ -1280,7 +1271,6 @@ def getposts(request):
     #return HttpResponse(json.dumps(post))
 
 #@logged_in_or_basicauth()
-
 @csrf_exempt
 def newfriendrequest(request):
     items = []
@@ -1466,11 +1456,11 @@ def checkfriends(request):
         except ObjectDoesNotExist:
             return HttpResponse('{"message": "Queried author not found"}')
 
-        print("hi")
         hey = str(author1.author_id)
         for x in authors:
             newthing = str(x)
             #print("newthing",newthing)
+            # Need to try except finding the author. Otherwise Ignore it.
             try: 
                 if Authors.objects.filter(author_uuid=newthing):
                     author2 = Authors.objects.get(author_uuid = newthing)

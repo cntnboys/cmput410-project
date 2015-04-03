@@ -16,13 +16,11 @@ urlpatterns = patterns('',
     # Get Our Dataa
     url(r'^api/getallauthors/', views.getAllAuthors, name = 'getAllAuthors'),
     url(r'^api/getposts/', views.getposts, name='getposts'),
-    url(r'^api/getfriendrequests/$', views.getfriendrequests, name='getfriendrequests'),
     url(r'^api/getfriendstatus/$', views.getfriendstatus, name='getfriendstatus'),
     url(r'^api/author/posts2/$', views.authorposts, name='authorposts'),
     url(r'^api/getapost/$', views.singlepost, name='singlepost'), 
     url(r'^api/getpostsbyauthor/$', views.getPostsByAuthor, name='postsbyauthor'),
-    url(r'^api/newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),
-    url(r'^api/friendRequest/$', views.friendRequest, name='friendRequest'),    
+    url(r'^api/newfriendrequest/$', views.newfriendrequest, name='newfriendrequest'),    
     url(r'^api/checkfriends/$', views.checkfriends, name='checkfriends'),
     url(r'^api/Foafvis/$', views.Foafvis, name='Foafvis'),
 
@@ -36,9 +34,6 @@ urlpatterns = patterns('',
     url(r'^deletepost/$', views.deletePost, name='deletepost'),
     url(r'^searchPage/$', views.searchPage, name='SearchPage'),
     url(r'^friends/$',views.friends, name='userFriends'),
-
-
-
     url(r'^unfriend/$', views.unfriend, name='unfriend'),
     url(r'^unfollow/$', views.unfollow, name='unfollow'),
     url(r'^follow/$', views.follow, name='follow'),
