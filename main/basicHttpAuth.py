@@ -41,7 +41,7 @@ def view_or_basicauth(view, request, test_func, realm = "", *args, **kwargs):
 
                 # Node Checking
                 try:
-                    node = Nodes.objects.all().filter(node_name=host).filter(node_status=True) 
+                    node = Nodes.objects.get(node_name=host, node_status=True) 
                 except ObjectDoesNotExist:
                     response = HttpResponse(content="{message: node approved, contact admin}",
                                             content_type="text/HTML; charset=utf-8")
