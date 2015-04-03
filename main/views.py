@@ -1252,7 +1252,7 @@ def newfriendrequest(request):
         if Authors.objects.filter(username=authorname):
             author1 = Authors.objects.get(username=authorname)
         else:
-            author1 = Authors.objects.get_or_create(name=authorname, username=authorname, 
+            author1 = Authors.objects.get_or_create(name=authorname, username=authorname, author_uuid=authorid, 
             image="", email=email, github="", location=authorhost)
         print("author1",author1)
 
