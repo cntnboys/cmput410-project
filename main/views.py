@@ -38,8 +38,9 @@ from django.utils.html import strip_tags
 
 
 home = "thought-bubble.herokuapp.com"
-counter = 0
 cs410 = "cs410.cs.ualberta.ca:41084"
+counter = 0
+
 #################################################################################
 #                          API Function Calls Are Here                          #
 #                          Part 1: Get                                          #
@@ -211,14 +212,22 @@ def getPostsByAuthor(request):
 #http://stackoverflow.com/questions/645312/what-is-the-quickest-way-to-http-get-in-python
 #http://docs.python-requests.org/en/latest/user/authentication/
 
-def getAuthorsFromOthers():
+def getAuthorsFromOthers(location):
     #curl -u dan:host:password http://cs410.cs.ualberta.ca:41084/api/friends
-    url2 = 'http://cs410.cs.ualberta.ca:41084/api/friends'
-    string2 = "Basic "+ base64.b64encode('dan:host:password')
-    headers2 = {'Authorization':string2, 'Host': 'host'}
-    r2 = requests.get(url2, headers=headers2)
-    content2 = json.loads(r2.content)
-    for author in content2:
+    
+    if location=="cs410.cs.ualberta.ca:41084":
+        url = 'http://cs410.cs.ualberta.ca:41084/api/friends'
+        string = "Basic "+ base64.b64encode('uuid:host:password')
+        headers = {'Authorization':string, 'Host': 'host'}
+            #else if location=="":
+            #url =
+            # string =
+            #headers =
+
+    r = requests.get(url, headers=headers)
+    content = json.loads(r.content)
+
+    for author in content:
         try:
             new_author = Authors.objects.get(author_uuid=author["id"])
         except:
@@ -226,21 +235,12 @@ def getAuthorsFromOthers():
             name = author["displayname"]
             username = author["displayname"]
             email = username + "@ualberta.ca"
-            location = "cs410.cs.ualberta.ca:41084"
-        
+            
             new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
 
     return None
 
-def formatUuid(id):
-    if id.find("-"):
-        compare_id = id[:8]+"-"+id[8:12]+"-"+id[12:16]+"-"+id[16:20]+"-"+id[20:]
-    else:
-        compare_id = id.replace("-", "")
-    
-    return compare_id
-
-def updateThePosts(content):
+def updateThePosts(content, location):
     #print(content)
     for post in content:
         author_uuid = post["author"]["id"]
@@ -257,7 +257,7 @@ def updateThePosts(content):
                 name = post["author"]["displayname"]
                 username = post["author"]["displayname"]
                 email = username + "@ualberta.ca"
-                location = "cs410.cs.ualberta.ca:41084"
+               
                 author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
         try:
@@ -297,10 +297,10 @@ def updateThePosts(content):
    
     return None
 
-
+#MAY NOT DO!!!
 def getOneAuthorPosts(author_id):
     url2 = 'http://cs410.cs.ualberta.ca:41084/api/author/'+str(author_id)+'posts/'
-    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    string2 = "Basic "+ base64.b64encode('uuid:host:password')
     headers2 = {'Authorization':string2, 'Host': 'host'}
     r2 = requests.get(url2, headers=headers2)
     
@@ -315,36 +315,32 @@ def getOneAuthorPosts(author_id):
     return None
 
 
-def getPostsFromOthers():
+def getPostsFromOthers(location):
     
-    url2 = 'http://cs410.cs.ualberta.ca:41084/api/posts'
+    if location=="cs410.cs.ualberta.ca:41084":
+        url = 'http://cs410.cs.ualberta.ca:41084/api/posts'
+        string = "Basic "+ base64.b64encode('uuid:host:password')
+        headers = {'Authorization':string, 'Host': 'host'}
+
+
+
+    r = requests.get(url, headers=headers)
+    content = json.loads(r.content)
     
-    string2 = "Basic "+ base64.b64encode('dan:host:password')
+    updateThePosts(content, location)
     
-    headers2 = {'Authorization':string2, 'Host': 'host'}
-    r2 = requests.get(url2, headers=headers2)
-    
-    content2 = json.loads(r2.content)
-    
-    updateThePosts(content2)
-    
-    #url = 'http://grepme.github.io/cmput410-project/api/posts'
-    #r = requests.get(url)
-    #content = json.loads(r.content)
-    #updateThePosts(content)
+
     
     return None
 
 
-def getFriendsOfAuthors(author_uuid):
-
-    # SAVE THE FRIENDS HERE
-    #NOT WORKING PROPERLY GETTING A 400 ERROR FOR BAD  REQUESTS 
-    url2 = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
+def getFriendsOfAuthors(author_uuid, location):
     
-    string2 = "Basic "+ base64.b64encode('dan:host:password')
-    
-    headers2 = {'Authorization':string2, 'Content-Type':'application/json', 'Accept':'*/*'}
+    if location=="cs410.cs.ualberta.ca:41084":
+        url = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
+        string = "Basic "+ base64.b64encode('uuid:host:password')
+        headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
+        
     
     author_list2 = []
     
@@ -352,20 +348,19 @@ def getFriendsOfAuthors(author_uuid):
         
         author_list2.insert(0,str(author.author_uuid))
 
-    data2 = { "query":"friends","authors":author_list2, "author":str(author_uuid)}
+    data = { "query":"friends","authors":author_list2, "author":str(author_uuid)}
     
-    print ("d2: ", data2)
-    print ("au: ",author_uuid)
-    r2 = requests.post(url2+str(author_uuid), data=json.dumps(data2), headers=headers2)
+
+    r = requests.post(url+str(author_uuid), data=json.dumps(data), headers=headers)
     
-    print ("r2content: " ,r2.content)
+    print ("rcontent: " ,r.content)
     
-    content2 = json.loads(r2.content)
+    content = json.loads(r.content)
 
     author = Authors.objects.get(author_uuid=author_uuid)
 
     try:
-        for friend_uuid in content2["authors"]:
+        for friend_uuid in content["authors"]:
             author2 = Authors.objects.get(author_uuid=friend_uuid)
             print author.author_uuid
             print author2.author_uuid
@@ -516,18 +511,18 @@ def mainPage(request, current_user):
     if request.method == "GET":
         # Try Except Chain for Offline Capabilities
         try:
-            getAuthorsFromOthers()
+            getAuthorsFromOthers(cs410)
         except:
             print "Cannot Get Authors from Others"
 
         try:
-            getPostsFromOthers()
+            getPostsFromOthers(cs410)
         except:
             print "Cannot Get Posts from Others"
 
         try:
             for author in Authors.objects.all():
-                getFriendsOfAuthors(author.author_uuid)
+                getFriendsOfAuthors(author.author_uuid, cs410)
         except:
             print "Cannot Get Friends of Authors"
 
@@ -849,7 +844,7 @@ def getaProfile(request, theusername, user_id):
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
     try:
-        getFriendsOfAuthors(user_id)
+        getFriendsOfAuthors(user_id, cs410)
     except:
         print("Offline")
 
