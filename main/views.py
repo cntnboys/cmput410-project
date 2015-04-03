@@ -1464,27 +1464,31 @@ def checkfriends(request):
         try:
         	author1 = Authors.objects.get(author_uuid = str(x))
         except ObjectDoesNotExist:
-            return HttpResponse('{"message": "Author not found"}')
+            return HttpResponse('{"message": "Queried author not found"}')
+
+        print("hi")
         hey = str(author1.author_id)
         for x in authors:
             newthing = str(x)
             #print("newthing",newthing)
-            if Authors.objects.filter(author_uuid=newthing):
-                author2 = Authors.objects.get(author_uuid = newthing)
-                hey2 = str(author2.author_id)
-                #print ("hey2",hey2)
-                if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
-                    newauthors.append(str(x))
-                elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
-                    #print "there!"
-                    newauthors.append(str(x))
-                else:
-                    return
+            try: 
+                if Authors.objects.filter(author_uuid=newthing):
+                    author2 = Authors.objects.get(author_uuid = newthing)
+                    hey2 = str(author2.author_id)
+                    #print ("hey2",hey2)
+                    if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
+                        newauthors.append(str(x))
+                    elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
+                        #print "there!"
+                        newauthors.append(str(x))
+                    else:
+                        return
+            except:
+                continue
         
         myjson['query'] = "friends"
         myjson['author'] = author
         myjson['friends'] = newauthors
-
 
         #print("dump",json.dumps(myjson))
         return HttpResponse(json.dumps(myjson, indent=4, sort_keys=True),)
