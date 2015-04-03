@@ -1752,21 +1752,11 @@ def unfriend(request):
                 userid = current_user.id
                 print userid
                 print "in unfriend"
+                # check on two things to make it less likely to error
                 theirUname = request.POST["follow"]
-                theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+                theirUuid = request.POST["followuuid"]
+                theirAuthor = Authors.objects.get(username=theirUname, author_uuid=str(theirUuid)) # location might not be thought-bubble only anymore
                 ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
-
-				# for e in Friends.objects.filter(inviter_id=ourName):
-				# 	if e.status is True :
-				# 		a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-				# 		items.append(a)
-
-				# for e in Friends.objects.filter(invitee_id=ourName):
-				# 	if e.status is True :
-				# 		a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-				# 		if not (a in items):
-				# 			items.append(a)
-				# 			print a
 
                 #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
                 if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=True):
@@ -1790,7 +1780,7 @@ def unfriend(request):
                             items.append(a)
                 # #items.append(yourprofileobj)
 
-                print("items",items)
+                #print("items",items)
 
                 return render(request, 'friends.html',{'items':items, 'author':ourName})
     return None
