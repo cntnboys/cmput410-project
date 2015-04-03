@@ -50,16 +50,18 @@ class Friends(models.Model):
                  " status: " + str(self.status) )
 
 class Blocked(models.Model):
+    blocked_id = models.AutoField(primary_key = True)
     blockedname = models.CharField(max_length=30, null=False)
+    author_obj = models.ForeignKey(Authors, related_name='authobj', null=False)
+    imgs = models.BooleanField(default=False)
+    posts = models.BooleanField(default=False)
 
     class Meta:
-        db_table = "Blocked"
-        verbose_name = "Blocked"
-        unique_together = (("blockedname"),)
+        db_table = "block"
+        verbose_name = "block"
 
     def __str__(self):
         return ( "blockedname: " + str(self.blockedname))
-
 
 
 class Posts(models.Model):
