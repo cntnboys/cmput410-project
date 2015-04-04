@@ -3,6 +3,7 @@ from datetime import timedelta
 import random
 import time
 import urllib2
+import datetime
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -35,6 +36,7 @@ from requests.auth import HTTPBasicAuth
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
+import dateutil.parser
 
 
 home = "thought-bubble.herokuapp.com"
@@ -75,7 +77,10 @@ def getPostsByAuthor(request):
         try:
             myid = Authors.objects.get(username=str(current_user))
         except ObjectDoesNotExist:
-            print "Current User Not in DB"
+            response = HttpResponse(content="{message: current user does not exist}",content_type="text/HTML; charset=utf-8")
+            response.status_code = 404
+            response['message'] = 'current user does not exist'
+            return response
 
         authorid = request.GET.get('authorid', '')
 
@@ -93,6 +98,7 @@ def getPostsByAuthor(request):
         try:
             for x in Posts.objects.filter(author_id=a, privacy="public"):
                 items.insert(0,x)
+
         except ObjectDoesNotExist:
             print "No Posts"
 
@@ -100,7 +106,7 @@ def getPostsByAuthor(request):
         for f in Friends.objects.all():
              if (f.invitee_id.author_id==myid.author_id and f.invitee_id.location==home) and f.status:
                 if str(f.invitee_id.username) == a.username:
-                    print("Same person")
+                    continue
                 else:
                     for x in Posts.objects.filter(author_id=a, location=home, privacy="friends"):
                         items.insert(0,x)
@@ -108,7 +114,7 @@ def getPostsByAuthor(request):
             
              if (f.inviter_id.author_id==myid.author_id) and f.status:
                 if f.inviter_id.username == a.username:
-                    print("Same person")
+                    continue
                 else:
                     for x in Posts.objects.filter(author_id=a, privacy="friends"):
                         items.insert(0,x)
@@ -170,7 +176,7 @@ def getPostsByAuthor(request):
             posts.append(post)
 
 
-    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
+        return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
 
 
 #################################################################################
@@ -274,11 +280,16 @@ def updateThePosts(content, location):
                 post_uuid = post["guid"]
                 privacy = post["visibility"].lower()
                 content = post["description"]
-                        #date = post["pubDate"]
-                        #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
                 title = post["title"]
-                        
+                date = post["pubDate"]
+         
+                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]]")
+                
+               
+               
                 new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
+                #snew_post = Posts.objects.get(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)
+                #new_post.update(date=date)
             
         for comment in post["comments"]:
                 
@@ -310,7 +321,6 @@ def getOneAuthorPosts(author_id):
     try: #if the author actually has posts
         content2 = json.loads(r2.content)
         
-        print r2
         updateThePosts(content2)
     
     except:
@@ -520,14 +530,23 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Authors from projecthub"
 
-        try:
-            getPostsFromOthers(cs410)
-        except:
-            print "Cannot Get Posts Others"
+#try:
+        getPostsFromOthers(cs410)
+            #       except:
+            #print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
             print "Cannot Get Posts from projecthub"
+        
+        try:
+            getFriendsOfAuthors(author.author_uuid, cs410)
+        except:
+            "Current user has no friends on cs410"
+        try:
+            getFriendsOfAuthors(author.author_uuid, projecthub)
+        except:
+            "Current user has no friends on projecthub"
 
         try:
             print "GitHub Start"

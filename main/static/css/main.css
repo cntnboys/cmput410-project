@@ -9,6 +9,36 @@ body {
     background-image: url(../images/back.jpg);
 }
 
+@media (min-width: 300px) {
+  .friendbub{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 550px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 800px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 1200px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+
+
 .createPost {
   border-radius: 10px;
   position:relative;
@@ -43,10 +73,7 @@ body {
 
 .editprofile {
   position:absolute;
-
 }
-
-
 
 
 .friendfollow {
@@ -122,7 +149,6 @@ body {
   }
 }
 
-
 .headerbox {
   position:relative;
   padding:15px;
@@ -163,7 +189,6 @@ body {
   }
 }
 
-
 .contentbox {
   position:relative;
   padding:15px;
@@ -182,7 +207,6 @@ body {
 .contentbox:nth-child(odd) {
     border: 2px solid rgba(20,45,200,0.3);
     background-color: rgba(20,45,200,0.2);
-
 }
 
 @media (min-width: 300px) {
@@ -218,13 +242,11 @@ body {
 .comment {
   border: 2px solid rgba(140,33,170,0.3);
   background-color: rgba(140,33,170,0.2);
-
 }
 
 .comment:nth-child(odd) {
     border: 2px solid rgba(110,33,70,0.3);
     background-color: rgba(110,33,70,0.2);
-
 }
 
 
@@ -325,58 +347,144 @@ input[type="file"] {
     width: 95%;
   }
 }
-.friendreq {
-  height: 30px;
+
+.postbtn {
   position: absolute;
-  top: 20%;
+  height: 100px;
+  width: 100px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.postbtn:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+@media (min-width: 300px) {
+  .postbtn  {
+    margin-left: 60%;
+    bottom: 30pt;
+  }
+}
+@media (min-width: 550px) {
+  .postbtn {
+    margin-left: 72%;
+    bottom: 30pt;
+  }
+}
+
+@media (min-width: 800px) {
+  .postbtn  {
+    top: 20pt;
+    margin-left: -68pt;
+  }
+}
+
+@media (min-width: 1200px) {
+  .postbtn {
+    top: 50;
+    margin-left: -40pt;
+  }
+
+.friendreq {
+  position: absolute;
+  height: 30px;
+  width: auto;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.friendreq:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
 }
 
 @media (min-width: 300px) {
 .friendreq {
-    margin-left: 35%;
+    top: 55%;
+    margin-left: 56%;
   }
 }
 @media (min-width: 550px) {
 .friendreq  {
-    margin-left: 43%;
+    top: 30%;
+    margin-left: 50%;
   }
 }
 
 @media (min-width: 800px) {
 .friendreq {
-    margin-left: 60%;
+    top: 30%;
+    margin-left: 65%;
   }
 }
 @media (min-width: 1200px) {
 .friendreq {
-    margin-left: 70%;
+    top:20%;
+    margin-left: 73%;
   }
 }
 .followreq {
-  height: 30px;
   position: absolute;
-  top: 20%;
+  height: 30px;
+  width: auto;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.followreq:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
 }
 
 @media (min-width: 300px) {
 .followreq {
-    margin-left: 57%;
+    top: 10%;
+    margin-left: 70%;
   }
 }
 @media (min-width: 550px) {
 .followreq  {
-    margin-left: 69%;
+    top: 30%;
+    margin-left: 78%;
   }
 }
 
 @media (min-width: 800px) {
 .followreq {
-    margin-left: 78%;
+    top: 30%;
+    margin-left: 85%;
   }
 }
 @media (min-width: 1200px) {
 .followreq {
-    margin-left: 84%;
+    top: 20%;
+    margin-left: 88%;
   }
 }
 
@@ -510,61 +618,6 @@ input:focus {
     margin-left: 88%;
   }
 
-
-@media (min-width: 300px) {
-  .postbtn  {
-    margin-left: 60%;
-    bottom: 30pt;
-  }
-}
-@media (min-width: 550px) {
-  .postbtn {
-
-    margin-left: 72%;
-    bottom: 30pt;
-  }
-}
-
-@media (min-width: 800px) {
-  .postbtn  {
-    top: 20pt;
-    margin-left: -68pt;
-  }
-}
-
-@media (min-width: 1200px) {
-  .postbtn {
-    top: 25pt;
-    margin-left: -40pt;
-  }
-
-
-@media (min-width: 1200px) {
-  .postbtn {
-    top:30pt;
-    margin-left: -40pt;
-  }
-
-.postbtn input[type="submit"] {
-  height: 100px;
-  width: 100px;
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 20px;
-  cursor: pointer;
-  background: rgba(140,213,133,0.7);
-}
-
-.postbtn input[type="submit"]:hover {
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  background: rgba(140,213,183,0.9)
-}
-
 input[type="submit"] {
   height: 60px;
   width: auto;
@@ -594,13 +647,6 @@ input:focus {
   bottom: 2%;
   margin-left: 88%;
 } 
-  
-.postbtn {
-  position: absolute;
-}
-
-
-
 
 @media (min-width: 300px) {
   .post{
@@ -638,12 +684,11 @@ input:focus {
 
 }
 
-
-
-
-
-
-
+.friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
 
 a.postlink {
   text-decoration: none;
@@ -663,8 +708,8 @@ a.user:hover {
   width:100%;
   margin: auto;
 }
+
 header {
-  /*background: url(../images/bg-header.png);*/
   background: #cdf1ff;
   height: 230px;
   width: 100%;
@@ -672,11 +717,7 @@ header {
 header div.wrapper {
   padding: 11px 0;
 }
-header div.wrapper img {
-  position: relative;
-  top: 10px;
-  margin: 0 15px 0 0;
-}
+
 header div.wrapper span {
   font-size: 18px;
   margin: 0 42px 0 0;
@@ -690,10 +731,7 @@ header div.wrapper span {
 #content div.wrapper {
   margin: 38px auto;
 }
-#content div.wrapper img {
-  border-radius: 6px;
-  float: left;
-}
+
 #content div.wrapper div.panel {
   border: 1px solid #d2d2d2;
   background: white;
@@ -778,8 +816,6 @@ footer {
 footer div.wrapper {
   padding: 15px;
 }
-footer div.wrapper img {
-  float: right;
-}
+
 
 
