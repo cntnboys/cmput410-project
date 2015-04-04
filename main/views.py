@@ -3,6 +3,7 @@ from datetime import timedelta
 import random
 import time
 import urllib2
+import datetime
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -35,6 +36,7 @@ from requests.auth import HTTPBasicAuth
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
+import dateutil.parser
 
 
 home = "thought-bubble.herokuapp.com"
@@ -314,11 +316,16 @@ def updateThePosts(content, location):
                 post_uuid = post["guid"]
                 privacy = post["visibility"].lower()
                 content = post["description"]
-                        #date = post["pubDate"]
-                        #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
                 title = post["title"]
-                        
+                date = post["pubDate"]
+         
+                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]]")
+                
+               
+               
                 new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
+                #snew_post = Posts.objects.get(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)
+                #new_post.update(date=date)
             
         for comment in post["comments"]:
                 
@@ -350,7 +357,6 @@ def getOneAuthorPosts(author_id):
     try: #if the author actually has posts
         content2 = json.loads(r2.content)
         
-        print r2
         updateThePosts(content2)
     
     except:
@@ -374,10 +380,10 @@ def getPostsFromOthers(location):
     content = json.loads(r.content)
 
 
-    print "THESE ARE POSTS"
-    print location
-    print r
-    print content
+#print "THESE ARE POSTS"
+#    print location
+#   print r
+#print content
 
     updateThePosts(content, location)
     
@@ -577,14 +583,23 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Authors from projecthub"
 
-        try:
-            getPostsFromOthers(cs410)
-        except:
-            print "Cannot Get Posts Others"
+#try:
+        getPostsFromOthers(cs410)
+            #       except:
+            #print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
             print "Cannot Get Posts from projecthub"
+        
+        try:
+            getFriendsOfAuthors(author.author_uuid, cs410)
+        except:
+            "Current user has no friends on cs410"
+        try:
+            getFriendsOfAuthors(author.author_uuid, projecthub)
+        except:
+            "Current user has no friends on projecthub"
 
         try:
             print "GitHub Start"
