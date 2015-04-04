@@ -901,7 +901,8 @@ def getaProfile(request, theusername, user_id):
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
     try:
-        getFriendsOfAuthors(user_id, view_author.location)
+        if view_author.location==cs410 or view_author.location==projecthub:
+            getFriendsOfAuthors(user_id, view_author.location)
     except:
         print("Offline")
 
