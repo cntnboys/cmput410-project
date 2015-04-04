@@ -86,7 +86,7 @@ def getPostsByAuthor(request):
         #print("start")
         authorid = request.GET.get('authorid', '')
         #print("end")
-        #print(authorid)
+        print(authorid)
 
         try:
             a = Authors.objects.get(author_uuid = str(authorid), location=home)
@@ -96,14 +96,15 @@ def getPostsByAuthor(request):
             response['message'] = 'author does not exist'
             return response
 
-
+        print("after try", a)
         # public posts by author
         try:
-            for x in Posts.objects.filter(author_id=a, location=home, privacy="public"):
+            for x in Posts.objects.filter(author_id=a, privacy="public"):
                 items.insert(0,x)
+                print("x:",x)
         except ObjectDoesNotExist:
             print "No Posts"
-
+        print("after try2")
 
         # if current user is friends with author
         for f in Friends.objects.all():
@@ -1229,11 +1230,19 @@ def getfriendstatus(request):
 def getposts(request):
     items = []
     current_user = request.user.get_username()
-    blocked = Blocked.objects.all()
-    for x in blocked:
-        if (x.blockedname == current_user):
+    try:
+        author_id = Authors.objects.get(username=str(current_user))
+    except ObjectDoesNotExist:
+        return HttpResponse('{"message": "Current user not found"}')
 
-            return HttpResponse("You're blocked.")
+    try:
+        blocked = Blocked.objects.all()
+        for x in blocked:
+            if (x.author_obj == author_id):
+                return HttpResponse("You're blocked.")
+    except:
+        print("checking blocked failed")
+
     if request.method == "GET":
         print "here!"
         postobjs = Posts.objects.all()
@@ -1640,12 +1649,22 @@ def authorposts(request):
         current_user = str(request.user.get_username())
         print("yo2")
         print("current-user",current_user)
+        try:
+            author_id = Authors.objects.get(username=str(current_user))
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried author not found"}')
 
-        author_id = Authors.objects.get(username=str(current_user))
-        
+
          #get freinds of user for post input
-        author = Authors.objects.get(username=current_user)
-        user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        try:    
+            author = Authors.objects.get(username=current_user)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried author not found"}')
+        try:
+            user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried user not found"}')
+
         items2.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
