@@ -564,6 +564,7 @@ def mainPage(request, current_user):
 
     items = []
     ufriends=[]
+    items2 = []
 
     if request.method == "GET":
         # Try Except Chain for Offline Capabilities
@@ -585,12 +586,13 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Posts from projecthub"
 
-
         try:
             print "GitHub Start"
             githubAggregator(current_user)
         except:
             print "Cannot Get Github"
+
+        items2.append(author)
 
         for e in Friends.objects.filter(inviter_id=author):
             if e.status is True :
@@ -878,8 +880,11 @@ def getaProfile(request, theusername, user_id):
     
     author = Authors.objects.get(username=current_user, location=home)
 
-    view_author = Authors.objects.get(author_uuid=user_id)
-    authoruuid = view_author.author_uuid
+    try:
+        view_author = Authors.objects.get(author_uuid=user_id)
+        authoruuid = view_author.author_uuid
+    except:
+        print("Weird Login")    
 
     try:
         getFriendsOfAuthors(user_id, view_author.location)
@@ -981,9 +986,9 @@ def editpost(request):
         try:
             Posts.objects.filter(post_id=str(postidin)).update(title=str(titlein),image=imagein,content=str(contentin))
         except:
-            pass
+            return redirect(mainPage)
 
-    return render(request, 'main.html')
+     return redirect(mainPage)
             
                                                     
 
