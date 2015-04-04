@@ -58,7 +58,7 @@ $(document).ready(function(){
 		{% for link in items %}
 		
 		 {% if link.image %}
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="../../../media/{{ link.image }}" class="img-circle" height="205" width="204"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{{ MEDIA_URL }}//{{ link.image }}" class="img-circle" height="205" width="204"> </div>
 		
 		{% else %}
 		 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/plaeholder_icon.png" class="img-circle"> </div>
@@ -272,17 +272,24 @@ $(document).ready(function(){
                 </div>
                 {% endfor %}
             {% else %}
-
+                
                 {% for link in ufriends %}
-                <div class="bubbleWrapper">
+                <div class="contentbox">
+                
                     <!-- Need to do images -->
                     <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                         {% csrf_token %}
                         <input type="hidden" value="{{link.username}}" name="username">
-                        <input type="submit" value="{{link.username}}">
+                        {% if link.image %}
+                        <input type="image" src={{ MEDIA_URL }}/{{link.image}} class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"> {{link.username}} </a>
+                        {% else %}
+                        <div> <input type="image" src={{ STATIC_URL }}images/profileicon.png class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{link.username}} </a>
+                        {% endif %}
+                        
                     </form>
-                </div>
+                 </div>
                 {% endfor %}
+               
                 {% endif %}
             </div>
         </div>
@@ -309,7 +316,7 @@ $(document).ready(function(){
             <div class="postbody">
                 {% if link.image %}
                
-		<a href="../../../media/{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}"  height="82" width="100" /></a> </br>
+		<a href="{{ MEDIA_URL }}//{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}"  height="82" width="100" /></a> </br>
                     {% endif %}
                     {% if link.content %}
                     <span class="name">{{ link.content }}</span> </br>

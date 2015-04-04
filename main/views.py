@@ -70,7 +70,6 @@ def getAllAuthors(request):
 # seems like we need more backend logic to allow for specific people
 @logged_in_or_basicauth()
 def getPostsByAuthor(request):
-    print("start")
     posts = []
     items = []
 
@@ -81,12 +80,15 @@ def getPostsByAuthor(request):
         try:
             myid = Authors.objects.get(username=str(current_user))
         except ObjectDoesNotExist:
-            print "Current User Not in DB"
+            response = HttpResponse(content="{message: current user does not exist}",content_type="text/HTML; charset=utf-8")
+            response.status_code = 404
+            response['message'] = 'current user does not exist'
+            return response
 
         #print("start")
         authorid = request.GET.get('authorid', '')
         #print("end")
-        print(authorid)
+        #print(authorid)
 
         try:
             a = Authors.objects.get(author_uuid = str(authorid), location=home)
@@ -96,15 +98,14 @@ def getPostsByAuthor(request):
             response['message'] = 'author does not exist'
             return response
 
-        print("after try", a)
+        #print("after try", a)
         # public posts by author
         try:
             for x in Posts.objects.filter(author_id=a, privacy="public"):
                 items.insert(0,x)
-                print("x:",x)
+                #print("x:",x)
         except ObjectDoesNotExist:
             print "No Posts"
-        print("after try2")
 
         # if current user is friends with author
         for f in Friends.objects.all():
@@ -112,7 +113,7 @@ def getPostsByAuthor(request):
              #print("invitee_id",f.invitee_id.author_id)
              if (f.invitee_id.author_id==myid.author_id and f.invitee_id.location==home) and f.status:
                 if str(f.invitee_id.username) == a.username:
-                    print("Same person")
+                    continue
                 else:
                     for x in Posts.objects.filter(author_id=a, location=home, privacy="friends"):
                         #print("1: ",x)
@@ -122,7 +123,7 @@ def getPostsByAuthor(request):
             
              if (f.inviter_id.author_id==myid.author_id) and f.status:
                 if f.inviter_id.username == a.username:
-                    print("Same person")
+                    continue
                 else:
                     for x in Posts.objects.filter(author_id=a, privacy="friends"):
                         #print("2: ",x)
@@ -133,7 +134,6 @@ def getPostsByAuthor(request):
         for x in Posts.objects.filter(author_id = a ,privacy=str(current_user)):
             #print("for: ",str(current_user), "id :", x.post_id, "x: ", x)
             items.insert(0,x)
-
 
         items.sort(key=lambda x: x.date, reverse=True)
 
@@ -200,7 +200,7 @@ def getPostsByAuthor(request):
             #     print("by current user"")
 
 
-    return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
+        return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
 
 
 #################################################################################
