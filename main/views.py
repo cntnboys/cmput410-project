@@ -1378,18 +1378,31 @@ def Foafvis(request):
         print("greg: ",greg)
         #laraFriends = []
         flag = False
-        for friend in Friends.objects.all():
-            print(friend.inviter_id.author_uuid)
+        # for friend in Friends.objects.all():
+        #     print(friend.inviter_id.author_uuid)
+        #     #print(myAuthor.author_uuid)
+        #     print(friend.status)
+        #     if (friend.inviter_id.author_uuid == greg.author_uuid and friend.status == True):
+        #         print("in if")
+        #         #laraFriends.append(str(friend.invitee_id.author_uuid))
+        #         flag = True
+        #     elif (friend.invitee_id.author_uuid == greg.author_uuid and friend.status == True):    
+        #         flag = True
+        #         print "in else"
+        #         #laraFriends.append(str(friend.inviter_id.author_uuid))
+
+        for f in friend:
+            print("F",f)
+            friendauthor = Authors.objects.get(author_uuid=str(f))
+            if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
+                flag = True
+            elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
+                flag = True
             #print(myAuthor.author_uuid)
-            print(friend.status)
-            if (friend.inviter_id.author_uuid == greg.author_uuid and friend.status == True):
-                print("in if")
-                #laraFriends.append(str(friend.invitee_id.author_uuid))
-                flag = True
-            elif (friend.invitee_id.author_uuid == greg.author_uuid and friend.status == True):    
-                flag = True
-                print "in else"
+            print(friendauthor)
+
                 #laraFriends.append(str(friend.inviter_id.author_uuid))
+
 
         posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
@@ -1423,10 +1436,15 @@ def Foafvis(request):
         print(post)
         #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
         #  print(jsonfromhost.ok)
+        # if(posts.privacy =="public"):
+        #     print("Post is public so just display.")
+        #     return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         if (flag == True):
             print("nice")
             #print (json.dumps(post, indent = 4, sort_keys=True))
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
+        elif(flag == False):
+            return HttpResponse('{"message": "You are not FOAF."}')
 
 
         #return HttpResponse(json.dumps(post))
