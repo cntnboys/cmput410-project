@@ -1485,10 +1485,12 @@ def checkfriends(request):
                     hey2 = str(author2.author_id)
                     #print ("hey2",hey2)
                     if Friends.objects.filter(invitee_id=hey2, inviter_id=hey, status = True):
-                        newauthors.append(str(x))
+                        if str(x) not in newauthors:
+                            newauthors.append(str(x))
                     elif Friends.objects.filter(inviter_id=hey2, invitee_id=hey, status = True):
                         #print "there!"
-                        newauthors.append(str(x))
+                        if str(x) not in newauthors:
+                            newauthors.append(str(x))
                     else:
                         continue
             except:
