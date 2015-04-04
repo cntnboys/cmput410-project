@@ -560,18 +560,15 @@ def logout(request):
 def mainPage(request, current_user):
     context = RequestContext(request)
     current_user = request.user.get_username()
-
     author = Authors.objects.get(username=current_user, location=home)
 
     items = []
     ufriends=[]
-    items2 = []
 
     if request.method == "GET":
         # Try Except Chain for Offline Capabilities
         try:
            getAuthorsFromOthers(cs410)
-        
         except:
            print "Cannot Get Authors from Others"
         try:
@@ -612,10 +609,6 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Github"
 
-
-        #Get friends of user for post input
-        items2.append(author)
-
         for e in Friends.objects.filter(inviter_id=author):
             if e.status is True :
                 a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
@@ -644,7 +637,6 @@ def mainPage(request, current_user):
                 for x in Posts.objects.filter(author_id=f.invitee_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
                     items.insert(0,x)
 
-
         # retrieve all public posts
         # retrieve all private posts of current user (these have been left out in all above queries)
         # retrieve all private posts of current user (these have been left out in all above queries)
@@ -663,9 +655,11 @@ def mainPage(request, current_user):
             except:
                 post.comments = None
 
-        return render(request,'main.html',{'items':items, 'author':author ,
-                                           'ufriends':ufriends})
+        # This got overwritten some how?
+        author = Authors.objects.get(username=current_user, location=home)
 
+        return render(request,'main.html',{'items':items, 'author':author ,
+                                           'ufriends':ufriends, 'items2': items2})
 
 @logged_in_or_basicauth()
 def onePost(request,author_name, post_uuid):
@@ -689,18 +683,6 @@ def foaf(request, userid1, userid2):
     user2 = Authors.objects.get(userid=userid2)
     inviter = Friends.objects.get(userid1=inviter_id.author_uuid)
     items = []
-    # if logged in
-    #if request.user.is_authenticated():
-        # for e in Friends.objects.filter(invitee_id.author_uuid=user1): 
-        #   if Friends.objects.filter(inviter_id.author_uuid = user2) and e.status = True:
-        #       a = Authors.objects.filter(author_uuid=user2)
-        #       items.append(a)
-            
-  #       for e in Friends.objects.filter(inviter_id.author_uuid=user1): 
-  #           if Friends.objects.filter(invitee_id.author_uuid=user2) and e.status = True:
-  #             a = Authors.objects.filter(author_uuid=user2)
-  #             items.append(a)
-    # foaf.html should be a profile page of userid2 ie: service/author/userid2 when that's working
     return render(request, 'foaf.html',{'items':items})
   
 # Friend Request function currently default method is GET which will retrieve
@@ -730,8 +712,8 @@ def friendRequest(request):
 
     if request.method == 'POST':
         userid = current_user.id
-        print userid
-        print "in post"
+        #print userid
+        #print "in post"
         theirUname = request.POST["follow"]
         try:
             theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
@@ -792,18 +774,22 @@ def friendRequest(request):
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1, status =0) # new friend request means u auto-follow
                 print("ni: ", new_invite)    
 		    
-
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
 
-        
-            print("itemsfr:", items)
+            #print("itemsfr:", items)
         
             return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends, 'friends' : friends,
                       "author": theirAuthor} )
 
         except:
             print ("not local author")
+            aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+            for e in Friends.objects.filter(invitee_id=aUser, frequest=True):
+                if e.status is False :
+                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
+                    items.append(a)
+            return render(request, 'friendrequest.html',{'items':items, "author": aUser })
 
 #second group friend request
 # not working because of csrf token problems
@@ -904,15 +890,12 @@ def getaProfile(request, theusername, user_id):
     ufriends = []
     posts = []
     current_user = request.user
-
     friends = []
     locationflag = 1
-    # git_author = Authors.objects.get(author_uuid=user_id)
     
     author = Authors.objects.get(username=current_user, location=home)
     authoruuid = Authors.objects.get(author_uuid=user_id).author_uuid
-    #authoruuid = Authors.objects.get(username=current_user).author_uuid #gets current user uuid instead of the person clicked on
-    
+
     #try:
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
@@ -981,28 +964,8 @@ def getaProfile(request, theusername, user_id):
 
         print("Friends: ", friends)
 
-        return render(request,'profile.html',{'items':items, 'posts':posts, 'ufriends':ufriends, 'author': user, 'friends' :friends, 'location': locationflag})
-
-    # if request.method == "POST":
-    #     user = request.POST["username"]
-    #     print(user)
-
-    #     yourprofileobj = Authors.objects.get(username=user)
-    #     items.append(yourprofileobj)
-
-    #     for e in Friends.objects.filter(inviter_id=yourprofileobj):
-    #         if e.status is True :
-    #             a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-    #             ufriends.append(a)
-    #     #print a.values('name')
-
-    #     for e in Friends.objects.filter(invitee_id=yourprofileobj):
-    #         if e.status is True :
-    #             a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-    #             ufriends.append(a)
-    #     print(ufriends)
-    #     return render(request,'profile.html',{'items':items,'ufriends':ufriends, 'author': yourprofileobj})
-
+        return render(request,'profile.html',{'items':items, 'posts':posts, 'ufriends':ufriends, 
+            'author': author, 'viewinguser':user, 'friends' :friends, 'location': locationflag})
 
 # EditProfile is a function that we have not implemented yet.
 # This function will be implemented in part 2
@@ -1018,9 +981,9 @@ def editProfile(request, current_user):
         try:
             Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin,image=imagein)
             error_message = "Profile updated"
-            print("Profile updated")
+            #print("Profile updated")
         except:
-            print("email already exists")
+            #print("email already exists")
             error_message = "Email already exists"
             
     return render(request, 'profile.html',{'error_msg': error_message})
@@ -1151,10 +1114,8 @@ def registerPage(request):
 def searchPage(request):
     items = []
     if request.method == 'POST':
-        #searchField = request.POST["searchuser"]
         current_user = request.user
         print current_user.id
-        #print request.user.is_authenticated()
         
         # if logged in
         if request.user.is_authenticated():
@@ -1172,8 +1133,6 @@ def searchPage(request):
     return render(request, 'search.html',{'items':items})
       
 
-
-
 #/main/getfriendstatus/?user=<user1>/<user2>
 @logged_in_or_basicauth()
 def getfriendstatus(request):
@@ -1186,9 +1145,6 @@ def getfriendstatus(request):
 
         user1 = str(x[0])
         user2 = str(x[1])
-
-        print(user1)
-        print(user2)
 
         authors = {}
         authors['query']='friends'
@@ -1214,10 +1170,6 @@ def getfriendstatus(request):
         hey = str(author1.author_id)
         hey2 = str(author2.author_id)
 
-        print("hey",hey)
-        print("hey2", hey2)
-
-        
         #check if they are friends        
         if Friends.objects.filter(invitee_id=hey2, inviter_id=hey):
             print "here!"
@@ -1260,7 +1212,6 @@ def getposts(request):
         print("checking blocked failed")
 
     if request.method == "GET":
-        print "here!"
         postobjs = Posts.objects.all()
         for x in postobjs:
             if x.privacy == "public" and x.author_id.location == "thought-bubble.herokuapp.com":
@@ -1293,15 +1244,12 @@ def getposts(request):
                 items.append(post)
 
     return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
-    #return HttpResponse(json.dumps(post))
 
 #@logged_in_or_basicauth()
 @csrf_exempt
 def newfriendrequest(request):
     items = []
-    #print("here")
     if request.method == "POST":
-        print("here")
         data = json.loads(request.body)
         authorid = data['author']['id']
         authorhost = data['author']['host']
@@ -1312,12 +1260,12 @@ def newfriendrequest(request):
         friendurl = data['friend']['url']
         location="thought-bubble.herokuapp.com"
 
-        print("authorid",authorid)
-        print("authorhost",authorhost)
-        print("authorname",authorname)
-        print("friendid",friendid)
-        print("friendhost",friendhost)
-        print("friendname",friendname)
+        #print("authorid",authorid)
+        #print("authorhost",authorhost)
+        #print("authorname",authorname)
+        #print("friendid",friendid)
+        #print("friendhost",friendhost)
+        #print("friendname",friendname)
         email=authorname+"@thought-bubble.com"
 
         if Authors.objects.filter(username=authorname, author_uuid=authorid):
@@ -1351,7 +1299,7 @@ def newfriendrequest(request):
             return HttpResponse('You are already friends.')
         else:
             newinvite = Friends.objects.get_or_create(inviter_id = author3, invitee_id=author2, frequest=1)
-            print(newinvite)
+            #print(newinvite)
             return HttpResponse('200 OK')
         return HttpResponse('Friend Request Failed.')
 
@@ -1653,7 +1601,6 @@ def singlepost(request):
 
     return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True),)
 
-#
 @logged_in_or_basicauth()
 def authorposts(request):
     print "hello"
@@ -1752,10 +1699,8 @@ def authorposts(request):
             except:
                 post.comments = None
 
-        for x in items:
-            
+        for x in items:      
             post = {}
-    
             post['title'] = str(x.title)
             post['source'] = ""
             post['origin']= ""
@@ -1767,8 +1712,7 @@ def authorposts(request):
 
         #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
             post['visibility'] = str(x.privacy)
-        
-        
+          
         #author
             a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
             author={}
