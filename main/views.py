@@ -986,7 +986,7 @@ def editpost(request):
 
         try:
             post = Posts.objects.filter(post_id=str(postidin))
-            if str(imagein) = "":
+            if str(imagein) == "":
                 post.update(title=str(titlein),content=str(contentin))
             else: 
                 post.update(title=str(titlein),image=imagein,content=str(contentin))
