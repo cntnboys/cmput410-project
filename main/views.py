@@ -887,7 +887,8 @@ def getaProfile(request, theusername, user_id):
         print("Weird Login")    
 
     try:
-        getFriendsOfAuthors(user_id, view_author.location)
+        if view_author.location==cs410 or view_author.location==projecthub:
+            getFriendsOfAuthors(user_id, view_author.location)
     except:
         print("Offline")
 
