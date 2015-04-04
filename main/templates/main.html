@@ -124,11 +124,11 @@ $(document).ready(function(){
 						</form>
 
 
-						<form method="POST" action="#" id=updateform name="updateform" class="updateform">
+						<form method="POST" action="{% url "editpost" %}" id=updateform name="updateform" class="updateform"  enctype="multipart/form-data" >
 						  {% csrf_token %}
-                                                  <div>  Title:</br> <input type="text" name="title"  maxlength="5" value={{ link.title }} > </div>
-						  <div>  Content:</br> <input type="text" name="content"  maxlength="5" value={{ link.content }} > </div>
-						  <div>  Image:<input type="file" name="image" maxlength="5" value={{ link.image }}> </div>
+                           <div>  Title:</br> <input type="text" name="title"  maxlength="30" value={{ link.title }} > </div>
+						  <div>  Content:</br> <input type="text" name="content"  maxlength="200" value={{ link.content }} > </div>
+						  <div>  Image:<input type="file" name="image" maxlength="10" value={{ link.image }}> </div>
 						  <div class="update">  <input type="submit" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>

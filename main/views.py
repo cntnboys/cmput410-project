@@ -985,11 +985,15 @@ def editpost(request):
         contentin = request.POST["content"]
 
         try:
-            Posts.objects.filter(post_id=str(postidin)).update(title=str(titlein),image=imagein,content=str(contentin))
+            post = Posts.objects.filter(post_id=str(postidin))
+            if str(imagein) = "":
+                post.update(title=str(titlein),content=str(contentin))
+            else: 
+                post.update(title=str(titlein),image=imagein,content=str(contentin))
         except:
-            return redirect(mainPage)
+            return redirect(mainPage, current_user=request.user.username)
 
-     return redirect(mainPage)
+    return redirect(mainPage, current_user=request.user.username)
             
                                                     
 
