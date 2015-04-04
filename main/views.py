@@ -281,9 +281,13 @@ def getAuthorsFromOthers(location):
 
 def updateThePosts(content, location):
     #print(content)
-    for post in content:
+    try:
+        posts = content["posts"]
+    except:
+        posts=content
+    for post in posts:
         author_uuid = post["author"]["id"]
-        #print author_uuid
+        print author_uuid
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
@@ -373,7 +377,7 @@ def getPostsFromOthers(location):
     print "THESE ARE POSTS"
     print location
     print r
-    print r.content
+    print content
 
     updateThePosts(content, location)
     
@@ -571,11 +575,11 @@ def mainPage(request, current_user):
         try:
             getPostsFromOthers(cs410)
         except:
-            print "Cannot Get Posts from projecthub"
+            print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
-            print "Cannot Get Posts from Others"
+            print "Cannot Get Posts from projecthub"
 
         try:
             for author in Authors.objects.all():
