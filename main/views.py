@@ -36,14 +36,11 @@ from requests.auth import HTTPBasicAuth
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
-import dateutil.parser
-
 
 home = "thought-bubble.herokuapp.com"
 cs410 = "cs410.cs.ualberta.ca:41084"
 projecthub = "projecthub.ca"
 counter = 0
-
 #################################################################################
 #                          API Function Calls Are Here                          #
 #                          Part 1: Get                                          #
@@ -282,18 +279,24 @@ def getAuthorsFromOthers(location):
     return None
 
 def updateThePosts(content, location):
-    #print(content)
     try:
         posts = content["posts"]
     except:
         posts=content
+
     for post in posts:
+
+        try:
+            Posts.objects.get(post_uuid=str(post["guid"]))
+            continue;
+        except ObjectDoesNotExist:
+            print "Time to Create Post"
+
         author_uuid = post["author"]["id"]
-        print author_uuid
+
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
-      
             try:
                 author_uuid = formatUuid(author_uuid)
                 author = Authors.objects.get(author_uuid=author_uuid)
@@ -302,7 +305,7 @@ def updateThePosts(content, location):
                 name = post["author"]["displayname"]
                 username = post["author"]["displayname"]
                 email = username + "@ualberta.ca"
-               
+
                 author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
         try:
@@ -318,17 +321,9 @@ def updateThePosts(content, location):
                 content = post["description"]
                 title = post["title"]
                 date = post["pubDate"]
-         
-                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]]")
-                
-               
-               
                 new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
-                #snew_post = Posts.objects.get(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)
-                #new_post.update(date=date)
             
-        for comment in post["comments"]:
-                
+        for comment in post["comments"]:          
             author_uuid = comment["author"]["id"]
             try:
                 comment_author = Authors.objects.get(author_uuid=author_uuid)
@@ -341,10 +336,7 @@ def updateThePosts(content, location):
             except: #comment date?
                 comment_uuid = comment["guid"]
                 content = comment["comment"]
-                        
                 new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
-        
-   
     return None
 
 #MAY NOT DO!!!
@@ -379,21 +371,12 @@ def getPostsFromOthers(location):
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
 
-
-#print "THESE ARE POSTS"
-#    print location
-#   print r
-#print content
-
     updateThePosts(content, location)
-    
-
-    
+        
     return None
 
 
 def getFriendsOfAuthors(author_uuid, location):
-    
     if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
         string = "Basic "+ base64.b64encode('uuid:host:password')
