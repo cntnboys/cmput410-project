@@ -1295,8 +1295,8 @@ def newfriendrequest(request):
         print("friendname",friendname)
         email=authorname+"@thought-bubble.com"
 
-        if Authors.objects.filter(username=authorname):
-            author1 = Authors.objects.get(username=authorname)
+        if Authors.objects.filter(username=authorname, author_uuid=authorid):
+            author1 = Authors.objects.get(username=authorname, author_uuid=authorid)
         else:
             author1 = Authors.objects.get_or_create(name=authorname, username=authorname, author_uuid=authorid, 
             image="", email=email, github="", location=authorhost)
@@ -1310,7 +1310,7 @@ def newfriendrequest(request):
 
             return HttpResponse('Friend Request Failed: Friend does not exist.')
         try:
-        	author3 = Authors.objects.get(username=authorname)
+        	author3 = Authors.objects.get(username=authorname, author_uuid=authorid)
         except ObjectDoesNotExist:
             return HttpResponse('{"message": "Author not found"}')
         print(author3)
