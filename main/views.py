@@ -1247,7 +1247,7 @@ def getposts(request):
         print "here!"
         postobjs = Posts.objects.all()
         for x in postobjs:
-            if x.privacy == "public":
+            if x.privacy == "public" and x.author_id.location == "thought-bubble.herokuapp.com":
                 post = {}
                 post['title'] = x.title
                 post['source'] = ""
