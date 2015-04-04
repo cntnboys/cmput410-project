@@ -388,24 +388,31 @@ def getPostsFromOthers(location):
 
 def getFriendsOfAuthors(author_uuid, location):
     
-    if location=="cs410.cs.ualberta.ca:41084":
+    if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
         string = "Basic "+ base64.b64encode('uuid:host:password')
         headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
         
-    
-    author_list2 = []
+    if location==projecthub:
+        url = 'http://projecthub.ca/api/friends/'
+        string = "Basic "+ base64.b64encode('node:thought-bubble.com:api')
+        headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
+
+    author_list = []
     
     for author in Authors.objects.all():
         
-        author_list2.insert(0,str(author.author_uuid))
+        author_list.insert(0,str(author.author_uuid))
 
-    data = { "query":"friends","authors":author_list2, "author":str(author_uuid)}
+    data = { "query":"friends","authors":author_list, "author":str(author_uuid)}
     
 
     r = requests.post(url+str(author_uuid), data=json.dumps(data), headers=headers)
-    
-    print ("rcontent: " ,r.content)
+
+    print "FIRENDSSSS"
+    print location
+    print r
+#print ("rcontent: " ,r.content)
     
     content = json.loads(r.content)
 
@@ -435,11 +442,11 @@ def getFriendsOfAuthors(author_uuid, location):
     return None
 
 def makeFriendRequest(theirUName,ourUName, locations):
-    if locations == "cs410.cs.ualberta.ca:41084":
+    if locations == cs410:
         theirAuthor = Authors.objects.get(username=theirUName, location=locations)
         ourName = Authors.objects.get(username=ourUName, location="thought-bubble.herokuapp.com")
         url = "http://cs410.cs.ualberta.ca:41084/api/friendrequest"
-        string = "Basic "+ base64.b64encode("dan:host:password")
+        string = "Basic "+ base64.b64encode("uuid:host:password")
         headers = {"Authorization":string, "Host":"host", "Content-Type":"application/json"}
         oid = str(ourName.author_uuid)
         odname = str(ourName.username)
@@ -586,6 +593,11 @@ def mainPage(request, current_user):
                 getFriendsOfAuthors(author.author_uuid, cs410)
         except:
             print "Cannot Get Friends of Authors"
+        try:
+            for author in Authors.objects.all():
+                getFriendsOfAuthors(author.author_uuid, projecthub)
+        except:
+            print "Cannot Get Friends of projecthub"
 
 
         try:
