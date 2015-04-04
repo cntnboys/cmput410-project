@@ -395,8 +395,8 @@ def getFriendsOfAuthors(author_uuid, location):
         
     if location==projecthub:
         url = 'http://projecthub.ca/api/friends/'
-        string = "Basic "+ base64.b64encode('node:thought-bubble.com:api')
-        headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
+        #string = "Basic "+ base64.b64encode('node:thought-bubble.com:api')
+        headers = {'Content-Type':'application/json', 'Accept':'*/*'}
 
     author_list = []
     
@@ -588,23 +588,6 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Posts from projecthub"
 
-        try:
-            for author in Authors.objects.all():
-                getFriendsOfAuthors(author.author_uuid, cs410)
-        except:
-            print "Cannot Get Friends of Authors"
-        try:
-            for author in Authors.objects.all():
-                getFriendsOfAuthors(author.author_uuid, projecthub)
-        except:
-            print "Cannot Get Friends of projecthub"
-
-
-        try:
-            for author in Authors.objects.all():
-                getOneAuthorPosts(author.author_uuid)
-        except:
-            print "Cannot get One Author Posts"
 
         try:
             print "GitHub Start"
@@ -910,14 +893,15 @@ def getaProfile(request, theusername, user_id):
     # git_author = Authors.objects.get(author_uuid=user_id)
     
     author = Authors.objects.get(username=current_user, location=home)
-    authoruuid = Authors.objects.get(author_uuid=user_id).author_uuid
+    view_author = Authors.objects.get(author_uuid=user_id)
+    authoruuid = view_author.author_uuid
     #authoruuid = Authors.objects.get(username=current_user).author_uuid #gets current user uuid instead of the person clicked on
     
     #try:
     #if author.location != "thought-bubble.herokuapp.com":
     #   getOneAuthorPosts(author.author_uuid)# this is also redundant with get posts
     try:
-        getFriendsOfAuthors(user_id, cs410)
+        getFriendsOfAuthors(user_id, view_author.location)
     except:
         print("Offline")
 
