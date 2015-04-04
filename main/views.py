@@ -1472,7 +1472,7 @@ def checkfriends(request):
                         #print "there!"
                         newauthors.append(str(x))
                     else:
-                        return
+                        continue
             except:
                 continue
         
@@ -1684,8 +1684,6 @@ def authorposts(request):
         for x in Posts.objects.filter(privacy=current_user):
             items.insert(0,x)
 
-
-
         items.sort(key=lambda x: x.date, reverse=True)
 
         for post in items:
@@ -1739,8 +1737,6 @@ def authorposts(request):
       
         #for the comments
             for comment in comments:
-                 
-        
                 commAuth = Authors.objects.get(author_uuid = str(x.author_id.author_uuid))
                 commAuthJson = {}
                 commJson= {}
