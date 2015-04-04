@@ -86,7 +86,7 @@ def getPostsByAuthor(request):
         #print("start")
         authorid = request.GET.get('authorid', '')
         #print("end")
-        #print(authorid)
+        print(authorid)
 
         try:
             a = Authors.objects.get(author_uuid = str(authorid), location=home)
@@ -96,14 +96,15 @@ def getPostsByAuthor(request):
             response['message'] = 'author does not exist'
             return response
 
-
+        print("after try", a)
         # public posts by author
         try:
-            for x in Posts.objects.filter(author_id=a, location=home, privacy="public"):
+            for x in Posts.objects.filter(author_id=a, privacy="public"):
                 items.insert(0,x)
+                print("x:",x)
         except ObjectDoesNotExist:
             print "No Posts"
-
+        print("after try2")
 
         # if current user is friends with author
         for f in Friends.objects.all():
@@ -280,9 +281,13 @@ def getAuthorsFromOthers(location):
 
 def updateThePosts(content, location):
     #print(content)
-    for post in content:
+    try:
+        posts = content["posts"]
+    except:
+        posts=content
+    for post in posts:
         author_uuid = post["author"]["id"]
-        #print author_uuid
+        print author_uuid
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
@@ -372,7 +377,7 @@ def getPostsFromOthers(location):
     print "THESE ARE POSTS"
     print location
     print r
-    print r.content
+    print content
 
     updateThePosts(content, location)
     
@@ -383,24 +388,31 @@ def getPostsFromOthers(location):
 
 def getFriendsOfAuthors(author_uuid, location):
     
-    if location=="cs410.cs.ualberta.ca:41084":
+    if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
         string = "Basic "+ base64.b64encode('uuid:host:password')
         headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
         
-    
-    author_list2 = []
+    if location==projecthub:
+        url = 'http://projecthub.ca/api/friends/'
+        string = "Basic "+ base64.b64encode('node:thought-bubble.com:api')
+        headers = {'Authorization':string, 'Content-Type':'application/json', 'Accept':'*/*'}
+
+    author_list = []
     
     for author in Authors.objects.all():
         
-        author_list2.insert(0,str(author.author_uuid))
+        author_list.insert(0,str(author.author_uuid))
 
-    data = { "query":"friends","authors":author_list2, "author":str(author_uuid)}
+    data = { "query":"friends","authors":author_list, "author":str(author_uuid)}
     
 
     r = requests.post(url+str(author_uuid), data=json.dumps(data), headers=headers)
-    
-    print ("rcontent: " ,r.content)
+
+    print "FIRENDSSSS"
+    print location
+    print r
+#print ("rcontent: " ,r.content)
     
     content = json.loads(r.content)
 
@@ -430,11 +442,11 @@ def getFriendsOfAuthors(author_uuid, location):
     return None
 
 def makeFriendRequest(theirUName,ourUName, locations):
-    if locations == "cs410.cs.ualberta.ca:41084":
+    if locations == cs410:
         theirAuthor = Authors.objects.get(username=theirUName, location=locations)
         ourName = Authors.objects.get(username=ourUName, location="thought-bubble.herokuapp.com")
         url = "http://cs410.cs.ualberta.ca:41084/api/friendrequest"
-        string = "Basic "+ base64.b64encode("dan:host:password")
+        string = "Basic "+ base64.b64encode("uuid:host:password")
         headers = {"Authorization":string, "Host":"host", "Content-Type":"application/json"}
         oid = str(ourName.author_uuid)
         odname = str(ourName.username)
@@ -570,17 +582,22 @@ def mainPage(request, current_user):
         try:
             getPostsFromOthers(cs410)
         except:
-            print "Cannot Get Posts from projecthub"
+            print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
-            print "Cannot Get Posts from Others"
+            print "Cannot Get Posts from projecthub"
 
         try:
             for author in Authors.objects.all():
                 getFriendsOfAuthors(author.author_uuid, cs410)
         except:
             print "Cannot Get Friends of Authors"
+        try:
+            for author in Authors.objects.all():
+                getFriendsOfAuthors(author.author_uuid, projecthub)
+        except:
+            print "Cannot Get Friends of projecthub"
 
 
         try:
@@ -1229,11 +1246,19 @@ def getfriendstatus(request):
 def getposts(request):
     items = []
     current_user = request.user.get_username()
-    blocked = Blocked.objects.all()
-    for x in blocked:
-        if (x.blockedname == current_user):
+    try:
+        author_id = Authors.objects.get(username=str(current_user))
+    except ObjectDoesNotExist:
+        return HttpResponse('{"message": "Current user not found"}')
 
-            return HttpResponse("You're blocked.")
+    try:
+        blocked = Blocked.objects.all()
+        for x in blocked:
+            if (x.author_obj == author_id):
+                return HttpResponse("You're blocked.")
+    except:
+        print("checking blocked failed")
+
     if request.method == "GET":
         print "here!"
         postobjs = Posts.objects.all()
@@ -1642,12 +1667,22 @@ def authorposts(request):
         current_user = str(request.user.get_username())
         print("yo2")
         print("current-user",current_user)
+        try:
+            author_id = Authors.objects.get(username=str(current_user))
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried author not found"}')
 
-        author_id = Authors.objects.get(username=str(current_user))
-        
+
          #get freinds of user for post input
-        author = Authors.objects.get(username=current_user)
-        user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        try:    
+            author = Authors.objects.get(username=current_user)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried author not found"}')
+        try:
+            user = Authors.objects.get(author_uuid=author_id.author_uuid)
+        except ObjectDoesNotExist:
+            return HttpResponse('{"message": "Queried user not found"}')
+
         items2.append(user)
 
         for e in Friends.objects.filter(inviter_id=user):
