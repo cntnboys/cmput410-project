@@ -51,6 +51,23 @@
 
                     </div>
                 {% endfor %}
+                <div class="bubbleWrapper" style="padding:10pt; font-size:25pt"> Followers </div>
+                {% for link in follow %}
+                    <div class="bubbleWrapper row" style="padding: 10pt;">
+                        <!-- Need to do images -->
+                        {% if link.image %}
+                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;" src="{{ MEDIA_URL }}//{{ link.image }}">
+                        {% else %}
+                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"   src="{{ STATIC_URL }}images/plaeholder_icon.png">
+                        {% endif %}
+                            <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{link.username}}" name="username">
+                            <input type="submit" value="{{link.username}}">
+                        </form>
+
+                    </div>
+                {% endfor %}
 			</div>
 		</div>
 	</div>

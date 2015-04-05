@@ -625,6 +625,8 @@ def friendRequest(request):
     items = []
     ufriends = []
     friends = []
+    follow = []
+
     current_user = request.user
     if request.method == 'GET':
         # if logged in
@@ -635,7 +637,17 @@ def friendRequest(request):
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
 
-        return render(request, 'friendrequest.html',{'items':items, "author": aUser })
+            for e in Friends.objects.filter(invitee_id=aUser):
+                if e.inviter_follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    follow.append(a)
+
+            for e in Friends.objects.filter(inviter_id=aUser):
+                if e.invitee_follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    follow.append(a)
+
+        return render(request, 'friendrequest.html',{'items':items, "author": aUser,"follow":follow })
 
     if request.method == 'POST':
         userid = current_user.id
@@ -704,7 +716,18 @@ def friendRequest(request):
                 if e.status is False :
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
-            return render(request, 'friendrequest.html',{'items':items, "author": aUser })
+
+            for e in Friends.objects.filter(invitee_id=aUser):
+                if e.inviter_follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    follow.append(a)
+
+            for e in Friends.objects.filter(inviter_id=aUser):
+                if e.invitee_follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    follow.append(a)
+
+            return render(request, 'friendrequest.html',{'items':items, "author": aUser, 'follow':follow })
 
 #second group friend request
 # not working because of csrf token problems
@@ -1666,6 +1689,7 @@ def deletePost(request):
 def unfriend(request):
     if request.user.is_authenticated():
         items = []
+        follow = []
         current_user = request.user
         if request.method == 'POST':
                 userid = current_user.id
@@ -1701,7 +1725,7 @@ def unfriend(request):
 
                 #print("items",items)
 
-                return render(request, 'friends.html',{'items':items, 'author':ourName})
+                return render(request, 'friends.html',{'items':items, 'author':ourName, 'follow':follow})
     return None
 
 
@@ -1710,6 +1734,8 @@ def unfriend(request):
 def unfollow(request):
     if request.user.is_authenticated():
         items = []
+        friends = []
+        follow = []
         current_user = request.user
         if request.method == 'POST':
                 userid = current_user.id
@@ -1731,24 +1757,29 @@ def unfollow(request):
                 for e in Friends.objects.filter(invitee_id=ourName):
                     if e.inviter_follow is True :
                         a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                        items.append(a)
+                        follow.append(a)
                         print a
 
-                for e in Friends.objects.filter(inviter_id=ourName):
-                    if e.invitee_follow is True :
-                        a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                for e in Friends.objects.filter(invitee_id=ourName):
+                    if e.frequest is True :
+                        a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                         items.append(a)
-                        print a
+                for e in Friends.objects.filter(inviter_id=ourName):
+                    if e.frequest is True :
+                        a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
+                        items.append(a)
 
                 print("items",items)
 
-                return render(request, 'follow.html',{'items':items, 'author':ourName})
+                return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
     return None
 
 @logged_in_or_basicauth()
 def follow(request):
     if request.user.is_authenticated():
         items = []
+        friends = []
+        follow = []
         current_user = request.user
         if request.method =='GET':
             userid = current_user.id
@@ -1760,18 +1791,23 @@ def follow(request):
                 print("e: ",e)
                 if e.invitee_follow is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
             for e in Friends.objects.filter(invitee_id=ourName):
                 if e.inviter_follow is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
                     print a
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.frequest is True :
+                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
+                    items.append(a)
+
             #items.append(yourprofileobj)
 
             print("items",items)
             print("ourName: ",ourName.username)
 
-            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
 
         if request.method == 'POST':
             userid = current_user.id
@@ -1794,17 +1830,22 @@ def follow(request):
                 print("e: ",e)
                 if e.invitee_follow is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
             for e in Friends.objects.filter(invitee_id=ourName):
                 if e.inviter_follow is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
                     print a
+
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.frequest is True :
+                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
+                    items.append(a)
 
 
             print("items",items)
 
-            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
 
 
 def custom404(request):
