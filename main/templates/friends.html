@@ -33,34 +33,29 @@
 
 {% block body %} 
     <div id="content">
-        <form id="search" action ="{% url 'friends' %}" method="POST">{% csrf_token%}
+        <form id="search" style="margin-left:5%" action ="{% url 'friends' %}" method="POST">{% csrf_token%}
             <input name=searchuser type = "text" placeholder="Search">
-            <input id="submit" type = "submit" value = "Search">
+            <input id="submit" type = "submit" value ="Search" >
         </form>
-        <div class="wrapper">
+        <div class="wrapper" style="margin-left:3%; padding: 10pt; width:auto" >
 
-            <div class="panel left">
-                <h1>Your Friends</h1>
+            <div class="panel left" style="margin-left:2%; padding: 10pt;">
+                <div class="bubbleWrapper" style="padding:10pt; font-size:25pt"> Your Friends</div>
                 {% for link in items %}
-                    <div class="bubbleWrapper">
+                <div class="bubbleWrapper row">
                         <!-- Need to do images -->
                         <!--<img class="avatar" src="""+{{link.images}}+""">-->
                         {% if link.image %}
-                        <img class="avatar" src="../../../media/{{ link.image }}">
+                        <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"><img class="avatar" style="width: 80px; height: 80px; border-radius:80px;" src="{{ MEDIA_URL}}/{{ link.image }}"></a> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{ link.username }}</a><br/>
                         {% else %}
-                        <img class="avatar" src="/static/images/plaeholder_icon.png">
+                        <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"><img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"  src="{{ STATIC_URL }}images/plaeholder_icon.png"></a> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{ link.username }}</a><br/>
                         {% endif %}
-                        <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{link.username}}" name="username">
-                            <input type="submit" value="{{link.username}}">
-                        </form>
-                    </div>
+                </div>      
                 {% endfor %}
             </div>
         </div>
     </div>
-        <div class="wrapper">
+        <div class="wrapper" style="margin-left:10pt">
             <p>Copyright &copy; Thought Bubble 2015</p>
         </div>
 </body>
