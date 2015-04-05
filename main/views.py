@@ -624,6 +624,7 @@ def foaf(request, userid1, userid2):
 def friendRequest(request):
     items = []
     ufriends = []
+    friends = []
     current_user = request.user
     if request.method == 'GET':
         # if logged in
