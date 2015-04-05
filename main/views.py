@@ -50,16 +50,13 @@ counter = 0
 def getAllAuthors(request):
     authors = []
     if request.method == "GET":
-        #print "before for"
         for auth in Authors.objects.filter(location = home):
-            #print "after for"
             author={}
             author['id'] = str(auth.author_uuid)
             author['host'] = str(auth.location)
             author['displayname'] = str(auth.username)
             author['url'] = str("thought-bubble.herokuapp.com/main/" + auth.username + "/" + str(auth.author_uuid))
             authors.append(author)
-            #print authors
             
     return HttpResponse(json.dumps({"authors" : authors}, indent=8, sort_keys=True))
 
@@ -74,8 +71,6 @@ def getPostsByAuthor(request):
 
     if request.method == "GET":        
         current_user = str(request.user.get_username())
-        #print("current-user",current_user)
-
         try:
             myid = Authors.objects.get(username=str(current_user))
         except ObjectDoesNotExist:
@@ -84,10 +79,7 @@ def getPostsByAuthor(request):
             response['message'] = 'current user does not exist'
             return response
 
-        #print("start")
         authorid = request.GET.get('authorid', '')
-        #print("end")
-        #print(authorid)
 
         try:
             a = Authors.objects.get(author_uuid = str(authorid), location=home)
@@ -97,26 +89,23 @@ def getPostsByAuthor(request):
             response['message'] = 'author does not exist'
             return response
 
-        #print("after try", a)
+        print("after try", a)
+
         # public posts by author
         try:
             for x in Posts.objects.filter(author_id=a, privacy="public"):
                 items.insert(0,x)
-                #print("x:",x)
+
         except ObjectDoesNotExist:
             print "No Posts"
 
         # if current user is friends with author
         for f in Friends.objects.all():
-             #print("authorid:",authorid)
-             #print("invitee_id",f.invitee_id.author_id)
              if (f.invitee_id.author_id==myid.author_id and f.invitee_id.location==home) and f.status:
                 if str(f.invitee_id.username) == a.username:
                     continue
                 else:
                     for x in Posts.objects.filter(author_id=a, location=home, privacy="friends"):
-                        #print("1: ",x)
-                        #print("f: ",f.invitee_id.username,":",current_user)
                         items.insert(0,x)
                     
             
@@ -125,13 +114,10 @@ def getPostsByAuthor(request):
                     continue
                 else:
                     for x in Posts.objects.filter(author_id=a, privacy="friends"):
-                        #print("2: ",x)
-                        #print("f: ",f.inviter_id.username,":",current_user)
                         items.insert(0,x)
         
         # posts by author marked for us
         for x in Posts.objects.filter(author_id = a ,privacy=str(current_user)):
-            #print("for: ",str(current_user), "id :", x.post_id, "x: ", x)
             items.insert(0,x)
 
         items.sort(key=lambda x: x.date, reverse=True)
@@ -186,25 +172,13 @@ def getPostsByAuthor(request):
 
             posts.append(post)
 
-            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            # ''                 foaf ?                               ''
-            # ''      privacy = current_user (all posts for me)       ''
-            # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            # get posts meant for current user? can privacy be this user? friends?
-            # for x in Posts.objects.filter(author_id = a privacy=current_user):
-            #     print("for user: ", current_user)
-
-            # maybe not this one
-            # for x in Posts.objects.filter(author_id = a privacy = foaf)):
-            #     print("by current user"")
-
 
         return HttpResponse(json.dumps({"posts" : posts},indent=4, sort_keys=True))
 
 
 #################################################################################
 #                          API Function Calls Are Here                          #
-#                          Part 2: Get Others                                          #
+#                          Part 2: Get Others                                   #
 #################################################################################
 
 
@@ -223,18 +197,10 @@ def getAuthorsFromOthers(location):
 
     elif location==projecthub:
         url = 'http://projecthub.ca/api/authors'
-        #string = "Basic "+ base64.b64encode('node:host:api')
         headers = {}
-    
 
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
-
-
-    print "THESE ARE AUTHORS!!!"
-    print location
-    print r
-    print r.content
 
     if location==projecthub:
         for author in content["authors"]:
@@ -273,12 +239,12 @@ def getAuthorsFromOthers(location):
                 if host=="host":
                     host=location
                 
-            
                 new_author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=host, github="")[0]
 
     return None
 
 def updateThePosts(content, location):
+
     try:
         posts = content["posts"]
     except:
@@ -363,14 +329,13 @@ def getPostsFromOthers(location):
     
     elif location==projecthub:
         url = 'http://projecthub.ca/api/posts'
-        #string = string = "Basic "+ base64.b64encode('node:host:api')
         headers = {}
 
     r = requests.get(url, headers=headers)
     content = json.loads(r.content)
 
     updateThePosts(content, location)
-        
+
     return None
 
 
@@ -382,7 +347,6 @@ def getFriendsOfAuthors(author_uuid, location):
         
     if location==projecthub:
         url = 'http://projecthub.ca/api/friends/'
-        #string = "Basic "+ base64.b64encode('node:thought-bubble.com:api')
         headers = {'Content-Type':'application/json', 'Accept':'*/*'}
 
     author_list = []
@@ -392,14 +356,8 @@ def getFriendsOfAuthors(author_uuid, location):
         author_list.insert(0,str(author.author_uuid))
 
     data = { "query":"friends","authors":author_list, "author":str(author_uuid)}
-    
 
     r = requests.post(url+str(author_uuid), data=json.dumps(data), headers=headers)
-
-    print "FIRENDSSSS"
-    print location
-    print r
-#print ("rcontent: " ,r.content)
     
     content = json.loads(r.content)
 
@@ -454,7 +412,6 @@ def makeFriendRequest(theirUName,ourUName, locations):
                         }
                     }
         r = requests.post(url,data=json.dumps(payload), headers=headers)
-        print r
 
     return None
 
@@ -564,10 +521,10 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Authors from projecthub"
 
-#try:
-        getPostsFromOthers(cs410)
-            #       except:
-            #print "Cannot Get Posts Others"
+        try:
+            getPostsFromOthers(cs410)
+        except:
+            print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
@@ -600,18 +557,11 @@ def mainPage(request, current_user):
                 a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
                 if not (a in items):
                     ufriends.append(a)
-        
-        #print("ufreinds",ufriends)
-        for x in ufriends:
-            print(x.username)
 
         # retrieve posts of friends
         for f in Friends.objects.all():
-            #print("authorid:",author_id.author_id)
-            #print("invitee_id",f.invitee_id.author_id)
             if (f.invitee_id.author_id==author.author_id) and f.status:
                 for x in Posts.objects.filter(author_id=f.inviter_id.author_id).filter(Q(privacy="friends")|Q(privacy="bubblefriend")):
-                    print("gothere2222")
                     items.insert(0,x)
                     
             if (f.inviter_id.author_id==author.author_id) and f.status:
@@ -621,8 +571,7 @@ def mainPage(request, current_user):
         # retrieve all public posts
         # retrieve all private posts of current user (these have been left out in all above queries)
         # retrieve all private posts of current user (these have been left out in all above queries)
-        for x in Posts.objects.filter(Q(privacy="public") | 
-            Q(author_id=author.author_id, privacy="private") | Q(privacy=current_user) ):
+        for x in Posts.objects.filter(Q(privacy="public") | Q(author_id=author.author_id, privacy="private") | Q(privacy=current_user) ):
            items.insert(0,x)
 
         for post in items:
@@ -677,10 +626,6 @@ def friendRequest(request):
     ufriends = []
     current_user = request.user
     if request.method == 'GET':
-        print current_user.id
-        print "in get"
-        #print request.user.is_authenticated()
-
         # if logged in
         if request.user.is_authenticated():
             aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
@@ -693,8 +638,6 @@ def friendRequest(request):
 
     if request.method == 'POST':
         userid = current_user.id
-        #print userid
-        #print "in post"
         theirUname = request.POST["follow"]
         try:
             theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
@@ -703,7 +646,6 @@ def friendRequest(request):
 	            if e.status is True :
 	                a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
 	                ufriends.append(a)
-        #print a.values('name')
 
 		    for e in Friends.objects.filter(invitee_id=theirAuthor):
 		        if e.status is True :
@@ -803,12 +745,6 @@ def friendRequest(request):
             
         yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
         items.append(yourprofileobj)
-            
-            # for e in Friends.objects.filter(invitee_id.author_uuid=current_user.id):
-            #   if e.status is False :
-            #       a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
-            #       ufriends.append(a)
-#       print items
 
         return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends, "author": yourprofileobj} )
     
@@ -822,22 +758,19 @@ def friends(request):
     aUser = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
     if request.method == 'GET':
         current_user = request.user
-        print current_user.id
-        #print request.user.is_authenticated()
+        
         # if logged in
         if request.user.is_authenticated():
             for e in Friends.objects.filter(inviter_id=aUser):
                 if e.status is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
                     items.append(a)
-                    print a
 
             for e in Friends.objects.filter(invitee_id=aUser):
                 if e.status is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
                     if not (a in items):
                         items.append(a)
-                        print a
 
     if request.method == 'POST':
         current_user = request.user
@@ -856,7 +789,6 @@ def friends(request):
                         a = Authors.objects.get(username=str(searchField))
                         if a not in items:
                             items.append(a)
-            #print a.values('name')
 
     print(items)
     return render(request, 'friends.html',{'items':items, 'author':aUser})
