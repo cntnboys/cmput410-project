@@ -134,18 +134,17 @@ $(document).ready(function(){
             {% for link in items %}
   
                        {% csrf_token %}
-                      
-                       <div>  Name: <br/> <input type="text" name="fullname"  maxlength="30" value={{ link.name }} > </div>
-                       <div>  Email: <br/> <input type="text" name="email"  maxlength="30" value={{ link.email }} > </div>
-                       <div>  Github: <br/> <input type="text" name="github"  maxlength="30" value={{ link.github }} > </div>
-                       <div>  Image: <br/><input type="file" name="image" maxlength="30" value={{ link.image }}> </div>
+                       <div>  Name: <br/> <input type="text" name="fullname"  value={{ link.name }} > </div>
+                       <div>  Email: <br/> <input type="text" name="email"  value={{ link.email }} > </div>
+                       <div>  Github: <br/> <input type="text" name="github" value={{ link.github }} > </div>
+                       <div>  Image: <br/><input type="file" name="image" value={{ link.image }}> </div>
                        <div>  <input type="submit" value="Update">  </div>
                        <div> <input type="hidden" name="username" value={{ link.username }} > </div>
             {% endfor %}
             </div></div></div></div>
                         </form>
 
-        <div class="wrapper">
+
             <div class="headerbox"> 
                 <h1>Friends</h1>
                     {% for link in items %}
@@ -292,7 +291,7 @@ $(document).ready(function(){
             </div>
         </div>
     
-        </div>
+ 
     </div>
     <br/>
     
@@ -300,7 +299,7 @@ $(document).ready(function(){
     <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
     <div class="panel-body">
     <div class="row">
-    <div class="wrapper">
+
         <div class="headerbox"><h1>Recent Posts</h1></div>
         {% for link in posts %}
         <div class="contentbox">
@@ -335,7 +334,6 @@ $(document).ready(function(){
          <img style="width:20%; height:20%;" src="{{ STATIC_URL }}images/sad.png"/><br/>
          You have no posts, go post something!
         </div>
-    </div>
     </div>
     </div>
     </div>

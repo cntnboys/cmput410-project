@@ -895,7 +895,7 @@ def editProfile(request):
         fullname =request.POST["fullname"]
         emailin = request.POST["email"]
         githubin = request.POST["github"]
-        imagein = request.POST["image"]
+        imagein = request.FILES["image"]
 
         #find author object needed to update
         try:
@@ -918,7 +918,7 @@ def editProfile(request):
 def editpost(request):
     if request.method == "POST":
         titlein = request.POST["title"]
-        imagein = request.POST["image"]
+        imagein = request.FILES["image"]
         postidin = request.POST["postid"]
         contentin = request.POST["content"]
 
