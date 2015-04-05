@@ -1332,16 +1332,18 @@ def Foafvis(request):
             return HttpResponse("Bad Post ID")
 
         greg = Authors.objects.get(author_uuid = str(data['author']['id']))
-
         flag = False
 
         for f in friend:
 
-            friendauthor = Authors.objects.get(author_uuid=str(f))
-            if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
-                flag = True
-            elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
-                flag = True
+            try:
+                friendauthor = Authors.objects.get(author_uuid=str(f))
+                if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
+                    flag = True
+                elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
+                    flag = True
+            except:
+                continue
 
         posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
@@ -1374,7 +1376,7 @@ def Foafvis(request):
         if (flag == True):
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         elif(flag == False):
-            return HttpResponse('{"message": "You are not FOAF."}')
+            return HttpResponse("{ message: NOT FOAF }")
 
     return HttpResponse('OK')
 
