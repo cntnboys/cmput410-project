@@ -978,7 +978,8 @@ def editProfile(request):
             print("email already exists")
             error_message = "Email already exists"
     
-    author = Authors.objects.get(username=current_user, location=home)       
+    author = Authors.objects.get(username=current_user, location=home)
+
     return redirect(getaProfile, theusername=author.username, user_id=author.author_uuid)
 
 # Edit Post
@@ -1312,13 +1313,6 @@ def Foafvis(request):
         authorid = data['author']['id']
         host = data['author']['host']
         friend = data['friends']
-
-        print(authorid)
-        print(friend)
-
-        print("host",host)
-
-        #check their host 1
         friendslist = []
 
         for x in friend:
@@ -1330,49 +1324,24 @@ def Foafvis(request):
                 postreq['author'] = authorid
                 postreq['authors'] = friendslist
 
-        print(host+"main/checkfriends/?user="+authorid+"/")
         newauthors = []
-
-        # Response, status etc
-        #print(r.status_code)
 
         try:
             thePost = Posts.objects.get(post_uuid=str(postid))
         except ObjectDoesNotExist:
             return HttpResponse("Bad Post ID")
 
-        print("post: ", thePost )
-        #myAuthor = Authors.objects.get(author_uuid = str(lara))
-        print("ok",str(data['author']['id']))
         greg = Authors.objects.get(author_uuid = str(data['author']['id']))
-        print("greg: ",greg)
-        #laraFriends = []
+
         flag = False
-        # for friend in Friends.objects.all():
-        #     print(friend.inviter_id.author_uuid)
-        #     #print(myAuthor.author_uuid)
-        #     print(friend.status)
-        #     if (friend.inviter_id.author_uuid == greg.author_uuid and friend.status == True):
-        #         print("in if")
-        #         #laraFriends.append(str(friend.invitee_id.author_uuid))
-        #         flag = True
-        #     elif (friend.invitee_id.author_uuid == greg.author_uuid and friend.status == True):    
-        #         flag = True
-        #         print "in else"
-        #         #laraFriends.append(str(friend.inviter_id.author_uuid))
 
         for f in friend:
-            print("F",f)
+
             friendauthor = Authors.objects.get(author_uuid=str(f))
             if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
                 flag = True
             elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
                 flag = True
-            #print(myAuthor.author_uuid)
-            print(friendauthor)
-
-                #laraFriends.append(str(friend.inviter_id.author_uuid))
-
 
         posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
@@ -1389,7 +1358,6 @@ def Foafvis(request):
         #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
         post['visibility'] = "FOAF"
             
-        print("before author")
         #author
         a = Authors.objects.get(author_uuid = posts.author_id.author_uuid)
         author={}
@@ -1401,23 +1369,13 @@ def Foafvis(request):
             
         #comments
         post['comments'] = []
-            
+         
         items.append(post)
-        print(post)
-        #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
-        #  print(jsonfromhost.ok)
-        # if(posts.privacy =="public"):
-        #     print("Post is public so just display.")
-        #     return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         if (flag == True):
-            print("nice")
-            #print (json.dumps(post, indent = 4, sort_keys=True))
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         elif(flag == False):
             return HttpResponse('{"message": "You are not FOAF."}')
 
-
-        #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
 
