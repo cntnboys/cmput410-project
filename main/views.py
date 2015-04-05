@@ -669,34 +669,25 @@ def friendRequest(request):
 
             #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
-                print("here!")
                 updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow =1, frequest=0)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
-                print("there!")
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=False):
-                print("newthere")
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=0, inviter_follow=1, frequest=1)
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=False):
-                print("theyinv me before, no follow")
                 updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=False).delete()
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=0, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=True):
-                print("theyinv me before, all follow")
             	updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=True).delete()
             	new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=1, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=True):
-				print("theyinv me before, I used to follow")
 				updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=True).delete()
 				new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=0, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=False):
-                print("theyinv me before, They followed")
             	updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=False).delete()
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=1, frequest=1, status =0) # new friend with follow info preserved
             else:
-                print("create try")
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1, status =0) # new friend request means u auto-follow
-                print("ni: ", new_invite)    
 		    
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
