@@ -101,7 +101,7 @@ $(document).ready(function(){
                 		{% else %}
                 			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}> Untitled Post </a></div>
                 		{% endif %}
-                		<span> Domain: {{ link.author_id.location }}</br>
+                		<span style="margin-left:10pt"> Domain: {{ link.author_id.location }}</br>
                                 By: <a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a>
 				  on {{link.date}}</span>
                 		<br/><br/>
@@ -129,7 +129,7 @@ $(document).ready(function(){
                            <div>  Title:</br> <input type="text" name="title"  maxlength="30" value={{ link.title }} > </div>
 						  <div>  Content:</br> <input type="text" name="content"  maxlength="200" value={{ link.content }} > </div>
 						  <div>  Image:<input type="file" name="image" maxlength="10" value={{ link.image }}> </div>
-						  <div class="update">  <input type="submit" value="Update"> </div>
+						  <div class="updatediv">  <input type="submit" class ="update" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>
 

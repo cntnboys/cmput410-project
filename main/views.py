@@ -36,14 +36,11 @@ from requests.auth import HTTPBasicAuth
 # Github feed stuff
 import feedparser
 from django.utils.html import strip_tags
-import dateutil.parser
-
 
 home = "thought-bubble.herokuapp.com"
 cs410 = "cs410.cs.ualberta.ca:41084"
 projecthub = "projecthub.ca"
 counter = 0
-
 #################################################################################
 #                          API Function Calls Are Here                          #
 #                          Part 1: Get                                          #
@@ -247,26 +244,33 @@ def getAuthorsFromOthers(location):
     return None
 
 def updateThePosts(content, location):
-    
+
     try:
         posts = content["posts"]
     except:
         posts=content
+
     for post in posts:
+
+        try:
+            Posts.objects.get(post_uuid=str(post["guid"]))
+            continue;
+        except ObjectDoesNotExist:
+            print "Time to Create Post"
+
         author_uuid = post["author"]["id"]
+
         try:
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
-      
             try:
-                author_uuid = formatUuid(author_uuid)
                 author = Authors.objects.get(author_uuid=author_uuid)
             except:
                 author_uuid = post["author"]["id"]
                 name = post["author"]["displayname"]
                 username = post["author"]["displayname"]
                 email = username + "@ualberta.ca"
-               
+
                 author = Authors.objects.get_or_create(name=name, username=username, author_uuid=author_uuid, email=email, location=location, github="")[0]
             
         try:
@@ -282,22 +286,13 @@ def updateThePosts(content, location):
                 content = post["description"]
                 title = post["title"]
                 date = post["pubDate"]
-         
-                #date = time.strptime(date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]]")
-                
-               
-               
                 new_post = Posts.objects.get_or_create(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)[0]#date=date
-                #snew_post = Posts.objects.get(author_id=author, post_uuid=post_uuid, privacy=privacy, content=content, title=title)
-                #new_post.update(date=date)
             
-        for comment in post["comments"]:
-                
+        for comment in post["comments"]:          
             author_uuid = comment["author"]["id"]
             try:
                 comment_author = Authors.objects.get(author_uuid=author_uuid)
             except:
-                author_uuid = formatUuid(author_uuid)
                 comment_author = Authors.objects.get(author_uuid=author_uuid)
                     
             try:
@@ -305,10 +300,7 @@ def updateThePosts(content, location):
             except: #comment date?
                 comment_uuid = comment["guid"]
                 content = comment["comment"]
-                        
                 new_comment = Comments.objects.get_or_create(comment_uuid=comment_uuid, post_id=new_post, author_id=comment_author)[0]
-        
-   
     return None
 
 #MAY NOT DO!!!
@@ -348,7 +340,6 @@ def getPostsFromOthers(location):
 
 
 def getFriendsOfAuthors(author_uuid, location):
-    
     if location==cs410:
         url = 'http://cs410.cs.ualberta.ca:41084/api/friends/'
         string = "Basic "+ base64.b64encode('uuid:host:password')
@@ -894,7 +885,11 @@ def getaProfile(request, theusername, user_id):
 
 # EditProfile is a function that we have not implemented yet.
 # This function will be implemented in part 2
-def editProfile(request, current_user):
+def editProfile(request):
+    print "Got Author"
+    current_user = request.user.username
+    
+
     if request.method == "POST":
         usernamein=request.POST["username"]
         fullname =request.POST["fullname"]
@@ -904,14 +899,20 @@ def editProfile(request, current_user):
 
         #find author object needed to update
         try:
-            Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin,image=imagein)
+            author = Authors.objects.filter(username=current_user, location=home)
+            if imagein == "":
+                author.update(name=fullname,email=emailin,github=githubin, status=True)
+            else:
+                author.update(name=fullname,email=emailin, github=githubin,image=imagein, status=True)
             error_message = "Profile updated"
-            #print("Profile updated")
+            print("Profile updated")
         except:
-            #print("email already exists")
+            print("email already exists")
             error_message = "Email already exists"
-            
-    return render(request, 'profile.html',{'error_msg': error_message})
+    
+    author = Authors.objects.get(username=current_user, location=home)
+
+    return redirect(getaProfile, theusername=author.username, user_id=author.author_uuid)
 
 # Edit Post
 def editpost(request):
@@ -1244,13 +1245,6 @@ def Foafvis(request):
         authorid = data['author']['id']
         host = data['author']['host']
         friend = data['friends']
-
-        print(authorid)
-        print(friend)
-
-        print("host",host)
-
-        #check their host 1
         friendslist = []
 
         for x in friend:
@@ -1262,49 +1256,24 @@ def Foafvis(request):
                 postreq['author'] = authorid
                 postreq['authors'] = friendslist
 
-        print(host+"main/checkfriends/?user="+authorid+"/")
         newauthors = []
-
-        # Response, status etc
-        #print(r.status_code)
 
         try:
             thePost = Posts.objects.get(post_uuid=str(postid))
         except ObjectDoesNotExist:
             return HttpResponse("Bad Post ID")
 
-        print("post: ", thePost )
-        #myAuthor = Authors.objects.get(author_uuid = str(lara))
-        print("ok",str(data['author']['id']))
         greg = Authors.objects.get(author_uuid = str(data['author']['id']))
-        print("greg: ",greg)
-        #laraFriends = []
+
         flag = False
-        # for friend in Friends.objects.all():
-        #     print(friend.inviter_id.author_uuid)
-        #     #print(myAuthor.author_uuid)
-        #     print(friend.status)
-        #     if (friend.inviter_id.author_uuid == greg.author_uuid and friend.status == True):
-        #         print("in if")
-        #         #laraFriends.append(str(friend.invitee_id.author_uuid))
-        #         flag = True
-        #     elif (friend.invitee_id.author_uuid == greg.author_uuid and friend.status == True):    
-        #         flag = True
-        #         print "in else"
-        #         #laraFriends.append(str(friend.inviter_id.author_uuid))
 
         for f in friend:
-            print("F",f)
+
             friendauthor = Authors.objects.get(author_uuid=str(f))
             if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
                 flag = True
             elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
                 flag = True
-            #print(myAuthor.author_uuid)
-            print(friendauthor)
-
-                #laraFriends.append(str(friend.inviter_id.author_uuid))
-
 
         posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
@@ -1321,7 +1290,6 @@ def Foafvis(request):
         #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
         post['visibility'] = "FOAF"
             
-        print("before author")
         #author
         a = Authors.objects.get(author_uuid = posts.author_id.author_uuid)
         author={}
@@ -1333,23 +1301,13 @@ def Foafvis(request):
             
         #comments
         post['comments'] = []
-            
+         
         items.append(post)
-        print(post)
-        #jsonfromhost = request.get(host+"main/checkfriends/?user="+authorid)
-        #  print(jsonfromhost.ok)
-        # if(posts.privacy =="public"):
-        #     print("Post is public so just display.")
-        #     return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         if (flag == True):
-            print("nice")
-            #print (json.dumps(post, indent = 4, sort_keys=True))
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         elif(flag == False):
             return HttpResponse('{"message": "You are not FOAF."}')
 
-
-        #return HttpResponse(json.dumps(post))
     return HttpResponse('OK')
 
 
