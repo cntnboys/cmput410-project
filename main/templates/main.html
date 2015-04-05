@@ -123,7 +123,7 @@ $(document).ready(function(){
 						</form>
 
 
-						<form method="POST" action="{% url "editpost" %}" id=updateform name="updateform" class="updateform"  enctype="multipart/form-data" >
+						<form method="POST" action="{% url "editpost" %}" id=updateform name="updateform" class="updateform" enctype="multipart/form-data" >
 						  {% csrf_token %}
                            <div>  Title:</br> <input type="text" name="title" value="{{ link.title }}"> </div>
 						  <div>  Content:</br> <input type="text" name="content" value="{{ link.content }}" > </div>
