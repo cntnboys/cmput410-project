@@ -530,10 +530,10 @@ def mainPage(request, current_user):
         except:
             print "Cannot Get Authors from projecthub"
 
-#try:
-        getPostsFromOthers(cs410)
-            #       except:
-            #print "Cannot Get Posts Others"
+        try:
+            getPostsFromOthers(cs410)
+        except:
+            print "Cannot Get Posts Others"
         try:
             getPostsFromOthers(projecthub)
         except:
