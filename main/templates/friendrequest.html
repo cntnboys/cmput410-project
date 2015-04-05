@@ -46,7 +46,7 @@
                             <form method="POST" action="{% url "getaProfile" theusername=link.0.username user_id=link.0.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
                             <input type="hidden" value="{{link.0.username}}" name="username">
-                            <input type="submit" class="freq" value="Friend {{link.0.username}}">
+                            <input type="submit" value="{{link.0.username}}">
                         </form>
 
                     </div>

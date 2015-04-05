@@ -279,7 +279,7 @@ $(document).ready(function(){
                         {% if link.image %}
                         <input type="image" src={{ MEDIA_URL }}/{{link.image}} class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"> {{link.username}} </a>
                         {% else %}
-                        <div> <input type="image" src={{ STATIC_URL }}images/profileicon.png class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{link.username}} </a>
+                        <div> <input type="image" src={{ STATIC_URL }}images/plaeholder_icon.png class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{link.username}} </a>
                         {% endif %}
                         
                     </form>
