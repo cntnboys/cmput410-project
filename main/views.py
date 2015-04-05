@@ -298,7 +298,6 @@ def updateThePosts(content, location):
             author = Authors.objects.get(author_uuid=author_uuid)
         except:
             try:
-                author_uuid = formatUuid(author_uuid)
                 author = Authors.objects.get(author_uuid=author_uuid)
             except:
                 author_uuid = post["author"]["id"]
@@ -328,7 +327,6 @@ def updateThePosts(content, location):
             try:
                 comment_author = Authors.objects.get(author_uuid=author_uuid)
             except:
-                author_uuid = formatUuid(author_uuid)
                 comment_author = Authors.objects.get(author_uuid=author_uuid)
                     
             try:
@@ -955,7 +953,11 @@ def getaProfile(request, theusername, user_id):
 
 # EditProfile is a function that we have not implemented yet.
 # This function will be implemented in part 2
-def editProfile(request, current_user):
+def editProfile(request):
+    print "Got Author"
+    current_user = request.user.username
+    
+
     if request.method == "POST":
         usernamein=request.POST["username"]
         fullname =request.POST["fullname"]
@@ -965,14 +967,19 @@ def editProfile(request, current_user):
 
         #find author object needed to update
         try:
-            Authors.objects.filter(username=usernamein).update(name=str(fullname),email=str(emailin),github=githubin,image=imagein)
+            author = Authors.objects.filter(username=current_user, location=home)
+            if imagein == "":
+                author.update(name=fullname,email=emailin,github=githubin, status=True)
+            else:
+                author.update(name=fullname,email=emailin, github=githubin,image=imagein, status=True)
             error_message = "Profile updated"
-            #print("Profile updated")
+            print("Profile updated")
         except:
-            #print("email already exists")
+            print("email already exists")
             error_message = "Email already exists"
-            
-    return render(request, 'profile.html',{'error_msg': error_message})
+    
+    author = Authors.objects.get(username=current_user, location=home)       
+    return redirect(getaProfile, theusername=author.username, user_id=author.author_uuid)
 
 # Edit Post
 def editpost(request):

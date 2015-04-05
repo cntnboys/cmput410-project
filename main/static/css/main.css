@@ -9,246 +9,6 @@ body {
     background-image: url(../images/back.jpg);
 }
 
-@media (min-width: 300px) {
-  .friendbub{
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  }
-}
-@media (min-width: 550px) {
-  .friendbub {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  }
-}
-@media (min-width: 800px) {
-  .friendbub {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  }
-}
-@media (min-width: 1200px) {
-  .friendbub {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  }
-}
-
-
-.createPost {
-  border-radius: 10px;
-  position:relative;
-  padding:15px;
-  border: 2px solid rgba(0,55,155,0.3);
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  margin-right: auto;
-  margin-left: auto;
-  background-color: rgba(0,55,155,0.2);
-
-}
-
-.editbutton {
-  background: #34d968;
-  background-image: -webkit-linear-gradient(top, #34d968, #2bb8b8);
-  background-image: -moz-linear-gradient(top, #34d968, #2bb8b8);
-  background-image: -ms-linear-gradient(top, #34d968, #2bb8b8);
-  background-image: -o-linear-gradient(top, #34d968, #2bb8b8);
-  background-image: linear-gradient(to bottom, #34d968, #2bb8b8);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  text-shadow: 0px 1px 3px #666666;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-
-}
-
-.editprofile {
-  position:absolute;
-}
-
-
-.friendfollow {
-  border-radius: 10px;
-  position:relative;
-  border: 2px solid rgba(0,55,155,0.3);
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  background-color: rgba(0,55,155,0.2);
-
-}
-.row h2 {
-  padding-left: 10pt;
-}
-
-@media (min-width: 300px) {
-  .createPost{
-    width: 350px;
-  }
-}
-@media (min-width: 550px) {
-  .createPost {
-    width: 500px;
-  }
-}
-@media (min-width: 800px) {
-  .createPost {
-    width: 750px;
-  }
-}
-@media (min-width: 1200px) {
-  .createPost {
-    width: 1000px;
-  }
-}
-
-.recentPost {
-  width: 1000px;
-  position:relative;
-  padding:15px;
-  border: 2px solid rgba(0,185,155,0.3);
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  border-radius: 10px;
-
-  margin-right: auto;
-  margin-left: auto;
-  background-color: rgba(0,185,155,0.2);
-}
-
-.recentPost h1 {
-  margin-left: 10pt;  
-}
-
-@media (min-width: 300px) {
-  .recentPost{
-    width: 350px;
-  }
-}
-@media (min-width: 550px) {
-  .recentPost {
-    width: 500px;
-  }
-}
-@media (min-width: 800px) {
-  .recentPost {
-    width: 750px;
-  }
-}
-@media (min-width: 1200px) {
-  .recentPost {
-    width: 1000px;
-  }
-}
-
-.headerbox {
-  position:relative;
-  padding:15px;
-
-  width: 1000px;
-  border-radius: 10px;
-  border: 2px solid rgba(0,185,155,0.3);
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-
-  margin-right: auto;
-  margin-left: auto;
-  background-color: rgba(0,185,155,0.2);
-}
-
-.headerbox h1 {
-  margin-left: 10pt;  
-}
-
-@media (min-width: 300px) {
-  .headerbox{
-    width: 350px;
-  }
-}
-@media (min-width: 550px) {
-  .headerbox {
-    width: 500px;
-  }
-}
-@media (min-width: 800px) {
-  .headerbox {
-    width: 750px;
-  }
-}
-@media (min-width: 1200px) {
-  .headerbox {
-    width: 1000px;
-  }
-}
-
-.contentbox {
-  position:relative;
-  padding:15px;
-  border-radius: 10px;
-  border: 2px solid rgba(0,55,155,0.3);
-
-  -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-
-  margin-right: auto;
-  margin-left: auto;
-  background-color: rgba(0,55,155,0.2);
-
-}
-
-.contentbox:nth-child(odd) {
-    border: 2px solid rgba(20,45,200,0.3);
-    background-color: rgba(20,45,200,0.2);
-}
-
-@media (min-width: 300px) {
-  .contentbox{
-    width: 350px;
-  }
-}
-@media (min-width: 550px) {
-  .contentbox {
-    width: 500px;
-  }
-}
-@media (min-width: 800px) {
-  .contentbox{
-    width: 750px;
-  }
-}
-@media (min-width: 1200px) {
-  .contentbox {
-    width: 1000px;
-  }
-}
-
-.contentbox img {
-  margin-left: 10pt;
-  padding-bottom: 10pt;
-}
-
-.contentbox p{
-  position: relative;
-}
-
-.comment {
-  border: 2px solid rgba(140,33,170,0.3);
-  background-color: rgba(140,33,170,0.2);
-}
-
-.comment:nth-child(odd) {
-    border: 2px solid rgba(110,33,70,0.3);
-    background-color: rgba(110,33,70,0.2);
-}
-
 
 input {
   width: 95%;
@@ -348,52 +108,149 @@ input[type="file"] {
   }
 }
 
-.postbtn {
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 20px;
-  cursor: pointer;
-  background: rgba(140,213,133,0.7);
-}
-
-.postbtn:hover {
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  background: rgba(140,213,183,0.9)
+.createPost {
+  border-radius: 10px;
+  position:relative;
+  padding:15px;
+  border: 2px solid rgba(0,55,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(0,55,155,0.2);
 }
 
 @media (min-width: 300px) {
-  .postbtn  {
-    margin-left: 60%;
-    bottom: 30pt;
+  .createPost{
+    width: 350px;
   }
 }
 @media (min-width: 550px) {
-  .postbtn {
-    margin-left: 72%;
-    bottom: 30pt;
+  .createPost {
+    width: 500px;
+  }
+}
+@media (min-width: 800px) {
+  .createPost {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .createPost {
+    width: 1000px;
+  }
+}
+
+.headerbox {
+  position:relative;
+  padding:15px;
+
+  width: 1000px;
+  border-radius: 10px;
+  border: 2px solid rgba(0,185,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(0,185,155,0.2);
+}
+
+.headerbox h1 {
+  margin-left: 10pt;  
+}
+
+@media (min-width: 300px) {
+  .headerbox{
+    width: 350px;
+  }
+}
+@media (min-width: 550px) {
+  .headerbox {
+    width: 500px;
+  }
+}
+@media (min-width: 800px) {
+  .headerbox {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .headerbox {
+    width: 1000px;
+  }
+}
+
+.editmode {
+  position: absolute;
+}
+
+@media (min-width: 300px) {
+  .editmode  {
+    height: 20px;
+    width: 20px;
+    top: 10%;
+    margin-left: 67%;  
+  }
+}
+@media (min-width: 550px) {
+  .editmode {
+    top: 10%;
+    margin-left: 75%;
   }
 }
 
 @media (min-width: 800px) {
-  .postbtn  {
-    top: 20pt;
-    margin-left: -68pt;
+  .editmode {
+    top: 10%;
+    margin-left: 84%;
   }
 }
 
 @media (min-width: 1200px) {
-  .postbtn {
-    top: 50;
-    margin-left: -40pt;
+  .editmode {
+    top: 
+    10%;
+    margin-left: 88%;
   }
+}
+
+.editbutton {
+  background: #34d968;
+  background-image: -webkit-linear-gradient(top, #34d968, #2bb8b8);
+  background-image: -moz-linear-gradient(top, #34d968, #2bb8b8);
+  background-image: -ms-linear-gradient(top, #34d968, #2bb8b8);
+  background-image: -o-linear-gradient(top, #34d968, #2bb8b8);
+  background-image: linear-gradient(to bottom, #34d968, #2bb8b8);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  text-shadow: 0px 1px 3px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+@media (min-width: 300px) {
+  .editbutton  {
+  }
+}
+@media (min-width: 550px) {
+  .editbutton  {
+  }
+}
+
+@media (min-width: 800px) {
+  .editbutton  {
+  }
+}
+
+@media (min-width: 1200px) {
+  .editbutton  {
+  }
+}
 
 .friendreq {
   position: absolute;
@@ -424,21 +281,21 @@ input[type="file"] {
 }
 @media (min-width: 550px) {
 .friendreq  {
-    top: 30%;
-    margin-left: 50%;
+    top:60%;
+    margin-left: 68%;
   }
 }
 
 @media (min-width: 800px) {
 .friendreq {
-    top: 30%;
-    margin-left: 65%;
+    top:60%;
+    margin-left: 79%;
   }
 }
 @media (min-width: 1200px) {
 .friendreq {
-    top:20%;
-    margin-left: 73%;
+    top:60%;
+    margin-left: 84%;
   }
 }
 .followreq {
@@ -470,77 +327,87 @@ input[type="file"] {
 }
 @media (min-width: 550px) {
 .followreq  {
-    top: 30%;
+    top: 10%;
     margin-left: 78%;
   }
 }
 
 @media (min-width: 800px) {
 .followreq {
-    top: 30%;
+    top: 10%;
     margin-left: 85%;
   }
 }
 @media (min-width: 1200px) {
 .followreq {
-    top: 20%;
-    margin-left: 88%;
+    top: 10%;
+    margin-left: 89%;
   }
 }
 
-input:focus {
-  background: #FFFDF2;
+.contentbox {
+  position:relative;
+  padding:15px;
+  border-radius: 10px;
+  border: 2px solid rgba(0,55,155,0.3);
+
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgba(0,55,155,0.2);
+
 }
 
-.addComment {
-  position: absolute;
+.contentbox:nth-child(odd) {
+    border: 2px solid rgba(20,45,200,0.3);
+    background-color: rgba(20,45,200,0.2);
 }
 
 @media (min-width: 300px) {
-  .addComment  {
-    margin-left: 65%;
-    bottom: 12pt;
+  .contentbox{
+    width: 350px;
   }
 }
 @media (min-width: 550px) {
-  .addComment {
-    top: -60pt;
-    margin-left: 280pt;
+  .contentbox {
+    width: 500px;
   }
 }
-
 @media (min-width: 800px) {
-  .addComment   {
-    top: 11pt;
-    margin-left: -58pt;
+  .contentbox{
+    width: 750px;
   }
 }
-
 @media (min-width: 1200px) {
-  .addComment   {
-    top: 15pt;
-    margin-left: -28pt;
+  .contentbox {
+    width: 1000px;
   }
 }
 
-.addComment input[type="submit"] {
-  height: 70px;
-  width: 70px;
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 0 20px;
-  cursor: pointer;
-  background: rgba(140,213,133,0.7);
+.contentbox img {
+  margin-left: 10pt;
+  padding-bottom: 10pt;
 }
 
-.addComment input[type="submit"]:hover {
-  border: 2px solid #7BC574;
-  border-radius: 50px;
-  color: black;
-  background: rgba(140,213,183,0.9)
+.contentbox p{
+  position: relative;
+}
+
+.posttitle {
+  margin-left: 5pt;
+  font-size: 18pt;
+  text-decoration: underline;
+
+}
+
+.postbody {
+  margin-left: 10pt;
+  margin-right: 10pt;
+  width: auto;
+  word-wrap:break-word;
+
 }
 
 .del { 
@@ -586,41 +453,10 @@ input:focus {
   }
 }
 
-.editmode {
+.addComment {
   position: absolute;
-}
-
-@media (min-width: 300px) {
-  .editmode  {
-    height: 20px;
-    width: 20px;
-    top: 10%;
-    margin-left: 67%;  
-  }
-}
-@media (min-width: 550px) {
-  .editmode {
-    top: 10%;
-    margin-left: 75%;
-  }
-}
-
-@media (min-width: 800px) {
-  .editmode {
-    top: 10%;
-    margin-left: 84%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .editmode {
-    top: 10%;
-    margin-left: 88%;
-  }
-
-input[type="submit"] {
-  height: 60px;
-  width: auto;
+  height: 70px;
+  width: 70px;
   border: 2px solid #7BC574;
   border-radius: 50px;
   color: black;
@@ -631,57 +467,38 @@ input[type="submit"] {
   background: rgba(140,213,133,0.7);
 }
 
-input[type="submit"]:hover {
+.addComment:hover {
   border: 2px solid #7BC574;
   border-radius: 50px;
   color: black;
   background: rgba(140,213,183,0.9)
 }
 
-input:focus {
-  background: rgba(140,213,183,0.0);
-}
-
-.update {
-  position: absolute;
-  bottom: 2%;
-  margin-left: 88%;
-} 
-
 @media (min-width: 300px) {
-  .post{
-    width: 350px;
+  .addComment  {
+    margin-left: 65%;
+    bottom: 12pt;
   }
 }
 @media (min-width: 550px) {
-  .post {
-    width: 500px;
+  .addComment {
+    top: -60pt;
+    margin-left: 280pt;
   }
 }
+
 @media (min-width: 800px) {
-  .post {
-    width: 750px;
+  .addComment   {
+    top: 11pt;
+    margin-left: -58pt;
   }
 }
+
 @media (min-width: 1200px) {
-  .post {
-    width: 1000px;
+  .addComment   {
+    top: 80%;
+    margin-left: -40%;
   }
-}
-
-.posttitle {
-  margin-left: 5pt;
-  font-size: 18pt;
-  text-decoration: underline;
-
-}
-
-.postbody {
-  margin-left: 10pt;
-  margin-right: 10pt;
-  width: auto;
-  word-wrap:break-word;
-
 }
 
 .friendbub {
@@ -690,6 +507,162 @@ input:focus {
   border-radius: 50px;
 }
 
+@media (min-width: 300px) {
+  .friendbub{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 550px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 800px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+@media (min-width: 1200px) {
+  .friendbub {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  }
+}
+
+.updatediv {
+  position: absolute;
+  text-align: center;
+}
+
+@media (min-width: 300px) {
+  .updatediv{  
+  bottom: 2%;
+  margin-left: 75%;
+  }
+}
+@media (min-width: 550px) {
+  .updatediv{
+  bottom: 2%;
+  margin-left: 80%;
+
+  }
+}
+@media (min-width: 800px) {
+  .updatediv{
+  bottom: 2%;
+  margin-left: 85%;
+  }
+}
+@media (min-width: 1200px) {
+  .updatediv {
+  bottom: 2%;
+  margin-left: 90%;
+  }
+}
+
+.update {
+  height: 70px;
+  width: 70px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.update:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+
+/**/
+.friendfollow {
+  border-radius: 10px;
+  position:relative;
+  border: 2px solid rgba(0,55,155,0.3);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  background-color: rgba(0,55,155,0.2);
+
+}
+.row h2 {
+  padding-left: 10pt;
+}
+
+/**/
+
+.comment {
+  border: 2px solid rgba(140,33,170,0.3);
+  background-color: rgba(140,33,170,0.2);
+}
+
+.comment:nth-child(odd) {
+    border: 2px solid rgba(110,33,70,0.3);
+    background-color: rgba(110,33,70,0.2);
+}
+
+
+.postbtn {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: rgba(140,213,133,0.7);
+}
+
+.postbtn:hover {
+  border: 2px solid #7BC574;
+  border-radius: 50px;
+  color: black;
+  background: rgba(140,213,183,0.9)
+}
+
+@media (min-width: 300px) {
+  .postbtn  {
+    margin-left: 60%;
+    bottom: 30pt;
+  }
+}
+@media (min-width: 550px) {
+  .postbtn {
+    margin-left: 72%;
+    bottom: 30pt;
+  }
+}
+
+@media (min-width: 800px) {
+  .postbtn  {
+    top: 20pt;
+    margin-left: -68pt;
+  }
+}
+
+@media (min-width: 1200px) {
+  .postbtn {
+    top: 55pt;
+    margin-left: -40pt;
+  }
+
+/*OLD STUFF*/
 a.postlink {
   text-decoration: none;
   color: #53bfab;

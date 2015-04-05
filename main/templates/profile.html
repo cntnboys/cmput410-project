@@ -16,17 +16,13 @@
     <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
 	<script src="{{ STATIC_URL }}js/less.js"></script>
-    <br>
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 
 
 
 $(document).ready(function(){
-
     $("#updateform").hide();
-
     $("#show").click(function(){
         $("#updateform").show();
     });
@@ -130,11 +126,12 @@ $(document).ready(function(){
 
           </div>
 
-<form method="POST" action="#" id=updateform name="updateform">
+<form method="POST" action="{% url "EditProfile" %}" id=updateform name="updateform" enctype="multipart/form-data">
 <div class="container" style="width:80%">
     <div class="row">
           <div class="panel panel-info" >
             <div class="panel-body">
+            {% for link in items %}
   
                        {% csrf_token %}
                       
@@ -144,7 +141,7 @@ $(document).ready(function(){
                        <div>  Image: <br/><input type="file" name="image" maxlength="30" value={{ link.image }}> </div>
                        <div>  <input type="submit" value="Update">  </div>
                        <div> <input type="hidden" name="username" value={{ link.username }} > </div>
-
+            {% endfor %}
             </div></div></div></div>
                         </form>
 
@@ -272,9 +269,9 @@ $(document).ready(function(){
                 </div>
                 {% endfor %}
             {% else %}
-                
-                {% for link in ufriends %}
                 <div class="contentbox">
+                {% for link in ufriends %}
+                
                 
                     <!-- Need to do images -->
                     <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
@@ -287,8 +284,9 @@ $(document).ready(function(){
                         {% endif %}
                         
                     </form>
-                 </div>
+                 
                 {% endfor %}
+                </div>
                
                 {% endif %}
             </div>
