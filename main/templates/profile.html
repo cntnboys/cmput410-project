@@ -234,6 +234,7 @@ $(document).ready(function(){
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="hidden" name="followuuid" value="{{ link.author_uuid }}">
                     <input type="submit" class="friendreq" value="Friend Request">
                     {% endif %}
                     {% if fstatus = 0 %}
@@ -249,6 +250,7 @@ $(document).ready(function(){
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="hidden" name="followuuid" value="{{ link.author_uuid }}">
                     <input type="submit" class="friendreq" value="Friend Request">
                     </form>
                     {% endif %}
