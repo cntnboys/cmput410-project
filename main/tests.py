@@ -1,5 +1,5 @@
 import calendar
-from datetime import timedelta
+from datetime import datetime
 import random
 
 from django.contrib import messages
@@ -19,7 +19,7 @@ import uuid
 
 from django.test import TestCase
 
-from main.models import Authors, Friends, Posts, Comments
+from main.models import Authors, Friends, Posts, Comments, GithubPosts, Nodes
 
 # AUHTOR TESTS
 class AuthorTests(TestCase):
@@ -32,65 +32,90 @@ class AuthorTests(TestCase):
         name = "Ana Marcu"
         username = "aname"
         email = "marcu@ualberta.ca"
-        location = "local"
+        location = "thought-bubble.com"
+        image="/path/to/image.jpg"
+        github="MyGithub"
         
-        author1 = Authors.objects.get_or_create(name=name, username=username,location=location, email=email, image="/path/to/image.jpg", github="MyGithub", twitter="MyTwitter", facebook="MyFacebook")[0]
+        author1 = Authors.objects.get_or_create(name=name, username=username,location=location, email=email, image=image, github=github)[0]
         
         # check author exists
-        self.assertEqual(Authors.objects.filter(username="aname")[0], author1)
+        self.assertEqual(Authors.objects.filter(username="aname", location="thought-bubble.com")[0], author1)
         self.assertEqual(Authors.objects.all().count(), 1)
         
         name = "Bob Murley"
         username = "bobmurley"
         email = "murley@ualberta.ca"
-        location = "local"
+        location = "thought-bubble.com"
         
         author2 = Authors.objects.get_or_create(name=name, username=username,location=location, email=email)[0]
         
         # check second author exists
-        self.assertEqual(Authors.objects.filter(username="bobmurley")[0], author2)
+        self.assertEqual(Authors.objects.filter(username="bobmurley", location="thought-bubble.com")[0], author2)
         self.assertEqual(Authors.objects.all().count(), 2)
     
     
-    # CREATE AN AUTHOR WITH AND EXISTING USERNAME, AND AN AUTHOR WITH AN EXISTING EMAIL
-    def test_create_same_username_email_author(self):
+    
+    # APPROVE AN AUTHOR (admin changes author status in system)
+    def test_approve_author(self):
         
-        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="local", email="murley@ualberta.ca")[0]
-        
-        self.assertEqual(Authors.objects.all().count(), 1)
-        
-        name = "Bill Murley"
-        username1 = "billmurey"
-        username2 = "bobmurley"
-        email1 = "murley@ualberta.ca"
-        email2 = "bob@ualberta.ca"
-        location = "local"
-        
-        # try to create author with existing email
-        try:
-            author3 = Authors.objects.get_or_create(name=name, username=username1,location=location, email=email1)[0]
-        except:
-            author3 = "Email not unique"
-        
-        # check author not created
-        self.assertEqual(author3, "Email not unique")
-        self.assertEqual(Authors.objects.all().count(), 1)
-        
-        # try to create author with existing username
-        try:
-            author4 = Authors.objects.get_or_create(name=name, username=username2,location=location, email=email2)[0]
-        except:
-            author4 = "Username not unique"
-        
-        # check author not created
-        self.assertEqual(author4, "Username not unique")
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="aname",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
+    
         self.assertEqual(Authors.objects.all().count(), 1)
     
+        # retrieve the author, update the status, and save
+        author = Authors.objects.get(username = "aname")
+        author.status = True
+        author.save()
     
+        # check that record is updated
+        self.assertEqual(Authors.objects.filter(username="aname", location="thought-bubble.com")[0], author)
+        #check that previous record does not exist
+        self.assertFalse(Authors.objects.filter(username="aname", status=False))
+        self.assertEqual(Authors.objects.all().count(), 1)
+
+
+    # CREATE AN AUTHOR WITH AN EXISTING USERNAME AND EXISTING LOCATION
+    def test_create_same_username_location_author(self):
+        
+        author = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="thought-bubble.com", email="murley@ualberta.ca")[0]
+        
+        self.assertEqual(Authors.objects.all().count(), 1)
+        
+        name = "Bob John Murley"
+        username = "bobmurley"
+        email = "bob@ualberta.ca"
+        location = "thought-bubble.com"
+        
+        # try to create author with existing username and location (unique together)
+        try:
+            author2 = Authors.objects.get_or_create(name=name, username=username, email=email, location=location)[0]
+        except:
+            author2 = "Username location not unique together"
+        
+        # check author not created
+        self.assertEqual(author2, "Username location not unique together")
+        self.assertEqual(Authors.objects.all().count(), 1)
+
+    # CREATE AN AUTHOR WITHOUT USERNAME (A REQUIRED FIELD)
+    #def test_create_author_no_username(self):
+    
+    #   name = "Bob John Murley"
+    #   email = "bob@ualberta.ca"
+    #   location = "thought-bubble.com"
+    
+    #   try:
+    #       author = Authors.objects.get_or_create(name=name, email=email, location=location)
+    #   except:
+    #       author = "Username is required"
+        
+        #   self.assertEqual(author, "Username is required")
+        #self.assertEqual(Authors.objects.all().count(), 0)
+
+
     # UPDATE AN AUHTOR'S USERNAME
     def test_update_author(self):
         
-        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="aname",location="local", email="marcu@ualberta.ca")[0]
+        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="aname",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         self.assertEqual(Authors.objects.filter(username="aname")[0], author1)
         self.assertEqual(Authors.objects.all().count(), 1)
@@ -109,7 +134,7 @@ class AuthorTests(TestCase):
     # DELETE AN AUTHOR
     def test_delete_author(self):
         
-        author = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="local", email="murley@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="thought-bubble.com", email="murley@ualberta.ca")[0]
         
         self.assertEqual(Authors.objects.all().count(), 1)
         
@@ -117,7 +142,7 @@ class AuthorTests(TestCase):
         Authors.objects.get(username = "bobmurley").delete()
         
         try:
-            deleted = Authors.objects.get("username = bobmurley")
+            deleted = Authors.objects.get(username = "bobmurley")
         except:
             deleted = None
         
@@ -127,6 +152,83 @@ class AuthorTests(TestCase):
 
 
 
+# NODES TESTS
+class NodesTests(TestCase):
+    
+    # CREATE A SYSTEM NODE
+    def test_create_node(self):
+
+        self.assertEqual(Authors.objects.all().count(), 0)
+
+        node_url = "http://thought-bubble.com"
+        node_name = "Thought Bubble"
+        
+        node = Nodes.objects.get_or_create(node_url=node_url, node_name=node_name)[0]
+
+        # check node exists
+        self.assertEqual(Nodes.objects.filter(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0], node)
+        self.assertEqual(Nodes.objects.all().count(), 1)
+
+    # CREATE A NODE WITH AN EXISITNG URL
+    def test_create_author_same_url(self):
+
+        node1 = Nodes.objects.get_or_create(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0]
+
+        self.assertEqual(Nodes.objects.all().count(), 1)
+
+        node_url = "http://thought-bubble.com"
+        node_name = "Second Thought Bubble"
+
+        # try to create a node with an existing url
+        try:
+            node2 = Nodes.objects.get_or_create(node_url=node_url, node_name=Node_name)[0]
+        except:
+            node2 = "Url must be unique"
+
+        # check node not created
+        self.assertEqual(node2, "Url must be unique")
+        self.assertEqual(Nodes.objects.all().count(), 1)
+
+
+    # UPDATE A SYSTEM NODE
+    def test_update_node(self):
+
+        node = Nodes.objects.get_or_create(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0]
+
+        self.assertEqual(Nodes.objects.filter(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0], node)
+        self.assertEqual(Nodes.objects.all().count(), 1)
+
+        # retrieve the node, update the name, and save
+        node = Nodes.objects.get(node_url="http://thought-bubble.com")
+        node.node_name = "Your Thought Bubble"
+        node.save()
+
+        # check that record is updated
+        self.assertEqual(Nodes.objects.filter(node_url="http://thought-bubble.com")[0], node)
+        #check that previous record does not exist
+        self.assertFalse(Nodes.objects.filter(node_url="http://thought-bubble.com", node_name="Thought Bubble"))
+        self.assertEqual(Nodes.objects.all().count(), 1)
+
+
+    # DELETE A SYSTEM NODE
+    def test_delete_author(self):
+    
+        node = Nodes.objects.get_or_create(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0]
+    
+        self.assertEqual(Nodes.objects.all().count(), 1)
+    
+        # retrieve an existing node and delete
+        Nodes.objects.get(node_url="http://thought-bubble.com").delete()
+    
+        try:
+            deleted = Nodes.objects.get(node_url="http://thought-bubble.com", node_name="Thought Bubble")
+        except:
+            deleted = None
+    
+        # check the node does not exist
+        self.assertEqual(deleted, None)
+        self.assertEqual(Nodes.objects.all().count(), 0)
+
 
 # POSTS TESTS
 class PostsTests(TestCase):
@@ -134,7 +236,7 @@ class PostsTests(TestCase):
     # CREATE TWO POSTS FOR AN AUTHOR
     def test_create_post(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         self.assertEqual(Posts.objects.all().count(), 0)
         
@@ -205,7 +307,7 @@ class PostsTests(TestCase):
     # DELETE A POST
     def test_delete_post(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         post = Posts.objects.get_or_create(author_id=author, title="First Post", content="the first post", privacy="public")[0]
         
         self.assertEqual(Posts.objects.all().count(), 1)
@@ -222,43 +324,182 @@ class PostsTests(TestCase):
         self.assertEqual(deleted, "deleted")
         self.assertEqual(Posts.objects.all().count(), 0)
 
+
+# GITHUB POSTS TESTS
+class GithubPostsTests(TestCase):
+    
+    # CREATE A GITHUB POST RECORD FOR AN EXISTING POST
+    def test_create_githubpost(self):
+
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca", github="marcugit")[0]
+        
+        post = Posts.objects.get_or_create(author_id=author, title="First Post", content="the first post", privacy="public")[0]
+    
+        gh_uuid = uuid.uuid4()
+        date = datetime.now()
+        content = "a github post"
+        
+        
+        self.assertEqual(GithubPosts.objects.all().count(), 0)
+        # create a github post (mark a post as being a github post)
+        githubPost = GithubPosts.objects.get_or_create(post_id=post, gh_uuid=gh_uuid, content=content, date=date)[0]
+    
+        # check that the github post exists
+        self.assertEqual(GithubPosts.objects.filter(post_id=post, content="a github post")[0], githubPost)
+        self.assertEqual(GithubPosts.objects.all().count(), 1)
+
+
+    # CREATE A GITHUB POST WITHOUR REFERENCING THE POST
+    def test_create_githubpost_without_post(self):
+    
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca", github="marcugit")[0]
+    
+        gh_uuid = uuid.uuid4()
+        date = datetime.now()
+        content = "a github post without post"
+    
+        self.assertEqual(GithubPosts.objects.all().count(), 0)
+    
+        # try to create github post without a post
+        try:
+            githubPost = GithubPosts.objects.get_or_create(gh_uuid=gh_uuid, content=content, date=date)[0]
+        except:
+            githubPost = "No post"
+    
+        # check github post not created
+        self.assertEqual(githubPost, "No post")
+        self.assertFalse(GithubPosts.objects.filter(content="a github post without post"))
+        self.assertEqual(GithubPosts.objects.all().count(), 0)
+
+    # UPDATE A GITHUB POST'S CONTENT
+    def test_update_post(self):
+    
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
+        
+        post = Posts.objects.get_or_create(author_id=author, title="First Post", content="the first post", privacy="public")[0]
+    
+        gh_uuid = uuid.uuid4()
+        date = datetime.now()
+        content = "a github post"
+        githubPost = GithubPosts.objects.get_or_create(post_id=post, gh_uuid=gh_uuid, content=content, date=date)[0]
+    
+        self.assertEqual(GithubPosts.objects.all().count(), 1)
+    
+        # retrieve an existing github post, update the content, and save
+        githubPost = GithubPosts.objects.get(post_id=post, content="a github post")
+        githubPost.content = "This is Github"
+        githubPost.save()
+    
+        # check that record is updated
+        self.assertEqual(GithubPosts.objects.filter(post_id=post, content="This is Github")[0], githubPost)
+        # check that previous record does not exist
+        self.assertFalse(GithubPosts.objects.filter(post_id=post, content="a github post"))
+        self.assertEqual(GithubPosts.objects.all().count(), 1)
+
+    # DELETE A GITHUB POST
+    def test_delete_post(self):
+    
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
+        post = Posts.objects.get_or_create(author_id=author, title="First Post", content="the first post", privacy="public")[0]
+    
+        gh_uuid = uuid.uuid4()
+        date = datetime.now()
+        content = "a github post"
+        githubPost = GithubPosts.objects.get_or_create(post_id=post, gh_uuid=gh_uuid, content=content, date=date)[0]
+    
+        self.assertEqual(Posts.objects.all().count(), 1)
+        self.assertEqual(GithubPosts.objects.all().count(), 1)
+    
+        # retrieve an existing post and delete
+        GithubPosts.objects.get(post_id=post, content="a github post").delete()
+        Posts.objects.get(author_id=author, content="the first post").delete()
+    
+        try:
+            deleted = GithubPosts.objects.get(post_id=post, content="a github post")
+        except:
+            deleted = "deleted"
+    
+        # check the post does not exist
+        self.assertEqual(deleted, "deleted")
+        self.assertEqual(GithubPosts.objects.all().count(), 0)
+        self.assertEqual(Posts.objects.all().count(), 0)
+
+
+
 # FRIENDS TESTS
 class FriendsTests(TestCase):
     
     # CREATE FOLLOWS (friends with unconfirmed friend request) AND FIRENDS (friends with confirmed friend request) (status: false=follow, true=friend)
-    def test_create_friends(self):
+    def test_create_follows(self):
         
-        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
-        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="local", email="murley@ualberta.ca")[0]
-        author3 = Authors.objects.get_or_create(name="Adam Smith", username="adamsmith",location="local", email="smith@ualberta.ca")[0]
-        author4 = Authors.objects.get_or_create(name="Alexa Roui", username="alexaroui",location="local", email="roui@ualberta.ca")[0]
+        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
+        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="thought-bubble.com", email="murley@ualberta.ca")[0]
         
         self.assertEqual(Friends.objects.all().count(), 0)
         
-        # friendship relationship as 'follow' (status=false)
-        follows = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, status=False)[0]
+        # friendship relationship as an author 'follows' another (inviter_follow=true)
+        follows = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, inviter_follow=True)[0]
         
-        # check frendship created
-        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=False)[0], follows)
+        # check followship created
+        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, inviter_follow=True)[0], follows)
         self.assertEqual(Friends.objects.all().count(), 1)
         
-        # friendship relationship as 'friends' (status=true)
-        friends = Friends.objects.get_or_create(inviter_id=author3, invitee_id=author4, status=True)[0]
+    # CREATE A 'FRIEND REQUEST SENT' RECORD
+    def test_create_friend_request(self):
+        
+        author1 = Authors.objects.get_or_create(name="Adam Smith", username="adamsmith",location="thought-bubble.com", email="smith@ualberta.ca")[0]
+        author2 = Authors.objects.get_or_create(name="Alexa Roui", username="alexaroui",location="thought-bubble.com", email="roui@ualberta.ca")[0]
+        
+        # friendship relationship as inviter friend requests invitee (frequest=true)
+        friends = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, inviter_follow=True, frequest=True, status=False)[0]
         
         # check friendship created
-        self.assertEqual(Friends.objects.filter(inviter_id=author3, invitee_id=author4, status=True)[0], friends)
-        self.assertEqual(Friends.objects.all().count(), 2)
+        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, frequest=True)[0], friends)
+        self.assertEqual(Friends.objects.all().count(), 1)
+        
+
+    # UPDATE A FRIENDSHIP (change the status to accept friend request)
+    def test_accept_friend_reuquest(self):
+    
+        author1 = Authors.objects.get_or_create(name="Adam Smith", username="adamsmith",location="thought-bubble.com", email="smith@ualberta.ca")[0]
+        author2 = Authors.objects.get_or_create(name="Alexa Roui", username="alexaroui",location="thought-bubble.com", email="roui@ualberta.ca")[0]
+    
+        friends = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, inviter_follow=True, frequest=True, status=False)[0]
+    
+        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, frequest=True, status=False)[0], friends)
+        self.assertEqual(Friends.objects.all().count(), 1)
+    
+        # retrieve existing friendship (with false status), update status, and save
+        friends = Friends.objects.get(inviter_id=author1, invitee_id=author2)
+        friends.status=True
+        friends.save()
+    
+        # check that record is updated
+        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=True)[0], friends)
+        # check that previous record does not exist
+        self.assertFalse(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=False))
+        self.assertEqual(Friends.objects.all().count(), 1)
+
+
+    # CREATE AN EXISTING FRIENDSHIP ('unique together' constraint)
+    def test_create_duplicate_friendship(self):
+        
+        author1 = Authors.objects.get_or_create(name="Adam Smith", username="adamsmith",location="thought-bubble.com", email="smith@ualberta.ca")[0]
+        author2 = Authors.objects.get_or_create(name="Alexa Roui", username="alexaroui",location="thought-bubble.com", email="roui@ualberta.ca")[0]
+        
+        friends = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, status=True)[0]
+        self.assertEqual(Friends.objects.all().count(), 1)
         
         # try to create a duplicate friendship
         try:
             with transaction.atomic():
-                sameFriends = Friends.objects.create(inviter_id=author3, invitee_id=author4, status=True)
+                sameFriends = Friends.objects.create(inviter_id=author1, invitee_id=author2, status=True)[0]
         except IntegrityError:
             sameFriends = "Not unique together"
         
         # check duplicate friendship not created
         self.assertEqual(sameFriends, "Not unique together")
-        self.assertEqual(Friends.objects.all().count(), 2)
+        self.assertEqual(Friends.objects.all().count(), 1)
     
     
     # CREATE FRIENDS WITHOUT REFERENCING SECOND AUTHOR
@@ -278,27 +519,6 @@ class FriendsTests(TestCase):
         self.assertEqual(friends, "Need second author")
         self.assertEqual(Friends.objects.all().count(), 0)
     
-    # UPDATE A FRIENDSHIP (change from follow to friends)
-    def test_update_friends(self):
-        
-        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
-        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="local", email="murley@ualberta.ca")[0]
-        
-        follows = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, status=False)[0]
-        
-        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=False)[0], follows)
-        self.assertEqual(Friends.objects.all().count(), 1)
-        
-        # retrieve existing friendship (with false status), update status, and save
-        friends = Friends.objects.get(inviter_id=author1, invitee_id=author2)
-        friends.status=True
-        friends.save()
-        
-        # check that record is updated
-        self.assertEqual(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=True)[0], friends)
-        # check that previous record does not exist
-        self.assertFalse(Friends.objects.filter(inviter_id=author1, invitee_id=author2, status=False))
-        self.assertEqual(Friends.objects.all().count(), 1)
     
     # DELETE FRIENDS
     def test_delete_friends(self):
@@ -329,7 +549,7 @@ class CommentsTests(TestCase):
     # CREATE COMMENT FOR POST FROM AUTHOR
     def test_create_comment(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu", location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         post = Posts.objects.get_or_create(author_id=author, title="A Post", content="this is a post", privacy="public")[0]
         
@@ -345,7 +565,7 @@ class CommentsTests(TestCase):
     # CREATE COMMENT WITHOUT REFERENCING AUTHOR OR POST
     def test_create_comment_without_author_post(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu", location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         post = Posts.objects.get_or_create(author_id=author, title="A Post", content="this is a post", privacy="public")[0]
         
@@ -353,7 +573,7 @@ class CommentsTests(TestCase):
         
         # try to create comment without referencing author
         try:
-            comment = Comments.objects.get_or_create(post_id=post, content="Writing a comment", date=timezone.now())
+            comment = Comments.objects.get_or_create(post_id=post, content="Writing a comment")
         
         except:
             comment = "No author"
@@ -364,7 +584,7 @@ class CommentsTests(TestCase):
         
         # try to create comment without referencing post
         try:
-            comment = Comments.objects.get_or_create(author_id=author, content="Writing a comment", date=timezone.now())
+            comment = Comments.objects.get_or_create(author_id=author, content="Writing a comment")
         except:
             comment = "No post"
         
@@ -375,11 +595,11 @@ class CommentsTests(TestCase):
     # UPDATE COMMENT'S CONTENT
     def test_update_comment(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu", location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         post = Posts.objects.get_or_create(author_id=author, title="A Post", content="this is a post", privacy="public")[0]
         
-        comment = Comments.objects.get_or_create(author_id=author, post_id=post, content="Writing a comment", date=timezone.now())[0]
+        comment = Comments.objects.get_or_create(author_id=author, post_id=post, content="Writing a comment")[0]
         
         self.assertEqual(Comments.objects.filter(author_id=author, post_id=post, content="Writing a comment")[0], comment)
         self.assertEqual(Comments.objects.all().count(), 1)
@@ -398,7 +618,7 @@ class CommentsTests(TestCase):
     # DELETE COMMENT
     def test_delete_comment(self):
         
-        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
+        author = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu", location="thought-bubble.com", email="marcu@ualberta.ca")[0]
         
         post = Posts.objects.get_or_create(author_id=author, title="A Post", content="this is a post", privacy="public")[0]
         
@@ -426,14 +646,14 @@ class DeleteTests(TestCase):
     # DELETE AUTHOR DELETE ON CASCADE - friends/posts/comments that reference the author
     def test_delete_on_cascade(self):
         
-        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu",location="local", email="marcu@ualberta.ca")[0]
-        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley",location="local", email="murley@ualberta.ca")[0]
+        author1 = Authors.objects.get_or_create(name="Ana Marcu", username="anamarcu", location="thought-bubble.com", email="marcu@ualberta.ca")[0]
+        author2 = Authors.objects.get_or_create(name="Bob Murley", username="bobmurley", location="thought-bubble.com", email="murley@ualberta.ca")[0]
         
         post = Posts.objects.get_or_create(author_id=author1, title="First Post", content="the post content", privacy="public")[0]
         
-        comment = Comments.objects.get_or_create(author_id=author1, post_id=post, content="Writing a comment", date=timezone.now())[0]
+        comment = Comments.objects.get_or_create(author_id=author1, post_id=post, content="Writing a comment")[0]
         
-        firends = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, status=True)[0]
+        friends = Friends.objects.get_or_create(inviter_id=author1, invitee_id=author2, status=True)[0]
         
         # two authors exist, a friendship relationship, and a post and comment of one author
         self.assertEqual(Authors.objects.all().count(), 2)
@@ -442,7 +662,7 @@ class DeleteTests(TestCase):
         self.assertEqual(Friends.objects.all().count(), 1)
         
         # delete one author
-        Authors.objects.get(username = "anamarcu").delete()
+        Authors.objects.get(username = "anamarcu", location="thought-bubble.com").delete()
         
         # check only one author exists
         # check friendship/post/comment do not exist
