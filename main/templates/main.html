@@ -127,7 +127,6 @@ $(document).ready(function(){
 						  {% csrf_token %}
                            <div>  Title:</br> <input type="text" name="title" value="{{ link.title }}"> </div>
 						  <div>  Content:</br> <input type="text" name="content" value="{{ link.content }}" > </div>
-						  <div>  Image:<input type="file" name="image" value={{ link.image }}> </div>
 						  <div class="updatediv">  <input type="submit" class ="update" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>

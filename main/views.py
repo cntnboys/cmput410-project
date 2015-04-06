@@ -652,8 +652,9 @@ def friendRequest(request):
     if request.method == 'POST':
         userid = current_user.id
         theirUname = request.POST["follow"]
+        theirUuid = request.POST["followuuid"]
         try:
-            theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+            theirAuthor = Authors.objects.get(username=theirUname, author_uuid=theirUuid)
             ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             for e in Friends.objects.filter(inviter_id=theirAuthor):
 	            if e.status is True :
@@ -933,16 +934,14 @@ def editProfile(request):
 def editpost(request):
     if request.method == "POST":
         titlein = request.POST["title"]
-        imagein = request.FILES["image"]
         postidin = request.POST["postid"]
         contentin = request.POST["content"]
 
         try:
             post = Posts.objects.filter(post_id=str(postidin))
-            if str(imagein) == "":
-                post.update(title=str(titlein),content=str(contentin))
-            else: 
-                post.update(title=str(titlein),image=imagein,content=str(contentin))
+
+            post.update(title=str(titlein),content=str(contentin))
+
         except:
             return redirect(mainPage, current_user=request.user.username)
 

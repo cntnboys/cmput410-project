@@ -18,6 +18,7 @@
     <!-- JS -->
     <script src="{{ STATIC_URL }}/js/less.js"></script>
     <br>
+
 </head>
 
 <body>
@@ -38,15 +39,13 @@
                 {% for link in items %}
                     <div class="bubbleWrapper row" style="padding: 10pt;">
                         <!-- Need to do images -->
-                        {% if link.image %}
-                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;" src="{{ MEDIA_URL }}//{{ link.0.image }}">
-                        {% else %}
-                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"   src="{{ STATIC_URL }}images/plaeholder_icon.png">
-                        {% endif %}
+
+                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"   src="{{ STATIC_URL }}images/excl.png">
+
                             <form method="POST" action="{% url "getaProfile" theusername=link.0.username user_id=link.0.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
                             <input type="hidden" value="{{link.0.username}}" name="username">
-                            <input type="submit" value="{{link.0.username}}">
+                            <input type="submit" value="Go to {{link.0.username}}'s profile">
                         </form>
 
                     </div>
@@ -55,17 +54,14 @@
                 {% for link in follow %}
                     <div class="bubbleWrapper row" style="padding: 10pt;">
                         <!-- Need to do images -->
-                        {% if link.image %}
-                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;" src="{{ MEDIA_URL }}//{{ link.image }}">
-                        {% else %}
-                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"   src="{{ STATIC_URL }}images/plaeholder_icon.png">
-                        {% endif %}
+                        <img class="avatar" style="width: 80px; height: 80px; border-radius:80px;"   src="{{ STATIC_URL }}images/Star.png">
+
                             <form method="POST" action="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}" enctype="multipart/form-data" name="form">
                             {% csrf_token %}
                             <input type="hidden" value="{{link.username}}" name="username">
-                            <input type="submit" value="{{link.username}}">
+                            <input type="submit" value="Go to {{link.username}}'s profile">
                         </form>
-
+                        
                     </div>
                 {% endfor %}
 			</div>
