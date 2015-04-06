@@ -705,10 +705,19 @@ def friendRequest(request):
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
 
+            for e in Friends.objects.filter(inviter_id=ourName):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    items.append(a)
+
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        items.append(a)
             #print("itemsfr:", items)
         
-            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends, 'friends' : friends,
-                      "author": theirAuthor} )
+            return render(request, 'friends.html', {'items' : items, "author": ourName} )
 
         except:
             print ("not local author")
