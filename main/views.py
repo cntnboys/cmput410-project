@@ -494,7 +494,7 @@ def logout(request):
     # Logout function redefined in import statement by Chris Morgan
     # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
     auth_logout(request)
-    Session.objects.all().delete()
+    #Session.objects.all().delete()
     return redirect(indexPage)
 
 # Main Page function allows user to go back to the stream of posts
