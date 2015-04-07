@@ -96,23 +96,8 @@ class AuthorTests(TestCase):
         self.assertEqual(author2, "Username location not unique together")
         self.assertEqual(Authors.objects.all().count(), 1)
 
-    # CREATE AN AUTHOR WITHOUT USERNAME (A REQUIRED FIELD)
-    #def test_create_author_no_username(self):
-    
-    #   name = "Bob John Murley"
-    #   email = "bob@ualberta.ca"
-    #   location = "thought-bubble.com"
-    
-    #   try:
-    #       author = Authors.objects.get_or_create(name=name, email=email, location=location)
-    #   except:
-    #       author = "Username is required"
-        
-        #   self.assertEqual(author, "Username is required")
-        #self.assertEqual(Authors.objects.all().count(), 0)
 
-
-    # UPDATE AN AUHTOR'S USERNAME
+    # UPDATE AN AUTHOR'S USERNAME
     def test_update_author(self):
         
         author1 = Authors.objects.get_or_create(name="Ana Marcu", username="aname",location="thought-bubble.com", email="marcu@ualberta.ca")[0]
@@ -170,7 +155,7 @@ class NodesTests(TestCase):
         self.assertEqual(Nodes.objects.all().count(), 1)
 
     # CREATE A NODE WITH AN EXISITNG URL
-    def test_create_author_same_url(self):
+    def test_create_node_same_url(self):
 
         node1 = Nodes.objects.get_or_create(node_url="http://thought-bubble.com", node_name="Thought Bubble")[0]
 
