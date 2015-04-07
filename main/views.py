@@ -40,6 +40,7 @@ from django.utils.html import strip_tags
 home = "thought-bubble.herokuapp.com"
 cs410 = "cs410.cs.ualberta.ca:41084"
 projecthub = "projecthub.ca"
+
 counter = 0
 #################################################################################
 #                          API Function Calls Are Here                          #
@@ -200,6 +201,7 @@ def getAuthorsFromOthers(location):
         headers = {}
 
     r = requests.get(url, headers=headers)
+    print r
     content = json.loads(r.content)
 
     if location==projecthub:
@@ -413,6 +415,31 @@ def makeFriendRequest(theirUName,ourUName, locations):
                     }
         r = requests.post(url,data=json.dumps(payload), headers=headers)
 
+    if locations == projecthub:
+        theirAuthor = Authors.objects.get(username=theirUName, location=locations)
+        ourName = Authors.objects.get(username=ourUName, location="thought-bubble.herokuapp.com")
+        url = "http://projecthub.ca/api/friendrequest"
+        string = "Basic "+ base64.b64encode("node:api")
+        headers = {"Authorization":string, "Content-Type":"application/json"}
+        oid = str(ourName.author_uuid)
+        odname = str(ourName.username)
+        furl ="http://projecthub.ca/author/%s" % str(theirAuthor.author_uuid)
+        fdname = str(theirAuthor.username)
+        fid = str(theirAuthor.author_uuid)
+        payload =  {    "query": "friendrequest",
+            "author":{
+                "id":oid,
+                    "host":"http://thought-bubble.herokuapp.com/",
+                        "displayname":odname
+                        },
+                        "friend": {
+                            "id":fid,
+                            "host":"http://projecthub.ca/",
+                            "displayname":fdname,
+                            "url":furl
+                }
+                }
+        r = requests.post(url,data=json.dumps(payload), headers=headers)
     return None
 
 
@@ -739,8 +766,8 @@ def friendRequest(request):
 
             return render(request, 'friendrequest.html',{'items':items, "author": aUser, 'follow':follow })
 
-#second group friend request
-# not working because of csrf token problems
+        #second group friend request
+
         try:
             makeFriendRequest(theirUname,current_user, cs410)
 
@@ -748,18 +775,14 @@ def friendRequest(request):
             if request.user.is_authenticated():
                 current_user = request.user.username
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
-                print "here!"
                 updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow=1, frequest=0)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
-                print "there!"
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
             else:
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1)
 
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
-            print items
-            print "items on top"
                 
             return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
                               "author": yourprofileobj} )
@@ -767,7 +790,28 @@ def friendRequest(request):
         except:
             print ("Not author on CMPUT410 host")
 
+        try:
+            makeFriendRequest(theirUname,current_user, projecthub)
+        
+            # SAVE POTENTIAL FRIEND
+            if request.user.is_authenticated():
+                current_user = request.user.username
+            if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
+                updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow=1, frequest=0)
+            elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
+                updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
+            else:
+                new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1)
+
+            yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
+            items.append(yourprofileobj)
             
+            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends,
+                          "author": yourprofileobj} )
+
+        except:
+            print ("Not author on CMPUT410 host")
+   
         yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
         items.append(yourprofileobj)
 
