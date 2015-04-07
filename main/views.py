@@ -200,11 +200,6 @@ def getAuthorsFromOthers(location):
         url = 'http://projecthub.ca/api/authors'
         headers = {}
 
-    elif location==cs4102:
-        url = 'http://cs410.cs.ualberta.ca:41024/api/authors/'
-        string = "Basic "+ base64.b64encode('admin:admin')
-        headers = {'Authorization':string}
-
     r = requests.get(url, headers=headers)
     print r
     content = json.loads(r.content)
@@ -527,10 +522,6 @@ def mainPage(request, current_user):
              getAuthorsFromOthers(projecthub)
         except:
             print "Cannot Get Authors from projecthub"
-        try:
-            getAuthorsFromOthers(cs4102)
-        except:
-            print "Cannot Get Authors from cs4102"
 
         try:
             getPostsFromOthers(cs410)
