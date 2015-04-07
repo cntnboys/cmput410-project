@@ -1,0 +1,3740 @@
+ #### Get A Post ID: 695fe189-b783-4b74-b679-5b312881909b ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "Friendly Guy", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "2c833235-087d-46d1-b83e-6f0fc486a4a2", 
+                "url": "thought-bubble.herokuapp.com/main/Friendly Guy/2c833235-087d-46d1-b83e-6f0fc486a4a2/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': '2c833235-087d-46d1-b83e-6f0fc486a4a2', 'displayname': 'Friendly Guy'}, 'comment': 'None', 'guid': '681e0ee6-11ca-4a89-b8a0-ba2892052d4c', 'pubDate': '2015-04-07 04:38:48.873007+00:00'}]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "695fe189-b783-4b74-b679-5b312881909b", 
+            "origin": "thought-bubble.herokuapp.com", 
+            "pubdate": "2015-04-07 04:38:48.866549+00:00", 
+            "source": "http://thought-bubble.herokuapp.com/main/getapost/?=695fe189-b783-4b74-b679-5b312881909b/", 
+            "title": "Hey how is everyone???", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get all public posts ###
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              4036d8c                                    Fixing Bulk Friends Request After                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "acf18e1b-e5fe-474f-9652-eab9b60c8640", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:18.003523+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              8ee38cc                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                20fff85                                    Fixed comments                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e3a73b7f-9399-443e-b5e7-e64743474b0f", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:18.874849+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              025b129                                    Fxing UI elements                                                                                1b33a32                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "fb2276b3-64a2-4425-8b24-2c48b8c41784", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:19.760599+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7a89296                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                d537f1f                                    Debugging new location check                                      3 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66d33706-6dad-47ce-80f4-f883394cb282", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:20.652358+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 31, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Project Specifications.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f8cfdff7-d9d1-46f5-b764-80367b5ad5cf", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:21.539078+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              f41391e                                    Update Bugs to FOAF and CheckFriends                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2a23cbd0-513c-4d83-aa3c-55a278739e89", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:22.459120+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              0fec86f                                    Fixing Delete. Fixing pathing and queries structure                                                                                77c067b                                    Comment host checking                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6ea742b3-f85d-4efd-9627-b66169568684", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:23.339458+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              2356af4                                    Adding test data                                                                                386650a                                    Test Commit                                      4 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "fea274ca-d3c6-47ba-bf9c-faf303042edd", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:24.227527+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7a4ea3a                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                fb702e6                                    Fixing No Reverse Bug. Adding 404 HTML                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e7f5198d-18b6-487e-ab7f-a40b8cd89e62", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:25.126636+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 30, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              fe1407c                                    Merge pull request #50 from cntnboys/AnaModels                                                                                581734d                                    slight location change                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "81c00587-d792-4ad5-a5c4-4ef7082a94e3", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:26.002629+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 30, 2015  djphan merged pull request cntnboys/cmput410-project#50        changed models uuids get requests bugs fixed                      3 commits with        79 additions and        60 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "242bafda-cd4b-4be8-b4d7-af9c1b6aa3d4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:26.893692+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#50", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Implementation Details of APIs and Tests.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "cfccf4c6-9fc9-4b59-9b61-4258ae68b881", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:27.783932+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan created the cntnboys/cmput410-project wiki                          Created          Django Implementation of APIs.                          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5b2d6b81-e58f-48f0-9af7-a54e299c658e", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:28.984238+00:00", 
+            "source": "", 
+            "title": "djphan created the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "75e8c750-e67c-40b9-8d0a-d3b8f9a7e666", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:29.882411+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Project Specifications.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7fbb101d-a104-489a-acb6-f249483b66ed", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:30.775804+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "        djphan deleted branch djphan at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "058b8d72-9c36-493e-a50b-6269a97cffb4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:31.819167+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphan at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              b674188                                    Merge branch 'djphan'                                                                                caba45a                                    UI Fixes                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f7503419-d6f1-4c20-a8ae-f74c3fb58346", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:32.700946+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan merged pull request cntnboys/cmput410-project#49        UI Fixes                      1 commit with        237 additions and        116 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5562043e-c660-4e0c-be55-70c7f27d16f7", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:33.580058+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#49", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan opened pull request cntnboys/cmput410-project#49        UI Fixes                      1 commit with        237 additions and        116 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "004036ac-7883-4f9f-a709-8bf50c402d97", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:34.478261+00:00", 
+            "source": "", 
+            "title": "djphan opened pull request cntnboys/cmput410-project#49", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "        djphan created branch djphan at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8ce25724-5f28-40d6-bf0d-59de8d2fc0f1", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:35.350327+00:00", 
+            "source": "", 
+            "title": "djphan created branch djphan at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "        djphan deleted branch djphannew at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8ff03b0f-76c9-4c6f-a8d7-71b8015cc79a", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:36.227301+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphannew at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "        djphan deleted branch djphanDatUICleanUp at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "bb3208d2-4747-4d97-b584-787a66792449", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:37.107462+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphanDatUICleanUp at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              c8875b7                                    Merge branch 'djphanDatUICleanUp'                                                                                10c02d3                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project \u2026                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "465ab981-fe7d-4ac0-a057-3dd6bf0acdd4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:37.994112+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan merged pull request cntnboys/cmput410-project#48        Fixing UI. Profile. Fixed some JSON issues. Added some try: except: for ...                      1 commit with        225 additions and        139 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9144a3ab-8ce7-4ad8-9f0e-76bb580579fe", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:38.872008+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#48", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 27, 2015  djphan opened pull request cntnboys/cmput410-project#48        Fixing UI. Profile. Fixed some JSON issues. Added some try: except: for ...                      1 commit with        225 additions and        139 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "ac81b185-a0df-4896-970e-aa176a7a2f51", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:39.754911+00:00", 
+            "source": "", 
+            "title": "djphan opened pull request cntnboys/cmput410-project#48", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "        djphan created branch djphanDatUICleanUp at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "734732e1-e412-490e-9aa1-1aaaf3a9a127", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:40.629778+00:00", 
+            "source": "", 
+            "title": "djphan created branch djphanDatUICleanUp at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Mar 26, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f5367c2d-c0fc-461a-ac56-5f4042955041", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:41.504014+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              e32e12c                                    Cleaned up heroku test server                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0bb27a64-5b49-47bf-b57d-c268ca79d000", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:50:42.390764+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              980dbd3                                    Fixing Friend Request.                                                                                b695c33                                    Fixed nodes issue                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b9c7cf8e-4959-4ebc-a2c9-7419c1db0384", 
+            "origin": "", 
+            "pubdate": "2015-04-03 15:47:22.211074+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              d264b53                                    Heroku settings                                                                                1e2ef5d                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      4 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "a7c759ef-ecbf-4409-b92f-363c567062fd", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:32:58.252046+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              8f20936                                    Heroku                                                                                49e5fc6                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7ba81f70-96b3-4fbe-8bae-905c43c2a6d9", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:32:59.138400+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "sisenior", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "55099018-78b5-4178-b9ee-be99308fe8d6", 
+                "url": "thought-bubble.herokuapp.com/main/sisenior/55099018-78b5-4178-b9ee-be99308fe8d6/"
+            }, 
+            "comments": "[]", 
+            "content": "Si", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "46ca6b99-dfe8-4bdd-ae8c-57426e935a47", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:42:43.963911+00:00", 
+            "source": "", 
+            "title": "Si (Oui or Yes)", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "sisenior", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "55099018-78b5-4178-b9ee-be99308fe8d6", 
+                "url": "thought-bubble.herokuapp.com/main/sisenior/55099018-78b5-4178-b9ee-be99308fe8d6/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': 'b815b07c-2018-4b2c-bc98-d68603975bac', 'displayname': 'iamthrall_warchief'}, 'comment': 'Yoh', 'guid': '51195116-e796-400e-82c6-c1f41237c7ca', 'pubDate': '2015-04-05 18:28:55.236321+00:00'}]", 
+            "content": "I thought this was a thought cloud", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5db57514-39a1-49b4-8165-24fcf5802705", 
+            "origin": "", 
+            "pubdate": "2015-04-04 20:03:57.822708+00:00", 
+            "source": "", 
+            "title": "I does a thought bubble work", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              0c81991                                    Fixing Image Bug for Edit Posts                                                                                3238bf8                                    Fixing Edit Post                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b100b3e0-f7a2-4842-80a2-bb49d527537e", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:49:20.980035+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked blueimp/JavaScript-Load-Image to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "752e9352-7c23-43de-ba82-3977e1e5fc70", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.440105+00:00", 
+            "source": "", 
+            "title": "tb forked blueimp/JavaScript-Load-Image to tb/JavaScript-Load-Image", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked angular-ui/ui-select2 to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "924d6376-c05d-4595-b925-b1b9e9c2f9d9", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.459388+00:00", 
+            "source": "", 
+            "title": "tb forked angular-ui/ui-select2 to tb/ui-select2", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              dae3b83                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                f5a1b6e                                    Fixing UI                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "584a1108-3a53-43d5-944d-9b43fbb627c5", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:49:48.421818+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              e658a38                                    UI changes                                                                                d642f1a                                    Change Posts                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "91fb0e8e-47e2-4bce-856e-33078eea249b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 00:46:01.205901+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              5201cc5                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                d0b017c                                    FoafFixed                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "38ae27c5-5c4b-4b2d-978f-25f5c9eedcb2", 
+            "origin": "", 
+            "pubdate": "2015-04-05 01:03:45.685064+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7d77aa2                                    Cleaning code                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "accdc4c1-51c6-42ed-81bb-0b7619f6256b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 01:03:47.587607+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              c25e0ec                                    Final UI changes                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0304f401-7e45-4fb4-aae3-6e8e47548c69", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:22:18.917132+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              f6aecfc                                    Fixed Leaning Tower of Posts                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "05ee5c0c-eef2-4cbf-9987-30b9d590add9", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:32:06.413727+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              26609cb                                    Fixing main spacing                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "72ad6556-0927-48b7-963e-3fc798be512b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:50:24.125736+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "I'm organizing a tournament for the best players. Expect dollar packs and lots of gold for your troubles. Imaginary details are here.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "ecde926d-b14e-4d60-8a08-ec934db6a655", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:33:39.808475+00:00", 
+            "source": "", 
+            "title": "Howdy Fellow Heartharena Players2", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Thom", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "61fa89a6-bdb5-412a-8749-44f7fa424207", 
+                "url": "thought-bubble.herokuapp.com/main/Thom/61fa89a6-bdb5-412a-8749-44f7fa424207/"
+            }, 
+            "comments": "[]", 
+            "content": "asd", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "78f0b94e-327e-4fa4-a3d9-58ec7ea9827e", 
+            "origin": "", 
+            "pubdate": "2015-04-05 23:06:59.317320+00:00", 
+            "source": "", 
+            "title": "Thom's public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": "[]", 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              984dcd1                                    Fixing Update Multi Value Error                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0d272d6b-a263-4c00-b15e-4c0e13af4a42", 
+            "origin": "", 
+            "pubdate": "2015-04-05 03:00:46.287849+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "JohnsFriend", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "a823698a-97ca-4607-86d5-26910b25a871", 
+                "url": "thought-bubble.herokuapp.com/main/JohnsFriend/a823698a-97ca-4607-86d5-26910b25a871/"
+            }, 
+            "comments": "[]", 
+            "content": "I feel sad I can't be his friend.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f59dddaf-6aa4-4073-a5b2-132aab6a469f", 
+            "origin": "", 
+            "pubdate": "2015-04-05 23:23:38.496286+00:00", 
+            "source": "", 
+            "title": "I really want to be john's friend", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "50", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "52e7ace8-3723-4a7d-8abc-d4228ff5dced", 
+                "url": "thought-bubble.herokuapp.com/main/50/52e7ace8-3723-4a7d-8abc-d4228ff5dced/"
+            }, 
+            "comments": "[]", 
+            "content": " opened issue continuous-software/node-linnworks#1              Integration      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6ff9ceee-5e6d-478f-a8af-2671fa9c629c", 
+            "origin": "", 
+            "pubdate": "2015-04-05 17:47:02.327047+00:00", 
+            "source": "", 
+            "title": "50 opened issue continuous-software/node-linnworks#1", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9/"
+            }, 
+            "comments": "[]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "10f3c573-8c42-44a0-8e7c-c0a1303141ed", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.789747+00:00", 
+            "source": "", 
+            "title": "Second post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9/"
+            }, 
+            "comments": "[]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5b83757e-3eb1-4326-bf8f-df1d295bbd30", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.817672+00:00", 
+            "source": "", 
+            "title": "Hi everyone!", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "ig", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "892d6964-6432-44f0-b2e0-528c503485d9", 
+                "url": "thought-bubble.herokuapp.com/main/ig/892d6964-6432-44f0-b2e0-528c503485d9/"
+            }, 
+            "comments": "[]", 
+            "content": "as", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6279b283-c2e0-4f52-99a5-f79d559b2ced", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:57:01.899573+00:00", 
+            "source": "", 
+            "title": "public ig post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "ig", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "892d6964-6432-44f0-b2e0-528c503485d9", 
+                "url": "thought-bubble.herokuapp.com/main/ig/892d6964-6432-44f0-b2e0-528c503485d9/"
+            }, 
+            "comments": "[]", 
+            "content": "content", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e2766e0f-8581-40f1-b53d-f7558e573c10", 
+            "origin": "", 
+            "pubdate": "2015-04-06 00:41:01.472242+00:00", 
+            "source": "", 
+            "title": "post editt", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred idno/User-Research        Apr 4, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f377555a-4e97-4584-9b32-b9e13ae2f61e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.262855+00:00", 
+            "source": "", 
+            "title": "tb starred idno/User-Research", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred airbnb/javascript        Apr 4, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "77ec0c3b-59fe-465e-b787-99084e110722", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.293967+00:00", 
+            "source": "", 
+            "title": "tb starred airbnb/javascript", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred KillaPL/steak        Apr 2, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "43fda858-71de-433f-9eed-daaaebbb3284", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.319394+00:00", 
+            "source": "", 
+            "title": "tb starred KillaPL/steak", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked shinnn/uglify-save-license to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7c6143a4-9f35-41d6-99e4-2fd293315d0a", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.343449+00:00", 
+            "source": "", 
+            "title": "tb forked shinnn/uglify-save-license to tb/uglify-save-license", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred shinnn/uglify-save-license        Mar 31, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f99a26f4-cdc5-44a9-835b-2a47919c682b", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.363102+00:00", 
+            "source": "", 
+            "title": "tb starred shinnn/uglify-save-license", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred itslenny/angular-pretty-checkable        Mar 31, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "49316085-4228-4644-9ad0-aa6be8b50e5c", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.380509+00:00", 
+            "source": "", 
+            "title": "tb starred itslenny/angular-pretty-checkable", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " commented on commit miksturait/merit-money@c9a2f84f06              Yes      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "462fff13-9850-450b-abfc-3bbbc0e9a6cb", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.397552+00:00", 
+            "source": "", 
+            "title": "tb commented on commit miksturait/merit-money@c9a2f84f06", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " pushed to v0.4.0 at ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "51531a62-ef80-40f1-9a3f-7979ad23e4a8", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.420263+00:00", 
+            "source": "", 
+            "title": "tb pushed to v0.4.0 at tb/ng-table", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " commented on pull request Swiip/generator-gulp-angular#443              Is the centralized processing producing .js files for only the changed files? I.e. I change some.spec.coffee and only some.spec.js is generated?      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b8d748a3-44b8-472a-8c22-8a7bfb21c0d7", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.475715+00:00", 
+            "source": "", 
+            "title": "tb commented on pull request Swiip/generator-gulp-angular#443", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred ck86/main-bower-files        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "380aa877-55e0-46fe-a9ac-d5202c037936", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.497546+00:00", 
+            "source": "", 
+            "title": "tb starred ck86/main-bower-files", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred klei/gulp-inject        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "85764cfc-8e9f-4d23-9afc-4f6ddf8a23cd", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.513716+00:00", 
+            "source": "", 
+            "title": "tb starred klei/gulp-inject", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked netzpirat/haml-coffee to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "bd27ac40-5b42-41ba-b372-bf275e64750e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.531205+00:00", 
+            "source": "", 
+            "title": "tb forked netzpirat/haml-coffee to tb/haml-coffee", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked stevelacy/gulp-haml to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0b3e3a5c-3afc-442a-ad7b-d9a88b8b302b", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.549490+00:00", 
+            "source": "", 
+            "title": "tb forked stevelacy/gulp-haml to tb/gulp-haml", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked tj/haml.js to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "10aca909-7770-4cc4-b3d5-a7959165954e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.568251+00:00", 
+            "source": "", 
+            "title": "tb forked tj/haml.js to tb/haml.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked creationix/haml-js to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "72fe1747-9de2-4ff4-977c-bd6e91668bd1", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.587981+00:00", 
+            "source": "", 
+            "title": "tb forked creationix/haml-js to tb/haml-js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred tj/consolidate.js        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "86b44935-4b20-4eb4-b85d-4e2d53fa1ca1", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.607933+00:00", 
+            "source": "", 
+            "title": "tb starred tj/consolidate.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred tj/haml.js        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66530300-d86e-40ef-8e63-d8e26657d948", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.627345+00:00", 
+            "source": "", 
+            "title": "tb starred tj/haml.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred wiledal/gulp-include        Mar 24, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8d15671c-ea18-411e-b026-105357a0604a", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.647515+00:00", 
+            "source": "", 
+            "title": "tb starred wiledal/gulp-include", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred greypants/gulp-starter        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8dfb085c-efdc-413c-9ef1-6cb04f740add", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.664747+00:00", 
+            "source": "", 
+            "title": "tb starred greypants/gulp-starter", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred dlmanning/gulp-sass        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6fe8a476-7647-49f7-a28a-befc0d0bd6b2", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.686547+00:00", 
+            "source": "", 
+            "title": "tb starred dlmanning/gulp-sass", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred taptapship/wiredep        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "30253275-1f4d-41b5-84b3-efd7191cce65", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.710849+00:00", 
+            "source": "", 
+            "title": "tb starred taptapship/wiredep", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " opened pull request Swiip/generator-gulp-angular#443        fix #438 coffee test auto task                      1 commit with        24 additions and        2 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9290afcd-4a6b-45f9-b28e-811969cfc66f", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.731509+00:00", 
+            "source": "", 
+            "title": "tb opened pull request Swiip/generator-gulp-angular#443", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " created branch fix-coffeescript-test-auto at ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "d3a3116b-0c38-44b8-a00c-4125292976f9", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.752985+00:00", 
+            "source": "", 
+            "title": "tb created branch fix-coffeescript-test-auto at tb/generator-gulp-angular", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " forked Swiip/generator-gulp-angular to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "1c619b7a-720c-47f5-aa5d-3a4dd8e27913", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.769596+00:00", 
+            "source": "", 
+            "title": "tb forked Swiip/generator-gulp-angular to tb/generator-gulp-angular", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " commented on issue Swiip/generator-gulp-angular#438              gulp test:auto reruns tests for *.spec.js changes, but not for *.spec.coffee changes.      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "4ce55d50-9c67-4e59-9819-4fe31b0402e7", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.791475+00:00", 
+            "source": "", 
+            "title": "tb commented on issue Swiip/generator-gulp-angular#438", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred AveVlad/gulp-connect        Mar 21, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "3135eb1f-294d-4749-85e0-8d54dda0facd", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.812512+00:00", 
+            "source": "", 
+            "title": "tb starred AveVlad/gulp-connect", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " starred floatdrop/gulp-plumber        Mar 21, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "77e9a1a7-a58f-4d46-8ae5-81aaec8f2ed0", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.829514+00:00", 
+            "source": "", 
+            "title": "tb starred floatdrop/gulp-plumber", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[]", 
+            "content": " pushed to gulp-angular at miksturait/merit-money                                                              260c827                                    add select user directive                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "af531701-be61-41c8-b54c-2301f8afd2d8", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.846263+00:00", 
+            "source": "", 
+            "title": "tb pushed to gulp-angular at miksturait/merit-money", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': '4955530c-3267-40e1-8fcc-7fa8cd256c98', 'displayname': 'Nuisance'}, 'comment': 'truuu', 'guid': '25dc47a7-64fd-48c1-b58a-fec05b67aad3', 'pubDate': '2015-04-07 04:39:33.010294+00:00'}]", 
+            "content": "I had a dream where I would become friends with someone from social-distribution.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8a0c8cec-b35f-4534-b359-2d4445c8259f", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:52:34.174708+00:00", 
+            "source": "", 
+            "title": "I had a dream", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "bubble", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "3be635c3-fc4e-45d4-9a70-555e38e90f93", 
+                "url": "thought-bubble.herokuapp.com/main/bubble/3be635c3-fc4e-45d4-9a70-555e38e90f93/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': '4955530c-3267-40e1-8fcc-7fa8cd256c98', 'displayname': 'Nuisance'}, 'comment': 'asdaq', 'guid': '7e42991e-0da9-4342-9667-c583fc6aa961', 'pubDate': '2015-04-07 04:40:01.787966+00:00'}]", 
+            "content": "i feel bad", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66114eb3-c2d3-492a-9588-ab11f9128bbc", 
+            "origin": "", 
+            "pubdate": "2015-04-06 03:40:51.151543+00:00", 
+            "source": "", 
+            "title": "i feel bad", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Hnirt", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "d87e6112-8bb7-470b-986d-6b0c6f9d62f4", 
+                "url": "thought-bubble.herokuapp.com/main/Hnirt/d87e6112-8bb7-470b-986d-6b0c6f9d62f4/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': 'd87e6112-8bb7-470b-986d-6b0c6f9d62f4', 'displayname': 'Hnirt'}, 'comment': '', 'guid': '36733a16-b8f6-4260-a999-d647e73ac36c', 'pubDate': '2015-04-07 04:38:48.844369+00:00'}, {'author': {'host': 'thought-bubble.herokuapp.com', 'id': 'd87e6112-8bb7-470b-986d-6b0c6f9d62f4', 'displayname': 'Hnirt'}, 'comment': '', 'guid': 'a19887b9-31d2-4275-8a32-11065e140834', 'pubDate': '2015-04-07 04:38:48.837423+00:00'}]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "a0a988c6-9154-4613-83c7-b6dbb7b7e725", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.830450+00:00", 
+            "source": "", 
+            "title": "Hey guys, I'm Brian.", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Nuisance", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "4955530c-3267-40e1-8fcc-7fa8cd256c98", 
+                "url": "thought-bubble.herokuapp.com/main/Nuisance/4955530c-3267-40e1-8fcc-7fa8cd256c98/"
+            }, 
+            "comments": "[]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "83fd514d-0947-4477-9a02-5cb1b356767f", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.857431+00:00", 
+            "source": "", 
+            "title": "Hey guys wow cool neato nice", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Friendly Guy", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "2c833235-087d-46d1-b83e-6f0fc486a4a2", 
+                "url": "thought-bubble.herokuapp.com/main/Friendly Guy/2c833235-087d-46d1-b83e-6f0fc486a4a2/"
+            }, 
+            "comments": "[{'author': {'host': 'thought-bubble.herokuapp.com', 'id': '4955530c-3267-40e1-8fcc-7fa8cd256c98', 'displayname': 'Nuisance'}, 'comment': \"chillin' u?\", 'guid': '0209e4e1-b3db-48af-9453-451af0aea3fa', 'pubDate': '2015-04-07 05:27:22.200174+00:00'}, {'author': {'host': 'thought-bubble.herokuapp.com', 'id': '2c833235-087d-46d1-b83e-6f0fc486a4a2', 'displayname': 'Friendly Guy'}, 'comment': '', 'guid': '681e0ee6-11ca-4a89-b8a0-ba2892052d4c', 'pubDate': '2015-04-07 04:38:48.873007+00:00'}]", 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "695fe189-b783-4b74-b679-5b312881909b", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.866549+00:00", 
+            "source": "", 
+            "title": "Hey how is everyone???", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get specific author posts for authenticated user ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9"
+            }, 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5b83757e-3eb1-4326-bf8f-df1d295bbd30", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.817672+00:00", 
+            "source": "", 
+            "title": "Hi everyone!", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9"
+            }, 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "10f3c573-8c42-44a0-8e7c-c0a1303141ed", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.789747+00:00", 
+            "source": "", 
+            "title": "Second post", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get posts for currently authenticated user ###
+
+
+Response: 
+
+
+{
+    "posts": [
+        {
+            "author": {
+                "displayname": "ben", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "04957a6ad97b11e4b3e6005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/ben/04957a6ad97b11e4b3e6005056041008/"
+            }, 
+            "comments": [], 
+            "content": "I swear", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "56a6de0edce411e4a5d3005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-07 05:26:54.974026+00:00", 
+            "source": "", 
+            "title": "CommonMark works!", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "ben", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "04957a6ad97b11e4b3e6005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/ben/04957a6ad97b11e4b3e6005056041008/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "ben", 
+                        "host": "cs410.cs.ualberta.ca:41084", 
+                        "id": "04957a6ad97b11e4b3e6005056041008"
+                    }, 
+                    "comment": "None", 
+                    "guid": "86dca2e8dcdf11e4a094005056041008", 
+                    "pubDate": "2015-04-07 04:38:48.948123+00:00"
+                }
+            ], 
+            "content": "Gettin Posts", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "83cb4820dcdf11e4b07f005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.937839+00:00", 
+            "source": "", 
+            "title": "Ben is finally online", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Friendly Guy", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "2c833235-087d-46d1-b83e-6f0fc486a4a2", 
+                "url": "thought-bubble.herokuapp.com/main/Friendly Guy/2c833235-087d-46d1-b83e-6f0fc486a4a2/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "Friendly Guy", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "2c833235-087d-46d1-b83e-6f0fc486a4a2"
+                    }, 
+                    "comment": "chillin' u?", 
+                    "guid": "0209e4e1-b3db-48af-9453-451af0aea3fa", 
+                    "pubDate": "2015-04-07 05:27:22.200174+00:00"
+                }, 
+                {
+                    "author": {
+                        "displayname": "Friendly Guy", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "2c833235-087d-46d1-b83e-6f0fc486a4a2"
+                    }, 
+                    "comment": "None", 
+                    "guid": "681e0ee6-11ca-4a89-b8a0-ba2892052d4c", 
+                    "pubDate": "2015-04-07 04:38:48.873007+00:00"
+                }
+            ], 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "695fe189-b783-4b74-b679-5b312881909b", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.866549+00:00", 
+            "source": "", 
+            "title": "Hey how is everyone???", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Nuisance", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "4955530c-3267-40e1-8fcc-7fa8cd256c98", 
+                "url": "thought-bubble.herokuapp.com/main/Nuisance/4955530c-3267-40e1-8fcc-7fa8cd256c98/"
+            }, 
+            "comments": [], 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "83fd514d-0947-4477-9a02-5cb1b356767f", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.857431+00:00", 
+            "source": "", 
+            "title": "Hey guys wow cool neato nice", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Hnirt", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "d87e6112-8bb7-470b-986d-6b0c6f9d62f4", 
+                "url": "thought-bubble.herokuapp.com/main/Hnirt/d87e6112-8bb7-470b-986d-6b0c6f9d62f4/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "Hnirt", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "d87e6112-8bb7-470b-986d-6b0c6f9d62f4"
+                    }, 
+                    "comment": "None", 
+                    "guid": "36733a16-b8f6-4260-a999-d647e73ac36c", 
+                    "pubDate": "2015-04-07 04:38:48.844369+00:00"
+                }, 
+                {
+                    "author": {
+                        "displayname": "Hnirt", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "d87e6112-8bb7-470b-986d-6b0c6f9d62f4"
+                    }, 
+                    "comment": "None", 
+                    "guid": "a19887b9-31d2-4275-8a32-11065e140834", 
+                    "pubDate": "2015-04-07 04:38:48.837423+00:00"
+                }
+            ], 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "a0a988c6-9154-4613-83c7-b6dbb7b7e725", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.830450+00:00", 
+            "source": "", 
+            "title": "Hey guys, I'm Brian.", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "nbui", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "62aab028-9494-4441-a3ee-e0486845c6f4", 
+                "url": "thought-bubble.herokuapp.com/main/nbui/62aab028-9494-4441-a3ee-e0486845c6f4/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "nbui", 
+                        "host": "http://hindlebook.tamarabyte.com/api", 
+                        "id": "62aab028-9494-4441-a3ee-e0486845c6f4"
+                    }, 
+                    "comment": "None", 
+                    "guid": "3c347d2d-0bef-4661-835a-64475ff46e0d", 
+                    "pubDate": "2015-04-07 04:38:48.817858+00:00"
+                }
+            ], 
+            "content": "This is my first post on hindlebook", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f453b3de-1d58-4c42-b746-6049d4a75514", 
+            "origin": "", 
+            "pubdate": "2015-04-07 04:38:48.802471+00:00", 
+            "source": "", 
+            "title": "This is my first post on hindlebook", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "marcus", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "699cfde6-9f19-4202-8631-fb950b11d250", 
+                "url": "thought-bubble.herokuapp.com/main/marcus/699cfde6-9f19-4202-8631-fb950b11d250/"
+            }, 
+            "comments": [], 
+            "content": "This is a sick song checkit", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0324a6d5-79dd-4d31-8b88-87a82b090cfd", 
+            "origin": "", 
+            "pubdate": "2015-04-06 04:36:13.475736+00:00", 
+            "source": "", 
+            "title": "This is a sick song checkit", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "bubble", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "3be635c3-fc4e-45d4-9a70-555e38e90f93", 
+                "url": "thought-bubble.herokuapp.com/main/bubble/3be635c3-fc4e-45d4-9a70-555e38e90f93/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "bubble", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "3be635c3-fc4e-45d4-9a70-555e38e90f93"
+                    }, 
+                    "comment": "asdaq", 
+                    "guid": "7e42991e-0da9-4342-9667-c583fc6aa961", 
+                    "pubDate": "2015-04-07 04:40:01.787966+00:00"
+                }
+            ], 
+            "content": "i feel bad", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66114eb3-c2d3-492a-9588-ab11f9128bbc", 
+            "origin": "", 
+            "pubdate": "2015-04-06 03:40:51.151543+00:00", 
+            "source": "", 
+            "title": "i feel bad", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "tb", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "1042c725-677d-4e18-96d0-a222a7d7713c"
+                    }, 
+                    "comment": "truuu", 
+                    "guid": "25dc47a7-64fd-48c1-b58a-fec05b67aad3", 
+                    "pubDate": "2015-04-07 04:39:33.010294+00:00"
+                }
+            ], 
+            "content": "I had a dream where I would become friends with someone from social-distribution.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8a0c8cec-b35f-4534-b359-2d4445c8259f", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:52:34.174708+00:00", 
+            "source": "", 
+            "title": "I had a dream", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " pushed to gulp-angular at miksturait/merit-money                                                              260c827                                    add select user directive                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "af531701-be61-41c8-b54c-2301f8afd2d8", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.846263+00:00", 
+            "source": "", 
+            "title": "tb pushed to gulp-angular at miksturait/merit-money", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred floatdrop/gulp-plumber        Mar 21, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "77e9a1a7-a58f-4d46-8ae5-81aaec8f2ed0", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.829514+00:00", 
+            "source": "", 
+            "title": "tb starred floatdrop/gulp-plumber", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred AveVlad/gulp-connect        Mar 21, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "3135eb1f-294d-4749-85e0-8d54dda0facd", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.812512+00:00", 
+            "source": "", 
+            "title": "tb starred AveVlad/gulp-connect", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " commented on issue Swiip/generator-gulp-angular#438              gulp test:auto reruns tests for *.spec.js changes, but not for *.spec.coffee changes.      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "4ce55d50-9c67-4e59-9819-4fe31b0402e7", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.791475+00:00", 
+            "source": "", 
+            "title": "tb commented on issue Swiip/generator-gulp-angular#438", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked Swiip/generator-gulp-angular to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "1c619b7a-720c-47f5-aa5d-3a4dd8e27913", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.769596+00:00", 
+            "source": "", 
+            "title": "tb forked Swiip/generator-gulp-angular to tb/generator-gulp-angular", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " created branch fix-coffeescript-test-auto at ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "d3a3116b-0c38-44b8-a00c-4125292976f9", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.752985+00:00", 
+            "source": "", 
+            "title": "tb created branch fix-coffeescript-test-auto at tb/generator-gulp-angular", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " opened pull request Swiip/generator-gulp-angular#443        fix #438 coffee test auto task                      1 commit with        24 additions and        2 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9290afcd-4a6b-45f9-b28e-811969cfc66f", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.731509+00:00", 
+            "source": "", 
+            "title": "tb opened pull request Swiip/generator-gulp-angular#443", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred taptapship/wiredep        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "30253275-1f4d-41b5-84b3-efd7191cce65", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.710849+00:00", 
+            "source": "", 
+            "title": "tb starred taptapship/wiredep", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred dlmanning/gulp-sass        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6fe8a476-7647-49f7-a28a-befc0d0bd6b2", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.686547+00:00", 
+            "source": "", 
+            "title": "tb starred dlmanning/gulp-sass", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred greypants/gulp-starter        Mar 23, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8dfb085c-efdc-413c-9ef1-6cb04f740add", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.664747+00:00", 
+            "source": "", 
+            "title": "tb starred greypants/gulp-starter", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred wiledal/gulp-include        Mar 24, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8d15671c-ea18-411e-b026-105357a0604a", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.647515+00:00", 
+            "source": "", 
+            "title": "tb starred wiledal/gulp-include", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred tj/haml.js        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66530300-d86e-40ef-8e63-d8e26657d948", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.627345+00:00", 
+            "source": "", 
+            "title": "tb starred tj/haml.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred tj/consolidate.js        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "86b44935-4b20-4eb4-b85d-4e2d53fa1ca1", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.607933+00:00", 
+            "source": "", 
+            "title": "tb starred tj/consolidate.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked creationix/haml-js to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "72fe1747-9de2-4ff4-977c-bd6e91668bd1", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.587981+00:00", 
+            "source": "", 
+            "title": "tb forked creationix/haml-js to tb/haml-js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked tj/haml.js to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "10aca909-7770-4cc4-b3d5-a7959165954e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.568251+00:00", 
+            "source": "", 
+            "title": "tb forked tj/haml.js to tb/haml.js", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked stevelacy/gulp-haml to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0b3e3a5c-3afc-442a-ad7b-d9a88b8b302b", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.549490+00:00", 
+            "source": "", 
+            "title": "tb forked stevelacy/gulp-haml to tb/gulp-haml", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked netzpirat/haml-coffee to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "bd27ac40-5b42-41ba-b372-bf275e64750e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.531205+00:00", 
+            "source": "", 
+            "title": "tb forked netzpirat/haml-coffee to tb/haml-coffee", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred klei/gulp-inject        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "85764cfc-8e9f-4d23-9afc-4f6ddf8a23cd", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.513716+00:00", 
+            "source": "", 
+            "title": "tb starred klei/gulp-inject", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred ck86/main-bower-files        Mar 25, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "380aa877-55e0-46fe-a9ac-d5202c037936", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.497546+00:00", 
+            "source": "", 
+            "title": "tb starred ck86/main-bower-files", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " commented on pull request Swiip/generator-gulp-angular#443              Is the centralized processing producing .js files for only the changed files? I.e. I change some.spec.coffee and only some.spec.js is generated?      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b8d748a3-44b8-472a-8c22-8a7bfb21c0d7", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.475715+00:00", 
+            "source": "", 
+            "title": "tb commented on pull request Swiip/generator-gulp-angular#443", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked angular-ui/ui-select2 to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "924d6376-c05d-4595-b925-b1b9e9c2f9d9", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.459388+00:00", 
+            "source": "", 
+            "title": "tb forked angular-ui/ui-select2 to tb/ui-select2", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked blueimp/JavaScript-Load-Image to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "752e9352-7c23-43de-ba82-3977e1e5fc70", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.440105+00:00", 
+            "source": "", 
+            "title": "tb forked blueimp/JavaScript-Load-Image to tb/JavaScript-Load-Image", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " pushed to v0.4.0 at ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "51531a62-ef80-40f1-9a3f-7979ad23e4a8", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.420263+00:00", 
+            "source": "", 
+            "title": "tb pushed to v0.4.0 at tb/ng-table", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " commented on commit miksturait/merit-money@c9a2f84f06              Yes      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "462fff13-9850-450b-abfc-3bbbc0e9a6cb", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.397552+00:00", 
+            "source": "", 
+            "title": "tb commented on commit miksturait/merit-money@c9a2f84f06", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred itslenny/angular-pretty-checkable        Mar 31, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "49316085-4228-4644-9ad0-aa6be8b50e5c", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.380509+00:00", 
+            "source": "", 
+            "title": "tb starred itslenny/angular-pretty-checkable", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred shinnn/uglify-save-license        Mar 31, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f99a26f4-cdc5-44a9-835b-2a47919c682b", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.363102+00:00", 
+            "source": "", 
+            "title": "tb starred shinnn/uglify-save-license", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " forked shinnn/uglify-save-license to ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7c6143a4-9f35-41d6-99e4-2fd293315d0a", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.343449+00:00", 
+            "source": "", 
+            "title": "tb forked shinnn/uglify-save-license to tb/uglify-save-license", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred KillaPL/steak        Apr 2, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "43fda858-71de-433f-9eed-daaaebbb3284", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.319394+00:00", 
+            "source": "", 
+            "title": "tb starred KillaPL/steak", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred airbnb/javascript        Apr 4, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "77ec0c3b-59fe-465e-b787-99084e110722", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.293967+00:00", 
+            "source": "", 
+            "title": "tb starred airbnb/javascript", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tb", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "1042c725-677d-4e18-96d0-a222a7d7713c", 
+                "url": "thought-bubble.herokuapp.com/main/tb/1042c725-677d-4e18-96d0-a222a7d7713c/"
+            }, 
+            "comments": [], 
+            "content": " starred idno/User-Research        Apr 4, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f377555a-4e97-4584-9b32-b9e13ae2f61e", 
+            "origin": "", 
+            "pubdate": "2015-04-06 02:51:12.262855+00:00", 
+            "source": "", 
+            "title": "tb starred idno/User-Research", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "ig", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "892d6964-6432-44f0-b2e0-528c503485d9", 
+                "url": "thought-bubble.herokuapp.com/main/ig/892d6964-6432-44f0-b2e0-528c503485d9/"
+            }, 
+            "comments": [], 
+            "content": "content", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e2766e0f-8581-40f1-b53d-f7558e573c10", 
+            "origin": "", 
+            "pubdate": "2015-04-06 00:41:01.472242+00:00", 
+            "source": "", 
+            "title": "post editt", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "JohnsFriend", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "a823698a-97ca-4607-86d5-26910b25a871", 
+                "url": "thought-bubble.herokuapp.com/main/JohnsFriend/a823698a-97ca-4607-86d5-26910b25a871/"
+            }, 
+            "comments": [], 
+            "content": "I feel sad I can't be his friend.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f59dddaf-6aa4-4073-a5b2-132aab6a469f", 
+            "origin": "", 
+            "pubdate": "2015-04-05 23:23:38.496286+00:00", 
+            "source": "", 
+            "title": "I really want to be john's friend", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "Thom", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "61fa89a6-bdb5-412a-8749-44f7fa424207", 
+                "url": "thought-bubble.herokuapp.com/main/Thom/61fa89a6-bdb5-412a-8749-44f7fa424207/"
+            }, 
+            "comments": [], 
+            "content": "asd", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "78f0b94e-327e-4fa4-a3d9-58ec7ea9827e", 
+            "origin": "", 
+            "pubdate": "2015-04-05 23:06:59.317320+00:00", 
+            "source": "", 
+            "title": "Thom's public post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "ig", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "892d6964-6432-44f0-b2e0-528c503485d9", 
+                "url": "thought-bubble.herokuapp.com/main/ig/892d6964-6432-44f0-b2e0-528c503485d9/"
+            }, 
+            "comments": [], 
+            "content": "as", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6279b283-c2e0-4f52-99a5-f79d559b2ced", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:57:01.899573+00:00", 
+            "source": "", 
+            "title": "public ig post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9/"
+            }, 
+            "comments": [], 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5b83757e-3eb1-4326-bf8f-df1d295bbd30", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.817672+00:00", 
+            "source": "", 
+            "title": "Hi everyone!", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "btrinh", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "42567a5b-81b8-4962-a9d7-2b558b9da5c9", 
+                "url": "thought-bubble.herokuapp.com/main/btrinh/42567a5b-81b8-4962-a9d7-2b558b9da5c9/"
+            }, 
+            "comments": [], 
+            "content": "", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "10f3c573-8c42-44a0-8e7c-c0a1303141ed", 
+            "origin": "", 
+            "pubdate": "2015-04-05 22:09:03.789747+00:00", 
+            "source": "", 
+            "title": "Second post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "eilonwy", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "2a3d0ad6-d9ac-11e4-99e1-00224d9e24da", 
+                "url": "thought-bubble.herokuapp.com/main/eilonwy/2a3d0ad6-d9ac-11e4-99e1-00224d9e24da/"
+            }, 
+            "comments": [], 
+            "content": "post - pub", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6466c13e-dbcd-11e4-9fb8-00224d9e24da", 
+            "origin": "", 
+            "pubdate": "2015-04-05 21:04:51.966396+00:00", 
+            "source": "", 
+            "title": "I made a new post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "zturchan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "12acaee4-d9ac-11e4-8fca-00224d9e24da", 
+                "url": "thought-bubble.herokuapp.com/main/zturchan/12acaee4-d9ac-11e4-8fca-00224d9e24da/"
+            }, 
+            "comments": [], 
+            "content": "Super exci", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0605d774-dbc8-11e4-ad18-00224d9e24da", 
+            "origin": "", 
+            "pubdate": "2015-04-05 19:17:13.229020+00:00", 
+            "source": "", 
+            "title": "This is a post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "50", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "52e7ace8-3723-4a7d-8abc-d4228ff5dced", 
+                "url": "thought-bubble.herokuapp.com/main/50/52e7ace8-3723-4a7d-8abc-d4228ff5dced/"
+            }, 
+            "comments": [], 
+            "content": " opened issue continuous-software/node-linnworks#1              Integration      ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6ff9ceee-5e6d-478f-a8af-2671fa9c629c", 
+            "origin": "", 
+            "pubdate": "2015-04-05 17:47:02.327047+00:00", 
+            "source": "", 
+            "title": "50 opened issue continuous-software/node-linnworks#1", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              984dcd1                                    Fixing Update Multi Value Error                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0d272d6b-a263-4c00-b15e-4c0e13af4a42", 
+            "origin": "", 
+            "pubdate": "2015-04-05 03:00:46.287849+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              26609cb                                    Fixing main spacing                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "72ad6556-0927-48b7-963e-3fc798be512b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:50:24.125736+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "I'm organizing a tournament for the best players. Expect dollar packs and lots of gold for your troubles. Imaginary details are here.", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "ecde926d-b14e-4d60-8a08-ec934db6a655", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:33:39.808475+00:00", 
+            "source": "", 
+            "title": "Howdy Fellow Heartharena Players2", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              f6aecfc                                    Fixed Leaning Tower of Posts                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "05ee5c0c-eef2-4cbf-9987-30b9d590add9", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:32:06.413727+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              c25e0ec                                    Final UI changes                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0304f401-7e45-4fb4-aae3-6e8e47548c69", 
+            "origin": "", 
+            "pubdate": "2015-04-05 02:22:18.917132+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7d77aa2                                    Cleaning code                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "accdc4c1-51c6-42ed-81bb-0b7619f6256b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 01:03:47.587607+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              5201cc5                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                d0b017c                                    FoafFixed                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "38ae27c5-5c4b-4b2d-978f-25f5c9eedcb2", 
+            "origin": "", 
+            "pubdate": "2015-04-05 01:03:45.685064+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "robert", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "90344edadb1911e4aa69005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/robert/90344edadb1911e4aa69005056041008/"
+            }, 
+            "comments": [], 
+            "content": "Again", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "29297e22db2d11e4a2aa005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-05 01:03:10.437425+00:00", 
+            "source": "", 
+            "title": "Test Post By Rob Again", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 5, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              e658a38                                    UI changes                                                                                d642f1a                                    Change Posts                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "91fb0e8e-47e2-4bce-856e-33078eea249b", 
+            "origin": "", 
+            "pubdate": "2015-04-05 00:46:01.205901+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "robert", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "90344edadb1911e4aa69005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/robert/90344edadb1911e4aa69005056041008/"
+            }, 
+            "comments": [], 
+            "content": "Bleh", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "000ec476db2711e49aae005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-05 00:16:25.145524+00:00", 
+            "source": "", 
+            "title": "Bleh", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "robert", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "90344edadb1911e4aa69005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/robert/90344edadb1911e4aa69005056041008/"
+            }, 
+            "comments": [], 
+            "content": "Such spam", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "1696bf1adb2611e48bde005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-05 00:16:25.131611+00:00", 
+            "source": "", 
+            "title": "Another Test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "robert", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "90344edadb1911e4aa69005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/robert/90344edadb1911e4aa69005056041008/"
+            }, 
+            "comments": [], 
+            "content": "my name is", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f9aa0c82db2411e485d2005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-05 00:16:25.108873+00:00", 
+            "source": "", 
+            "title": "Hi my name is", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "robert", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "90344edadb1911e4aa69005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/robert/90344edadb1911e4aa69005056041008/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "robert", 
+                        "host": "team8", 
+                        "id": "90344edadb1911e4aa69005056041008"
+                    }, 
+                    "comment": "None", 
+                    "guid": "7a68e512db1d11e49db6005056041008", 
+                    "pubDate": "2015-04-04 23:01:30.260292+00:00"
+                }
+            ], 
+            "content": "Test Post By Rob", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0a390132db1d11e48b76005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:51:00.373680+00:00", 
+            "source": "", 
+            "title": "Test Post By Rob", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              dae3b83                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                f5a1b6e                                    Fixing UI                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "584a1108-3a53-43d5-944d-9b43fbb627c5", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:49:48.421818+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              0c81991                                    Fixing Image Bug for Edit Posts                                                                                3238bf8                                    Fixing Edit Post                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b100b3e0-f7a2-4842-80a2-bb49d527537e", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:49:20.980035+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tamara", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "27f0259e-91f1-4342-a3ab-a2d1b0a87c4b", 
+                "url": "thought-bubble.herokuapp.com/main/tamara/27f0259e-91f1-4342-a3ab-a2d1b0a87c4b/"
+            }, 
+            "comments": [], 
+            "content": "Bunnies", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2e937690-977e-41a0-a7b1-7596baf80a30", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:34.290219+00:00", 
+            "source": "", 
+            "title": "Bunnies", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "admin", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "424d049a-d216-4f86-932b-a0bca333f16c", 
+                "url": "thought-bubble.herokuapp.com/main/admin/424d049a-d216-4f86-932b-a0bca333f16c/"
+            }, 
+            "comments": [], 
+            "content": "Welcome to Hindlebook", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "857b7f81-cb94-4dae-a3e5-1041d80e372c", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:33.722199+00:00", 
+            "source": "", 
+            "title": "Welcome to Hindlebook", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "tatest", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "f924beec-1ab3-4d28-adb4-3554f6dddf4c", 
+                "url": "thought-bubble.herokuapp.com/main/tatest/f924beec-1ab3-4d28-adb4-3554f6dddf4c/"
+            }, 
+            "comments": [], 
+            "content": "This is a ta test", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8a6aff5d-677a-4e9e-aba4-5631cbfa00be", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:33.153343+00:00", 
+            "source": "", 
+            "title": "This is a ta test", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "marcus", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "699cfde6-9f19-4202-8631-fb950b11d250", 
+                "url": "thought-bubble.herokuapp.com/main/marcus/699cfde6-9f19-4202-8631-fb950b11d250/"
+            }, 
+            "comments": [], 
+            "content": "Why no markdown working?", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "05ecd050-d3c8-4eac-a8a4-a2fb7afd5a95", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:32.585433+00:00", 
+            "source": "", 
+            "title": "Why no markdown working?", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "admin", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "424d049a-d216-4f86-932b-a0bca333f16c", 
+                "url": "thought-bubble.herokuapp.com/main/admin/424d049a-d216-4f86-932b-a0bca333f16c/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "admin", 
+                        "host": "http://hindlebook.tamarabyte.com/api", 
+                        "id": "424d049a-d216-4f86-932b-a0bca333f16c"
+                    }, 
+                    "comment": "None", 
+                    "guid": "ecdca01b-7b0e-4c32-933a-fc17a12565bf", 
+                    "pubDate": "2015-04-04 22:27:32.010962+00:00"
+                }
+            ], 
+            "content": "This is the top post to comment on", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "d4381dfe-383b-436a-a100-7af6d31ea794", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:31.524496+00:00", 
+            "source": "", 
+            "title": "This is the top post to comment on", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "marcus", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "699cfde6-9f19-4202-8631-fb950b11d250", 
+                "url": "thought-bubble.herokuapp.com/main/marcus/699cfde6-9f19-4202-8631-fb950b11d250/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "marcus", 
+                        "host": "http://hindlebook.tamarabyte.com/api", 
+                        "id": "699cfde6-9f19-4202-8631-fb950b11d250"
+                    }, 
+                    "comment": "None", 
+                    "guid": "08598b70-6c82-4cfc-aaf9-8f2636c6d517", 
+                    "pubDate": "2015-04-04 22:27:30.887761+00:00"
+                }, 
+                {
+                    "author": {
+                        "displayname": "marcus", 
+                        "host": "http://hindlebook.tamarabyte.com/api", 
+                        "id": "699cfde6-9f19-4202-8631-fb950b11d250"
+                    }, 
+                    "comment": "None", 
+                    "guid": "68ee5366-75f0-46bb-b95f-07e4178f2f94", 
+                    "pubDate": "2015-04-04 22:27:30.395553+00:00"
+                }
+            ], 
+            "content": "My first post", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "cbd08aef-7f21-4693-8628-f545b628a171", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:29.898947+00:00", 
+            "source": "", 
+            "title": "My first post", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "admin", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "424d049a-d216-4f86-932b-a0bca333f16c", 
+                "url": "thought-bubble.herokuapp.com/main/admin/424d049a-d216-4f86-932b-a0bca333f16c/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "admin", 
+                        "host": "http://hindlebook.tamarabyte.com/api", 
+                        "id": "424d049a-d216-4f86-932b-a0bca333f16c"
+                    }, 
+                    "comment": "None", 
+                    "guid": "73e3b83f-711a-4c42-b859-d20d270e10d1", 
+                    "pubDate": "2015-04-04 22:27:29.212683+00:00"
+                }
+            ], 
+            "content": "This is top post reply to this one", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5f211af4-1926-4283-b20a-d9109fc7f23e", 
+            "origin": "", 
+            "pubdate": "2015-04-04 22:27:28.682439+00:00", 
+            "source": "", 
+            "title": "This is top post reply to this one", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "sisenior", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "55099018-78b5-4178-b9ee-be99308fe8d6", 
+                "url": "thought-bubble.herokuapp.com/main/sisenior/55099018-78b5-4178-b9ee-be99308fe8d6/"
+            }, 
+            "comments": [
+                {
+                    "author": {
+                        "displayname": "sisenior", 
+                        "host": "thought-bubble.herokuapp.com", 
+                        "id": "55099018-78b5-4178-b9ee-be99308fe8d6"
+                    }, 
+                    "comment": "Yoh", 
+                    "guid": "51195116-e796-400e-82c6-c1f41237c7ca", 
+                    "pubDate": "2015-04-05 18:28:55.236321+00:00"
+                }
+            ], 
+            "content": "I thought this was a thought cloud", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5db57514-39a1-49b4-8165-24fcf5802705", 
+            "origin": "", 
+            "pubdate": "2015-04-04 20:03:57.822708+00:00", 
+            "source": "", 
+            "title": "I does a thought bubble work", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "sisenior", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "55099018-78b5-4178-b9ee-be99308fe8d6", 
+                "url": "thought-bubble.herokuapp.com/main/sisenior/55099018-78b5-4178-b9ee-be99308fe8d6/"
+            }, 
+            "comments": [], 
+            "content": "Si", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "46ca6b99-dfe8-4bdd-ae8c-57426e935a47", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:42:43.963911+00:00", 
+            "source": "", 
+            "title": "Si (Oui or Yes)", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              8f20936                                    Heroku                                                                                49e5fc6                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7ba81f70-96b3-4fbe-8bae-905c43c2a6d9", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:32:59.138400+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 4, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              d264b53                                    Heroku settings                                                                                1e2ef5d                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      4 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "a7c759ef-ecbf-4409-b92f-363c567062fd", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:32:58.252046+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "zturchan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "12acaee4-d9ac-11e4-8fca-00224d9e24da", 
+                "url": "thought-bubble.herokuapp.com/main/zturchan/12acaee4-d9ac-11e4-8fca-00224d9e24da/"
+            }, 
+            "comments": [], 
+            "content": "I made a p", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8d2b3eae-d9ae-11e4-bf02-00224d9e24da", 
+            "origin": "", 
+            "pubdate": "2015-04-04 19:32:55.827066+00:00", 
+            "source": "", 
+            "title": "HaI!", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              980dbd3                                    Fixing Friend Request.                                                                                b695c33                                    Fixed nodes issue                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "b9c7cf8e-4959-4ebc-a2c9-7419c1db0384", 
+            "origin": "", 
+            "pubdate": "2015-04-03 15:47:22.211074+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              e32e12c                                    Cleaned up heroku test server                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "0bb27a64-5b49-47bf-b57d-c268ca79d000", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:50:42.390764+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 26, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f5367c2d-c0fc-461a-ac56-5f4042955041", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:41.504014+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "        djphan created branch djphanDatUICleanUp at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "734732e1-e412-490e-9aa1-1aaaf3a9a127", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:40.629778+00:00", 
+            "source": "", 
+            "title": "djphan created branch djphanDatUICleanUp at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan opened pull request cntnboys/cmput410-project#48        Fixing UI. Profile. Fixed some JSON issues. Added some try: except: for ...                      1 commit with        225 additions and        139 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "ac81b185-a0df-4896-970e-aa176a7a2f51", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:39.754911+00:00", 
+            "source": "", 
+            "title": "djphan opened pull request cntnboys/cmput410-project#48", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan merged pull request cntnboys/cmput410-project#48        Fixing UI. Profile. Fixed some JSON issues. Added some try: except: for ...                      1 commit with        225 additions and        139 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "9144a3ab-8ce7-4ad8-9f0e-76bb580579fe", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:38.872008+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#48", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              c8875b7                                    Merge branch 'djphanDatUICleanUp'                                                                                10c02d3                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project \u2026                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "465ab981-fe7d-4ac0-a057-3dd6bf0acdd4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:37.994112+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "        djphan deleted branch djphanDatUICleanUp at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "bb3208d2-4747-4d97-b584-787a66792449", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:37.107462+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphanDatUICleanUp at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "        djphan deleted branch djphannew at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8ff03b0f-76c9-4c6f-a8d7-71b8015cc79a", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:36.227301+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphannew at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "        djphan created branch djphan at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "8ce25724-5f28-40d6-bf0d-59de8d2fc0f1", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:35.350327+00:00", 
+            "source": "", 
+            "title": "djphan created branch djphan at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan opened pull request cntnboys/cmput410-project#49        UI Fixes                      1 commit with        237 additions and        116 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "004036ac-7883-4f9f-a709-8bf50c402d97", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:34.478261+00:00", 
+            "source": "", 
+            "title": "djphan opened pull request cntnboys/cmput410-project#49", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan merged pull request cntnboys/cmput410-project#49        UI Fixes                      1 commit with        237 additions and        116 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5562043e-c660-4e0c-be55-70c7f27d16f7", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:33.580058+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#49", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              b674188                                    Merge branch 'djphan'                                                                                caba45a                                    UI Fixes                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f7503419-d6f1-4c20-a8ae-f74c3fb58346", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:32.700946+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "        djphan deleted branch djphan at cntnboys/cmput410-project        Mar 27, 2015  ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "058b8d72-9c36-493e-a50b-6269a97cffb4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:31.819167+00:00", 
+            "source": "", 
+            "title": "djphan deleted branch djphan at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Project Specifications.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "7fbb101d-a104-489a-acb6-f249483b66ed", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:30.775804+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          API Documentation for Part 2.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "75e8c750-e67c-40b9-8d0a-d3b8f9a7e666", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:29.882411+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan created the cntnboys/cmput410-project wiki                          Created          Django Implementation of APIs.                          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "5b2d6b81-e58f-48f0-9af7-a54e299c658e", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:28.984238+00:00", 
+            "source": "", 
+            "title": "djphan created the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 27, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Implementation Details of APIs and Tests.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "cfccf4c6-9fc9-4b59-9b61-4258ae68b881", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:27.783932+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 30, 2015  djphan merged pull request cntnboys/cmput410-project#50        changed models uuids get requests bugs fixed                      3 commits with        79 additions and        60 deletions        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "242bafda-cd4b-4be8-b4d7-af9c1b6aa3d4", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:26.893692+00:00", 
+            "source": "", 
+            "title": "djphan merged pull request cntnboys/cmput410-project#50", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 30, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              fe1407c                                    Merge pull request #50 from cntnboys/AnaModels                                                                                581734d                                    slight location change                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "81c00587-d792-4ad5-a5c4-4ef7082a94e3", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:26.002629+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7a4ea3a                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                fb702e6                                    Fixing No Reverse Bug. Adding 404 HTML                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e7f5198d-18b6-487e-ab7f-a40b8cd89e62", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:25.126636+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              2356af4                                    Adding test data                                                                                386650a                                    Test Commit                                      4 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "fea274ca-d3c6-47ba-bf9c-faf303042edd", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:24.227527+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              0fec86f                                    Fixing Delete. Fixing pathing and queries structure                                                                                77c067b                                    Comment host checking                                      2 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "6ea742b3-f85d-4efd-9627-b66169568684", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:23.339458+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 31, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              f41391e                                    Update Bugs to FOAF and CheckFriends                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "2a23cbd0-513c-4d83-aa3c-55a278739e89", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:22.459120+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Mar 31, 2015  djphan edited the cntnboys/cmput410-project wiki                          Edited          Project Specifications.            View the diff &#187;              ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "f8cfdff7-d9d1-46f5-b764-80367b5ad5cf", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:21.539078+00:00", 
+            "source": "", 
+            "title": "djphan edited the cntnboys/cmput410-project wiki", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              7a89296                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                d537f1f                                    Debugging new location check                                      3 more commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "66d33706-6dad-47ce-80f4-f883394cb282", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:20.652358+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              025b129                                    Fxing UI elements                                                                                1b33a32                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                      1 more commit &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "fb2276b3-64a2-4425-8b24-2c48b8c41784", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:19.760599+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 2, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              8ee38cc                                    Merge branch 'master' of https://github.com/cntnboys/cmput410-project                                                                                20fff85                                    Fixed comments                                      View comparison for these 2 commits &raquo;          ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e3a73b7f-9399-443e-b5e7-e64743474b0f", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:18.874849+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "dan", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "94070c9d-0482-459f-8940-562c67643409", 
+                "url": "thought-bubble.herokuapp.com/main/dan/94070c9d-0482-459f-8940-562c67643409/"
+            }, 
+            "comments": [], 
+            "content": "  Apr 3, 2015  djphan pushed to master at cntnboys/cmput410-project                                                              4036d8c                                    Fixing Bulk Friends Request After                                        ", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "acf18e1b-e5fe-474f-9652-eab9b60c8640", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:18.003523+00:00", 
+            "source": "", 
+            "title": "djphan pushed to master at cntnboys/cmput410-project", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "konrad", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "0d35e7a4d97b11e49020005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/konrad/0d35e7a4d97b11e49020005056041008/"
+            }, 
+            "comments": [], 
+            "content": "fasdf", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "e5cb0204d97e11e4bc97005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:11.017303+00:00", 
+            "source": "", 
+            "title": "asdf", 
+            "visibility": "public"
+        }, 
+        {
+            "author": {
+                "displayname": "konrad", 
+                "host": "thought-bubble.herokuapp.com", 
+                "id": "0d35e7a4d97b11e49020005056041008", 
+                "url": "thought-bubble.herokuapp.com/main/konrad/0d35e7a4d97b11e49020005056041008/"
+            }, 
+            "comments": [], 
+            "content": "fasdf", 
+            "content-type": "", 
+            "description": "", 
+            "guid": "33b311fed97b11e48356005056041008", 
+            "origin": "", 
+            "pubdate": "2015-04-03 14:39:10.451755+00:00", 
+            "source": "", 
+            "title": "asdf", 
+            "visibility": "public"
+        }
+    ]
+}########################################################
+
+ #### Get post if FOAF ###
+
+
+Response: 
+{
+    "author": {
+        "displayname": "bubble", 
+        "host": "thought-bubble.herokuapp.com", 
+        "id": "3be635c3-fc4e-45d4-9a70-555e38e90f93", 
+        "url": "thought-bubble.herokuapp.com/main/bubble/3be635c3-fc4e-45d4-9a70-555e38e90f93/"
+    }, 
+    "comments": [], 
+    "content": "Hello", 
+    "content-type": "", 
+    "description": "", 
+    "guid": "591bb0b1-e212-4e1c-8ab5-5aa7e513ad1c", 
+    "origin": "", 
+    "pubdate": "2015-04-06 05:21:44.788087+00:00", 
+    "source": "", 
+    "title": "Dear foaf", 
+    "visibility": "FOAF"
+}########################################################
+
+ ###### Post new friend request (200 OK) #####
+
+
+Response: 
+
+
+Your previous friend request to that user is still pending approval.
+
+########################################################
+
+ ####### Post new friend request (approval pending) #######
+
+
+Response: 
+
+
+200 OK
+
+########################################################
+
+ ####### Check if friends #######
+
+
+Response: 
+
+
+{
+    "author": "d87e6112-8bb7-470b-986d-6b0c6f9d62f4", 
+    "friends": [
+        "5586a50b-500f-469c-80a1-1bc38a8a819a", 
+        "b815b07c-2018-4b2c-bc98-d68603975bac"
+    ], 
+    "query": "friends"
+}
+
+########################################################
+
