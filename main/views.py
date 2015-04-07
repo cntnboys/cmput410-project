@@ -1177,12 +1177,14 @@ def getposts(request):
                 post['content'] = x.content
                 post['pubdate'] = str(x.date)
                 post['guid'] = str(x.post_uuid)
+               #print("x: ",x)
 
             #need to implement our saving of Privacy ex. "PUBLIC" "PRIVATE" 
                 post['visibility'] = "public"
             
             
             #author
+
                 a = Authors.objects.get(author_uuid = x.author_id.author_uuid)
                 author={}
                 author['id'] = str(a.author_uuid)
@@ -1190,13 +1192,40 @@ def getposts(request):
                 author['displayname'] = a.username
                 author['url'] = "thought-bubble.herokuapp.com/main/" + a.username + "/" + str(a.author_uuid) + "/"
                 post['author'] = author
-            
-            #comments
-                post['comments'] = []
-                
+
+                try:    
+                    comments = Comments.objects.filter(post_id = x)
+                    commentList = []
+                    for n in comments:
+
+                        if(str(a.location) == "thought-bubble.herokuapp.com"):
+                            print("n.author_id: ", n.author_id.author_id)
+                            commAuth = Authors.objects.get(author_id = n.author_id.author_id)
+                            commAuthJson = {}
+                            commJson= {}
+                            theid = str(commAuth.author_uuid)
+                            location = str(commAuth.location)
+                            theuser = str(commAuth.username)
+                            thecontent = str(n.content)
+                            if(thecontent == 'None'):
+                                thecontent=""
+                            thedate = str(n.date)
+                            thecommuuid = str(n.comment_uuid)
+                            commAuthJson['id'] = str(theid)
+                            commAuthJson['host'] = str(location)
+                            commAuthJson['displayname'] = str(theuser)
+                            commJson['comment'] = str(thecontent)
+                            commJson['pubDate'] = str(thedate)
+                            commJson['guid'] = str(thecommuuid)
+                            commJson['author'] = commAuthJson
+                            commentList.append(commJson)
+                except ObjectDoesNotExist:
+                    print "no comments to send"
+                post['comments'] = str(commentList)
                 items.append(post)
 
-    return HttpResponse(json.dumps({"posts" : items},indent=4, sort_keys=True))
+
+    return HttpResponse(json.dumps({"posts" : items}, indent=4, sort_keys=True))
 
 #@logged_in_or_basicauth()
 @csrf_exempt
