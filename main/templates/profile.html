@@ -14,8 +14,8 @@
     <!-- Custom CSS -->
     <link href="{{ STATIC_URL }}/css/small-business.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
-	<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
-	<script src="{{ STATIC_URL }}js/less.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+    <script src="{{ STATIC_URL }}js/less.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 
@@ -51,21 +51,21 @@ $(document).ready(function(){
           <div class="panel panel-info" >
             <div class="panel-body">
               <div class="row">
-		{% for link in items %}
-		
-		 {% if link.image %}
+        {% for link in items %}
+        
+         {% if link.image %}
                 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{{ MEDIA_URL }}//{{ link.image }}" class="img-circle" height="205" width="204"> </div>
-		
-		{% else %}
-		 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/plaeholder_icon.png" class="img-circle"> </div>
-		{% endif %}
+        
+        {% else %}
+         <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/static/images/plaeholder_icon.png" class="img-circle"> </div>
+        {% endif %}
         <br/>
-	
+    
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information" style="border-radius:10px">
                     <tbody>
-		
-			             <tr>
+        
+                         <tr>
                             <td>Username</td>
                             <td>{{ link.username }}</td>
                         </tr>
@@ -92,7 +92,7 @@ $(document).ready(function(){
                             <td><span style="color:grey"> Location origin not provided </span></td>
                             {% endif %}
 
-			             <tr>
+                         <tr>
                             <td>Github</td>
                             {% if link.github %}
                             <td> {{ link.github }} </td>
@@ -110,8 +110,8 @@ $(document).ready(function(){
                             </td>
                         </tr>
                         <br/>
-	                 
-		 
+                     
+         
 
                     </tbody>
                   </table>
@@ -119,7 +119,7 @@ $(document).ready(function(){
               </div>
             </div>
 
-	    
+        
 
                 {% endfor %}
                
@@ -134,18 +134,17 @@ $(document).ready(function(){
             {% for link in items %}
   
                        {% csrf_token %}
-                      
-                       <div>  Name: <br/> <input type="text" name="fullname"  maxlength="30" value={{ link.name }} > </div>
-                       <div>  Email: <br/> <input type="text" name="email"  maxlength="30" value={{ link.email }} > </div>
-                       <div>  Github: <br/> <input type="text" name="github"  maxlength="30" value={{ link.github }} > </div>
-                       <div>  Image: <br/><input type="file" name="image" maxlength="30" value={{ link.image }}> </div>
+                       <div>  Name: <br/> <input type="text" name="fullname"  value={{ link.name }} > </div>
+                       <div>  Email: <br/> <input type="text" name="email"  value={{ link.email }} > </div>
+                       <div>  Github: <br/> <input type="text" name="github" value={{ link.github }} > </div>
+                       <div>  Image: <br/><input type="file" name="image" value={{ link.image }}> </div>
                        <div>  <input type="submit" value="Update">  </div>
                        <div> <input type="hidden" name="username" value={{ link.username }} > </div>
             {% endfor %}
             </div></div></div></div>
                         </form>
 
-        <div class="wrapper">
+
             <div class="headerbox"> 
                 <h1>Friends</h1>
                     {% for link in items %}
@@ -226,6 +225,7 @@ $(document).ready(function(){
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="hidden" name="followuuid" value="{{ link.author_uuid }}">
                     <input type="submit" class="friendreq" value="Accept Request">
                     </form>
 
@@ -234,6 +234,7 @@ $(document).ready(function(){
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="hidden" name="followuuid" value="{{ link.author_uuid }}">
                     <input type="submit" class="friendreq" value="Friend Request">
                     {% endif %}
                     {% if fstatus = 0 %}
@@ -249,6 +250,7 @@ $(document).ready(function(){
                     <form method="POST" action="{% url "friendRequest" %}" enctype="multipart/form-data" name="friendrequest">
                     {% csrf_token %}
                     <input type="hidden" name="follow" value="{{ link.username }}">
+                    <input type="hidden" name="followuuid" value="{{ link.author_uuid }}">
                     <input type="submit" class="friendreq" value="Friend Request">
                     </form>
                     {% endif %}
@@ -278,9 +280,9 @@ $(document).ready(function(){
                         {% csrf_token %}
                         <input type="hidden" value="{{link.username}}" name="username">
                         {% if link.image %}
-                        <input type="image" src={{ MEDIA_URL }}/{{link.image}} class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"> {{link.username}} </a>
+                        <input type="image" src={{ MEDIA_URL }}//{{link.image}} class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}"> {{link.username}} </a>
                         {% else %}
-                        <div> <input type="image" src={{ STATIC_URL }}images/profileicon.png class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{link.username}} </a>
+                        <div> <input type="image" src={{ STATIC_URL }}images/plaeholder_icon.png class="friendbub" value="{{link.username}}"> <a href="{% url "getaProfile" theusername=link.username user_id=link.author_uuid %}">{{link.username}} </a>
                         {% endif %}
                         
                     </form>
@@ -289,18 +291,12 @@ $(document).ready(function(){
                 </div>
                
                 {% endif %}
-            </div>
-        </div>
-    
-        </div>
-    </div>
+
     <br/>
     
     {% if posts %}
-    <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
-    <div class="panel-body">
-    <div class="row">
-    <div class="wrapper">
+
+
         <div class="headerbox"><h1>Recent Posts</h1></div>
         {% for link in posts %}
         <div class="contentbox">
@@ -314,7 +310,7 @@ $(document).ready(function(){
             <div class="postbody">
                 {% if link.image %}
                
-		<a href="{{ MEDIA_URL }}//{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}"  height="82" width="100" /></a> </br>
+        <a href="{{ MEDIA_URL }}//{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}"  height="82" width="100" /></a> </br>
                     {% endif %}
                     {% if link.content %}
                     <span class="name">{{ link.content }}</span> </br>
@@ -325,21 +321,27 @@ $(document).ready(function(){
     </div>
     </div></div>
 </div>
+            </div>
+        </div>
+    
+ 
+    </div>
     {% else %}
-    <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
-    <div class="panel-body">
-    <div class="row">
-    <div class="wrapper">
+
+
         <div class="headerbox"><h1>Recent Posts</h1></div>
         <div class="contentbox text-center">
          <img style="width:20%; height:20%;" src="{{ STATIC_URL }}images/sad.png"/><br/>
          You have no posts, go post something!
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
 
+    </div>
+    </div>
+                </div>
+        </div>
+    
+ 
+    </div>
     {% endif %}
 
 </body>

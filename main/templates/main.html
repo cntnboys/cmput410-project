@@ -38,7 +38,7 @@ $(document).ready(function(){
 {% block body %}
 
 <body>
-	<div class="wrapper">
+
 		<div class="createPost">
 			<div class="row">
 				<h2>Create a Thought Bubble</h2>
@@ -87,10 +87,9 @@ $(document).ready(function(){
 				
 		</div>
 	</div>
-	</div>
+
 
 	<br/>
-	<div class="wrapper" >	
 		<div class='headerbox'><h1>Recent Posts</h1>	
 		<div class="editmode"><button id="show" name="Showbutton" class="editbutton">Edit Mode</button></div></div>
 
@@ -102,12 +101,12 @@ $(document).ready(function(){
                 			<div class="posttitle"><a href={% url "onePost" author_name=link.author_id.username post_uuid=link.post_uuid %}> Untitled Post </a></div>
                 		{% endif %}
                 		<span style="margin-left:10pt"> Domain: {{ link.author_id.location }}</br>
-                                By: <a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a>
+                               <span style="margin-left:10pt"> By: <a class href={% url "getaProfile" theusername=link.author_id.username user_id=link.author_id.author_uuid %}>{{ link.author_id.username }}</a></span>
 				  on {{link.date}}</span>
                 		<br/><br/>
 
                         {% if link.image %}
-			<a href="{{ MEDIA_URL }}/{{link.image}}"><img src="../../../media/{{link.image}}" height="82" width="100" /> </br></a>
+			<a href="{{ MEDIA_URL }}/{{link.image}}"><img src="{{ MEDIA_URL }}/{{link.image}}" height="82" width="100" /> </br></a>
                         {% endif %}
                         {% if link.content %}
                         <p style="margin-left:10pt">{{ link.content }}</p>
@@ -124,11 +123,10 @@ $(document).ready(function(){
 						</form>
 
 
-						<form method="POST" action="{% url "editpost" %}" id=updateform name="updateform" class="updateform"  enctype="multipart/form-data" >
+						<form method="POST" action="{% url "editpost" %}" id=updateform name="updateform" class="updateform" enctype="multipart/form-data" >
 						  {% csrf_token %}
-                           <div>  Title:</br> <input type="text" name="title"  maxlength="30" value={{ link.title }} > </div>
-						  <div>  Content:</br> <input type="text" name="content"  maxlength="200" value={{ link.content }} > </div>
-						  <div>  Image:<input type="file" name="image" maxlength="10" value={{ link.image }}> </div>
+                           <div>  Title:</br> <input type="text" name="title" value="{{ link.title }}"> </div>
+						  <div>  Content:</br> <input type="text" name="content" value="{{ link.content }}" > </div>
 						  <div class="updatediv">  <input type="submit" class ="update" value="Update"> </div>
 						  <div> <input type="hidden" name="postid" value={{ link.post_id }} > </div>
 						</form>
@@ -180,7 +178,6 @@ $(document).ready(function(){
 		<div class="wrapper">
 			<p><span style="margin-left:10pt">Copyright &copy; Thought Bubble 2015</span></p>
 		</div>
-	</div>
 
 </body>
 </html>

@@ -501,7 +501,7 @@ def logout(request):
     # Logout function redefined in import statement by Chris Morgan
     # http://stackoverflow.com/questions/7357127/django-logout-crashes-python
     auth_logout(request)
-    Session.objects.all().delete()
+    #Session.objects.all().delete()
     return redirect(indexPage)
 
 # Main Page function allows user to go back to the stream of posts
@@ -635,6 +635,9 @@ def foaf(request, userid1, userid2):
 def friendRequest(request):
     items = []
     ufriends = []
+    friends = []
+    follow = []
+
     current_user = request.user
     if request.method == 'GET':
         # if logged in
@@ -645,13 +648,24 @@ def friendRequest(request):
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
 
-        return render(request, 'friendrequest.html',{'items':items, "author": aUser })
+            for e in Friends.objects.filter(invitee_id=aUser):
+                if e.inviter_follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    follow.append(a)
+
+            for e in Friends.objects.filter(inviter_id=aUser):
+                if e.invitee_follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    follow.append(a)
+
+        return render(request, 'friendrequest.html',{'items':items, "author": aUser,"follow":follow })
 
     if request.method == 'POST':
         userid = current_user.id
         theirUname = request.POST["follow"]
+        theirUuid = request.POST["followuuid"]
         try:
-            theirAuthor = Authors.objects.get(username=theirUname, location="thought-bubble.herokuapp.com")
+            theirAuthor = Authors.objects.get(username=theirUname, author_uuid=theirUuid)
             ourName = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             for e in Friends.objects.filter(inviter_id=theirAuthor):
 	            if e.status is True :
@@ -679,42 +693,42 @@ def friendRequest(request):
 
             #If there exists an entry in our friends table where U1 has already added U2 then flag can be set true now
             if Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=True):
-                print("here!")
                 updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor).update(status=1, invitee_follow =1, frequest=0)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=True):
-                print("there!")
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=1, inviter_follow=1, frequest=0)
             elif Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor, status=False, frequest=False):
-                print("newthere")
                 updateStatus = Friends.objects.filter(inviter_id=ourName, invitee_id=theirAuthor).update(status=0, inviter_follow=1, frequest=1)
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=False):
-                print("theyinv me before, no follow")
                 updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=False).delete()
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=0, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=True):
-                print("theyinv me before, all follow")
             	updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=True).delete()
             	new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=1, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=True):
-				print("theyinv me before, I used to follow")
 				updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = False, invitee_follow=True).delete()
 				new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=0, frequest=1, status =0) # new friend with follow info preserved
             elif Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=False):
-                print("theyinv me before, They followed")
             	updateStatus = Friends.objects.filter(invitee_id=ourName, inviter_id=theirAuthor, status=False, frequest=False, inviter_follow = True, invitee_follow=False).delete()
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1,invitee_follow=1, frequest=1, status =0) # new friend with follow info preserved
             else:
-                print("create try")
                 new_invite = Friends.objects.get_or_create(invitee_id = theirAuthor, inviter_id = ourName, inviter_follow = 1, frequest=1, status =0) # new friend request means u auto-follow
-                print("ni: ", new_invite)    
 		    
             yourprofileobj = Authors.objects.get(username=current_user, location="thought-bubble.herokuapp.com")
             items.append(yourprofileobj)
 
+            for e in Friends.objects.filter(inviter_id=ourName):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    items.append(a)
+
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.status is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    if not (a in items):
+                        items.append(a)
             #print("itemsfr:", items)
         
-            return render(request, 'profile.html', {'items' : items, 'ufriends' : ufriends, 'friends' : friends,
-                      "author": theirAuthor} )
+            return render(request, 'friends.html', {'items' : items, "author": ourName} )
 
         except:
             print ("not local author")
@@ -723,7 +737,18 @@ def friendRequest(request):
                 if e.status is False :
                     a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                     items.append(a)
-            return render(request, 'friendrequest.html',{'items':items, "author": aUser })
+
+            for e in Friends.objects.filter(invitee_id=aUser):
+                if e.inviter_follow is True :
+                    a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
+                    follow.append(a)
+
+            for e in Friends.objects.filter(inviter_id=aUser):
+                if e.invitee_follow is True :
+                    a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                    follow.append(a)
+
+            return render(request, 'friendrequest.html',{'items':items, "author": aUser, 'follow':follow })
 
 #second group friend request
 # not working because of csrf token problems
@@ -906,7 +931,7 @@ def editProfile(request):
         fullname =request.POST["fullname"]
         emailin = request.POST["email"]
         githubin = request.POST["github"]
-        imagein = request.POST["image"]
+        imagein = request.FILES["image"]
 
         #find author object needed to update
         try:
@@ -929,16 +954,14 @@ def editProfile(request):
 def editpost(request):
     if request.method == "POST":
         titlein = request.POST["title"]
-        imagein = request.POST["image"]
         postidin = request.POST["postid"]
         contentin = request.POST["content"]
 
         try:
             post = Posts.objects.filter(post_id=str(postidin))
-            if str(imagein) == "":
-                post.update(title=str(titlein),content=str(contentin))
-            else: 
-                post.update(title=str(titlein),image=imagein,content=str(contentin))
+
+            post.update(title=str(titlein),content=str(contentin))
+
         except:
             return redirect(mainPage, current_user=request.user.username)
 
@@ -1275,16 +1298,18 @@ def Foafvis(request):
             return HttpResponse("Bad Post ID")
 
         greg = Authors.objects.get(author_uuid = str(data['author']['id']))
-
         flag = False
 
         for f in friend:
 
-            friendauthor = Authors.objects.get(author_uuid=str(f))
-            if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
-                flag = True
-            elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
-                flag = True
+            try:
+                friendauthor = Authors.objects.get(author_uuid=str(f))
+                if(Friends.objects.filter(invitee_id=friendauthor, inviter_id=greg)):
+                    flag = True
+                elif(Friends.objects.filter(inviter_id=friendauthor, invitee_id=greg)):
+                    flag = True
+            except:
+                continue
 
         posts = Posts.objects.get(post_uuid = str(postid))
         post = {}
@@ -1317,7 +1342,7 @@ def Foafvis(request):
         if (flag == True):
             return HttpResponse(json.dumps(post, indent = 4, sort_keys=True), )
         elif(flag == False):
-            return HttpResponse('{"message": "You are not FOAF."}')
+            return HttpResponse("{ message: NOT FOAF }")
 
     return HttpResponse('OK')
 
@@ -1683,6 +1708,7 @@ def deletePost(request):
 def unfriend(request):
     if request.user.is_authenticated():
         items = []
+        follow = []
         current_user = request.user
         if request.method == 'POST':
                 userid = current_user.id
@@ -1718,7 +1744,7 @@ def unfriend(request):
 
                 #print("items",items)
 
-                return render(request, 'friends.html',{'items':items, 'author':ourName})
+                return render(request, 'friends.html',{'items':items, 'author':ourName, 'follow':follow})
     return None
 
 
@@ -1727,6 +1753,8 @@ def unfriend(request):
 def unfollow(request):
     if request.user.is_authenticated():
         items = []
+        friends = []
+        follow = []
         current_user = request.user
         if request.method == 'POST':
                 userid = current_user.id
@@ -1748,24 +1776,29 @@ def unfollow(request):
                 for e in Friends.objects.filter(invitee_id=ourName):
                     if e.inviter_follow is True :
                         a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                        items.append(a)
+                        follow.append(a)
                         print a
 
-                for e in Friends.objects.filter(inviter_id=ourName):
-                    if e.invitee_follow is True :
-                        a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
+                for e in Friends.objects.filter(invitee_id=ourName):
+                    if e.frequest is True :
+                        a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
                         items.append(a)
-                        print a
+                for e in Friends.objects.filter(inviter_id=ourName):
+                    if e.frequest is True :
+                        a = Authors.objects.filter(author_uuid=e.invitee_id.author_uuid)
+                        items.append(a)
 
                 print("items",items)
 
-                return render(request, 'follow.html',{'items':items, 'author':ourName})
+                return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
     return None
 
 @logged_in_or_basicauth()
 def follow(request):
     if request.user.is_authenticated():
         items = []
+        friends = []
+        follow = []
         current_user = request.user
         if request.method =='GET':
             userid = current_user.id
@@ -1777,18 +1810,23 @@ def follow(request):
                 print("e: ",e)
                 if e.invitee_follow is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
             for e in Friends.objects.filter(invitee_id=ourName):
                 if e.inviter_follow is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
                     print a
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.frequest is True :
+                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
+                    items.append(a)
+
             #items.append(yourprofileobj)
 
             print("items",items)
             print("ourName: ",ourName.username)
 
-            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
 
         if request.method == 'POST':
             userid = current_user.id
@@ -1811,17 +1849,22 @@ def follow(request):
                 print("e: ",e)
                 if e.invitee_follow is True :
                     a = Authors.objects.get(author_uuid=e.invitee_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
             for e in Friends.objects.filter(invitee_id=ourName):
                 if e.inviter_follow is True :
                     a = Authors.objects.get(author_uuid=e.inviter_id.author_uuid)
-                    items.append(a)
+                    follow.append(a)
                     print a
+
+            for e in Friends.objects.filter(invitee_id=ourName):
+                if e.frequest is True :
+                    a = Authors.objects.filter(author_uuid=e.inviter_id.author_uuid)
+                    items.append(a)
 
 
             print("items",items)
 
-            return render(request, 'follow.html',{'items':items, 'author':ourName})
+            return render(request, 'friendrequest.html',{'items':items, 'author':ourName, 'follow':follow})
 
 
 def custom404(request):
